@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cv_trending"
+    style="@style/CustomCardRed"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/card_elevation_5"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_trending"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/app_logo"
+            android:contentDescription="@string/s3" />
+
+        <ImageView
+            android:id="@+id/iv_play"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/margin_3"
+            android:layout_marginBottom="@dimen/margin_2"
+            android:layout_above="@+id/tv_name"
+            android:src="@drawable/ic_quiz_played"
+            android:contentDescription="@string/s3" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/QuizTrendingHead"
+            android:layout_below="@+id/iv_trending" />
+
+        <LinearLayout
+            android:id="@+id/ll_prize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_below="@+id/tv_name"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+            <ImageView
+                android:id="@+id/iv_prize"
+                android:layout_width="@dimen/quiz_timer_image_width"
+                android:layout_height="@dimen/quiz_timer_image_height"
+                android:src="@drawable/prize"
+                android:contentDescription="@string/s3" />
+            <TextView
+                android:id="@+id/tv_prize"
+                android:layout_marginTop="@dimen/margin_2"
+                android:layout_marginStart="@dimen/margin_5"
+                style="@style/QuizTrendingSubHead" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_marginBottom="@dimen/margin_2"
+            android:layout_below="@+id/ll_prize"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/iv_entry"
+            android:layout_width="@dimen/quiz_timer_image_width"
+            android:layout_height="10dp"
+            android:src="@drawable/entry"
+            android:contentDescription="@string/text_entry_fee" />
+
+        <TextView
+            android:id="@+id/tv_entry"
+            android:layout_marginStart="@dimen/margin_8"
+            style="@style/QuizTrendingSubHead" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

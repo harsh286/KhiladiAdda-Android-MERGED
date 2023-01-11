@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/droido_bg">
+
+    <include
+        android:id="@+id/in_action_bar"
+        layout="@layout/new_toolbar_droido"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_advertisement"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/text_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/in_action_bar" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout_droido"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="@dimen/text_12"
+        android:background="#D12F36"
+        app:layout_constraintTop_toBottomOf="@id/vp_advertisement"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="3dp"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        app:tabTextColor="@color/white" />
+    <!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/tab_layout_droido"-->
+    <!--        android:layout_height="wrap_content">-->
+
+
+    <TextView
+        android:id="@+id/tv_trending_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16sp"
+        android:layout_marginTop="@dimen/text_16"
+        android:fontFamily="@font/rowdies_regular"
+        android:text="@string/tournament"
+        android:textColor="@color/white"
+        android:textFontWeight="500"
+        android:textSize="@dimen/dimen_18sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout_droido" />
+
+    <TextView
+        android:id="@+id/tv_filter_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/card_corner_radius_4"
+        android:layout_marginTop="@dimen/text_16"
+        android:fontFamily="@font/rowdies_regular"
+        android:text=" "
+        android:textColor="@color/white"
+        android:textFontWeight="500"
+        android:textSize="@dimen/dimen_18sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/tv_trending_txt"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout_droido" />
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcv_filters"
+        android:layout_width="119dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="@dimen/text_16"
+        android:layout_marginEnd="@dimen/margin_20"
+        app:cardBackgroundColor="#242426"
+        app:cardCornerRadius="@dimen/text_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout_droido">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constrain_filters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_filters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/text_14"
+                android:layout_marginBottom="@dimen/card_corner_radius_4"
+                android:fontFamily="@font/rowdies_regular"
+                android:gravity="center"
+                android:text="Filters"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textFontWeight="500"
+                android:textSize="@dimen/dimen_18sp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="@dimen/margin_30"
+                android:layout_height="@dimen/margin_30"
+                android:layout_marginTop="@dimen/margin_2"
+                android:layout_marginBottom="@dimen/margin_2"
+                app:cardBackgroundColor="#363638"
+                app:cardCornerRadius="@dimen/text_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/constrain_filters"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@id/constrain_filters"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/card_corner_radius_4"
+                    android:layout_marginEnd="@dimen/margin_2"
+                    android:background="@drawable/filter_image_bg"
+                    android:src="@drawable/filter_icon" />
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+    <!--            android:id="@+id/swipe_all_tournament"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="@dimen/text_14"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/tv_trending_txt">-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_more_tournaments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="@dimen/text_14"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:nestedScrollingEnabled="false"
+        android:scrollbars="vertical"
+        app:layout_anchorGravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_trending_txt" />
+    <!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_my_tournaments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/text_14"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_trending_txt" />
+
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="160dp"
+        android:fontFamily="@font/rowdies_regular"
+        android:gravity="center"
+        android:text="@string/no_games_exist_please_wait"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_16"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_trending_txt"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_error_my_tournament"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        android:layout_marginTop="160dp"-->
+    <!--        android:fontFamily="@font/rowdies_regular"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="@string/You_haven_t_participated_in_any_tournament"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="@dimen/text_16"-->
+    <!--        android:visibility="visible"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/tv_trending_txt"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+</androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_error_show"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/dimen_16sp"
+        android:layout_marginEnd="@dimen/dimen_16sp"
+        android:fontFamily="@font/rowdies_regular"
+        android:gravity="center"
+        android:text="@string/no_game_data_avaliable"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimen_16sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+</LinearLayout>

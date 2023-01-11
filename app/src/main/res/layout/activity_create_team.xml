@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/inner_bg"
+    tools:context=".headtohead.HTHBattlesActivity">
+
+    <View
+        android:id="@+id/team_background"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:background="@drawable/ic_overlayteam"
+
+        />
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_5"
+        android:contentDescription="@string/s3"
+        android:padding="@dimen/padding_5"
+        android:src="@drawable/ic_arrow_back_white" />
+
+    <LinearLayout
+        android:id="@+id/ll_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_back"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_one"
+                android:layout_width="@dimen/image_width"
+                android:layout_height="@dimen/image_height"
+                android:contentDescription="@string/team_code" />
+
+            <TextView
+                android:id="@+id/tv_team_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/padding_3"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_10"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_date"
+            style="@style/MatchDetailsFontTextHTH"
+            android:text="@string/text_vs"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_two"
+                android:layout_width="@dimen/image_width"
+                android:layout_height="@dimen/image_height"
+                android:contentDescription="@string/team_code" />
+
+            <TextView
+                android:id="@+id/tv_team_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/padding_3"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_10"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_main"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_5"
+        android:text="@string/you_can_select_1_player_from_each_category"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimen_12sp" />
+
+    <include
+        layout="@layout/player_selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_5" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/sliding_tabs"
+        style="@style/CustomTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/team_background"
+        android:background="@color/white"
+        app:tabIndicatorColor="@color/battle_red"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="#787070" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_below="@id/sliding_tabs" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible"
+        android:weightSum="@integer/int_1">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight=".5"
+            android:background="#C7C2C2"
+            android:gravity="center"
+            android:text="@string/back"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+
+        <RelativeLayout
+            android:id="@+id/rl_next"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:background="#EC223A">
+
+            <TextView
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:drawablePadding="@dimen/margin_10"
+                android:gravity="center"
+                android:text="@string/text_next"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:drawableEndCompat="@drawable/ic_arrow_right_circle" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

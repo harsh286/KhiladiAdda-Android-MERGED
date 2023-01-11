@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    tools:context=".withdrawcoins.WithdrawActivity">
+
+    <include layout="@layout/actionbar_transparent" />
+
+    <TextView
+        android:id="@+id/tv_wining_cash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar"
+        android:layout_marginStart="@dimen/margin_30"
+        android:layout_marginTop="@dimen/margin_5"
+        android:text="@string/text_wining_cash"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_20" />
+
+    <TextView
+        android:id="@+id/tv_coins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_wining_cash"
+        android:layout_toEndOf="@+id/tv_cash_option"
+        android:layout_marginStart="@dimen/margin_30"
+        android:text="@string/text_rs_per_coin"
+        android:padding="@dimen/padding_2"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_13" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:layout_marginTop="@dimen/margin_15"
+        android:layout_below="@+id/tv_coins">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/link_amazon_pay"/>
+
+            <TextView
+                android:id="@+id/tv_cash_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_5"
+                android:layout_marginStart="@dimen/margin_10"
+                android:text="@string/text_cash_withdraw_options"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_13" />
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:orientation="horizontal">
+                <include layout="@layout/link_paytm" />
+                <!--                <include layout="@layout/link_upi"/>-->
+                <!--                <include layout="@layout/link_amazon_pay"/>-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:orientation="horizontal">
+                <include layout="@layout/link_bank_transfer"/>
+                <include layout="@layout/link_upi"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_link_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginStart="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_15"
+                android:background="@drawable/roundborder_pink_red"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_5"
+                    android:text="@string/text_link_details"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_13" />
+
+                <EditText
+                    android:id="@+id/et_upa_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_15"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/textview_background_black"
+                    android:padding="@dimen/padding_8"
+                    android:maxLength="60"
+                    android:hint="@string/text_account_name"
+                    android:text=""
+                    android:inputType="text"
+                    android:textSize="@dimen/text_12"
+                    android:textColor="@color/colorBlack"
+                    android:autofillHints="@string/text_account_name" />
+                <EditText
+                    android:id="@+id/et_payment_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_marginStart="@dimen/margin_15"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/textview_background_black"
+                    android:padding="@dimen/padding_8"
+                    android:maxLength="50"
+                    android:textSize="@dimen/text_12"
+                    android:hint="@string/text_paytm_number"
+                    android:inputType="text"
+                    android:textColor="@color/colorBlack"
+                    android:autofillHints="@string/text_paytm_number" />
+                <TextView
+                    android:id="@+id/tv_existing_withdraw_option"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:padding="@dimen/padding_2"
+                    android:textColor="@color/color_green"
+                    android:textSize="@dimen/text_11" />
+                <LinearLayout
+                    android:id="@+id/ll_bank"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:layout_marginStart="@dimen/margin_30"
+                    android:layout_marginEnd="@dimen/margin_30"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/et_name"
+                        style="@style/AmountEditText"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:hint="@string/text_account_name"
+                        android:textColorHint="@color/lighter_black"
+                        android:inputType="textCapWords"
+                        android:autofillHints="@string/text_account_name" />
+
+                    <EditText
+                        android:id="@+id/et_account_number"
+                        style="@style/AmountEditText"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:hint="@string/text_account_number"
+                        android:textColorHint="@color/lighter_black"
+                        android:inputType="number"
+                        android:maxLength="18"
+                        android:autofillHints="@string/text_account_number" />
+
+                    <EditText
+                        android:id="@+id/et_ifsc_code"
+                        style="@style/AmountEditText"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:textColorHint="@color/lighter_black"
+                        android:hint="@string/text_ifsc"
+                        android:autofillHints="@string/text_ifsc"
+                        android:inputType="textCapCharacters" />
+
+                    <EditText
+                        android:id="@+id/et_address"
+                        style="@style/AmountEditText"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:hint="@string/text_address"
+                        android:textColorHint="@color/lighter_black"
+                        android:inputType="textCapWords"
+                        android:autofillHints="@string/text_address" />
+                </LinearLayout>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_add_beneficiary"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_marginBottom="@dimen/margin_8"
+                    android:background="@drawable/roundborder_primary_dark"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_10"
+                    android:text="@string/text_add_beneficiary"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_13" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_linked_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginStart="@dimen/margin_15"
+                android:text="@string/text_linked_account"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_13" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_withdraw"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:layout_margin="@dimen/margin_5"/>
+
+            <LinearLayout
+                android:id="@+id/ll_amount_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginStart="@dimen/margin_15"
+                android:padding="@dimen/padding_10"
+                android:layout_marginEnd="@dimen/margin_15"
+                android:layout_marginBottom="@dimen/margin_15"
+                android:background="@drawable/roundborder_pink_red"
+                android:orientation="vertical">
+                <EditText
+                    android:id="@+id/et_amount"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/textview_background_black"
+                    android:padding="@dimen/padding_8"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:hint="@string/text_enter_amount"
+                    android:textColor="@color/colorBlack"
+                    android:autofillHints="@string/hint_amount" />
+                <TextView
+                    android:id="@+id/tv_total_coins"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:padding="@dimen/padding_2"
+                    android:textColor="@color/color_green"
+                    android:textSize="@dimen/text_11" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_submit"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:background="@drawable/roundborder_primary_dark"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_10"
+                    android:text="@string/text_withdraw"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_13" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

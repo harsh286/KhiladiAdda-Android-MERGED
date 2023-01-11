@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#6200EE</color>-->
+    <!--<color name="colorPrimaryDark">#3700B3</color>-->
+    <!--<color name="colorAccent">#03DAC6</color>-->
+
+    <!--<color name="colorPrimary">#005276</color>-->
+    <!--<color name="colorPrimary">#88005276</color>-->
+    <!--<color name="colorPrimaryDark">#01425E</color>-->
+    <!--<color name="colorAccent">#26ac3a</color>-->
+
+    <!--<color name="colorPrimary">#2196F3</color>-->
+    <!--<color name="colorPrimaryDark">#0D47A1</color>-->
+    <!--<color name="colorAccent">#009688</color>-->
+
+    <!--<color name="colorPrimary">#6200EE</color>-->
+    <!--<color name="colorPrimaryDark">#3700B3</color>-->
+    <!--<color name="colorAccent">#03DAc5</color>-->
+
+    <color name="colorPrimary">#ed213a</color>
+    <color name="colorPrimaryDark">#630a0a</color>
+<!--    <color name="colorAccent">#FFFFFF</color>-->
+    <color name="colorAccent">#000000</color>
+
+    <color name="color_green">#26ac3a</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="seconAccent">#018786</color>
+    <color name="colorCyan">#006064</color>
+    <color name="button_green">#54BD82</color>
+    <color name="light_black">#333333</color>
+    <color name="lighter_black">#444444</color>
+    <color name="white">@android:color/white</color>
+    <color name="lighter_gray">#989898</color>
+    <color name="player_selected">#AB3845</color>
+    <color name="light_gray">#676767</color>
+    <color name="lightest_gray">#F5F5F5</color>
+    <color name="light_background">#03000000</color>
+    <color name="event_back">#4c858585</color>
+    <color name="light_red_white">#FFEBEE</color>
+    <color name="colorTransparent">#00000000</color>
+    <color name="orange_dark">#E65100</color>
+    <color name="like_pink">#ff9ca5</color>
+    <color name="hint_white">#f5f5f5</color>
+    <color name="item_border">#EEEEEE</color>
+    <color name="color_yellow">#ffff4d</color>
+    <color name="blue_dark">#311B92</color>
+    <color name="view_video_color">#FF4081</color>
+    <color name="info">#fa6363</color>
+    <color name="battle_red">#E31313</color>
+    <color name="colorLivePlayed">#FFC107</color>
+    <color name="colorLiveLead">#4CAF50</color>
+    <color name="personal">#bdbdbd</color>
+    <color name="newgrey">#646464</color>
+    <color name="card_red">#DD1D34</color>
+    <color name="color_graynew">#9B9B9B</color>
+    <color name="purple">#9334DE</color>
+    <color name="colorgreen">#18A900</color>
+    <color name="lightred">#BA3D4D</color>
+    <color name="redhth">#EB1C24</color>
+    <color name="yellowhth">#F8B710</color>
+    <color name="ludo_uni_actionbar">#6752E6</color>
+    <color name="luod_uni_dialog_bg">#E3DFF6</color>
+    <color name="newblack">#171111</color>
+    <color name="ludocoins">#786ACC</color>
+    <color name="ludounibutton">#553CEB</color>
+    <color name="home_black">#111010</color>
+    <color name="ka_word_search_toolbar">#FF1717</color>
+    <color name="ka_word_search_days_left">#820C0C</color>
+    <color name="ka_word_search_straight_line">#E7E7E7</color>
+    <color name="ka_word_search_toolbar_quizes">#FF4C4C</color>
+    <color name="ka_word_search_quizes_win">#535353</color>
+    <color name="quiz_shadow">#A94A6E</color>
+    <color name="rank_text_color">#4D4D4D</color>
+    <color name="game_text_color">#141D5A</color>
+    <color name="win_prize_text_color">#FFD74B</color>
+    <color name="droido_toolbar_color">#DE2424</color>
+    <color name="droido_toolbar_back_button_bg">#EE4646</color>
+    <color name="droido_bg">#1B1B1D</color>
+    <color name="partcipants_rv_bg_color">#393939</color>
+    <color name="prize_pool_bg_color">#DCBD1D</color>
+    <color name="lightbluecolor">#BFC3E3</color>
+    <color name="tab_bg_dashboard">#FF1717</color>
+    <color name="footer_red">#DA3A41</color>
+    <color name="tab_indicator_default_color">#B3FFFFFF</color>
+    <color name="clashxpoint_table_red">#AE1A1A</color>
+
+    <!--  Ludo Tournament  -->
+    <color name="ludotmt_purple">#6752E6</color>
+    <color name="ludotmt_brown">#AA4545</color>
+    <color name="ludotmt_text">#545454</color>
+    <color name="ludotmt_text_green">#49C100</color>
+    <color name="ludotmt_logo_green">#29A93C</color>
+    <color name="ludotmt_yellow">#EBBB14</color>
+
+    //new added
+    <color name="toolbar_gamer">#CA2236</color>
+    <color name="amount_color">#8A8A8A</color>
+    <color name="center_color">#F2EDED</color>
+    <color name="gamercash_color">#4CAF50</color>
+    <color name="droido_color_play_bg">#F6DB6F</color>
+</resources>

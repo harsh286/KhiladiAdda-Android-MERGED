@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/margin_10"
+    android:background="@drawable/roundborder_pink_red"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="@dimen/margin_3"
+            android:src="@mipmap/ic_launcher"
+            app:civ_border_color="@color/colorPrimaryDark"
+            app:civ_border_width="1dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="@color/colorPrimary"
+            app:civ_shadow_radius="5" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_toStartOf="@+id/btn_request"
+            android:layout_toEndOf="@+id/iv_profile"
+            android:maxLines="3"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_13" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:background="@drawable/bg_button"
+            android:padding="@dimen/padding_5"
+            android:text="@string/text_request_buddy"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_11"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="@string/text_events"
+                android:textColor="@color/light_gray" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Success Raid" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Success Tackle" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Raid Bonus" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Super Tackle" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Super Raid" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Super Ten Raid" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="High 5 Defend" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Playing Seven" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Substitue" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Unsuccess R" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Unsuccess T" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="All Out" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Green Card" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Yellow Card" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Red Card" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_2"
+            android:layout_marginEnd="@dimen/margin_2"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="@string/text_actual"
+                android:textColor="@color/light_gray" />
+
+            <TextView
+                android:id="@+id/tv_success_raid"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_success_tackle"
+                style="@style/TextViewPredictionPoints"
+
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_raid_bonus"
+                style="@style/TextViewPredictionPoints"
+
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_super_tackle"
+                style="@style/TextViewPredictionPoints"
+
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_super_raid"
+                style="@style/TextViewPredictionPoints"
+
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_super_ten_raid"
+                style="@style/TextViewPredictionPoints"
+                tools:text="dsds" />
+
+            <TextView
+                android:id="@+id/tv_high_five_defends"
+                style="@style/TextViewPredictionPoints"
+
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_playing_seven"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jkhbkjhg" />
+
+            <TextView
+                android:id="@+id/tv_substitue"
+                style="@style/TextViewPredictionPoints"
+
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_unsuccess_raid"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_unsuccess_tackle"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_opposition_all_out"
+                style="@style/TextViewPredictionPoints"
+
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_green_card"
+                style="@style/TextViewPredictionPoints"
+                android:layout_height="wrap_content"
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_yellow_card"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_red_card"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="@string/text_points"
+                android:textColor="@color/light_gray" />
+
+            <TextView
+                android:id="@+id/tv_success_raid_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_success_tackle_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_raid_bonus_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_super_tackle_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_super_raid_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_super_ten_raid_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_high_five_defends_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_playing_seven_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_substitue_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_unsuccess_raid_points"
+                style="@style/TextViewPredictionPoints" />
+
+
+            <TextView
+                android:id="@+id/tv_unsuccess_tackle_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_opposition_all_out_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_green_card_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_yellow_card_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_red_card_points"
+                style="@style/TextViewPredictionPoints" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

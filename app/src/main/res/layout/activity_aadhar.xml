@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/main_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/actionbar_transparent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_aadhar_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/margin_25"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginEnd="@dimen/margin_25"
+                android:textColor="@color/white"
+                android:text="@string/text_aadhar_hint"/>
+
+            <ImageView
+                android:id="@+id/iv_captcha"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/text_won"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/tv_new_captcha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/margin_25"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginEnd="@dimen/margin_25"
+                android:textColor="@color/white"
+                android:text="@string/text_new_captcha"/>
+
+            <EditText
+                android:id="@+id/et_captcha"
+                style="@style/CustomEditText"
+                android:layout_marginStart="@dimen/margin_25"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_25"
+                android:autofillHints="@string/s3"
+                android:hint="@string/hint_captcha"
+                android:maxLength="10"
+                android:inputType="textCapCharacters" />
+
+            <EditText
+                android:id="@+id/et_aadhaar_number"
+                style="@style/CustomEditText"
+                android:layout_marginStart="@dimen/margin_25"
+                android:layout_marginTop="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_25"
+                android:autofillHints="@string/s3"
+                android:hint="@string/hint_number_aadhar"
+                android:maxLength="16"
+                android:inputType="number" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_update_aadhar"
+                style="@style/ButtonLoginText"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_15"
+                android:layout_marginBottom="@dimen/margin_15"
+                android:text="@string/text_update" />
+
+            <TextView
+                android:id="@+id/tv_otp_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/txt_enter_otp_verify_aadhar"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_13" />
+
+            <LinearLayout
+                android:id="@+id/ll_otp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_5"
+                android:layout_marginStart="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_15"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_one"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_two"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_three"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_four"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_five"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_six"
+                    style="@style/OtpEditText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginStart="@dimen/margin_40"
+                android:layout_marginEnd="@dimen/margin_40"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_quiz_timer"
+                    tools:text="Waiting for OTP - 00:30s"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_13"
+                    android:layout_weight="1"
+                    android:gravity="start"/>
+
+                <TextView
+                    android:id="@+id/tv_resend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:gravity="end"
+                    android:text="@string/txt_resend_otp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_13" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_confirm_otp"
+                style="@style/ButtonLoginText"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginBottom="@dimen/margin_15"
+                android:text="@string/txt_submit" />
+
+            <TextView
+                android:id="@+id/tv_manual_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/margin_25"
+                android:layout_marginEnd="@dimen/margin_25"
+                android:visibility="gone"
+                android:text="@string/text_manual_aadhar_hint"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_11" />
+
+            <Button
+                android:id="@+id/btn_query"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/margin_25"
+                android:layout_marginEnd="@dimen/margin_25"
+                android:visibility="visible"
+                android:text="@string/text_manual_aadhar_hint"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_11" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_aadhar_manual"
+                style="@style/ButtonLoginText"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_5"
+                android:layout_marginBottom="@dimen/margin_15"
+                android:text="@string/txt_aadhar_manual" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

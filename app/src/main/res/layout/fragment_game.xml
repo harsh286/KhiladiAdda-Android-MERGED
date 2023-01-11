@@ -1,0 +1,267 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/home_black">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_5"
+                android:text="Games"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/iv_ludo"
+                    android:layout_width="300dp"
+                    android:layout_height="140dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:contentDescription="@string/menu_ludo"
+                    android:src="@drawable/ic_ludo" />
+
+                <ImageView
+                    android:id="@+id/iv_wordsearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="140dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:contentDescription="@string/menu_ludo"
+                    android:src="@drawable/dash_ws" />
+
+                <ImageView
+                    android:id="@+id/iv_droidd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="140dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:contentDescription="@string/menu_ludo"
+                    android:src="@drawable/dash_droid" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_ludo_universe"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_10"
+                android:contentDescription="@string/menu_ludo"
+                android:src="@drawable/dash_lu" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10"
+                android:text="Fantasy"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_120"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_clashx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:contentDescription="@string/room_id"
+                    android:src="@drawable/fantasy" />
+
+                <ImageView
+                    android:id="@+id/iv_fanbattle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:contentDescription="@string/room_id"
+                    android:src="@drawable/fanbattle_live" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10"
+                android:text="@string/text_esports"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/game_dashboard_height"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_freefire"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/text_free_fire"
+                    android:src="@drawable/ic_ff" />
+
+                <ImageView
+                    android:id="@+id/iv_bgmi"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/margin_2"
+                    android:layout_marginEnd="@dimen/margin_1"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/menu_ludo"
+                    android:src="@drawable/ic_bgmi" />
+
+                <ImageView
+                    android:id="@+id/iv_ff_max"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/margin_3"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/room_id"
+                    android:src="@drawable/freefire_max" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_ff_clash"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/room_id"
+                    android:src="@drawable/ff_clashs" />
+
+
+                <ImageView
+                    android:id="@+id/iv_tdm"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/room_id"
+                    android:src="@drawable/tdm" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_120"
+                android:layout_marginTop="@dimen/margin_8"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_pubg_gobal_lite"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/margin_10"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:contentDescription="@string/room_id"
+                    android:src="@drawable/pubg_gobal_lite" />
+
+                <ImageView
+                    android:id="@+id/iv_esportsperimum"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/margin_10"
+                    android:contentDescription="@string/room_id"
+                    android:src="@drawable/esports_per" />
+
+                <ImageView
+                    android:id="@+id/iv_ludotournament"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/margin_10"
+                    android:contentDescription="@string/room_id"
+                    android:src="@drawable/ludo_img" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_50"
+                    android:background="@drawable/top_khiladi_bg"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_top_khiladi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_15" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:contentDescription="@string/s3"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/top_khiladi" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/footer_home" />
+
+</RelativeLayout>

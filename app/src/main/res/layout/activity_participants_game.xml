@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1B1B1D">
+
+    <RelativeLayout
+        android:id="@+id/rl_top_rectangle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp">
+
+        <include
+            android:id="@+id/in_action_bar"
+            layout="@layout/new_toolbar_droido"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_live_leaderboard"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/rl_top_rectangle"
+        android:layout_marginTop="-10dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_live_leaderboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="List sorted by entry order of the participants."
+            android:fontFamily="@font/rowdies_regular"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_10">
+
+        </TextView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_live_leaderboard"
+        android:layout_marginTop="16dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_participant"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/games_participant_items" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/rowdies_regular"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="No participants avaliable Now."
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_16"
+        android:visibility="gone">
+
+    </TextView>
+</RelativeLayout>

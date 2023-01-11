@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/dialog_shape_version"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/orange_dark"
+        android:drawableEnd="@drawable/ic_update"
+        android:gravity="start|center_vertical"
+        android:padding="@dimen/padding_15"
+        android:text="@string/text_version_update"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_17" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_10">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/text_about_update"
+            android:textColor="@color/light_black" />
+
+        <TextView
+            android:id="@+id/tv_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="@string/text_version"
+            android:textColor="@color/orange_dark" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:padding="@dimen/padding_5"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/text_11"
+        android:textStyle="bold"
+        tools:text="@string/text_msg" />
+
+    <TextView
+        android:id="@+id/tv_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_8"
+        android:textColor="@color/blue_dark"
+        android:textSize="@dimen/text_11"
+        android:textStyle="bold"
+        tools:text="@string/text_downloading_progress" />
+
+    <ProgressBar
+        android:id="@+id/pb_apk_download"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginStart="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginEnd="@dimen/margin_20"
+        android:layout_marginBottom="@dimen/margin_15"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/quiz_progress_bar"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_update"
+        style="@style/DialogButton"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@color/colorPrimary"
+        android:text="@string/update_now" />
+
+    <TextView
+        android:id="@+id/tv_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="@dimen/padding_10"
+        android:text="@string/text_download_issue"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/text_9" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_update_website"
+        style="@style/DialogButton"
+        android:layout_marginBottom="@dimen/margin_15"
+        android:background="@color/colorPrimary"
+        android:text="@string/download_website" />
+
+</LinearLayout>

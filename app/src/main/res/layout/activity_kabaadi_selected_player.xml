@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/inner_bg"
+    android:orientation="vertical"
+    tools:context=".clashx2.main.activity.SelectedPlayers">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_50">
+
+        <View
+            android:id="@+id/team_background"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@drawable/ic_overlayteam_kabaddi" />
+
+        <TextView
+            android:id="@+id/tv_battleid"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/team_background"
+            android:background="@color/white"
+            android:fontFamily="@font/productsansregular"
+            android:gravity="center"
+            android:text="Battle ID: 3TG56G4S9"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/tv_battleid"
+            android:background="@color/redhth" />
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
+            android:contentDescription="@string/s3"
+            android:padding="@dimen/padding_5"
+            android:src="@drawable/ic_arrow_back_white" />
+
+        <LinearLayout
+            android:id="@+id/ll_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_back"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_one"
+                    android:layout_width="@dimen/image_width"
+                    android:layout_height="@dimen/image_height"
+                    android:contentDescription="@string/team_code"
+                    android:src="@drawable/clashx" />
+
+                <TextView
+                    android:id="@+id/tv_team_one"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_3"
+                    android:text="Khiladi Adda"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_10"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_date"
+                style="@style/MatchDetailsFontTextHTH"
+                android:text="@string/text_vs"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_two"
+                    android:layout_width="@dimen/image_width"
+                    android:layout_height="@dimen/image_height"
+                    android:contentDescription="@string/team_code"
+                    android:src="@drawable/clashx" />
+
+                <TextView
+                    android:id="@+id/tv_team_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_3"
+                    android:text="Gamerpe"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_10"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tv_battleid"
+            android:layout_alignParentBottom="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_50">
+
+                <include
+                    android:id="@+id/editable"
+                    layout="@layout/items_of_kabaadi_selected_players"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_18"
+                    android:layout_marginTop="@dimen/margin_25"
+                    android:layout_marginEnd="@dimen/margin_18"
+                    android:layout_marginBottom="@dimen/margin_10" />
+
+                <include
+                    android:id="@+id/notedit"
+                    layout="@layout/items_of_kabaadi_opponent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/editable"
+                    android:layout_marginStart="@dimen/margin_18"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginEnd="@dimen/margin_18"
+                    android:layout_marginBottom="@dimen/margin_10" />
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/margin_20"
+        android:background="#EC223A"
+        android:gravity="center"
+        android:text="@string/cancel_battle"
+        android:textColor="@color/white" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_accept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/margin_20"
+        android:background="#EC223A"
+        android:text="@string/join_battle"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
+</RelativeLayout>

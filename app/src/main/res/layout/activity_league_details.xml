@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profile.ProfileActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="165dp"
+            android:background="@drawable/ff_banner"
+            android:contentDescription="@string/text_pubg" />
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:contentDescription="@string/s3"
+            android:padding="@dimen/padding_5"
+            android:src="@drawable/ic_arrow_back_white" />
+
+        <ImageView
+            android:id="@+id/iv_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:contentDescription="@string/menu_notification"
+            android:padding="@dimen/padding_5"
+            android:src="@drawable/ic_notifications_black_24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_how_join"
+                style="@style/ButtonGrey"
+                android:layout_weight="1"
+                android:background="@color/color_yellow"
+                android:text="@string/text_how_join"
+                android:textColor="@color/blue_dark"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/tv_rules"
+                style="@style/ButtonGrey"
+                android:layout_weight="1"
+                android:text="@string/text_rules_how_to_play" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_below="@+id/rl_image"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/inner_bg"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_quiz_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/padding_5"
+                android:text="@string/text_trending_quizzes"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/text_17" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_5"
+                android:gravity="center"
+                android:text="@string/title_home"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/text_17" />
+
+            <include layout="@layout/view_line_gray" />
+
+            <include layout="@layout/entry_prize_participant" />
+
+            <include layout="@layout/view_line_gray" />
+
+            <include
+                android:id="@+id/ll_length_level_loss"
+                layout="@layout/length_level_loss"
+                android:visibility="gone" />
+
+            <include layout="@layout/view_line_gray" />
+
+            <include layout="@layout/league_map_mode" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:background="@color/light_red_white" />
+
+            <include layout="@layout/prize_pool_breakup" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/footer_league" />
+
+</RelativeLayout>

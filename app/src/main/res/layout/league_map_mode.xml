@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_kill_point"
+        style="@style/TextWeightGravity"
+        android:text="@string/help_drawable_kill_point"
+        android:textColor="@color/button_green" />
+
+    <include layout="@layout/view_line_gray_vertical" />
+
+    <TextView
+        android:id="@+id/tv_mode"
+        style="@style/TextWeightGravity"
+        android:text="@string/text_tppmode" />
+
+    <include layout="@layout/view_line_gray_vertical" />
+
+    <TextView
+        android:id="@+id/tv_bonus"
+        style="@style/TextWeightGravity"
+        android:text="@string/text_bonus"
+        android:textColor="@color/orange_dark" />
+
+    <include layout="@layout/view_line_gray_vertical" />
+
+    <TextView
+        android:id="@+id/tv_map"
+        style="@style/TextWeightGravity"
+        android:text="@string/help_drawable_map" />
+
+</LinearLayout>

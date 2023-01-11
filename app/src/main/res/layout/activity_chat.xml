@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".chat.ChatActivity">
+
+    <include layout="@layout/actionbar_chat" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_chat"
+        style="@style/BaseRecyclerview"
+        android:layout_above="@+id/rl_chat"
+        android:layout_below="@+id/action_bar"
+        android:layout_marginBottom="@dimen/margin_10" />
+
+    <RelativeLayout
+        android:id="@+id/rl_chat"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible">
+
+        <EditText
+            android:id="@+id/et_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@+id/ib_send"
+            android:autofillHints="@string/text_type_message"
+            android:background="@drawable/border_red_black"
+            android:hint="@string/text_type_message"
+            android:inputType="text"
+            android:maxLength="20"
+            android:paddingStart="@dimen/padding_10"
+            android:paddingEnd="0dp"
+            android:digits=" ABCDEFGHIJKLMOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "
+            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/colorBlack"
+            android:textSize="@dimen/text_17" />
+
+        <ImageButton
+            android:id="@+id/ib_send"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="@color/colorPrimary"
+            android:contentDescription="@string/send_otp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_menu_send"
+            android:tint="@color/white" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

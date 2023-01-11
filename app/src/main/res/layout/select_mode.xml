@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="@dimen/margin_5"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_marginStart="@dimen/margin_15"
+    android:layout_marginEnd="@dimen/margin_15"
+    android:layout_height="match_parent">
+
+        <TextView
+            style="@style/ButtonGreyRedCoin"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:text="@string/text_classic" />
+        <TextView
+            style="@style/ButtonGreyRedCoin"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:text="@string/text_popular" />
+</LinearLayout>

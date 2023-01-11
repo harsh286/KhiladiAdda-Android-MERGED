@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "878751439202",
+    "firebase_url": "https://khiladiaddaapp-1563520429908.firebaseio.com",
+    "project_id": "khiladiaddaapp-1563520429908",
+    "storage_bucket": "khiladiaddaapp-1563520429908.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878751439202:android:b5876560d287a0672f343b",
+        "android_client_info": {
+          "package_name": "com.khiladiadda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "878751439202-qekrchhuglda2snepir94pn6gk0smddo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.khiladiadda",
+            "certificate_hash": "b8a41a29bb771bd4eff6db45f9207382120be28d"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWNaajFjylIX6xRCnhc8X2c9e5DTeoxus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "878751439202-urccqmf4mvn74g4d3u85ceqbok7ktr1k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

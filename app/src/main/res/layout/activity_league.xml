@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/inner_bg"
+    android:orientation="vertical"
+    tools:context=".profile.ProfileActivity">
+
+    <include layout="@layout/footer_white" />
+
+    <RelativeLayout
+        android:id="@+id/rl_image"
+        android:layout_below="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_advertisement"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_alignParentTop="true" />
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="165dp"
+            android:visibility="gone"
+            android:contentDescription="@string/text_pubg" />
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
+            android:contentDescription="@string/s3"
+            android:padding="@dimen/padding_5"
+            android:src="@drawable/ic_arrow_back_white" />
+
+        <ImageView
+            android:id="@+id/iv_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:contentDescription="@string/menu_notification"
+            android:padding="@dimen/padding_5"
+            android:src="@drawable/ic_notifications_black_24dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_below="@+id/rl_image"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_25"
+            android:layout_marginEnd="@dimen/margin_25"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_10"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/btn_solo"
+                style="@style/ButtonGreySelected"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_weight="1"
+                android:text="@string/text_solo" />
+
+            <TextView
+                android:id="@+id/btn_duo"
+                style="@style/ButtonGreySelected"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_weight="1"
+                android:text="@string/text_duo" />
+
+            <TextView
+                android:id="@+id/btn_squad"
+                style="@style/ButtonGreySelected"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_weight="1"
+                android:text="@string/text_squad" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_league"
+            style="@style/BaseRecyclerview"
+            android:layout_below="@+id/ll_first" />
+
+        <TextView
+            android:id="@+id/tv_no_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/margin_30"
+            android:layout_marginEnd="@dimen/margin_30"
+            android:gravity="center"
+            android:text="@string/text_creating_league"
+            android:textColor="@color/lighter_black"
+            android:textSize="@dimen/text_11" />
+    </RelativeLayout>
+
+</RelativeLayout>

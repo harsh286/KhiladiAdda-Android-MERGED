@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/margin_10"
+    android:background="@drawable/roundborder_pink_red"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="@dimen/margin_3"
+            android:src="@mipmap/ic_launcher"
+            app:civ_border_color="@color/colorPrimaryDark"
+            app:civ_border_width="1dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="@color/colorPrimary"
+            app:civ_shadow_radius="5" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_toStartOf="@+id/btn_request"
+            android:layout_toEndOf="@+id/iv_profile"
+            android:maxLines="3"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_13" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:background="@drawable/bg_button"
+            android:padding="@dimen/padding_5"
+            android:text="@string/text_request_buddy"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_11"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="@string/text_events"
+                android:textColor="@color/light_gray" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/margin_8"
+                android:text="@string/attack"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_11"
+                android:textStyle="bold" />
+
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Goal Scored" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Assist" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:maxLines="1"
+                android:text=" For Every 5 Passes Completed" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Tackle Won" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/margin_8"
+                android:text="@string/defense"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_11"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:maxLines="1"
+                android:text="Interception Won" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:maxLines="1"
+                android:text="Saves by Goalkeeper" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Penalty Saved" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="@integer/int_1"
+                android:padding="@dimen/margin_8"
+                android:text="@string/bonus_pts"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_11"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:maxLines="1"
+                android:text="Super 60” (Played more than 60 min.)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="@integer/int_1"
+                android:padding="@dimen/margin_8"
+                android:text="@string/penalties"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_11"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Yellow Card" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Red Card" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="Own Goal" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_2"
+            android:layout_marginEnd="@dimen/margin_2"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="@string/text_actual"
+                android:textColor="@color/light_gray" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:fontFamily="@font/productsansregular"-->
+            <!--                android:gravity="center"-->
+            <!--                android:padding="@dimen/margin_8"-->
+            <!--                android:text=""-->
+            <!--                android:textAllCaps="false"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="@dimen/text_14"-->
+            <!--                android:textStyle="bold" />-->
+
+
+            <TextView
+                android:id="@+id/tv_goal_scored"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_assists"
+                style="@style/TextViewPredictionPoints"
+
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_for_every_5_passes_completed"
+                style="@style/TextViewPredictionPoints"
+
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_tackle_won"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:fontFamily="@font/productsansregular"-->
+            <!--                android:gravity="center"-->
+            <!--                android:padding="@dimen/margin_8"-->
+            <!--                android:text="gfhjkgfh"-->
+            <!--                android:textAllCaps="false"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="@dimen/text_14"-->
+            <!--                android:textStyle="bold" />-->
+
+            <TextView
+                android:id="@+id/tv_interception_won"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_saves_by_goalkeeper"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_penalty_saved"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/productsansregular"
+                android:gravity="center"
+                android:padding="@dimen/margin_8"
+                android:text=""
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_14"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_super_60"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jkhbkjhg" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                tools:text="jkhbkjhg" />
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:fontFamily="@font/productsansregular"-->
+            <!--                android:gravity="center"-->
+            <!--                android:maxLines="@integer/int_1"-->
+            <!--                android:padding="@dimen/margin_8"-->
+            <!--                android:text=""-->
+            <!--                android:textAllCaps="false"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="@dimen/text_14"-->
+            <!--                android:textStyle="bold" />-->
+
+            <TextView
+                android:id="@+id/tv_yellow_card_score"
+                style="@style/TextViewPredictionPoints"
+
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_red_card_score"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+
+            <TextView
+                android:id="@+id/tv_own_goal_score"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
+                android:text="@string/text_points"
+                android:textColor="@color/light_gray" />
+
+
+            <TextView style="@style/TextViewPredictionPoints" />
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:fontFamily="@font/productsansregular"-->
+            <!--                android:gravity="center"-->
+            <!--                android:padding="@dimen/margin_8"-->
+            <!--                android:text=""-->
+            <!--                android:textAllCaps="false"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="@dimen/text_14"-->
+            <!--                android:textStyle="bold" />-->
+
+            <TextView
+                android:id="@+id/tv_goal_scored_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_assists_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_for_every_5_passes_completed_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_tackle_won_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView style="@style/TextViewPredictionPoints" />
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:fontFamily="@font/productsansregular"-->
+            <!--                android:gravity="center"-->
+            <!--                android:padding="@dimen/margin_8"-->
+            <!--                android:text=""-->
+            <!--                android:textAllCaps="false"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="@dimen/text_14"-->
+            <!--                android:textStyle="bold" />-->
+
+            <TextView
+                android:id="@+id/tv_interception_won_points"
+                style="@style/TextViewPredictionPoints" />
+
+
+            <TextView
+                android:id="@+id/tv_saves_by_goalkeeper_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_penalty_saved_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView style="@style/TextViewPredictionPoints" />
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:fontFamily="@font/productsansregular"-->
+            <!--                android:gravity="center"-->
+            <!--                android:padding="@dimen/margin_8"-->
+            <!--                android:text=""-->
+            <!--                android:textAllCaps="false"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="@dimen/text_14"-->
+            <!--                android:textStyle="bold" />-->
+
+            <TextView
+                android:id="@+id/tv_super_60_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView style="@style/TextViewPredictionPoints" />
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:fontFamily="@font/productsansregular"-->
+            <!--                android:gravity="center"-->
+            <!--                android:maxLines="@integer/int_1"-->
+            <!--                android:padding="@dimen/margin_8"-->
+            <!--                android:text=""-->
+            <!--                android:textAllCaps="false"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="@dimen/text_14"-->
+            <!--                android:textStyle="bold" />-->
+
+            <TextView
+                android:id="@+id/tv_yellow_card_football_points"
+                style="@style/TextViewPredictionPoints" />
+
+            <TextView
+                android:id="@+id/tv_red_card_football_points"
+                style="@style/TextViewPredictionPoints" />
+
+
+            <TextView
+                android:id="@+id/tv_own_goal_score_points"
+                style="@style/TextViewPredictionPoints" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

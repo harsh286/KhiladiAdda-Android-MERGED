@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="360dp"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/dialog_shape_version">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EB1C24"
+        android:gravity="center"
+        android:padding="@dimen/padding_15"
+        android:text="@string/update"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/dimen_18sp" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_80"
+        android:contentDescription="@string/s3"
+        android:padding="@dimen/padding_15"
+        android:src="@drawable/ic_vector_white" />
+
+
+    <TextView
+        android:id="@+id/updatemsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_15"
+        android:gravity="center"
+        android:text="@string/newpaytmwarning"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimen_18sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/updatemsg"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="#DFDFDF" />
+
+
+    <TextView
+        android:id="@+id/website_btn1"
+        android:layout_width="200dp"
+        android:layout_height="@dimen/margin_50"
+        android:layout_below="@id/view"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/margin_10"
+        android:background="@drawable/live_btn_bg_selected"
+        android:gravity="center"
+        android:text="@string/how_to_get_paytm_upi_id"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/website_btn2"
+        android:layout_width="200dp"
+        android:layout_height="@dimen/margin_50"
+        android:layout_below="@id/website_btn1"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/margin_5"
+        android:background="@drawable/live_btn_bg_selected"
+        android:gravity="center"
+        android:text="@string/how_to_setup_paytm_upi"
+        android:textColor="@color/white" />
+
+
+    <TextView
+        android:id="@+id/dismiss"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#49C100"
+        android:gravity="center"
+        android:padding="@dimen/padding_15"
+        android:text="@string/ok"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/dimen_18sp"
+
+        />
+
+
+</RelativeLayout>

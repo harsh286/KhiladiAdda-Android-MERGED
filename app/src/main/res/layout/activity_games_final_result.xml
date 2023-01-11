@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <include
+        android:id="@+id/in_action_bar"
+        layout="@layout/new_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_60"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_mainscreen_bg_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/in_action_bar">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.1"
+            android:scaleType="fitXY"
+            android:src="@drawable/droid_bg_img" />
+
+
+        <TextView
+            android:id="@+id/tv_ranktxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rowdies_regular"
+            android:text="Your Rank"
+            android:textColor="#ffffff"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_highscore" />
+
+        <TextView
+            android:id="@+id/tv_high_score_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:fontFamily="@font/rowdies_regular"
+            android:text="Your High Score"
+            android:textColor="#ffffff"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_highscore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rowdies_regular"
+            android:textColor="#ffffff"
+            android:textSize="48sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_high_score_txt"
+            app:layout_constraintStart_toStartOf="@+id/tv_high_score_txt"
+            app:layout_constraintTop_toBottomOf="@+id/tv_high_score_txt" />
+
+        <TextView
+            android:id="@+id/tv_games_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rowdies_regular"
+            android:textColor="#ffffff"
+            android:textSize="40sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ranktxt" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_mainscreen_bg_gradient">
+
+
+        <TextView
+            android:id="@+id/tv_scoretxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rowdies_regular"
+            android:text="@string/current_score"
+            android:textColor="@color/prize_pool_bg_color"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_timetaketxt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_games_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/rowdies_regular"
+            android:textColor="@color/white"
+            android:textSize="48sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_scoretxt"
+            app:layout_constraintStart_toStartOf="@+id/tv_scoretxt"
+            app:layout_constraintTop_toBottomOf="@+id/tv_scoretxt" />
+
+        <TextView
+            android:id="@+id/tv_timetaketxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="56dp"
+            android:fontFamily="@font/rowdies_regular"
+            android:text="@string/time_taken"
+            android:textColor="@color/prize_pool_bg_color"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_games_score" />
+
+        <TextView
+            android:id="@+id/tv_games_timetaken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:fontFamily="@font/rowdies_regular"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_timetaketxt"
+            app:layout_constraintStart_toStartOf="@+id/tv_timetaketxt"
+            app:layout_constraintTop_toBottomOf="@+id/tv_timetaketxt" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/foolpati"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/in_action_bar" />
+</androidx.constraintlayout.widget.ConstraintLayout>

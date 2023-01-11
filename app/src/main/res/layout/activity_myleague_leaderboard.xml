@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".leaderboard.NewLeaderboardActivity">
+
+    <include layout="@layout/actionbar_white" />
+
+    <RelativeLayout
+        android:id="@+id/rl_champion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:padding="@dimen/padding_10">
+
+        <ImageView
+            android:id="@+id/iv_cup"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/s3"
+            android:src="@drawable/bonus_trophy" />
+
+        <TextView
+            android:id="@+id/tv_champ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_toEndOf="@+id/iv_cup"
+            android:gravity="center"
+            android:text="@string/text_champions"
+            android:textColor="@android:color/holo_orange_light"
+            android:textSize="@dimen/text_24"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_champ"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_toEndOf="@+id/iv_cup"
+            android:gravity="center"
+            android:text="@string/text_adda"
+            android:textColor="@android:color/holo_orange_light"
+            android:textSize="@dimen/text_27" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_leaderboard"
+        style="@style/BaseRecyclerview"
+        android:layout_below="@+id/rl_champion" />
+
+    <TextView
+        android:id="@+id/tv_no_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/margin_30"
+        android:layout_marginEnd="@dimen/margin_30"
+        android:gravity="center"
+        android:text="@string/text_no_game_played"
+        android:textColor="@color/lighter_black"
+        android:textSize="@dimen/text_11"
+        android:visibility="gone" />
+
+</RelativeLayout>

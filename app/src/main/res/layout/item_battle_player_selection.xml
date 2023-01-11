@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_top"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_5"
+    android:layout_marginEnd="@dimen/margin_5"
+    android:elevation="@dimen/card_elevation_5"
+    app:cardCornerRadius="@dimen/margin_10"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:id="@+id/rl_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_10">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_profile"
+            style="@style/BattleTeamImageHTH"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:textSize="@dimen/text_10"
+            android:layout_toStartOf="@+id/btn_play"
+            android:layout_toEndOf="@id/iv_profile"
+            android:textColor="@color/black" />
+
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_toStartOf="@+id/btn_play"
+            android:layout_toEndOf="@id/iv_profile"
+            android:textColor="#9B9B9B"
+            android:textSize="@dimen/text_11"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/ll_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iv_profile"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_playerrole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:paddingLeft="@dimen/dimen_4dp"
+                android:paddingRight="@dimen/dimen_4dp"
+                android:textColor="#00A79D"
+                android:textSize="@dimen/text_11" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_team_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_toStartOf="@+id/btn_play"
+            android:layout_toEndOf="@id/iv_profile"
+            android:textAllCaps="true"
+            android:textColor="@color/battle_red"
+            android:textSize="@dimen/text_10" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_play"
+            style="@style/ButtonBattleSelectPlayHth"
+            android:layout_alignParentEnd="true"
+            android:gravity="center" />
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

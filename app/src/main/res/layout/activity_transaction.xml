@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    tools:context=".withdrawcoins.WithdrawActivity">
+
+    <include layout="@layout/actionbar_transparent" />
+
+    <TextView
+        android:id="@+id/tv_wining_cash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar"
+        android:layout_marginStart="@dimen/margin_30"
+        android:text="@string/text_wining_cash"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_20" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_wining_cash"
+        android:layout_above="@+id/btn_view_manual_history"
+        android:layout_marginTop="@dimen/margin_25"
+        android:background="@color/colorWhite"
+        android:padding="@dimen/padding_5">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_transaction"
+            style="@style/BaseRecyclerview"
+            android:elevation="@dimen/card_elevation_5" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_withdraw"
+            style="@style/BaseRecyclerview"
+            android:elevation="@dimen/card_elevation_5"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_no_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/margin_30"
+        android:layout_marginEnd="@dimen/margin_30"
+        android:gravity="center"
+        android:text="@string/text_no_transaction"
+        android:textColor="@color/lighter_black"
+        android:textSize="@dimen/text_11"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_view_manual_history"
+        style="@style/ButtonBottomLast"
+        android:layout_alignParentBottom="true"
+        android:text="@string/text_manual_withdraw_history" />
+
+</RelativeLayout>

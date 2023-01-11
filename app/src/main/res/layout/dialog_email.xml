@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/margin_30"
+        android:layout_marginTop="@dimen/margin_30"
+        android:layout_marginEnd="@dimen/margin_30"
+        android:layout_marginBottom="@dimen/margin_30"
+        android:background="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_10">
+
+            <TextView
+                android:id="@+id/tv_dialog_name"
+                style="@style/DialogHeadText"
+                android:text="@string/text_update_email"
+                android:textColor="@color/colorWhite" />
+
+            <ImageView
+                android:layout_width="@dimen/margin_30"
+                android:layout_height="@dimen/margin_30"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/ic_baseline_cancel" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorWhite" />
+
+        <LinearLayout
+            android:id="@+id/ll_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_15"
+                android:fontFamily="@font/montserrat"
+                android:padding="@dimen/padding_10"
+                android:text="@string/txt_email_help"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_14sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_50"
+                android:layout_marginStart="@dimen/margin_15"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_15"
+                android:background="@drawable/textview_background_white"
+                android:drawableStart="@drawable/ic_phone"
+                android:drawablePadding="@dimen/margin_10"
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:padding="@dimen/margin_10"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="@dimen/text_15" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_send_otp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:layout_marginBottom="@dimen/margin_20"
+                android:background="@drawable/whitebutton"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/text_send_otp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_otp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_enterotp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/txt_enter_otp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_11"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/padding_5"
+                android:text="@string/hint_email"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_13" />
+
+            <LinearLayout
+                android:id="@+id/ll_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_15"
+                android:layout_marginTop="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_15"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_one"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_two"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_three"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_four"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_five"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_six"
+                    style="@style/OtpEditText" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_verify"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/whitebutton"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/txt_verify_otp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_otphtrec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/haven_t_received_otp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_11" />
+
+            <TextView
+                android:id="@+id/tv_resend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:layout_marginBottom="@dimen/margin_20"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/text_resend_otp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

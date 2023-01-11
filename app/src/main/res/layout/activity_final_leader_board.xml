@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wssplash"
+    tools:context=".wordsearch.activity.FinalLeaderBoardActivity">
+
+    <include
+        android:id="@+id/inc_toolbar"
+        layout="@layout/toolbar_word_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_top_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inc_toolbar">
+
+        <View
+            android:id="@+id/divider10"
+            android:layout_width="409dp"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="@+id/mcv_first_rank"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mcv_first_rank" />
+
+        <!--   1st     -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_first_rank"
+            android:layout_width="102dp"
+            android:layout_height="102dp"
+            app:cardCornerRadius="360dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="#FF1717"
+            app:strokeWidth="3dp">
+
+            <ImageView
+                android:id="@+id/iv_first_pic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView12"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            app:cardBackgroundColor="#FF1717"
+            app:cardCornerRadius="360dp"
+            app:layout_constraintBottom_toBottomOf="@+id/mcv_first_rank"
+            app:layout_constraintEnd_toEndOf="@+id/mcv_first_rank"
+            app:layout_constraintStart_toStartOf="@+id/mcv_first_rank"
+            app:layout_constraintTop_toBottomOf="@+id/mcv_first_rank">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/productsansregular"
+                android:text="1st"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tv_first_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/productsansregular"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_10"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/mcv_first_rank"
+            app:layout_constraintStart_toStartOf="@+id/mcv_first_rank"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView12"
+            tools:text="Name" />
+
+        <TextView
+            android:id="@+id/tv_first_won"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/productsansregular"
+            android:textColor="#939393"
+            android:textSize="@dimen/text_10"
+            app:layout_constraintEnd_toEndOf="@+id/tv_first_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_first_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_first_name"
+            tools:text="Won" />
+
+        <TextView
+            android:id="@+id/tv_first_best_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/productsansregular"
+            android:textColor="#939393"
+            android:textSize="@dimen/text_10"
+            app:layout_constraintEnd_toEndOf="@+id/tv_first_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_first_won"
+            app:layout_constraintTop_toBottomOf="@+id/tv_first_won"
+            tools:text="Best Time:" />
+
+
+        <TextView
+            android:id="@+id/tv_first_word_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/productsansregular"
+            android:textColor="#939393"
+            android:textSize="@dimen/text_10"
+            app:layout_constraintEnd_toEndOf="@+id/tv_first_best_time"
+            app:layout_constraintStart_toStartOf="@+id/tv_first_best_time"
+            app:layout_constraintTop_toBottomOf="@+id/tv_first_best_time"
+            tools:text="Word Count:" />
+
+        <!--   2nd     -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_second_rank"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:cardCornerRadius="360dp"
+            app:layout_constraintEnd_toStartOf="@+id/mcv_first_rank"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider10"
+            app:strokeColor="#9F6B2D"
+            app:strokeWidth="3dp">
+
+            <ImageView
+                android:id="@+id/iv_second_pic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView19"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:cardBackgroundColor="#9F6B2D"
+            app:cardCornerRadius="360dp"
+            app:layout_constraintBottom_toBottomOf="@+id/mcv_second_rank"
+            app:layout_constraintEnd_toEndOf="@+id/mcv_second_rank"
+            app:layout_constraintStart_toStartOf="@+id/mcv_second_rank"
+            app:layout_constraintTop_toBottomOf="@+id/mcv_second_rank">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/productsansregular"
+                android:text="2nd"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <TextView
+            android:id="@+id/tv_second_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/productsansregular"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_10"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/mcv_second_rank"
+            app:layout_constraintStart_toStartOf="@+id/mcv_second_rank"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView19"
+            tools:text="Name" />
+
+        <TextView
+            android:id="@+id/tv_second_won"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/productsansregular"
+            android:textColor="#939393"
+            android:textSize="@dimen/text_10"
+            app:layout_constraintEnd_toEndOf="@+id/tv_second_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_second_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_second_name"
+            tools:text="Won" />
+
+        <TextView
+            android:id="@+id/tv_second_best_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/productsansregular"
+            android:textColor="#939393"
+            android:textSize="@dimen/text_10"
+            app:layout_constraintEnd_toEndOf="@+id/tv_second_won"
+            app:layout_constraintStart_toStartOf="@+id/tv_second_won"
+            app:layout_constraintTop_toBottomOf="@+id/tv_second_won"
+            tools:text="Best Time:" />
+        <TextView
+            android:id="@+id/tv_second_word_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/productsansregular"
+            android:textColor="#939393"
+            android:textSize="@dimen/text_10"
+            app:layout_constraintEnd_toEndOf="@+id/tv_second_best_time"
+            app:layout_constraintStart_toStartOf="@+id/tv_second_best_time"
+            app:layout_constraintTop_toBottomOf="@+id/tv_second_best_time"
+            tools:text="Word Count:" />
+        <!--   3rd     -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_third_rank"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:cardCornerRadius="360dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/mcv_first_rank"
+            app:layout_constraintTop_toBottomOf="@+id/divider10"
+            app:strokeColor="#FF7817"
+            app:strokeWidth="3dp">
+
+            <ImageView
+                android:id="@+id/iv_third_pic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView18"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:cardBackgroundColor="#FF7817"
+            app:cardCornerRadius="360dp"
+            app:layout_constraintBottom_toBottomOf="@+id/mcv_third_rank"
+            app:layout_constraintEnd_toEndOf="@+id/mcv_third_rank"
+            app:layout_constraintStart_toStartOf="@+id/mcv_third_rank"
+            app:layout_constraintTop_toBottomOf="@+id/mcv_third_rank">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/productsansregular"
+                android:text="3rd"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <TextView
+            android:id="@+id/tv_third_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/productsansregular"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_10"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/mcv_third_rank"
+            app:layout_constraintStart_toStartOf="@+id/mcv_third_rank"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView18"
+            tools:text="Name" />
+
+        <TextView
+            android:id="@+id/tv_third_won"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/productsansregular"
+            android:textColor="#939393"
+            android:textSize="@dimen/text_10"
+            app:layout_constraintEnd_toEndOf="@+id/tv_third_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_third_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_third_name"
+            tools:text="Won" />
+
+        <TextView
+            android:id="@+id/tv_third_best_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/productsansregular"
+            android:textColor="#939393"
+            android:textSize="@dimen/text_10"
+            app:layout_constraintEnd_toEndOf="@+id/tv_third_won"
+            app:layout_constraintStart_toStartOf="@+id/tv_third_won"
+            app:layout_constraintTop_toBottomOf="@+id/tv_third_won"
+            tools:text="Best Time:" />
+        <TextView
+            android:id="@+id/tv_third_word_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/productsansregular"
+            android:textColor="#939393"
+            android:textSize="@dimen/text_10"
+            app:layout_constraintEnd_toEndOf="@+id/tv_third_best_time"
+            app:layout_constraintStart_toStartOf="@+id/tv_third_best_time"
+            app:layout_constraintTop_toBottomOf="@+id/tv_third_best_time"
+            tools:text="Word Count:" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_leaderboard"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_top_main"
+        tools:listitem="@layout/items_of_leaderboard_wordsearch" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

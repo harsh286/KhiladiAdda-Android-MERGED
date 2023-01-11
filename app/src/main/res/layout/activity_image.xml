@@ -1,0 +1,28 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.khiladiadda.utility.TouchImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom|left" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/ib_exit"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="top|right"
+        android:layout_margin="@dimen/margin_10"
+        android:background="@drawable/ic_close"
+        android:backgroundTint="@color/colorWhite"
+        android:contentDescription="@string/press_again_exit" />
+
+</FrameLayout>

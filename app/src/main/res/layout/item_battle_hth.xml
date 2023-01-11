@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_5"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+
+        <LinearLayout
+            android:id="@+id/ll_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/margin_10"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_one"
+                android:layout_width="@dimen/image_width"
+                android:layout_height="@dimen/image_height" />
+
+            <TextView
+                android:id="@+id/tv_team_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/productsansregular"
+                android:gravity="center"
+                android:padding="@dimen/padding_3"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_10"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_two"
+                android:layout_width="@dimen/image_width"
+                android:layout_height="@dimen/image_height"
+                android:contentDescription="@string/team_code" />
+
+            <TextView
+                android:id="@+id/tv_team_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/productsansregular"
+                android:gravity="center"
+                android:padding="@dimen/padding_3"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_10"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/vs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_id"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_5"
+            android:fontFamily="@font/productsansregular"
+            android:text="@string/text_vs"
+            android:textColor="#ACACAC" />
+
+        <TextView
+            android:id="@+id/tv_id"
+            android:layout_width="@dimen/margin_80"
+            android:layout_height="@dimen/margin_25"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_20"
+            android:layout_toEndOf="@id/ll_one"
+            android:background="@drawable/green_background"
+            android:backgroundTint="#FFBD12"
+            android:fontFamily="@font/productsansregular"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_10" />
+
+        <LinearLayout
+            android:id="@+id/ll_coins"
+            android:layout_width="@dimen/dimen_85dp"
+            android:layout_height="@dimen/margin_25"
+            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:layout_toStartOf="@id/ll_two"
+            android:background="@drawable/green_background"
+            android:backgroundTint="#4869DF"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_entry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/margin_5"
+                android:fontFamily="@font/productsansregular"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_10"
+                app:drawableStartCompat="@drawable/ic_entryicon" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_win"
+            android:layout_width="@dimen/margin_100"
+            android:layout_height="@dimen/margin_25"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:background="@drawable/green_background"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_win"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/margin_5"
+                android:fontFamily="@font/productsansregular"
+                android:textColor="@color/white"
+                app:drawableStartCompat="@drawable/ic_trophy_hth" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_accept"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_25"
+        android:layout_below="@id/main"
+        android:background="#49C100"
+        android:gravity="center"
+        android:text="@string/text_accept"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_12" />
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_25"
+        android:background="#C10017"
+        android:gravity="center"
+        android:text="@string/text_cancel"
+        android:layout_below="@id/main"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_12"
+        android:visibility="gone" />
+
+</RelativeLayout>

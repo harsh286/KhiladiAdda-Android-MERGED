@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DialogLinearLayout">
+
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/padding_10"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_15"
+        android:textStyle="bold"
+        tools:text="@string/text_msg" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_video"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/margin_8"
+        android:background="@color/color_yellow"
+        android:drawableTop="@drawable/ic_video"
+        android:drawableTint="@color/blue_dark"
+        android:gravity="center"
+        android:padding="@dimen/padding_8"
+        android:text="@string/text_play_video"
+        android:textColor="@color/blue_dark"
+        android:textSize="@dimen/text_13" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_10">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_ok"
+            android:layout_width="0dp"
+            android:layout_height="53dp"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:layout_weight="1"
+            android:background="@color/blue_dark"
+            android:gravity="center"
+            android:text="@string/later"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_11" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_no"
+            android:layout_width="0dp"
+            android:layout_height="53dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="@string/text_dont_ask_again"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_11" />
+    </LinearLayout>
+
+</LinearLayout>

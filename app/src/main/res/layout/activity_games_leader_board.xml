@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/games_leaderboard_bg">
+
+    <RelativeLayout
+        android:id="@+id/rl_top_rectangle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp">
+
+        <include
+            android:id="@+id/in_action_bar"
+            layout="@layout/new_toolbar_droido"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_live_leaderboard"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_below="@+id/rl_top_rectangle"
+        android:background="@color/rank_text_color"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_live_leaderboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/rowdies_regular"
+            android:gravity="center"
+            android:maxLines="3"
+            android:text="@string/this_is_live_leaderboard_result_is_not_announced_yet"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_12"
+            android:visibility="visible">
+
+        </TextView>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_totla_question"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_below="@+id/rl_live_leaderboard"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/margin_8"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_user_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/rowdies_regular"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_20"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_toEndOf="@+id/tv_user_rank"
+                android:fontFamily="@font/rowdies_regular"
+                android:text="You"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_user_rank"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+
+            <TextView
+                android:id="@+id/tv_time_taken"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="24dp"
+                android:fontFamily="@font/rowdies_regular"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="24dp"
+                android:fontFamily="@font/rowdies_regular"
+                android:textColor="@color/black"
+                android:textFontWeight="400"
+                android:textSize="@dimen/text_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_time_taken"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_totla_question"
+        android:layout_marginTop="@dimen/margin_8"
+        android:background="@drawable/round_ract_bottom_games">
+
+        <LinearLayout
+            android:id="@+id/ll_selection_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/rl_view_more"
+            android:layout_marginTop="@dimen/dimen_16sp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/rowdies_regular"
+                android:gravity="center"
+                android:text="@string/ranks"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/rowdies_regular"
+                android:gravity="center"
+                android:text="@string/players"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/rowdies_regular"
+                android:gravity="center"
+                android:text="Time"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/rowdies_regular"
+                android:gravity="center"
+                android:text="Score"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_16" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_leaderboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/ll_selection_top"
+            android:layout_marginTop="@dimen/dimen_16sp"
+            tools:listitem="@layout/games_leaderboard_items" />
+
+        <RelativeLayout
+            android:id="@+id/rl_view_more"
+            android:layout_width="130dp"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dimen_16sp"
+            android:layout_marginBottom="@dimen/text_24"
+            android:background="@drawable/ic_leaderboard_gameskite"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/rowdies_regular"
+                android:text="@string/txt_view_more"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/rowdies_regular"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="No Data Found."
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_16"
+        android:visibility="gone" />
+</RelativeLayout>

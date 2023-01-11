@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/main_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/actionbar_transparent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pan_height"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:layout_marginStart="@dimen/margin_20">
+
+                    <ImageView
+                        android:id="@+id/iv_aadhar_front"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/image_background"
+                        android:contentDescription="@string/text_won"
+                        android:scaleType="fitXY" />
+
+                    <TextView
+                        android:id="@+id/tv_front"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:layout_margin="@dimen/margin_10"
+                        android:text="@string/text_pan_upload_hint"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/text_11" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pan_height"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_20">
+
+                    <ImageView
+                        android:id="@+id/iv_aadhar_back"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/image_background"
+                        android:contentDescription="@string/text_won"
+                        android:scaleType="fitXY" />
+
+                    <TextView
+                        android:id="@+id/tv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:layout_margin="@dimen/margin_10"
+                        android:text="@string/text_aadhar_upload_hint"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/text_11" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_name"
+                style="@style/CustomEditText"
+                android:layout_marginStart="@dimen/margin_25"
+                android:layout_marginTop="@dimen/margin_5"
+                android:layout_marginEnd="@dimen/margin_25"
+                android:autofillHints="@string/s3"
+                android:hint="@string/text_adhar_name"
+                android:inputType="text"
+                android:maxLength="50"
+                android:maxLines="1" />
+
+            <EditText
+                android:id="@+id/et_number"
+                style="@style/CustomEditText"
+                android:layout_marginStart="@dimen/margin_25"
+                android:layout_marginTop="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_25"
+                android:autofillHints="@string/s3"
+                android:hint="@string/hint_number_aadhar"
+                android:inputType="number"
+                android:maxLength="12" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="DOB"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_13" />
+                <TextView
+                    android:id="@+id/tv_dob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_25"
+                    android:drawablePadding="@dimen/padding_10"
+                    android:padding="@dimen/padding_10"
+                    android:background="@drawable/dialog_shape_version"
+                    android:hint="@string/text_update_dob_hint"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_17"
+                    app:drawableEndCompat="@drawable/ic_date" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_address"
+                style="@style/CustomEditText"
+                android:layout_marginStart="@dimen/margin_25"
+                android:layout_marginTop="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_25"
+                android:autofillHints="@string/s3"
+                android:hint="@string/text_address_adhar"
+                android:maxLength="50" />
+
+            <EditText
+                android:id="@+id/et_city"
+                style="@style/CustomEditText"
+                android:layout_marginStart="@dimen/margin_25"
+                android:layout_marginTop="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_25"
+                android:autofillHints="@string/s3"
+                android:hint="@string/text_city"
+                android:inputType="text"
+                android:maxLength="28" />
+
+            <EditText
+                android:id="@+id/et_state"
+                style="@style/CustomEditText"
+                android:layout_marginStart="@dimen/margin_25"
+                android:layout_marginTop="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_25"
+                android:autofillHints="@string/s3"
+                android:hint="@string/text_state"
+                android:inputType="text"
+                android:maxLength="35" />
+
+            <EditText
+                android:id="@+id/et_pincode"
+                style="@style/CustomEditText"
+                android:layout_marginStart="@dimen/margin_25"
+                android:layout_marginTop="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_25"
+                android:autofillHints="@string/s3"
+                android:hint="@string/text_pincode"
+                android:inputType="number"
+                android:maxLength="10" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_send"
+                style="@style/ButtonLoginText"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_20"
+                android:layout_marginBottom="@dimen/margin_15"
+                android:text="@string/text_update" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

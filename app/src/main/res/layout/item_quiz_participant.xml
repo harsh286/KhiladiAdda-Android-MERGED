@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/ItemCardAppearance"
+    android:id="@+id/cv_top">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:civ_border_color="@color/colorPrimaryDark"
+            android:layout_margin="@dimen/margin_3"
+            android:src="@drawable/profile"
+            app:civ_border_width="1dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="5"
+            app:civ_shadow_color="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_13"
+            android:textColor="@color/colorBlack"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
+            android:hint="@string/text_pubg"
+            android:layout_toEndOf="@+id/iv_profile" />
+
+        <TextView
+            android:id="@+id/tv_playedfor"
+           android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_2"
+            android:layout_toEndOf="@+id/iv_profile"
+            android:layout_below="@+id/tv_name"
+            android:hint="@string/text_pubg"
+            android:textSize="@dimen/text_9"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/tv_win"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_pubg"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_2"
+            android:layout_below="@+id/tv_playedfor"
+            android:layout_toEndOf="@+id/iv_profile"
+            android:textSize="@dimen/text_9"
+            android:textColor="@color/color_green" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

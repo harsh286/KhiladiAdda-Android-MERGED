@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_10"
+    android:background="@color/luod_uni_dialog_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ludo_uni_actionbar"
+        android:gravity="center"
+        android:padding="@dimen/padding_15"
+        android:text="@string/text_alert"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_15"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:gravity="center"
+        android:padding="@dimen/padding_10"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_15"
+        android:textStyle="bold"
+        tools:text="@string/text_msg" />
+
+    <TextView
+        android:id="@+id/tv_help"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:gravity="center"
+        android:padding="@dimen/padding_10"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_13"
+        tools:text="@string/text_msg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginEnd="@dimen/margin_15"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_5">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_weight="1"
+            android:background="@drawable/roundborder_ludo_uni"
+            android:gravity="center"
+            android:text="@string/text_yes"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_11"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_ok"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_weight="1"
+            android:background="@drawable/roundborder_ludo_uni"
+            android:gravity="center"
+            android:text="@string/ok"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_11" />
+    </LinearLayout>
+
+</LinearLayout>

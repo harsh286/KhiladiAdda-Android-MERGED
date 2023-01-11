@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DialogLinearLayoutLudo"
+    android:background="#F1e7ea">
+
+    <TextView
+        android:id="@+id/tv_dialog_name"
+        style="@style/NewDialogHeadText"
+        android:text="@string/text_add_challenge" />
+
+    <TextView
+        android:id="@+id/tv_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_8"
+        android:background="@color/color_yellow"
+        android:gravity="center"
+        android:padding="@dimen/padding_8"
+        android:text="@string/help_ludo_show_image"
+        android:textColor="@color/blue_dark"
+        android:textSize="@dimen/text_9"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginEnd="@dimen/margin_15"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_ludo_id"
+            style="@style/CustomEditTextLudo"
+            android:drawableStart="@drawable/ic_gaming"
+            android:drawableTint="@color/black"
+            android:hint="@string/hint_ludoking_username"
+            android:maxLength="20"
+            android:autofillHints="" />
+
+        <EditText
+            android:id="@+id/et_amount"
+            style="@style/CustomEditTextLudo"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:autofillHints=""
+            android:digits="0123456789"
+            android:drawableStart="@drawable/ic_coins"
+            android:drawableTint="@color/black"
+            android:hint="@string/help_coins"
+            android:inputType="number"
+            android:maxLength="5" />
+
+        <include layout="@layout/select_coins" />
+
+        <include layout="@layout/select_coins_more" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:padding="@dimen/padding_5"
+            android:text="@string/text_select_mode"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <include layout="@layout/select_mode" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_3"
+            android:padding="@dimen/padding_5"
+            android:text="@string/text_ludo_multiple_coins"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_9" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_set"
+            style="@style/DialogButtonLudo"
+            android:layout_marginTop="@dimen/margin_8"
+            android:text="@string/text_add_challenge"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_8"
+    android:id="@+id/rl_upi"
+    android:background="@drawable/ic_selector_merchant">
+
+    <ImageView
+        android:id="@+id/iv_upi"
+        android:layout_width="@dimen/margin_90"
+        android:layout_height="@dimen/margin_60"
+        android:contentDescription="@string/s3"
+        android:src="@drawable/ic_upi" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_upi"
+        android:textColor="@color/black"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/text_11"
+        android:text="@string/bhim_upi" />
+
+</RelativeLayout>

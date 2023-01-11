@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/sl_scratchCard"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/margin_35"
+        android:layout_marginBottom="@dimen/margin_15"
+        android:contentDescription="@string/s3"
+        android:src="@drawable/ic_close_button" />
+
+    <dev.skymansandy.scratchcardlayout.ui.ScratchCardLayout
+        android:id="@+id/sl_scratchCard"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="@dimen/margin_20"
+        app:scratchDrawable="@drawable/new_scratch_card">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/margin_8"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/scratched_card" />
+
+            <TextView
+                android:id="@+id/tv_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:textColor="#CB1126"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </dev.skymansandy.scratchcardlayout.ui.ScratchCardLayout>
+</RelativeLayout>

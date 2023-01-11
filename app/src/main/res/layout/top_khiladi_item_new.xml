@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/top_khiladi_width"
+    android:layout_height="@dimen/top_khiladi_height"
+    android:padding="@dimen/padding_5"
+    android:orientation="vertical">
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/iv_image"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="@dimen/top_khiladi_image_height"
+        android:layout_height="@dimen/top_khiladi_image_height"  />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_11"
+        android:hint="@string/fan_battle"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_total_won"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#52CF05"
+        android:textSize="@dimen/text_11"
+        android:hint="@string/fan_battle"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_9"
+        android:hint="@string/fan_battle"
+        android:textStyle="bold" />
+
+</LinearLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/inner_bg"
+    tools:context=".myfacts.MyFacts">
+
+    <include layout="@layout/actionbar"/>
+    <include layout="@layout/footer"/>
+
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_below="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_liked"
+            style="@style/ButtonShadowSelectNew"
+            android:text="@string/liked_fact" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_bookmarked"
+            style="@style/ButtonShadowSelectNew"
+            android:text="@string/bookmark_fact" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/ll_top"
+        android:layout_above="@+id/ll_bottom"
+        android:id="@+id/rv_facts"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:layout_marginStart="@dimen/margin_20"
+        android:layout_marginEnd="@dimen/margin_20"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

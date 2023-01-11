@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_ten"
+        style="@style/ButtonBlueCoin"
+        android:layout_marginEnd="@dimen/margin_2"
+        android:layout_weight="1"
+        android:text="@string/text_ten" />
+    <TextView
+        android:id="@+id/tv_fifty"
+        style="@style/ButtonBlueCoin"
+        android:layout_marginEnd="@dimen/margin_2"
+        android:layout_weight="1"
+        android:text="@string/text_fifty" />
+    <TextView
+        android:id="@+id/tv_hundred"
+        style="@style/ButtonBlueCoin"
+        android:layout_marginEnd="@dimen/margin_2"
+        android:layout_weight="1"
+        android:text="@string/text_hundred" />
+    <TextView
+        android:id="@+id/tv_two_hundred"
+        style="@style/ButtonBlueCoin"
+        android:layout_weight="1"
+        android:text="@string/text_two_hundred" />
+
+</LinearLayout>

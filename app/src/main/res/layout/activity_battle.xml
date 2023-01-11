@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/inner_bg"
+    tools:context=".fanbattle.FanBattleActivity">
+
+    <include layout="@layout/actionbar_fb" />
+
+    <LinearLayout
+        android:id="@+id/ll_match"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:layout_below="@+id/action_bar"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/padding_10"
+        android:paddingEnd="@dimen/padding_10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_one"
+                style="@style/BattleTeamImage"
+                android:contentDescription="@string/my_profile" />
+
+            <TextView
+                android:id="@+id/tv_team_one"
+                style="@style/TeamNameLatoFontText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_date"
+                style="@style/MatchDetailsLatoFontText"
+                android:drawablePadding="@dimen/padding_3"
+                app:drawableStartCompat="@drawable/ic_time" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/MatchDetailsLatoFontText"
+                android:layout_marginTop="@dimen/margin_2"
+                android:drawablePadding="@dimen/padding_3"
+                app:drawableStartCompat="@drawable/ic_trophy"
+                app:drawableTint="@color/lighter_black" />
+
+            <TextView
+                android:id="@+id/tv_vs"
+                style="@style/MatchDetailsLatoFontText"
+                android:layout_marginTop="@dimen/margin_5"
+                android:text="@string/help_vs" />
+
+            <TextView
+                android:id="@+id/tv_time_left"
+                style="@style/MatchDetailsLatoFontText"
+                android:layout_marginTop="@dimen/margin_15"
+                android:drawablePadding="@dimen/padding_3"
+                android:textSize="@dimen/text_12"
+                app:drawableStartCompat="@drawable/ic_time" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_two"
+                style="@style/BattleTeamImage"
+                android:contentDescription="@string/my_profile" />
+
+            <TextView
+                android:id="@+id/tv_team_two"
+                style="@style/TeamNameLatoFontText" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_prizepool"
+        android:layout_below="@+id/ll_match"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/padding_5"
+        android:paddingBottom="@dimen/padding_10">
+
+        <TextView
+            android:id="@+id/tv_how_play"
+            style="@style/BattlePlayTextview"
+            android:text="@string/text_how_play" />
+
+        <TextView
+            android:id="@+id/tv_calculate"
+            style="@style/BattlePlayTextview"
+            android:layout_marginStart="@dimen/margin_25"
+            android:layout_toEndOf="@+id/tv_how_play"
+            android:text="@string/text_points_calculate" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_below="@+id/rl_prizepool"
+        android:id="@+id/tv_description"
+        style="@style/BattleHeadLatoFontText"
+        android:text="@string/text_battles" />
+
+    <TextView
+        android:id="@+id/tv_set"
+        style="@style/TextPrizePoolMatch"
+        android:layout_below="@+id/tv_description"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginTop="@dimen/margin_2" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_battle_category"
+        style="@style/BaseRecyclerview"
+        android:layout_below="@+id/tv_set" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/rv_battle_category"
+        android:id="@+id/rv_battle"
+        android:layout_marginBottom="@dimen/margin_15"
+        style="@style/BaseRecyclerview" />
+
+
+
+</RelativeLayout>

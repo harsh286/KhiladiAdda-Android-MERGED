@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    tools:context=".rewards.RewardsActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_below="@+id/action_bar"
+        android:background="@color/colorWhite"
+        android:layout_marginTop="@dimen/margin_30">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/coupon"
+            android:layout_centerInParent="true"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_my_coupon"
+                style="@style/ButtonShadowSelect"
+                android:text="@string/text_my_coupons" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_get_coupon"
+                style="@style/ButtonShadowSelect"
+                android:text="@string/text_get_coupons" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_coupons"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_30"
+            android:background="@drawable/roundborder_primary_dark"
+            android:gravity="center"
+            android:padding="@dimen/padding_5"
+            android:text="@string/text_get_coupons"
+            android:layout_marginBottom="@dimen/margin_30"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_13" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/footer" />
+
+
+    <include layout="@layout/actionbar_transparent" />
+
+</RelativeLayout>

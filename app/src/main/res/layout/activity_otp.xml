@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/newblack"
+    android:orientation="vertical"
+    tools:context=".otp.OtpActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_glow"
+            android:contentDescription="@string/s3"
+            android:src="@drawable/splash_logo" />
+
+
+        <TextView
+            android:id="@+id/tv_enterotp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_logo"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/margin_30"
+            android:layout_marginTop="@dimen/margin_20"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/txt_enter_otp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen_14sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_enterotp"
+            android:gravity="center"
+            android:padding="@dimen/padding_5"
+            android:text="@string/prompt_mobile"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_17" />
+
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_mobile"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/margin_30"
+            android:layout_marginEnd="@dimen/margin_30"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/ll_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_30"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_one"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_two"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_three"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_four"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_five"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    style="@style/OtpEditText" />
+
+                <EditText
+                    android:id="@+id/et_six"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    style="@style/OtpEditText" />
+
+            </LinearLayout>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_register"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_edittext"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/whitebutton"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/txt_verify_otp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_otphtrec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_register"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_10"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/haven_t_received_otp"
+                android:textColor="@color/white" />
+
+
+            <TextView
+                android:id="@+id/tv_resend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_otphtrec"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:layout_toStartOf="@id/tv_or"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/text_resend_otp"
+                android:textColor="@color/white" />
+
+
+            <TextView
+                android:id="@+id/tv_or"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_otphtrec"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_10"
+                android:text="@string/or"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_changenumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_otphtrec"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_toEndOf="@id/tv_or"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/change_number"
+                android:textColor="@color/white" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_need_support"
+                android:layout_width="150dp"
+                android:layout_height="@dimen/margin_40"
+                android:layout_below="@id/tv_or"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:background="@drawable/black_round"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:contentDescription="@string/s3"
+                    android:src="@drawable/ic_chat_support" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/margin_10"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center"
+                    android:text="@string/need_support"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>

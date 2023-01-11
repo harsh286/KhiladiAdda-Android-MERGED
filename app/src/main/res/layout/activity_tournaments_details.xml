@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/droido_bg">
+
+    <include
+        android:id="@+id/in_action_bar"
+        layout="@layout/new_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView2"
+        android:layout_width="0dp"
+        android:layout_height="95dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        app:cardBackgroundColor="@color/droido_bg"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/in_action_bar"
+        app:strokeColor="@color/win_prize_text_color"
+        app:strokeWidth="2dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_game_logo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="@dimen/margin_40"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/prize_pool_bg_color"
+                app:strokeWidth="2dp">
+
+                <ImageView
+                    android:id="@+id/image_tournament_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/black"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/km_ic_person_white" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tv_tournament_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/rowdies_regular"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/tv_win_prize"
+                app:layout_constraintStart_toEndOf="@+id/cv_game_logo"
+                app:layout_constraintTop_toTopOf="@+id/cv_game_logo" />
+
+            <TextView
+                android:id="@+id/tv_player_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/rowdies_regular"
+                android:text="3/5"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_tournament_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView13"
+                app:layout_constraintTop_toTopOf="@+id/tv_tournament_name" />
+
+            <View
+                android:id="@+id/view7"
+                android:layout_width="0dp"
+                android:layout_height="0.8dp"
+                android:layout_marginTop="-1dp"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="@+id/tv_player_count"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/tv_player_count"
+                app:layout_constraintTop_toBottomOf="@+id/tv_player_count" />
+
+            <TextView
+                android:id="@+id/tv_win_prize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/rowdies_regular"
+                android:textColor="@color/prize_pool_bg_color"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/cv_game_logo"
+                app:layout_constraintStart_toEndOf="@+id/cv_game_logo"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tournament_name" />
+
+            <TextView
+                android:id="@+id/tv_entry_fee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/rowdies_regular"
+                android:textColor="@color/prize_pool_bg_color"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/cv_game_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.957"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cv_game_logo"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tournament_name"
+                app:layout_constraintVertical_bias="0.626" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/imageView13"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:background="@drawable/ic_user"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_player_count"
+                app:layout_constraintEnd_toStartOf="@+id/tv_player_count"
+                app:layout_constraintStart_toStartOf="@+id/tv_entry_fee"
+                app:layout_constraintTop_toTopOf="@+id/tv_player_count" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/rl_prize_pool"
+        android:layout_width="230dp"
+        android:layout_height="@dimen/margin_30"
+        android:layout_marginBottom="-5dp"
+        app:cardBackgroundColor="@color/prize_pool_bg_color"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/rl_winingtoken"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="2dp"
+            android:fontFamily="@font/rowdies_regular"
+            android:gravity="center_vertical"
+            android:text="@string/text_prize_pool"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_12" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/rl_winingtoken"
+        android:layout_width="280dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="@dimen/margin_20"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toTopOf="@id/rl_play_quiz"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView2">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/partcipants_rv_bg_color">
+
+            <TextView
+                android:id="@+id/tv_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/margin_40"
+                android:layout_marginTop="@dimen/margin_10"
+                android:fontFamily="@font/rowdies_regular"
+                android:text="@string/rank"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_12" />
+
+            <TextView
+                android:id="@+id/tv_prize_h"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_40"
+                android:fontFamily="@font/rowdies_regular"
+                android:text="@string/Prize"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_12" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_prize_h"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_prize_pool"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:isScrollContainer="true"
+                    android:scrollIndicators="none"
+                    android:scrollbarThumbVertical="@drawable/whitebutton"
+                    android:scrollbars="vertical" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <RelativeLayout
+        android:id="@+id/rl_play_quiz"
+        android:layout_width="330dp"
+        android:layout_height="@dimen/margin_50"
+        android:layout_marginTop="@dimen/text_12"
+        android:layout_marginBottom="@dimen/text_12"
+        android:background="@color/partcipants_rv_bg_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <com.ncorti.slidetoact.SlideToActView
+            android:id="@+id/slider_btn_play_quiz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="-15dp"
+            android:background="@color/prize_pool_bg_color"
+            android:hapticFeedbackEnabled="true"
+            app:animate_completion="false"
+            app:border_radius="0dp"
+            app:bump_vibration="10"
+            app:inner_color="@color/prize_pool_bg_color"
+            app:outer_color="@color/rank_text_color"
+            app:slider_icon="@drawable/slide_icon"
+            app:slider_icon_color="@color/white"
+            app:text=""
+            app:text_size="18sp" />
+
+        <com.romainpiel.shimmer.ShimmerTextView
+            android:id="@+id/shimmer_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/rowdies_regular"
+            android:letterSpacing="0.1"
+            android:text="@string/slide_to_play"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:reflectionColor="#031CF8" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+

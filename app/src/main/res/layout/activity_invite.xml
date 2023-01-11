@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    tools:context=".referhistory.InviteActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_first"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_10">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:layout_weight="1"
+            android:src="@drawable/refer_icon"
+            android:contentDescription="@string/text_referred_friends" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginEnd="@dimen/margin_20"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:layout_weight="1"
+            android:padding="@dimen/padding_15"
+            android:text="@string/text_invite"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_15"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_below="@+id/ll_first"
+        android:background="@color/colorWhite">
+
+        <TextView
+            android:id="@+id/tv_invite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:gravity="center"
+            android:text="@string/text_invite_code"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_13" />
+
+        <TextView
+            android:id="@+id/tv_invite_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_invite"
+            android:gravity="center"
+            android:padding="@dimen/padding_2"
+            android:text="@string/text_invite_code"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_20" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_whatsapp"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/tv_invite_code"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_30"
+            android:background="@drawable/roundbutton_green"
+            android:gravity="center"
+            android:drawableStart="@drawable/ic_invite"
+            android:padding="@dimen/padding_10"
+            android:text="@string/text_invite_whatsapp"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_11" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_option"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/btn_whatsapp"
+            android:drawableStart="@drawable/ic_share"
+            android:padding="@dimen/padding_10"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_15"
+            android:background="@drawable/roundbutton_red"
+            android:gravity="center"
+            android:text="@string/text_sharing_option"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_11" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_option"
+            android:layout_marginStart="@dimen/margin_50"
+            android:layout_marginTop="@dimen/margin_40"
+            android:text="@string/text_referred_friends"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_15" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/tv_view"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_below="@+id/btn_option"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/roundbutton_red"
+            android:layout_marginTop="@dimen/margin_30"
+            android:layout_marginEnd="@dimen/margin_50"
+            android:text="@string/text_view"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_15" />
+
+        <TextView
+            android:id="@+id/tv_refer_coins"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_view"
+            android:layout_margin="@dimen/margin_20"
+            android:padding="@dimen/padding_10"
+            android:visibility="gone"
+            android:gravity="center"
+            android:text="@string/text_refer_coins_offer"
+            android:textSize="@dimen/text_15"
+            android:textColor="@color/black" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/actionbar_transparent" />
+
+    <include layout="@layout/footer" />
+
+</RelativeLayout>

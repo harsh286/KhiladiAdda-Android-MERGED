@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    tools:context=".profile.update.UpdateProfileActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/ll_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_20"
+                android:layout_marginEnd="@dimen/margin_20"
+                android:gravity="center_vertical">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/iv_profile"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="@dimen/margin_30"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:src="@drawable/splash_logo"
+                    app:civ_border_color="@color/colorWhite"
+                    app:civ_border_width="4dp"
+                    app:civ_shadow="true"
+                    app:civ_shadow_color="@color/colorPrimaryDark"
+                    app:civ_shadow_radius="10" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_profile"
+                    android:layout_marginStart="@dimen/margin_65"
+                    android:text="Click Above"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_9" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/margin_30"
+                    android:layout_marginEnd="@dimen/margin_30"
+                    android:background="@drawable/roundborder_primary_dark"
+                    android:gravity="center"
+                    android:text="@string/text_upload"
+                    android:textColor="@color/colorWhite" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_30"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_30"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/et_user_name"
+                    style="@style/CustomEditText"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                    android:hint="@string/hint_user_name"
+                    android:maxLength="30" />
+
+                <EditText
+                    android:id="@+id/et_name"
+                    style="@style/CustomEditText"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:drawablePadding="@dimen/padding_10"
+                    android:editable="false"
+                    android:hint="@string/hint_name"
+                    android:inputType="none"
+                    android:maxLength="30" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_3"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:gravity="end"
+                    android:text="You cannot update name once aadhar is verified"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_9"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/et_mobile"
+                    style="@style/CustomEditText"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:drawablePadding="@dimen/padding_10"
+                    android:hint="@string/hint_mobile"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/et_email"
+                    style="@style/CustomEditText"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:drawablePadding="@dimen/padding_10"
+                    android:hint="@string/hint_email"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="40"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_20"
+                    android:inputType="number"
+                    android:padding="@dimen/padding_5"
+                    android:text="@string/txt_gender"
+                    android:textColor="@color/colorWhite" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_20"
+                    android:layout_marginEnd="@dimen/margin_20"
+                    android:orientation="horizontal">
+
+                    <RadioGroup
+                        android:id="@+id/rg_gender"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_10"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_male"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/txt_male"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/text_13" />
+
+                        <RadioButton
+                            android:id="@+id/rb_female"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/txt_female"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/text_13" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    style="@style/CustomEditText"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:drawablePadding="@dimen/padding_10"
+                    android:enabled="false"
+                    android:maxLines="5"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/et_state"
+                    style="@style/CustomEditText"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:drawablePadding="@dimen/padding_10"
+                    android:hint="@string/hint_state"
+                    android:inputType="textCapWords"
+                    android:maxLength="30" />
+
+                <TextView
+                    android:id="@+id/tv_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_2"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:gravity="end"
+                    android:text="You cannot update state once aadhar is verified"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_9"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/et_country"
+                    style="@style/CustomEditText"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:drawablePadding="@dimen/padding_10"
+                    android:hint="@string/hint_country"
+                    android:inputType="textCapWords"
+                    android:maxLength="30" />
+
+                <TextView
+                    android:id="@+id/tv_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_2"
+                    android:layout_marginEnd="@dimen/margin_2"
+                    android:gravity="end"
+                    android:text="You cannot update country once aadhar is verified"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_9"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_update"
+                    style="@style/ButtonLoginText"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:text="@string/text_update" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/actionbar_transparent" />
+
+</RelativeLayout>

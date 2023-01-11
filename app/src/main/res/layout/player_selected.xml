@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_batmanselected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5"
+        android:contentDescription="@string/s3"
+        android:src="@drawable/ic_playerunselected" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_batmanselected"
+        android:text="@string/_1_batsman"
+        android:gravity="center"
+
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_9" />
+
+    <ImageView
+        android:id="@+id/iv_bowlselected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5"
+        android:layout_toEndOf="@id/iv_batmanselected"
+        android:contentDescription="@string/s3"
+        android:src="@drawable/ic_playerunselected" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_bowlselected"
+        android:text="@string/_1_bowler"
+        android:gravity="center"
+        android:layout_toEndOf="@id/iv_batmanselected"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/margin_5"
+        android:textSize="@dimen/text_9" />
+
+    <ImageView
+        android:id="@+id/iv_arselected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5"
+        android:layout_toEndOf="@id/iv_bowlselected"
+        android:contentDescription="@string/s3"
+        android:src="@drawable/ic_playerunselected" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_arselected"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_toEndOf="@id/iv_bowlselected"
+        android:gravity="center"
+        android:text="@string/_1_all_rounder"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_9" />
+
+    <ImageView
+        android:id="@+id/iv_wkselected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5"
+        android:layout_toEndOf="@id/iv_arselected"
+        android:contentDescription="@string/s3"
+        android:src="@drawable/ic_playerunselected" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_wkselected"
+        android:text="@string/_1_wk"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_toEndOf="@id/iv_arselected"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_9" />
+
+    <ImageView
+        android:id="@+id/iv_allselected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginEnd="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:layout_toEndOf="@id/iv_wkselected"
+        android:contentDescription="@string/s3"
+        android:src="@drawable/ic_notselectedcircle" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_allselected"
+        android:text="@string/ready"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/margin_5"
+        android:layout_toEndOf="@id/iv_wkselected"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_9" />
+
+
+
+</RelativeLayout>

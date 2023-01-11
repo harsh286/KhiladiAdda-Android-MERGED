@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ludo.result.LudoResultActivity">
+
+    <include layout="@layout/actionbar" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_won"
+            style="@style/ButtonBottom"
+            android:drawableTop="@drawable/ic_trophy"
+            android:text="@string/text_won" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_lost"
+            style="@style/ButtonBottom"
+            android:drawableTop="@drawable/ic_lost"
+            android:text="@string/text_lost" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_error"
+            style="@style/ButtonBottomLast"
+            android:drawableTop="@drawable/ic_cancel"
+            android:text="@string/text_issue_ludo" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_below="@+id/action_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_5"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_2">
+
+                    <TextView
+                        android:id="@+id/tv_contest_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_2"
+                        android:text="@string/contest_name"
+                        android:textColor="@color/orange_dark"
+                        android:textSize="@dimen/text_11" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_top"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_contest_code"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <com.mikhaellopez.circularimageview.CircularImageView
+                                android:id="@+id/iv_captain_dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@mipmap/ic_launcher"
+                                app:civ_border_color="@color/colorPrimary"
+                                app:civ_border_width="1dp"
+                                app:civ_shadow="true"
+                                app:civ_shadow_color="@color/colorPrimaryDark"
+                                app:civ_shadow_radius="5" />
+
+                            <TextView
+                                android:id="@+id/tv_captain_detail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/contest_name"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/text_13" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_vs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/text_vs"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_player"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <com.mikhaellopez.circularimageview.CircularImageView
+                                android:id="@+id/iv_player_dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@mipmap/ic_launcher"
+                                app:civ_border_color="@color/colorPrimary"
+                                app:civ_border_width="1dp"
+                                app:civ_shadow="true"
+                                app:civ_shadow_color="@color/colorPrimaryDark"
+                                app:civ_shadow_radius="5" />
+
+                            <TextView
+                                android:id="@+id/tv_player_detail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/contest_name"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/text_13" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ll_top"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/padding_5">
+
+                        <TextView
+                            android:id="@+id/tv_amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/margin_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_grey"
+                            android:gravity="center"
+                            android:minLines="2"
+                            android:padding="@dimen/padding_5"
+                            android:text="@string/contest_name"
+                            android:textColor="@color/color_green"
+                            android:textSize="@dimen/text_15" />
+
+                        <TextView
+                            android:id="@+id/tv_winning_amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/margin_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_grey"
+                            android:gravity="center"
+                            android:minLines="2"
+                            android:padding="@dimen/padding_5"
+                            android:text="@string/contest_name"
+                            android:textColor="@color/colorCyan"
+                            android:textSize="@dimen/text_15" />
+
+                        <TextView
+                            android:id="@+id/tv_roomid"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_grey"
+                            android:drawableRight="@drawable/ic_copy"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_5"
+                            android:text="@string/text_waiting_roomid"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/text_15" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_2"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_cancel"
+                    style="@style/ButtonBottom"
+                    android:text="@string/text_cancel"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_update_roomid"
+                    style="@style/ButtonBottom"
+                    android:text="@string/text_update_room_code"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_chat"
+                    style="@style/ButtonBottomLast"
+                    android:text="@string/text_chat_opponent"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_15"
+                android:layout_marginBottom="@dimen/margin_5"
+                android:background="@drawable/border_red_black"
+                android:padding="@dimen/padding_10"
+                android:text="@string/text_ludo_result"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_13"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

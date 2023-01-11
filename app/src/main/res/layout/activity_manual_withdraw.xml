@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    tools:context=".withdrawcoins.WithdrawActivity">
+
+    <include layout="@layout/actionbar_transparent" />
+
+    <TextView
+        android:id="@+id/tv_wining_cash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar"
+        android:layout_marginStart="@dimen/margin_30"
+        android:layout_marginTop="@dimen/margin_10"
+        android:text="@string/text_wining_cash"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_20" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_wining_cash"
+        android:layout_marginTop="@dimen/margin_40"
+        android:background="@color/colorWhite">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_10">
+
+            <LinearLayout
+                android:id="@+id/ll_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_cash_option"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:text="@string/text_cash_withdraw_options"
+                    android:textColor="@color/lighter_gray"
+                    android:textSize="@dimen/text_13" />
+
+                <RadioGroup
+                    android:id="@+id/rg_payment"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_30"
+                    android:layout_marginEnd="@dimen/margin_30"
+                    android:inputType="text"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rb_paytm"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_20"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginEnd="@dimen/margin_20"
+                        android:button="@null"
+                        android:drawableStart="@drawable/paytm"
+                        android:drawableEnd="@android:drawable/btn_radio" />
+
+                    <RadioButton
+                        android:id="@+id/rb_upi"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_20"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginEnd="@dimen/margin_20"
+                        android:background="@color/colorWhite"
+                        android:button="@null"
+                        android:drawableStart="@drawable/upi"
+                        android:drawableEnd="@android:drawable/btn_radio" />
+
+                    <RadioButton
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_20"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginEnd="@dimen/margin_20"
+                        android:button="@null"
+                        android:drawableStart="@drawable/phonepe"
+                        android:drawableEnd="@android:drawable/btn_radio"
+                        android:visibility="gone" />
+
+                    <RadioButton
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_20"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginEnd="@dimen/margin_20"
+                        android:layout_marginBottom="@dimen/margin_5"
+                        android:button="@null"
+                        android:drawableEnd="@android:drawable/btn_radio"
+                        android:visibility="gone" />
+
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/et_payment_address"
+                    style="@style/DialogEditText"
+                    android:layout_marginStart="@dimen/margin_30"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_marginEnd="@dimen/margin_30"
+                    android:hint="@string/text_paytm_number"
+                    android:maxLength="30" />
+
+                <LinearLayout
+                    android:id="@+id/ll_bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_20"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/et_account_number"
+                        style="@style/DialogEditText"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:hint="@string/text_account_number" />
+
+                    <EditText
+                        android:id="@+id/et_ifsc_code"
+                        style="@style/DialogEditText"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:hint="@string/text_ifsc" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_5"
+                        android:text="@string/text_enter_amount"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/text_13" />
+
+                    <EditText
+                        android:id="@+id/et_amount"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_5"
+                        android:layout_marginEnd="@dimen/margin_5"
+                        android:layout_toEndOf="@+id/tv_amount"
+                        android:background="@drawable/textview_background_black"
+                        android:inputType="number"
+                        android:maxLength="5"
+                        android:padding="@dimen/padding_5"
+                        android:textColor="@color/colorBlack"
+                        android:textColorLink="@color/colorBlack"
+                        android:textSize="@dimen/text_15" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/et_amount"
+                        android:text="@string/text_rs_per_coin"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/text_8" />
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_submit"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:background="@drawable/roundborder_primary_dark"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_10"
+                    android:text="@string/text_withdraw"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_13" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_withdraw"
+                android:layout_below="@+id/ll_top"
+                style="@style/BaseRecyclerview" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

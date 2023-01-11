@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="end"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_drop_up_black"
+        />
+    <TextView
+        android:layout_marginTop="-7dp"
+        android:padding="@dimen/padding_10"
+
+        tools:text="Hello hii [k[pKK[fK{k[FK kF{K[kAPkp[iii"
+        android:id="@+id/tv_bonus_info"
+        android:background="@color/lighter_black"
+        android:textColor="@color/white"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

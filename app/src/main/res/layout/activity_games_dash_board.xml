@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".clashx2.main.activity.ClashXDashBoardActivity">
+
+    <RelativeLayout
+        android:id="@+id/relative_toolabar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_60"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:src="@drawable/ic_baseline_arrow_back_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_40"
+            android:layout_marginTop="@dimen/text_14"
+            android:text="ClashX"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/iv_notification_clashx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/text_14"
+            android:src="@drawable/ic_notifications_black" />
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_recyler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_40"
+        app:layout_constraintTop_toBottomOf="@+id/relative_toolabar">
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager_banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_100"
+            android:layout_marginStart="@dimen/dimen_12dp"
+            android:layout_marginEnd="@dimen/dimen_12dp"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_marginTop="@dimen/margin_8"
+            android:background="@color/tab_bg_dashboard"
+            android:clipToPadding="false"
+            android:paddingRight="4dp"
+            android:paddingBottom="@dimen/margin_1"
+            app:layout_constraintTop_toBottomOf="@id/viewpager_banner"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorHeight="2dp"
+            app:tabMinWidth="50dp"
+            app:tabRippleColor="@null"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextAppearance="@style/CustomTextAppearanceTab"
+            app:tabTextColor="@color/tab_indicator_default_color" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager_dashboard_games"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dimen_12dp"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:layout_marginEnd="@dimen/dimen_12dp"
+            android:layout_marginBottom="@dimen/margin_50"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout_dashboard" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/card_red"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <include
+            layout="@layout/footer_red_hth"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

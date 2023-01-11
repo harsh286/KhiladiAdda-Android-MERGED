@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal|center_vertical"
+    android:background="@drawable/dialog_shape_version"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple"
+        android:gravity="center"
+        android:padding="@dimen/padding_15"
+        android:text="@string/text_wallet_details"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_15" />
+
+    <TextView
+        android:id="@+id/tv_heading"
+        style="@style/DialogHeadText"
+        android:layout_marginTop="@dimen/margin_3"
+        android:text="@string/text_amount_invest"
+        android:textSize="@dimen/text_12" />
+
+    <EditText
+        android:id="@+id/et_amount"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_5"
+        android:autofillHints="@string/hint_amount"
+        android:background="@drawable/textview_background_black"
+        android:gravity="center"
+        android:hint="10"
+        android:inputType="number"
+        android:maxLength="4"
+        android:padding="@dimen/padding_8"
+        android:textColor="@color/colorBlack" />
+
+    <TextView
+        android:id="@+id/tv_hint"
+        style="@style/PageText"
+        android:layout_marginTop="@dimen/margin_2"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:text="@string/text_valid_amount_invest"
+        android:textColor="@color/colorPrimary" />
+
+    <include
+        layout="@layout/select_coins_battle_purple" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginEnd="@dimen/margin_5"
+        android:background="@drawable/border_grey"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_5">
+
+        <TextView
+            style="@style/WalletTextViewOne"
+            android:layout_marginStart="@dimen/margin_3"
+            android:text="@string/text_entry_fee" />
+
+        <TextView
+            android:id="@+id/tv_entry_fee"
+            style="@style/WalletTextViewTwo" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_total_wallet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginEnd="@dimen/margin_5"
+        android:background="@drawable/border_grey"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_5">
+
+        <TextView
+            style="@style/WalletTextViewOne"
+            android:layout_marginStart="@dimen/margin_3"
+            android:text="@string/text_total_wallet_bal" />
+
+        <TextView
+            android:id="@+id/tv_total_wallet_balance"
+            style="@style/WalletTextViewTwo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_wallet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginEnd="@dimen/margin_5"
+        android:background="@drawable/border_grey"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_5"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_wallet"
+            style="@style/WalletTextViewOne"
+            android:layout_marginStart="@dimen/margin_3"
+            android:text="@string/text_deposit_winning" />
+
+        <TextView
+            android:id="@+id/tv_wallet_entry"
+            style="@style/WalletTextViewTwo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_bonus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginEnd="@dimen/margin_5"
+        android:background="@drawable/border_grey"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_5"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_bonus"
+            style="@style/WalletTextViewOne"
+            android:layout_marginStart="@dimen/margin_3"
+            android:text="@string/text_bonus" />
+
+        <TextView
+            android:id="@+id/tv_wallet_bonus"
+            style="@style/WalletTextViewTwo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_profit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginEnd="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:background="@drawable/border_grey"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_5"
+        android:visibility="visible">
+
+        <TextView
+            style="@style/WalletTextViewOne"
+            android:layout_marginStart="@dimen/margin_3"
+            android:text="@string/text_fixed_winning" />
+
+        <TextView
+            android:id="@+id/tv_estimated_winning"
+            style="@style/WalletTextViewTwo"
+            android:layout_height="wrap_content"
+            android:text="@string/text_zero_double" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_recharge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_1"
+        android:layout_marginEnd="@dimen/margin_1"
+        android:gravity="center"
+        android:text="@string/text_insufficient_bal"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_13"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancel"
+            style="@style/DialogButtonWeightPurple"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:text="@string/text_cancel" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_send"
+            style="@style/DialogButtonWeightPurple"
+            android:layout_marginStart="@dimen/margin_8"
+            android:text="@string/text_confirm" />
+    </LinearLayout>
+
+</LinearLayout>

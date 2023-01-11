@@ -1,0 +1,969 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="DialogTheme" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+    </style>
+
+    <style name="CustomTabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabTextAppearance">@style/CustomTextAppearance</item>
+    </style>
+
+    <style name="CustomTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:padding">@dimen/padding_10</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">@dimen/text_15</item>
+        <item name="android:translationY">1.5dp</item>
+    </style>
+
+    <style name="PageText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_11</item>
+    </style>
+
+    <style name="ButtonLoginText">
+        <item name="android:layout_width">230dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/roundborder_primary</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="HeadText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_13</item>
+        <item name="android:inputType">textCapSentences</item>
+        <item name="android:layout_marginLeft">@dimen/margin_5</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="SettingText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawableEnd">@drawable/ic_keyboard_arrow_white</item>
+        <item name="android:textSize">@dimen/text_15</item>
+        <item name="android:padding">@dimen/padding_10</item>
+        <item name="android:layout_marginStart">@dimen/margin_20</item>
+        <item name="android:layout_marginEnd">@dimen/margin_20</item>
+        <item name="android:inputType">textCapSentences</item>
+        <item name="android:layout_marginLeft">@dimen/margin_5</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:longClickable">false</item>
+        <item name="android:textIsSelectable">false</item>
+    </style>
+
+    <style name="ButtonPrimaryDark">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_13</item>
+        <item name="android:background">@drawable/mybutton</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/padding_10</item>
+        <item name="android:layout_marginTop">@dimen/margin_20</item>
+        <item name="android:layout_marginBottom">@dimen/margin_20</item>
+        <item name="android:layout_marginLeft">@dimen/margin_80</item>
+        <item name="android:layout_marginRight">@dimen/margin_80</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="CustomEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_15</item>
+        <item name="android:background">@drawable/textview_background_white</item>
+        <item name="android:textColorHint">@color/hint_white</item>
+        <item name="android:padding">@dimen/padding_8</item>
+        <item name="android:drawablePadding">@dimen/padding_15</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="colorAccent">@color/colorWhite</item>
+    </style>
+
+    <style name="DialogEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:backgroundTint">@color/lighter_black</item>
+        <item name="android:textColorHint">@color/lighter_black</item>
+        <item name="android:padding">@dimen/padding_8</item>
+        <item name="android:drawablePadding">@dimen/padding_15</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">@dimen/text_15</item>
+    </style>
+
+    <style name="AmountEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_15</item>
+        <item name="android:background">@drawable/textview_background_black</item>
+        <item name="android:textColorHint">@color/colorBlack</item>
+        <item name="android:padding">@dimen/padding_8</item>
+        <item name="android:drawablePadding">@dimen/padding_15</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="OtpEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_20</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/textview_background_white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:padding">@dimen/padding_10</item>
+        <item name="android:layout_marginEnd">@dimen/margin_5</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:inputType">number</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WithdrawOtpEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_20</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/textview_background_black</item>
+        <item name="android:textColorHint">@color/colorBlack</item>
+        <item name="android:padding">@dimen/padding_10</item>
+        <item name="android:layout_marginEnd">@dimen/margin_5</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:inputType">number</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="QuizIconText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:padding">@dimen/padding_10</item>
+        <item name="android:drawablePadding">@dimen/padding_10</item>
+        <item name="android:background">@drawable/textview_background_white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_9</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="CustomCardAppearance" parent="CardView">
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius_4</item>
+        <item name="cardElevation">@dimen/card_elevation_3</item>
+    </style>
+
+    <style name="LeagueCardAppearance" parent="CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius_10</item>
+        <item name="cardElevation">@dimen/card_elevation_5</item>
+        <item name="android:layout_marginStart">@dimen/margin_5</item>
+        <item name="android:layout_marginEnd">@dimen/margin_5</item>
+    </style>
+
+    <style name="ItemCardAppearance" parent="CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cardElevation">@dimen/card_elevation_5</item>
+        <item name="android:layout_marginStart">@dimen/margin_5</item>
+        <item name="android:layout_marginEnd">@dimen/margin_5</item>
+    </style>
+
+    <style name="FactsHead">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:layout_marginStart">@dimen/margin_5</item>
+        <item name="android:layout_marginEnd">@dimen/margin_5</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">@dimen/text_11</item>
+    </style>
+
+    <style name="FactsSubHead">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:layout_marginStart">@dimen/margin_5</item>
+        <item name="android:layout_marginEnd">@dimen/margin_5</item>
+        <item name="android:textColor">@color/light_gray</item>
+        <item name="android:textSize">@dimen/text_9</item>
+    </style>
+
+    <style name="FactsTopHead">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:layout_marginTop">@dimen/margin_8</item>
+        <item name="android:layout_marginStart">@dimen/margin_10</item>
+        <item name="android:layout_marginEnd">@dimen/margin_5</item>
+        <item name="android:padding">@dimen/padding_2</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_11</item>
+    </style>
+
+    <style name="FactsTopSubHead">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:padding">@dimen/padding_2</item>
+        <item name="android:layout_marginStart">@dimen/margin_10</item>
+        <item name="android:layout_marginEnd">@dimen/margin_5</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textColor">@color/lighter_gray</item>
+        <item name="android:textSize">@dimen/text_9</item>
+    </style>
+
+    <style name="CustomCardRed" parent="CardView">
+        <item name="cardBackgroundColor">@color/colorPrimary</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius_10</item>
+        <item name="cardElevation">@dimen/card_elevation_3</item>
+    </style>
+
+    <style name="ButtonGreySelected">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:padding">@dimen/padding_10</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/live_btn_bg</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="CRButtonGreyRed">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:textSize">@dimen/text_12</item>
+        <item name="android:padding">@dimen/padding_5</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/live_btn_bg</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="CRButtonGreyRedHTH">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_marginStart">@dimen/margin_10</item>
+        <item name="android:textSize">@dimen/text_12</item>
+        <item name="android:padding">@dimen/padding_5</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/live_btn_bg_hth</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="QuizTrendingHead">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin_1</item>
+        <item name="android:layout_marginEnd">@dimen/margin_1</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_9</item>
+    </style>
+
+    <style name="QuizTrendingSubHead">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_8</item>
+    </style>
+
+    <style name="MyFactsText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_2</item>
+        <item name="android:layout_marginStart">@dimen/margin_5</item>
+        <item name="android:layout_marginEnd">@dimen/margin_5</item>
+        <item name="android:drawablePadding">@dimen/padding_5</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="ProfileHeadText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_15</item>
+        <item name="android:layout_marginStart">@dimen/margin_5</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="ProfileSubText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/lighter_gray</item>
+        <item name="android:layout_marginStart">@dimen/margin_5</item>
+        <item name="android:textSize">@dimen/text_11</item>
+    </style>
+
+    <style name="ProfileUpdateText">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/padding_5</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_11</item>
+    </style>
+
+    <style name="HelpQuestionText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_13</item>
+        <item name="android:textColor">@color/light_black</item>
+    </style>
+
+    <style name="HelpAnswerText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:padding">@dimen/padding_5</item>
+        <item name="android:textSize">@dimen/text_13</item>
+    </style>
+
+    <style name="ButtonShadowSelect">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/stat_tv_bg</item>
+        <item name="android:layout_marginBottom">@dimen/margin_10</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:padding">@dimen/padding_10</item>
+        <item name="android:textSize">@dimen/text_15</item>
+    </style>
+
+    <style name="ButtonShadowSelectNew">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/stat_tv_bg_white</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:padding">@dimen/padding_10</item>
+        <item name="android:textSize">@dimen/text_13</item>
+    </style>
+
+    <style name="TransferButtonShadowSelectNew">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">70dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/stat_tv_bg_white</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:padding">@dimen/padding_10</item>
+        <item name="android:textSize">@dimen/text_13</item>
+    </style>
+
+    <style name="WalletText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:padding">@dimen/padding_5</item>
+    </style>
+
+    <style name="ButtonBottom">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/border_bottom_white</item>
+        <item name="android:layout_marginEnd">@dimen/margin_1</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_9</item>
+        <item name="android:padding">@dimen/padding_3</item>
+        <item name="android:drawablePadding">@dimen/padding_5</item>
+    </style>
+
+    <style name="ButtonBottomLast">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/border_bottom_white</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_9</item>
+        <item name="android:padding">@dimen/padding_3</item>
+        <item name="android:drawablePadding">@dimen/padding_5</item>
+    </style>
+
+    <style name="QuestionText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_13</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:padding">@dimen/padding_10</item>
+        <item name="android:gravity">center_vertical|center</item>
+        <item name="android:background">@drawable/quiz_tv_bg</item>
+        <item name="android:layout_marginTop">@dimen/margin_15</item>
+    </style>
+
+    <style name="ImageQuestionText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_13</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">@dimen/padding_10</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:gravity">center|center_vertical</item>
+        <item name="android:layout_marginTop">@dimen/margin_8</item>
+        <item name="android:background">@drawable/quiz_tv_bg</item>
+    </style>
+
+    <style name="TextWeightGravity">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/padding_5</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="ButtonGrey">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:background">@color/lighter_gray</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/padding_8</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="DialogHeadText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/padding_5</item>
+        <item name="android:textSize">@dimen/text_17</item>
+        <item name="android:textColor">@color/blue_dark</item>
+    </style>
+
+    <style name="DialogButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:layout_marginStart">@dimen/margin_20</item>
+        <item name="android:layout_marginEnd">@dimen/margin_20</item>
+        <item name="android:textSize">@dimen/text_13</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="DialogButtonWeight">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/ludo_button</item>
+        <item name="android:textSize">@dimen/text_13</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="DialogButtonWeightPurple">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_button_purple</item>
+        <item name="android:textSize">@dimen/text_13</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="DialogLinearLayout">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/dialog_shape</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">@dimen/padding_10</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="DialogLinearLayoutLudo">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/dialog_shape</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="DialogLinearLayoutLudoUni">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/dialog_shape</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="WalletLinkCard" parent="CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cardElevation">@dimen/card_elevation_5</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="ButtonBottomLeaderBoard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:background">@drawable/leaderboard_btn_bg</item>
+        <item name="android:layout_marginEnd">@dimen/margin_1</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_8</item>
+        <item name="android:padding">@dimen/padding_5</item>
+    </style>
+
+    <style name="ButtonBottomLastLeaderBoard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:background">@drawable/leaderboard_btn_bg</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_8</item>
+        <item name="android:padding">@dimen/padding_5</item>
+    </style>
+
+    <style name="ButtonGreyRedCoin">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:padding">@dimen/padding_2</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/live_btn_bg</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="ButtonBlueCoin">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:padding">@dimen/padding_2</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/live_btn_bg_blue</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+
+    <style name="ButtonGreyPurpleCoin">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:padding">@dimen/padding_2</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/live_btn_bg_purple</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="ProfileCredentialButtonPlay">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/padding_5</item>
+        <item name="android:drawableTop">@drawable/ic_play</item>
+        <item name="android:textSize">@dimen/text_9</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:text">@string/text_play_now</item>
+    </style>
+
+    <style name="WalletTextViewOne">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/text_13</item>
+        <item name="android:gravity">start</item>
+        <item name="android:textColor">@color/lighter_black</item>
+    </style>
+
+    <style name="WalletTextViewTwo">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/text_15</item>
+        <item name="android:gravity">end</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="GroupTextPrizePoolMatch">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:background">@drawable/shape_button_red</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">@dimen/padding_5</item>
+        <item name="android:paddingBottom">@dimen/padding_5</item>
+        <item name="android:paddingStart">@dimen/padding_5</item>
+        <item name="android:paddingEnd">@dimen/padding_5</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
+    </style>
+
+    <style name="TextPrizePoolMatch">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:background">@drawable/shape_button_red</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">@dimen/padding_8</item>
+        <item name="android:paddingBottom">@dimen/padding_8</item>
+        <item name="android:paddingStart">@dimen/padding_15</item>
+        <item name="android:paddingEnd">@dimen/padding_15</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
+    </style>
+
+    <style name="ButtonBattlePlay">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:padding">@dimen/padding_5</item>
+        <item name="android:layout_marginTop">@dimen/margin_15</item>
+        <item name="android:text">@string/text_play_now</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
+        <item name="android:background">@drawable/roundborder_primary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="BattleCardAppearance" parent="CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius_10</item>
+        <item name="cardElevation">@dimen/card_elevation_5</item>
+        <item name="android:layout_marginStart">@dimen/margin_10</item>
+        <item name="android:layout_marginEnd">@dimen/margin_10</item>
+        <item name="android:layout_marginTop">@dimen/margin_5</item>
+        <item name="android:layout_marginBottom">@dimen/margin_8</item>
+    </style>
+
+    <style name="TextViewPredictionPoints">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/padding_8</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="BattlePlayTextview">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/textview_background_black</item>
+        <item name="android:paddingStart">@dimen/padding_15</item>
+        <item name="android:paddingEnd">@dimen/padding_15</item>
+        <item name="android:paddingTop">@dimen/padding_8</item>
+        <item name="android:paddingBottom">@dimen/padding_8</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:textColor">#797979</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
+    </style>
+
+    <style name="BaseRecyclerview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/margin_5</item>
+    </style>
+
+    <style name="BattleTeamImage">
+        <item name="android:layout_width">@dimen/quiz_icon_width</item>
+        <item name="android:layout_height">@dimen/quiz_icon_height</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:src">@drawable/battle</item>
+    </style>
+
+    <style name="BattleTeamImageHTH">
+        <item name="android:layout_width">@dimen/margin_60</item>
+        <item name="android:layout_height">@dimen/margin_60</item>
+        <item name="android:src">@drawable/battle</item>
+    </style>
+
+    <style name="BattleHeadLatoFontText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">@dimen/text_17</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">@dimen/padding_5</item>
+        <item name="android:layout_marginTop">@dimen/margin_2</item>
+        <item name="android:layout_marginStart">@dimen/margin_15</item>
+    </style>
+
+    <style name="BattleDescLatoFontText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
+        <item name="android:textColor">@color/lighter_black</item>
+        <item name="android:textSize">@dimen/text_13</item>
+    </style>
+
+    <style name="TeamNameLatoFontText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
+        <item name="android:padding">@dimen/padding_5</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/battle_red</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="MatchDetailsLatoFontText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/light_gray</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="BattleQuestion">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
+        <item name="android:layout_marginStart">@dimen/margin_10</item>
+        <item name="android:layout_marginEnd">@dimen/margin_10</item>
+        <item name="android:padding">@dimen/padding_5</item>
+        <item name="android:background">@color/light_red_white</item>
+        <item name="android:textColor">@color/blue_dark</item>
+        <item name="android:textSize">@dimen/text_13</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ButtonBottomLeaderBoardOutline">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginStart">@dimen/margin_1</item>
+        <item name="android:background">@drawable/newleaderboard_btn_bg</item>
+        <item name="android:layout_marginEnd">@dimen/margin_3</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/battle_red</item>
+        <item name="android:textSize">@dimen/text_8</item>
+    </style>
+
+    <style name="Color1SwitchStyle">
+        <item name="colorControlActivated">@color/battle_red</item>
+    </style>
+
+    <style name="TextLudoMode">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_7</item>
+        <item name="android:background">@drawable/shape_button_red</item>
+        <item name="android:paddingStart">@dimen/padding_5</item>
+        <item name="android:paddingEnd">@dimen/padding_5</item>
+        <item name="android:paddingTop">@dimen/padding_2</item>
+        <item name="android:paddingBottom">@dimen/padding_2</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:layout_marginStart">@dimen/margin_5</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
+    </style>
+
+    <style name="ButtonBattleSelectPlayHth">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:padding">@dimen/padding_5</item>
+        <item name="android:layout_marginTop">@dimen/margin_15</item>
+        <item name="android:text">Add</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
+        <item name="android:background">@drawable/player_selectionhth</item>
+        <item name="android:textColor">@drawable/text_selector</item>
+    </style>
+
+    <style name="MyDialog">
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+
+    <style name="MatchDetailsFontTextHTH">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/color_graynew</item>
+        <item name="android:textSize">@dimen/text_11</item>
+
+    </style>
+
+    <style name="DialogButtonLudoUni">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/roundborder_ludo_uni</item>
+        <item name="android:layout_marginStart">@dimen/margin_20</item>
+        <item name="android:layout_marginEnd">@dimen/margin_20</item>
+        <item name="android:textSize">@dimen/text_13</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="DialogButtonLudo">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/ludo_button</item>
+        <item name="android:layout_marginStart">@dimen/margin_20</item>
+        <item name="android:layout_marginEnd">@dimen/margin_20</item>
+        <item name="android:textSize">@dimen/text_13</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="TextFilterLudo">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:padding">@dimen/padding_2</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/live_btn_bg</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+
+    <style name="Theme.UserDialog" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="FavouriteImage">
+        <item name="android:layout_width">@dimen/margin_80</item>
+        <item name="android:layout_height">@dimen/margin_80</item>
+        <item name="android:padding">@dimen/padding_3</item>
+        <item name="android:layout_marginEnd">@dimen/margin_5</item>
+        <item name="android:background">@drawable/fav_bg</item>
+    </style>
+
+    <style name="CustomEditTextLudo">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_50dp</item>
+        <item name="android:textSize">@dimen/text_17</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@drawable/roundborder_black</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:drawablePadding">@dimen/padding_5</item>
+        <item name="android:paddingStart">@dimen/padding_8</item>
+    </style>
+
+    <style name="NewDialogHeadText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/padding_15</item>
+        <item name="android:textSize">@dimen/text_17</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="MySeekBar" parent="Widget.AppCompat.SeekBar">
+        <!--        <item name="android:progressBackgroundTint"></item>-->
+        <!--        <item name="android:progressTint">#388e3c</item>-->
+        <item name="android:colorControlActivated">#ffffff</item>
+    </style>
+
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="CustomTextAppearanceTab" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/productsansregular</item>
+        <item name="android:divider">@color/white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="GamesCardAppearance" parent="CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius_10</item>
+        <item name="cardElevation">@dimen/card_elevation_5</item>
+        <item name="android:layout_marginStart">@dimen/margin_2</item>
+        <item name="android:layout_marginEnd">@dimen/margin_2</item>
+        <item name="android:layout_marginTop">@dimen/margin_5</item>
+        <item name="android:layout_marginBottom">@dimen/margin_8</item>
+    </style>
+
+    <style name="LudoTmtAppearance" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/ludotmt_purple</item>
+        <item name="colorAccent">@color/ludotmt_purple</item>
+    </style>
+
+</resources>

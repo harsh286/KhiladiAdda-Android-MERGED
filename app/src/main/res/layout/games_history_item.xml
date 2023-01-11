@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_top_history_droido"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin_60"
+    android:layout_marginStart="@dimen/margin_10"
+    android:layout_marginTop="@dimen/margin_10"
+    android:layout_marginEnd="@dimen/margin_10"
+    android:layout_marginBottom="@dimen/margin_10"
+    android:outlineSpotShadowColor="@color/quiz_shadow"
+    app:cardCornerRadius="@dimen/margin_10"
+    app:cardMaxElevation="@dimen/margin_15">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_60">
+
+            <ImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_20"
+                android:layout_marginEnd="@dimen/margin_5"
+                app:srcCompat="@drawable/ic_completedicon" />
+
+            <TextView
+                android:id="@+id/tv_game_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dimen_16sp"
+                android:layout_marginTop="@dimen/margin_2"
+                android:layout_marginEnd="8dp"
+                android:layout_toStartOf="@+id/mcv_view_result"
+                android:layout_toEndOf="@+id/iv_profile"
+                android:fontFamily="@font/rowdies_regular"
+                android:textColor="#464646"
+                android:textSize="@dimen/text_14" />
+
+            <TextView
+                android:id="@+id/tv_amount_gc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/dimen_16sp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="@dimen/dimen_16sp"
+                android:fontFamily="@font/rowdies_regular"
+                android:textColor="#01A912"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_view_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_amount_gc"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/margin_2"
+                android:layout_marginEnd="@dimen/margin_20">
+
+                <TextView
+                    android:id="@+id/tv_view_result"
+                    android:layout_width="@dimen/margin_120"
+                    android:layout_height="30dp"
+                    android:fontFamily="@font/rowdies_regular"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/padding_8"
+                    android:paddingRight="@dimen/padding_8"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+            </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.cardview.widget.CardView>

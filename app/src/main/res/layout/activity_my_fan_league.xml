@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/inner_bg">
+
+    <include
+        android:id="@+id/ll_top"
+        layout="@layout/actionbar_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+
+    <LinearLayout
+        android:id="@+id/ll_second"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_top"
+        android:background="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_2">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_live"
+            style="@style/ButtonShadowSelectNew"
+            android:text="@string/text__live" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_past"
+            style="@style/ButtonShadowSelectNew"
+            android:text="@string/text__past" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_upcoming"
+            style="@style/ButtonShadowSelectNew"
+            android:text="@string/text__upcoming" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_my_match"
+        style="@style/BaseRecyclerview"
+        android:layout_below="@+id/ll_second" />
+
+    <TextView
+        android:id="@+id/tv_no_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/margin_30"
+        android:layout_marginEnd="@dimen/margin_30"
+        android:gravity="center"
+        android:text="@string/text_no_match"
+        android:textColor="@color/lighter_black"
+        android:textSize="@dimen/text_11"
+        android:visibility="gone" />
+
+</RelativeLayout>

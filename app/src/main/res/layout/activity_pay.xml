@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbar_gamercash"
+        layout="@layout/new_toolbar_gamercash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_gamercash">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv1"
+            android:layout_width="@dimen/margin_60"
+            android:layout_height="@dimen/margin_60"
+            android:layout_marginTop="@dimen/text_12"
+            android:visibility="visible"
+            app:cardBackgroundColor="@color/gamercash_color"
+            app:cardCornerRadius="@dimen/margin_90"
+            app:layout_constraintEnd_toStartOf="@+id/view_red"
+            app:layout_constraintStart_toStartOf="@+id/view_red"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteY="12dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/gc_coin_img_white" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <View
+            android:id="@+id/view_red"
+            android:layout_width="@dimen/margin_150"
+            android:layout_height="7dp"
+            android:layout_marginTop="@dimen/text_12"
+            android:background="@color/gamercash_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/view_grey"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv2"
+            android:layout_width="@dimen/margin_60"
+            android:layout_height="@dimen/margin_60"
+            android:layout_marginTop="@dimen/text_12"
+            android:visibility="visible"
+            app:cardBackgroundColor="@color/gamercash_color"
+            app:cardCornerRadius="@dimen/margin_90"
+            app:layout_constraintEnd_toEndOf="@+id/view_red"
+            app:layout_constraintStart_toEndOf="@+id/view_red"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/vector__10_white" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <View
+            android:id="@+id/view_grey"
+            android:layout_width="136dp"
+            android:layout_height="7dp"
+            android:layout_marginTop="@dimen/text_12"
+            android:background="@color/gamercash_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view_red"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv3"
+            android:layout_width="@dimen/margin_60"
+            android:layout_height="@dimen/margin_60"
+            android:layout_marginTop="@dimen/text_12"
+            android:layout_marginEnd="@dimen/margin_40"
+            android:visibility="visible"
+            app:cardBackgroundColor="@color/toolbar_gamer"
+            app:cardCornerRadius="@dimen/margin_90"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view_grey"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/vector__11_purse_white" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_12"
+        app:layout_constraintTop_toBottomOf="@id/cl_top">
+
+        <ImageView
+            android:id="@+id/gif_img_gamercash"
+            android:layout_width="@dimen/margin_150"
+            android:layout_height="@dimen/margin_150"
+            android:layout_marginTop="@dimen/margin_50"
+            android:layout_marginBottom="@dimen/margin_50"
+            android:src="@drawable/walletpg"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_amount_deducted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_60"
+            android:text="@string/amount_deducted"
+            android:textColor="@color/amount_color"
+            android:textSize="@dimen/dimen_16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gif_img_gamercash" />
+
+
+        <TextView
+            android:id="@+id/tv_amount_dedution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_20"
+            android:text="Rs. 40"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_24"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_amount_deducted" />
+
+        <TextView
+            android:id="@+id/tv_avaliable_blns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginEnd="@dimen/text_12"
+            android:text="@string/avaliable_blns_in_gamerpe"
+            android:textColor="@color/amount_color"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_amount_dedution" />
+
+        <TextView
+            android:id="@+id/tv_blance_in_gamerpe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginEnd="@dimen/text_12"
+            android:text="Rs. 40"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_24"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_avaliable_blns" />
+
+        <Button
+            android:id="@+id/btn_payy"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_60"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginTop="@dimen/text_12"
+            android:layout_marginEnd="@dimen/margin_20"
+            android:text="Pay"
+            app:layout_constraintTop_toBottomOf="@+id/tv_blance_in_gamerpe" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="160dp"
+        android:fontFamily="@font/rowdies_regular"
+        android:gravity="center"
+        android:text="You are not a user"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_16"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

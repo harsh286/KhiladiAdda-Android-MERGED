@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".wallet.WalletActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <include layout="@layout/actionbar_transparent" />
+
+        <TextView
+            android:id="@+id/tv_coins"
+            style="@style/WalletText"
+            android:layout_marginStart="@dimen/margin_30"
+            android:layout_marginEnd="@dimen/margin_30"
+            android:text="@string/text_total_coins"
+            android:textSize="@dimen/text_15" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_5"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_5">
+
+            <TextView
+                android:id="@+id/tv_deposit"
+                style="@style/WalletText"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:layout_weight="1"
+                android:background="@drawable/border_white"
+                android:gravity="center"
+                android:hint="@string/text_deposited"
+                android:padding="@dimen/padding_5" />
+
+            <TextView
+                android:id="@+id/tv_winning"
+                style="@style/WalletText"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:layout_weight="1"
+                android:background="@drawable/border_white"
+                android:gravity="center"
+                android:hint="@string/text_wining"
+                android:padding="@dimen/padding_5" />
+
+            <TextView
+                android:id="@+id/tv_bonus"
+                style="@style/WalletText"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:layout_weight="1"
+                android:background="@drawable/border_white"
+                android:gravity="center"
+                android:hint="@string/text_bonus"
+                android:padding="@dimen/padding_5" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_cash_option"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_top"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginTop="@dimen/margin_15"
+        android:text="@string/text_recent_transaction"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_15"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_recent_transaction"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_top"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_15"
+        android:background="@color/hint_white"
+        android:gravity="center"
+        android:padding="@dimen/padding_8"
+        android:text="@string/Viewall"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_12" />
+
+    <LinearLayout
+        android:id="@+id/ll_coins"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_add_coins"
+            style="@style/ButtonBottom"
+            android:drawableTop="@drawable/ic_plus"
+            android:text="@string/text_add_coins_next" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_withdraw"
+            style="@style/ButtonBottomLast"
+            android:drawableTop="@drawable/withdraw"
+            android:text="@string/text_withdraw_next" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_transaction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_coins"
+        android:layout_below="@+id/tv_recent_transaction"
+        android:layout_marginStart="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginEnd="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:elevation="@dimen/card_elevation_5" />
+
+</RelativeLayout>

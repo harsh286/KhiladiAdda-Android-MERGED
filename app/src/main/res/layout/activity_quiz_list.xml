@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/inner_bg"
+    tools:context=".profile.ProfileActivity">
+
+    <include layout="@layout/actionbar_white" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/action_bar"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_25"
+            android:layout_marginEnd="@dimen/margin_25"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_10">
+
+            <TextView
+                android:id="@+id/btn_past"
+                style="@style/ButtonGreySelected"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_weight="1"
+                android:text="@string/text__past" />
+
+            <TextView
+                android:id="@+id/btn_live"
+                style="@style/ButtonGreySelected"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_weight="1"
+                android:text="@string/text__live" />
+
+            <TextView
+                android:id="@+id/btn_upcoming"
+                style="@style/ButtonGreySelected"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_weight="1"
+                android:text="@string/text__upcoming" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_category_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_first"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginStart="@dimen/margin_20"
+            android:text="@string/text_picture"
+            android:textSize="@dimen/text_17"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_quiz"
+            android:layout_below="@+id/tv_category_name"
+            style="@style/BaseRecyclerview" />
+
+        <TextView
+            android:id="@+id/tv_no_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_30"
+            android:layout_marginEnd="@dimen/margin_30"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="@color/lighter_black"
+            android:visibility="gone"
+            android:textSize="@dimen/text_11"/>
+    </RelativeLayout>
+
+</RelativeLayout>

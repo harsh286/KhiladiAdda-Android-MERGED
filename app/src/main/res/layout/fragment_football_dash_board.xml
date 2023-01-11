@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".clashx2.main.fragment.FootballDashBoardFragment">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/srl_matches"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_football_games"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/tv_no_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No match available, Please try later!"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:fontFamily="@font/productsansregular"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_gravity="center"/>
+</FrameLayout>

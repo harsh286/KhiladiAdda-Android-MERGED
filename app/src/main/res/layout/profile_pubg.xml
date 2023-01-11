@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ItemCardAppearance">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_pubg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_bgmi"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/ic_bgmi" />
+
+            <TextView
+                android:id="@+id/tv_pubg"
+                style="@style/ProfileHeadText"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/btn_play_pubg"
+                android:layout_toEndOf="@+id/iv_bgmi"
+                android:padding="@dimen/padding_5" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_play_pubg"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line_gray" />
+
+        <RelativeLayout
+            android:id="@+id/rl_pubg_lite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_tdm"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/tdm" />
+
+            <TextView
+                android:id="@+id/tv_pubg_lite"
+                style="@style/ProfileHeadText"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/btn_play_pubg_lite"
+                android:layout_toEndOf="@+id/iv_tdm"
+                android:padding="@dimen/padding_5" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_play_pubg_lite"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line_gray" />
+
+        <RelativeLayout
+            android:id="@+id/rl_freefire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_freefire"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/ic_ff" />
+
+            <TextView
+                android:id="@+id/tv_freefire"
+                style="@style/ProfileHeadText"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/btn_play_ff"
+                android:layout_toEndOf="@+id/iv_freefire"
+                android:padding="@dimen/padding_5" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_play_ff"
+                style="@style/ProfileCredentialButtonPlay" />
+
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line_gray" />
+
+        <RelativeLayout
+            android:id="@+id/rl_ludo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_ludo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/ic_ludo" />
+
+            <TextView
+                android:id="@+id/tv_ludo"
+                style="@style/ProfileHeadText"
+                android:layout_toStartOf="@+id/btn_play_ludo"
+                android:layout_toEndOf="@+id/iv_ludo"
+                android:padding="@dimen/padding_5" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_play_ludo"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line_gray" />
+
+        <RelativeLayout
+            android:id="@+id/rl_clashroyale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_play_clash_royale"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_cod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_play_cod"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_ff_clash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_ff_clash"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/ff_clashs" />
+
+            <TextView
+                android:id="@+id/tv_ff_clash"
+                style="@style/ProfileHeadText"
+                android:layout_toStartOf="@+id/btn_play_ff_clash"
+                android:layout_toEndOf="@+id/iv_ff_clash"
+                android:padding="@dimen/padding_5" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_play_ff_clash"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line_gray" />
+
+        <RelativeLayout
+            android:id="@+id/rl_pubg_global"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_pubg_global"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/pubg_gobal_lite" />
+
+            <TextView
+                android:id="@+id/tv_pubg_global"
+                style="@style/ProfileHeadText"
+                android:layout_toStartOf="@+id/btn_pubg_global"
+                android:layout_toEndOf="@+id/iv_pubg_global"
+                android:padding="@dimen/padding_5" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_pubg_global"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line_gray" />
+
+        <RelativeLayout
+            android:id="@+id/rl_esports_per"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_esports_per"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/esports_per" />
+
+            <TextView
+                android:id="@+id/tv_esports_per"
+                style="@style/ProfileHeadText"
+                android:layout_toStartOf="@+id/btn_esports_per"
+                android:layout_toEndOf="@+id/iv_esports_per"
+                android:padding="@dimen/padding_5" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_esports_per"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line_gray" />
+        <RelativeLayout
+            android:id="@+id/rl_ff_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_ff_max"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/freefire_max" />
+
+            <TextView
+                android:id="@+id/tv_ff_max"
+                style="@style/ProfileHeadText"
+                android:layout_toStartOf="@+id/btn_ff_max"
+                android:layout_toEndOf="@+id/iv_ff_max"
+                android:padding="@dimen/padding_5" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_ff_max"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

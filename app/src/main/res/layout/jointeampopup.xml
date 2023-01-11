@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DialogLinearLayout">
+
+    <ImageView
+        android:id="@+id/iv_payment"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_margin="@dimen/margin_10"
+        android:src="@drawable/payment_success"
+        android:contentDescription="@string/txt_pay" />
+
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/padding_10"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/text_17"
+        android:textStyle="bold"
+        tools:text="@string/text_msg" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_ok"
+        style="@style/DialogButton"
+        android:layout_marginTop="@dimen/margin_10"
+        android:text="@string/ok" />
+</LinearLayout>

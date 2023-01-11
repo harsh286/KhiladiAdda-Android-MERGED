@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ItemCardAppearance">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_5"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5">
+
+            <TextView
+                android:id="@+id/tv_hint_mobile"
+                style="@style/ProfileSubText"
+                android:layout_toStartOf="@+id/tv_update_mobile"
+                android:text="@string/hint_mobile" />
+
+            <TextView
+                android:id="@+id/tv_mobile"
+                style="@style/ProfileHeadText"
+                android:layout_below="@+id/tv_hint_mobile"
+                android:layout_toStartOf="@+id/tv_update_mobile" />
+
+            <TextView
+                android:id="@+id/tv_update_mobile"
+                style="@style/ProfileUpdateText"
+                android:text="@string/text_update_mobile" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5">
+
+            <TextView
+                android:id="@+id/tv_hint_email"
+                style="@style/ProfileSubText"
+                android:layout_toStartOf="@+id/tv_update_email"
+                android:text="@string/hint_email" />
+
+            <TextView
+                android:id="@+id/tv_u_email"
+                style="@style/ProfileHeadText"
+                android:layout_below="@+id/tv_hint_email"
+                android:layout_toStartOf="@+id/tv_update_email" />
+
+            <TextView
+                android:id="@+id/tv_update_email"
+                style="@style/ProfileUpdateText"
+                android:text="@string/text_update_email" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:padding="@dimen/padding_5">
+
+            <TextView
+                android:id="@+id/tv_hint_password"
+                style="@style/ProfileSubText"
+                android:layout_toStartOf="@+id/tv_change_pwd"
+                android:text="@string/hint_password" />
+
+            <TextView
+                style="@style/ProfileHeadText"
+                android:layout_below="@+id/tv_hint_password"
+                android:layout_toStartOf="@+id/tv_change_pwd"
+                android:text="@string/password_hide" />
+
+            <TextView
+                android:id="@+id/tv_change_pwd"
+                android:visibility="gone"
+                style="@style/ProfileUpdateText"
+                android:text="@string/text_change_pwd" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:padding="@dimen/padding_5">
+
+            <TextView
+                android:id="@+id/tv_hint_dob"
+                style="@style/ProfileSubText"
+                android:layout_toStartOf="@+id/tv_change_dob"
+                android:text="@string/txt_dob" />
+
+            <TextView
+                android:id="@+id/tv_dob"
+                style="@style/ProfileHeadText"
+                android:layout_below="@+id/tv_hint_dob"
+                android:layout_toStartOf="@+id/tv_change_dob" />
+
+            <TextView
+                android:id="@+id/tv_change_dob"
+                style="@style/ProfileUpdateText"
+                android:text="@string/text_change_dob" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:padding="@dimen/padding_5">
+
+            <TextView
+                android:id="@+id/tv_hint_pan"
+                style="@style/ProfileSubText"
+                android:layout_toStartOf="@+id/tv_change_pan"
+                android:text="@string/txt_pan" />
+
+            <TextView
+                android:id="@+id/tv_pan"
+                style="@style/ProfileHeadText"
+                android:layout_below="@+id/tv_hint_pan"
+                android:text="@string/password_hide"
+                android:layout_toStartOf="@+id/tv_change_pan" />
+
+            <TextView
+                android:id="@+id/tv_change_pan"
+                style="@style/ProfileUpdateText"
+                android:text="@string/text_change_pan" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:padding="@dimen/padding_5">
+
+            <TextView
+                android:id="@+id/tv_hint_aadhar"
+                style="@style/ProfileSubText"
+                android:layout_toStartOf="@+id/tv_change_aadhar"
+                android:text="@string/txt_aadhar" />
+
+            <TextView
+                android:id="@+id/tv_aadhar"
+                style="@style/ProfileHeadText"
+                android:layout_below="@+id/tv_hint_aadhar"
+                android:text="@string/password_hide"
+                android:layout_toStartOf="@+id/tv_change_aadhar" />
+
+            <TextView
+                android:id="@+id/tv_change_aadhar"
+                style="@style/ProfileUpdateText"
+                android:text="@string/text_change_aadhar" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5">
+
+            <TextView
+                android:id="@+id/tv_promo_code"
+                style="@style/ProfileSubText"
+                android:layout_toStartOf="@+id/tv_share"
+                android:text="@string/text_invitation_code" />
+
+            <TextView
+                android:id="@+id/tv_invite_code"
+                style="@style/ProfileHeadText"
+                android:layout_below="@+id/tv_promo_code"
+                android:layout_toStartOf="@+id/tv_share"
+                android:padding="@dimen/padding_2" />
+
+            <TextView
+                android:id="@+id/tv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_share"
+                android:backgroundTint="@color/colorBlack"
+                android:layout_marginEnd="@dimen/margin_35" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

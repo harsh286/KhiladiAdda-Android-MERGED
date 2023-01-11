@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="#212121"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="14dp"
+    tools:context=".splash.SplashActivity">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
+        android:layout_width="153dp"
+        android:layout_height="153dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#05FFFFFF"
+        app:cardCornerRadius="180dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+      <com.google.android.material.card.MaterialCardView
+          android:layout_width="111dp"
+          android:layout_height="111dp"
+          android:layout_gravity="center"
+          app:cardBackgroundColor="#08FFFFFF"
+          app:cardCornerRadius="180dp">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_network_issue" />
+      </com.google.android.material.card.MaterialCardView>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tv_no_internet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat"
+        android:text="No internet connection"
+        android:textColor="@color/white"
+        android:textFontWeight="700"
+        android:textSize="@dimen/dimen_18sp"
+        app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+        app:layout_constraintStart_toStartOf="@+id/materialCardView"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+    <TextView
+        android:id="@+id/tv_no_internet_descp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="-4dp"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="Please, check internet connection on your smartphone to use this application"
+        android:textColor="@color/white"
+        android:textFontWeight="600"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_no_internet"
+        app:layout_constraintStart_toStartOf="@+id/tv_no_internet"
+        app:layout_constraintTop_toBottomOf="@+id/tv_no_internet" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="40dp"
+        android:background="#303030"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_no_internet_descp" />
+
+    <TextView
+        android:id="@+id/tv_try_again"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="Try Again"
+        android:textColor="@color/white"
+        android:textFontWeight="600"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+    <ImageView
+        android:id="@+id/iv_cross"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/ic_cross"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

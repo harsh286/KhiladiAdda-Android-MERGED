@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cv_upcoming"
+    style="@style/LeagueCardAppearance">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/iv_image"
+                android:layout_width="@dimen/quiz_image_width"
+                android:layout_height="@dimen/quiz_image_height"
+                android:contentDescription="@string/text_no"
+                android:scaleType="centerCrop"
+                android:src="@drawable/freefire" />
+
+            <TextView
+                android:id="@+id/tv_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_toEndOf="@+id/iv_image"
+                android:hint="@string/hint_league_name"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_15"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_3"
+                android:layout_weight="1"
+                android:background="@drawable/border_grey"
+                android:padding="@dimen/padding_5">
+
+                <ImageView
+                    android:id="@+id/iv_entry"
+                    android:layout_width="@dimen/quiz_icon_image_width"
+                    android:layout_height="@dimen/quiz_icon_image_height"
+                    android:layout_alignParentStart="true"
+                    android:contentDescription="@string/text_no"
+                    android:src="@drawable/prize" />
+
+                <TextView
+                    android:id="@+id/tvEntry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_marginTop="@dimen/margin_1"
+                    android:layout_toEndOf="@+id/iv_entry"
+                    android:text="@string/text_entry"
+                    android:textColor="@color/lighter_black"
+                    android:textSize="@dimen/text_9" />
+
+                <TextView
+                    android:id="@+id/tv_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvEntry"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:minLines="2"
+                    android:padding="@dimen/padding_2"
+                    android:text="@string/text_entry"
+                    android:textColor="@color/color_green"
+                    android:textSize="@dimen/text_13" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_3"
+                android:layout_weight="1"
+                android:background="@drawable/border_grey"
+                android:padding="@dimen/padding_5">
+
+                <ImageView
+                    android:id="@+id/iv_prize"
+                    android:layout_width="@dimen/quiz_icon_image_width"
+                    android:layout_height="@dimen/quiz_icon_image_height"
+                    android:layout_alignParentStart="true"
+                    android:contentDescription="@string/text_no"
+                    android:src="@drawable/entry" />
+
+                <TextView
+                    android:id="@+id/tvPrize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_marginTop="@dimen/margin_1"
+                    android:layout_toEndOf="@+id/iv_prize"
+                    android:text="@string/text_prize"
+                    android:textColor="@color/lighter_black"
+                    android:textSize="@dimen/text_9" />
+
+                <TextView
+                    android:id="@+id/tv_prize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvPrize"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:minLines="2"
+                    android:padding="@dimen/padding_2"
+                    android:text="@string/text_prize"
+                    android:textColor="@color/color_green"
+                    android:textSize="@dimen/text_13" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/border_grey"
+                android:padding="@dimen/padding_5">
+
+                <ImageView
+                    android:id="@+id/iv_kill"
+                    android:layout_width="@dimen/quiz_icon_image_width"
+                    android:layout_height="@dimen/quiz_icon_image_height"
+                    android:layout_alignParentStart="true"
+                    android:contentDescription="@string/text_no"
+                    android:src="@drawable/ic_coins" />
+
+                <TextView
+                    android:id="@+id/tvKill"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_marginTop="@dimen/margin_1"
+                    android:layout_toEndOf="@+id/iv_kill"
+                    android:text="@string/text_kill_point"
+                    android:textColor="@color/lighter_black"
+                    android:textSize="@dimen/text_9" />
+
+                <TextView
+                    android:id="@+id/tv_kill_point"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvKill"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:minLines="2"
+                    android:padding="@dimen/padding_2"
+                    android:text="@string/text_kill_point"
+                    android:textColor="@color/color_green"
+                    android:textSize="@dimen/text_13" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_participated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/margin_3"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:hint="@string/text_zero_double"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/text_9"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/pb_quiz_progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:max="100"
+            android:progress="20"
+            android:progressDrawable="@drawable/quiz_progress_bar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/border_grey"
+                android:padding="@dimen/padding_5">
+
+                <ImageView
+                    android:id="@+id/iv_timer"
+                    android:layout_width="@dimen/quiz_timer_image_width"
+                    android:layout_height="@dimen/quiz_timer_image_height"
+                    android:layout_alignParentStart="true"
+                    android:contentDescription="@string/text_no"
+                    android:src="@drawable/timer" />
+
+                <TextView
+                    android:id="@+id/tv_endtime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_toEndOf="@+id/iv_timer"
+                    android:text="@string/start_date"
+                    android:textColor="@color/lighter_black"
+                    android:textSize="@dimen/text_9" />
+
+                <TextView
+                    android:id="@+id/tv_end_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_endtime"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_2"
+                    android:textColor="@color/seconAccent"
+                    android:textSize="@dimen/text_11" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_3"
+                android:layout_weight="1"
+                android:background="@drawable/border_grey"
+                android:padding="@dimen/padding_5">
+
+                <ImageView
+                    android:id="@+id/iv_particpant"
+                    android:layout_width="@dimen/quiz_timer_image_width"
+                    android:layout_height="@dimen/quiz_timer_image_height"
+                    android:layout_alignParentStart="true"
+                    android:contentDescription="@string/text_no"
+                    android:src="@drawable/participant" />
+
+                <TextView
+                    android:id="@+id/tvParticipant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_toEndOf="@+id/iv_particpant"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_total_participant"
+                    android:textColor="@color/lighter_black"
+                    android:textSize="@dimen/text_9" />
+
+                <TextView
+                    android:id="@+id/tv_total_participant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvParticipant"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_2"
+                    android:textColor="@color/seconAccent"
+                    android:textSize="@dimen/text_11" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_3"
+                android:layout_weight="1"
+                android:background="@drawable/border_grey"
+                android:padding="@dimen/padding_5">
+
+                <ImageView
+                    android:id="@+id/iv_map"
+                    android:layout_width="@dimen/quiz_timer_image_width"
+                    android:layout_height="@dimen/quiz_timer_image_height"
+                    android:layout_alignParentStart="true"
+                    android:contentDescription="@string/text_no"
+                    android:src="@drawable/ic_map_black_24dp" />
+
+                <TextView
+                    android:id="@+id/tvMap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_toEndOf="@+id/iv_map"
+                    android:text="@string/text_map"
+                    android:textColor="@color/lighter_black"
+                    android:textSize="@dimen/text_9" />
+
+                <TextView
+                    android:id="@+id/tv_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvMap"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_2"
+                    android:textColor="@color/seconAccent"
+                    android:textSize="@dimen/text_11" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btn_play"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/mybutton"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
+            android:text="@string/text_view"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_11" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

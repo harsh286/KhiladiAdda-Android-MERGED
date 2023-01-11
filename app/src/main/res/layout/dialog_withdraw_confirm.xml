@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DialogLinearLayout">
+
+    <TextView
+        android:id="@+id/tv_dialog_name"
+        style="@style/DialogHeadText"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:text="@string/head_wallet_withdraw"
+        android:textColor="@color/orange_dark" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@drawable/border_grey"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_5">
+
+        <TextView
+            style="@style/WalletTextViewOne"
+            android:layout_marginStart="@dimen/margin_3"
+            android:text="@string/text_wallet_winning" />
+
+        <TextView
+            android:id="@+id/tv_wallet"
+            style="@style/WalletTextViewTwo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@drawable/border_grey"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_5">
+
+        <TextView
+            style="@style/WalletTextViewOne"
+            android:layout_marginStart="@dimen/margin_3"
+            android:text="@string/text_withdraw" />
+
+        <TextView
+            android:id="@+id/tv_withdraw"
+            style="@style/WalletTextViewTwo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@drawable/border_grey"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_5">
+
+        <TextView
+            style="@style/WalletTextViewOne"
+            android:layout_marginStart="@dimen/margin_3"
+            android:text="@string/text_transaction_fee" />
+
+        <TextView
+            android:id="@+id/tv_transaction_fee"
+            style="@style/WalletTextViewTwo"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:background="@drawable/border_grey"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_5">
+
+        <TextView
+            style="@style/WalletTextViewOne"
+            android:layout_marginStart="@dimen/margin_3"
+            android:text="@string/text_final_pay" />
+
+        <TextView
+            android:id="@+id/tv_final_fee"
+            style="@style/WalletTextViewTwo"
+            android:textColor="@color/color_green" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancel"
+            style="@style/DialogButtonWeight"
+            android:text="@string/text_cancel" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_send"
+            style="@style/DialogButtonWeight"
+            android:layout_marginStart="@dimen/margin_5"
+            android:text="@string/text_confirm" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_rules"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/padding_5"
+        android:text="@string/text_rules_withdraw"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_15"
+        android:visibility="visible" />
+
+</LinearLayout>

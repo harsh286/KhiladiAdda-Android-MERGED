@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DialogLinearLayout">
+
+    <TextView
+        android:id="@+id/tv_msg"
+        style="@style/DialogHeadText"
+        tools:text="@string/text_msg" />
+
+    <include layout="@layout/view_line_gray" />
+
+    <TextView
+        android:id="@+id/tv_help"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/padding_10"
+        android:text="@string/text_help_captain"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_14" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_ok"
+        style="@style/DialogButton"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:text="@string/ok" />
+
+</LinearLayout>

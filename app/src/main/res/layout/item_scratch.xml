@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mcv_main"
+    android:layout_width="@dimen/margin_120"
+    android:layout_height="@dimen/margin_120"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/margin_8"
+    android:orientation="vertical"
+    app:cardCornerRadius="@dimen/margin_10"
+    app:cardElevation="@dimen/margin_10">
+
+    <ImageView
+        android:id="@+id/iv_unscratch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/s3"
+        android:src="@drawable/new_scratch_card"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/iv_scracthed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:contentDescription="@string/s3"
+        android:src="@drawable/scratched_card"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/battle_red"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_ps"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/margin_50"
+            android:background="@color/toolbar_gamer"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="Payment Status"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_16"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_status_success"
+            android:layout_width="@dimen/margin_90"
+            android:layout_height="@dimen/margin_90"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:layout_marginBottom="@dimen/margin_30"
+            android:src="@drawable/insf_gc"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_ps" />
+
+        <TextView
+            android:id="@+id/tv_amt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:layout_marginEnd="@dimen/margin_20"
+            android:text="@string/insuffiecient_GC"
+            android:textAlignment="center"
+            android:textColor="#272727"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintLeft_toLeftOf="@id/img_status_success"
+            app:layout_constraintRight_toRightOf="@id/img_status_success"
+            app:layout_constraintTop_toBottomOf="@id/img_status_success" />
+
+        <Button
+            android:id="@+id/btn_okay_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_50"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginTop="@dimen/text_12"
+            android:layout_marginEnd="@dimen/margin_20"
+            android:gravity="center"
+            android:text="Okay"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@id/tv_amt"
+            app:layout_constraintRight_toRightOf="@id/tv_amt"
+            app:layout_constraintTop_toBottomOf="@+id/tv_amt" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

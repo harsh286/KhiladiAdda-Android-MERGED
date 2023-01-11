@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_8"
+    android:layout_marginStart="@dimen/margin_20"
+    android:layout_marginEnd="@dimen/margin_20"
+    android:layout_marginBottom="@dimen/margin_15">
+
+    <ProgressBar
+        android:id="@+id/pb_quiz_progress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/tv_progress"
+        android:max="100"
+        android:progress="20"
+        android:progressDrawable="@drawable/quiz_progress_bar" />
+
+    <TextView
+        android:id="@+id/tv_progress"
+        android:padding="@dimen/padding_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:text="@string/text_zero_double"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_9"
+        android:textStyle="bold" />
+
+</RelativeLayout>

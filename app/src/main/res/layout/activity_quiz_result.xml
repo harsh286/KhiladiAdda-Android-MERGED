@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profile.ProfileActivity">
+
+    <include layout="@layout/actionbar_white" />
+
+    <LinearLayout
+        android:id="@+id/ll_first"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar"
+        android:layout_marginStart="@dimen/margin_40"
+        android:layout_marginEnd="@dimen/margin_40"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:baselineAligned="false"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_correct"
+                android:layout_width="@dimen/correct_width"
+                android:layout_height="@dimen/correct_height"
+                android:background="@drawable/circular_green"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_24"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/padding_2"
+                android:text="@string/txt_correct"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_11" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_wrong"
+                android:layout_width="@dimen/correct_width"
+                android:layout_height="@dimen/correct_height"
+                android:background="@drawable/circular_red"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_24"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/padding_2"
+                android:text="@string/txt_not_correct"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_11" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_below="@+id/ll_first"
+        android:background="@drawable/main_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_final"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center"
+            android:padding="@dimen/padding_5"
+            android:text="@string/text_partial_leaderboard"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_11"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_view_leaderboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ll_second"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:padding="@dimen/padding_5">
+
+            <ImageView
+                android:id="@+id/iv_replay"
+                android:layout_width="@dimen/image_width"
+                android:layout_height="@dimen/image_height"
+                android:layout_weight="1"
+                android:contentDescription="@string/text_replay"
+                android:src="@drawable/replay" />
+
+            <ImageView
+                android:id="@+id/iv_view_prize_distribution"
+                android:layout_width="@dimen/image_width"
+                android:layout_height="@dimen/image_height"
+                android:layout_weight="1"
+                android:contentDescription="@string/text_view_prize_pool_breakup"
+                android:src="@drawable/view_prize_distribution" />
+
+            <ImageView
+                android:id="@+id/iv_view_prize_money"
+                android:layout_width="@dimen/image_width"
+                android:layout_height="@dimen/image_height"
+                android:layout_weight="1"
+                android:contentDescription="@string/text_view_prize_pool_breakup"
+                android:src="@drawable/view_prizze_amount" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_leaderboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_marginBottom="@dimen/margin_5"
+            android:background="@drawable/border_grey"
+            android:elevation="@dimen/card_elevation_5"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_10">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_leaderboard_live"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/text_17"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_leaderboard"
+                style="@style/BaseRecyclerview" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/inner_bg"
+    tools:context=".ludo.luodhelp.LudoHelpActivity">
+
+    <TextView
+        android:id="@+id/btn_view_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/margin_25"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginEnd="@dimen/margin_25"
+        android:background="@drawable/live_btn_bg_selected"
+        android:gravity="center"
+        android:padding="@dimen/padding_8"
+        android:text="@string/text_view_video"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_17" />
+
+    <ImageView
+        android:id="@+id/iv_ludo_help"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/s3"
+        android:src="@drawable/ludo_help_one" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/margin_20"
+        android:layout_marginEnd="@dimen/margin_20"
+        android:layout_marginBottom="@dimen/margin_3"
+        android:baselineAligned="false"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_previous"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:layout_weight="1"
+            android:background="@drawable/live_btn_bg_selected"
+            android:paddingStart="@dimen/padding_10"
+            android:paddingEnd="@dimen/padding_10">
+
+            <ImageView
+                android:id="@+id/iv_previous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/text_zero"
+                android:src="@drawable/ic_arrow_back_white" />
+
+            <TextView
+                android:id="@+id/btn_previous"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="@color/colorTransparent"
+                android:gravity="center"
+                android:text="@string/text_previous"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_next"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:layout_weight="1"
+            android:background="@drawable/live_btn_bg_selected"
+            android:paddingStart="@dimen/padding_10"
+            android:paddingEnd="@dimen/padding_10">
+
+            <ImageView
+                android:id="@+id/iv_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/text_zero"
+                android:src="@drawable/ic_arrow_forward_white" />
+
+            <TextView
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="@color/colorTransparent"
+                android:gravity="center"
+                android:text="@string/text_next"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

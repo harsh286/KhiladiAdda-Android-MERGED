@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_menu_dashboard"
+            android:title="@string/my_dashboard"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_profile"
+            android:title="@string/my_profile" />
+        <item
+            android:id="@+id/nav_stats"
+            android:icon="@drawable/ic_stats"
+            android:title="@string/my_stats_voucher" />
+        <item
+            android:id="@+id/nav_wallet"
+            android:icon="@drawable/ic_wallet"
+            android:title="@string/my_wallet" />
+        <item
+            android:id="@+id/nav_leaderboard"
+            android:icon="@drawable/ic_trending_up"
+            android:title="@string/text_leaderboard" />
+        <item
+            android:id="@+id/nav_earn_free_coins"
+            android:icon="@drawable/ic_play_quiz"
+            android:title="@string/my_past_quiz" />
+        <item
+            android:id="@+id/nav_rewards"
+            android:icon="@drawable/refer_icon"
+            android:title="@string/my_rewards_offer"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_referrals"
+            android:icon="@drawable/ic_refer"
+            android:title="@string/my_referals" />
+        <item
+            android:id="@+id/nav_facts"
+            android:icon="@drawable/ic_bookmark_black"
+            android:title="@string/my_facts"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_notification"
+            android:icon="@drawable/ic_notifications_black_24dp"
+            android:title="@string/menu_notification"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_deposit"
+            android:icon="@drawable/ic_deposit"
+            android:title="@string/menu_deposit" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_nav_setting"
+            android:title="@string/menu_setting" />
+
+        <item
+            android:id="@+id/nav_responsible_gaming"
+            android:icon="@drawable/responsible_gaming"
+            android:title="@string/responsible_gaming" />
+        <item
+            android:id="@+id/nav_tutorial"
+            android:icon="@drawable/nav_tutorial"
+            android:title="@string/menu_tutorial" />
+    </group>
+    <item android:title="@string/text_social_media">
+        <menu>
+            <item
+                android:id="@+id/nav_telegram"
+                android:icon="@drawable/ic_telegram"
+                android:title="@string/text_telegram" />
+            <item
+                android:id="@+id/nav_instagram"
+                android:icon="@drawable/ic_instagram"
+                android:title="@string/text_instagram" />
+            <item
+                android:id="@+id/nav_youtube"
+                android:icon="@drawable/ic_youtube"
+                android:title="@string/text_youtube" />
+        </menu>
+    </item>
+
+</menu>

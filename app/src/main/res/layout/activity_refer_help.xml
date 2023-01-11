@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/inner_bg"
+    tools:context=".referhistory.ReferHelpActivity">
+
+    <ImageView
+        android:id="@+id/iv_ludo_help"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/s3"
+        android:src="@drawable/refer_help" />
+
+    <TextView
+        android:id="@+id/tv_next"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:background="@drawable/live_btn_bg_selected"
+        android:drawableEnd="@drawable/ic_arrow_forward_white"
+        android:gravity="center"
+        android:padding="@dimen/padding_5"
+        android:text="@string/text_next"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite" />
+
+</RelativeLayout>

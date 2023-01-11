@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/action_bar"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:background="@android:color/transparent"
+    android:padding="@dimen/padding_15">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_arrow_back_white"
+        android:contentDescription="@string/text_no" />
+
+    <TextView
+        android:id="@+id/tv_activity_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/iv_sound"
+        android:layout_toEndOf="@+id/iv_back"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_17" />
+
+    <ImageView
+        android:id="@+id/iv_sound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/padding_5"
+        android:background="@drawable/ic_volume_play"
+        android:contentDescription="@string/text_no" />
+
+</RelativeLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ItemCardAppearance">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_5">
+
+        <TextView
+            android:id="@+id/tv_notification_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_13"
+            android:layout_toStartOf="@+id/iv_checkbox"
+            android:padding="@dimen/padding_2"
+            tools:text="@string/action_notifications" />
+
+        <TextView
+            android:id="@+id/tv_notification_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_notification_title"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_1"
+            android:layout_toStartOf="@+id/iv_checkbox"
+            android:maxLines="3"
+            android:minLines="1"
+            android:padding="@dimen/padding_2"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/text_11"
+            tools:text="sjhcgsjdgcusegugfuiwfhuirgfuilrgfierugvuilegruifgfgeruilfgeruilfgluirfguierfguilgefugrfuilgeruifgeruifgeruilfgrgfuigruilfgui" />
+
+        <TextView
+            android:id="@+id/tv_notification_date_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_notification_message"
+            android:layout_marginTop="@dimen/margin_2"
+            android:gravity="center"
+            android:padding="@dimen/padding_2"
+            android:textColor="@color/lighter_black"
+            android:textSize="@dimen/text_11"
+            android:textStyle="italic"
+            tools:text="@string/text__live" />
+
+        <ImageView
+            android:id="@+id/iv_checkbox"
+            android:layout_width="@dimen/quiz_image_width"
+            android:layout_height="@dimen/quiz_image_height"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/selector_checkbox"
+            android:contentDescription="@string/s3" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

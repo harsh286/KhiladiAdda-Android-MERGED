@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/ic_old_selector_merchant"
+    android:id="@+id/ll_payment"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/margin_5"
+    android:padding="@dimen/padding_5">
+
+    <ImageView
+        android:contentDescription="@string/text_delete"
+        android:id="@+id/iv_delete"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_height="25dp"
+        android:layout_width="30dp"
+        android:padding="@dimen/padding_2"
+        android:src="@drawable/ic_delete_black_24dp" />
+
+    <TextView
+        android:id="@+id/tv_mode"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/iv_delete"
+        android:layout_width="match_parent"
+        android:padding="@dimen/padding_3"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_13" />
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_below="@+id/tv_mode"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/iv_delete"
+        android:layout_width="match_parent"
+        android:maxLines="2"
+        android:minLines="2"
+        android:padding="@dimen/padding_3"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_11" />
+
+</RelativeLayout>

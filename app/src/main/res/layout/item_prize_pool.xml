@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cv_trending"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/card_elevation_5"
+    android:layout_marginTop="@dimen/margin_3"
+    android:layout_marginBottom="@dimen/margin_3"
+    android:layout_marginStart="@dimen/margin_15"
+    android:layout_marginEnd="@dimen/margin_15"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lightest_gray"
+        android:padding="@dimen/padding_3"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_from"
+            style="@style/FactsHead"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tv_amount"
+            style="@style/FactsHead"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

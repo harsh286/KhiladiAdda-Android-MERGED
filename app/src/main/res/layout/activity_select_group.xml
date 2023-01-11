@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/inner_bg"
+    android:orientation="vertical"
+    tools:context=".fanbattle.FanBattleActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical"
+        android:padding="@dimen/padding_5">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"
+            android:contentDescription="@string/s3"
+            android:padding="@dimen/padding_5"
+            android:src="@drawable/ic_arrow_back_white"
+            app:tint="@color/colorBlack" />
+
+        <TextView
+            android:id="@+id/tv_activity_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginRight="@dimen/margin_10"
+            android:layout_toEndOf="@+id/iv_back"
+            android:text="@string/text_combo"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_17" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_select_combo"
+        fontPath="fonts/Lato-Bold.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_image"
+        android:gravity="center"
+        android:padding="@dimen/padding_5"
+        android:text="@string/text_select_combo_invest"
+        android:textColor="@color/orange_dark"
+        android:textSize="@dimen/text_13"
+        tools:ignore="MissingPrefix" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_group"
+        style="@style/BaseRecyclerview"
+        android:layout_above="@+id/tv_hint"
+        android:layout_below="@+id/tv_select_combo" />
+
+    <TextView
+        android:id="@+id/tv_hint"
+        style="@style/PageText"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/margin_2"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:textStyle="bold"
+        android:padding="@dimen/padding_5"
+        android:textSize="@dimen/text_13"
+        android:text="@string/text_substitute_help"
+        android:textColor="@color/colorPrimary" />
+
+</RelativeLayout>

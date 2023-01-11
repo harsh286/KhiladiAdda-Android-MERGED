@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/inner_bg"
+    tools:context=".league.LeagueActivity">
+
+    <include layout="@layout/actionbar_white" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_view_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar"
+        android:layout_marginStart="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginEnd="@dimen/margin_20"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:background="@color/color_yellow"
+        android:text="@string/help_tutorial_message"
+        android:textColor="@color/blue_dark"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_help"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_below="@+id/btn_view_video" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_email"
+            style="@style/ButtonBottom"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_email"
+            android:text="@string/text_contact_email"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ll_whatsapp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/border_bottom_white"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_5">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/margin_5"
+                android:background="@drawable/circular_green"
+                android:padding="@dimen/padding_5"
+                android:src="@drawable/ic_phone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTransparent"
+                android:gravity="center"
+                android:text="@string/text_contact_whatsapp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_10" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

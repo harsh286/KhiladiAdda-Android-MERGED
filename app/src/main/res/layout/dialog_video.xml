@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="@dimen/margin_20"
+        android:layout_height="@dimen/margin_20"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/ic_close"
+        android:backgroundTint="@color/colorWhite" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_below="@+id/iv_close"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/margin_10" />
+
+</RelativeLayout>

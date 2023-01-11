@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/inner_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/actionbar" />
+
+    <ImageView
+        android:id="@+id/iv_upload"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_below="@+id/action_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:background="@drawable/image_background"
+        android:contentDescription="@string/text_won"
+        android:scaleType="fitXY" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_screenshot"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/padding_10"
+        android:text="@string/text_add_screenshot"
+        android:textColor="@color/white" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/roundborder_pink_red"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_5">
+
+        <Spinner
+            android:id="@+id/spn_reason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_15"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_15"
+           android:contentDescription="@string/s3"
+            android:minHeight="48dp"
+            android:padding="@dimen/padding_10" />
+
+        <EditText
+            android:id="@+id/et_other_reason"
+            style="@style/DialogEditText"
+            android:layout_marginStart="@dimen/margin_15"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_15"
+            android:autofillHints=""
+            android:hint="@string/text_reason"
+            android:inputType="textCapWords"
+            android:minHeight="48dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_confirm"
+            style="@style/DialogButton"
+            android:layout_marginTop="@dimen/margin_10"
+            android:text="@string/text_update_error" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,10 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/droido_toolbar_color"/>
+            <corners android:bottomLeftRadius="2dp"
+                android:bottomRightRadius="2dp"/>
+        </shape>
+    </item>
+
+</layer-list>

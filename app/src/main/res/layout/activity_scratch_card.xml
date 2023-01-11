@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".scratchcard.ScratchCardActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_120"
+            android:background="#DD1D34">
+
+            <include
+                android:id="@+id/include"
+                layout="@layout/actionbar_transparent" />
+
+            <TextView
+                android:id="@+id/tv_totalearnings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/include"
+                android:layout_marginStart="@dimen/margin_20"
+                android:text="@string/total_earnings"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14" />
+
+            <TextView
+                android:id="@+id/tv_amount_earned"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_totalearnings"
+                android:layout_marginStart="@dimen/margin_20"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_16" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_categories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_top"
+            android:layout_marginStart="@dimen/margin_15"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_5"
+            android:text="@string/categories"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16" />
+
+        <LinearLayout
+            android:id="@+id/ll_first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_categories"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <include layout="@layout/ludo_scratch" />
+
+            <include layout="@layout/fanbattle_scratch" />
+
+            <include layout="@layout/ludouni_scratch" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_second"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_first"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <include layout="@layout/league_scratch" />
+
+            <include layout="@layout/quiz_scratch" />
+
+            <include layout="@layout/clashx_scratch" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_third"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_second"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <include layout="@layout/droid_scratch" />
+
+            <include layout="@layout/ws_scratch" />
+
+            <include layout="@layout/comingsoon" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_third"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
+            android:text="@string/scratch_cards"
+            android:textColor="@color/black" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_scratch_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_text"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10" />
+
+        <TextView
+            android:id="@+id/txt_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_text"
+            android:layout_marginTop="@dimen/margin_50"
+            android:gravity="center"
+            android:text="@string/please_select_a_category_to_see_cards_or_complete_any_challenge"
+            android:textColor="#818181"
+            android:textSize="@dimen/text_16"
+            android:visibility="gone" />
+        <include layout="@layout/bannermoengage"/>
+    </RelativeLayout>
+</ScrollView>

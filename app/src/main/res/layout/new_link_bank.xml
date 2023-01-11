@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_8"
+    android:id="@+id/rl_bank"
+    android:background="@drawable/ic_selector_merchant">
+
+    <ImageView
+        android:id="@+id/iv_bank"
+        android:padding="@dimen/margin_20"
+        android:layout_width="@dimen/margin_90"
+        android:layout_height="@dimen/margin_60"
+        android:contentDescription="@string/s3"
+        android:src="@drawable/ic_bank" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_bank"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_11"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_centerHorizontal="true"
+        android:text="@string/bank_transfer" />
+
+</RelativeLayout>

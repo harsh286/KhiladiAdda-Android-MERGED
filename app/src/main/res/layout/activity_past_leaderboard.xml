@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".leaderboard.LeaderboardActivity">
+
+    <include layout="@layout/actionbar_white" />
+
+    <RelativeLayout
+        android:id="@+id/rl_champion"
+        android:layout_below="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/padding_10"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_cup"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/bonus_trophy" />
+
+        <TextView
+            android:id="@+id/tv_champ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_toEndOf="@+id/iv_cup"
+            android:gravity="center"
+            android:text="@string/text_champions"
+            android:textColor="@android:color/holo_orange_light"
+            android:textSize="@dimen/text_24"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_champ"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_toEndOf="@+id/iv_cup"
+            android:gravity="center"
+            android:text="@string/text_adda"
+            android:textColor="@android:color/holo_orange_light"
+            android:textSize="@dimen/text_27" />
+
+    </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_leaderboard"
+            android:layout_below="@+id/rl_champion"
+            style="@style/BaseRecyclerview" />
+
+</RelativeLayout>
