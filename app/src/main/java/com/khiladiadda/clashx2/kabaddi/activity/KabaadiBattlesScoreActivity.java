@@ -475,7 +475,6 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
                 mTPlayerFourIV.setImageResource(R.drawable.splash_logo);
             }
 
-
         } else if (mResultList.get(0).getCaptainPoints() == mResultList.get(0).getOpponentPoints()) {
             playerdatawithoutpoints();
         }
