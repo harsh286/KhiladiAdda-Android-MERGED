@@ -911,4 +911,5 @@
 <!--    <string name="gamer_cash_coins">GamerCash \nTotal = \u20B9 </string>-->
 <!--    <string name="insuffiecient_GC">Your GC amount is insufficient.\nPlease earn more GC for successful \ntransaction.</string>-->
     <string name="min_amount">Please add amount to proceed.\nMinimum amount to be added is Rs.10</string>
+    <string name="ended">Ended</string>
 </resources>

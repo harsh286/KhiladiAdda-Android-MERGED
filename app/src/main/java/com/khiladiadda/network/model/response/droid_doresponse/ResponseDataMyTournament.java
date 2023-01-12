@@ -31,11 +31,22 @@ public class ResponseDataMyTournament {
     @SerializedName("prizemoney")
     private Integer winPrize;
 
+    @SerializedName("is_won")
+    public boolean is_won;
+
     @SerializedName("prize_pool_breakthrough")
     private ArrayList<PrizePool> prizePools;
 
     public Integer getWinPrize() {
         return winPrize;
+    }
+
+    public boolean isIs_won() {
+        return is_won;
+    }
+
+    public void setIs_won(boolean is_won) {
+        this.is_won = is_won;
     }
 
     public void setWinPrize(Integer winPrize) {
