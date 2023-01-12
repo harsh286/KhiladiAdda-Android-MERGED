@@ -68,14 +68,18 @@ public class MyTournamentGameAdapter extends RecyclerView.Adapter<MyTournamentGa
             if (tournamentTrendingData.getTournament_status() == 0 && tournamentTrendingData.getN_attempts() == 3) {
                 holder.acbPlay.setVisibility(View.VISIBLE);
                 holder.acbPlay.setText(mContext.getString(R.string.view));
-                holder.tvEnded.setText(mContext.getString(R.string.attempts) + tournamentTrendingData.getN_attempts() + "/" + 3);
+                holder.tvEnded.setText(mContext.getString(R.string.completed));
             }
         } else if (tournamentTrendingData.getTournament_status() == 1) {
             holder.acbPlay.setVisibility(View.VISIBLE);
             holder.acbPlay.setText(mContext.getString(R.string.view));
             holder.tvEnded.setText(mContext.getString(R.string.completed));
-            if (tournamentTrendingData.getWinPrize() != 0) {
-                holder.tvEnded.setText(mContext.getString(R.string.won) + ":  ₹ " + tournamentTrendingData.getWinPrize());
+            if (tournamentTrendingData.getWinPrize() != 0 && tournamentTrendingData.is_won) {
+                holder.tvEnded.setText(mContext.getString(R.string.won) + ":  ₹ " + tournamentTrendingData.getPrizePools().get(0).getPrizeMoney());
+                holder.itemView.setClickable(false);
+                holder.itemView.setEnabled(false);
+            } else if (tournamentTrendingData.getTournament_status() == 1 && !tournamentTrendingData.is_won) {
+                holder.tvEnded.setText(mContext.getString(R.string.ended));
                 holder.itemView.setClickable(false);
                 holder.itemView.setEnabled(false);
             }
@@ -86,27 +90,23 @@ public class MyTournamentGameAdapter extends RecyclerView.Adapter<MyTournamentGa
             holder.itemView.setEnabled(false);
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (holder.acbPlay.getText().equals(mContext.getString(R.string.play))) {
-                    Intent intent = new Intent(mContext, TournamenetDetailActivity.class);
-                    intent.putExtra(AppConstant.DROIDO_NAME, tournamentTrendingData.getTournaments_name());
-                    intent.putExtra(AppConstant.DROIDO_IMAGE, tournamentTrendingData.getTournaments_image());
-                    intent.putExtra(AppConstant.DROIDO_ENTRY_FEE, tournamentTrendingData.getEntryFees().toString());
-                    intent.putExtra(AppConstant.DROIDO_WIN_PRIZE, tournamentTrendingData.getWinPrize().toString());
-                    intent.putExtra(AppConstant.DROIDO_N_ATTEMPTS, String.valueOf(tournamentTrendingData.getN_attempts()));
-                    intent.putExtra(AppConstant.DROIDO_TOTAL_PARTICIPANTS, String.valueOf(tournamentTrendingData.totalparticipants));
-                    intent.putExtra(AppConstant.DROIDO_PLAYED_PARTICIPANTS, String.valueOf(tournamentTrendingData.playedparticipants));
-                    intent.putExtra("id", tournamentTrendingData.getTournament_id());
-                    intent.putExtra(AppConstant.DROIDO_ENDS_IN, tournamentTrendingData.endIn);
-                    intent.putExtra(AppConstant.DROIDO_PRIZEPOOL, tournamentTrendingData.getPrizePools());
-///                    intent.putExtra("tournament_id", tournamentTrendingData.getTournament_id());
-                    mContext.startActivity(intent);
-                } else {
-                    if (tournamentTrendingData.getN_attempts() != 3) {
-                        doIntent(tournamentTrendingData);
-                    }
+        holder.itemView.setOnClickListener(view -> {
+            if (holder.acbPlay.getText().equals(mContext.getString(R.string.play))) {
+                Intent intent = new Intent(mContext, TournamenetDetailActivity.class);
+                intent.putExtra(AppConstant.DROIDO_NAME, tournamentTrendingData.getTournaments_name());
+                intent.putExtra(AppConstant.DROIDO_IMAGE, tournamentTrendingData.getTournaments_image());
+                intent.putExtra(AppConstant.DROIDO_ENTRY_FEE, tournamentTrendingData.getEntryFees().toString());
+                intent.putExtra(AppConstant.DROIDO_WIN_PRIZE, tournamentTrendingData.getWinPrize().toString());
+                intent.putExtra(AppConstant.DROIDO_N_ATTEMPTS, String.valueOf(tournamentTrendingData.getN_attempts()));
+                intent.putExtra(AppConstant.DROIDO_TOTAL_PARTICIPANTS, String.valueOf(tournamentTrendingData.totalparticipants));
+                intent.putExtra(AppConstant.DROIDO_PLAYED_PARTICIPANTS, String.valueOf(tournamentTrendingData.playedparticipants));
+                intent.putExtra("id", tournamentTrendingData.getTournament_id());
+                intent.putExtra(AppConstant.DROIDO_ENDS_IN, tournamentTrendingData.endIn);
+                intent.putExtra(AppConstant.DROIDO_PRIZEPOOL, tournamentTrendingData.getPrizePools());
+                mContext.startActivity(intent);
+            } else {
+                if (tournamentTrendingData.getN_attempts() != 3) {
+                    doIntent(tournamentTrendingData);
                 }
             }
         });
@@ -169,9 +169,6 @@ public class MyTournamentGameAdapter extends RecyclerView.Adapter<MyTournamentGa
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, itemView);
-
         }
-
     }
-
 }

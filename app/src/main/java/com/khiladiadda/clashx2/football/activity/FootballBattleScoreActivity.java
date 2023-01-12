@@ -1,6 +1,5 @@
 package com.khiladiadda.clashx2.football.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Lifecycle;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -23,7 +22,6 @@ import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.clashx2.football.createbattle.FootballPlayerStatus;
 import com.khiladiadda.clashx2.main.HTHPresenter;
-import com.khiladiadda.clashx2.main.activity.BattlesScoreActivity;
 import com.khiladiadda.clashx2.main.activity.MyFanLeagueActivityHTH;
 import com.khiladiadda.clashx2.main.activity.PlayerStatus;
 import com.khiladiadda.clashx2.main.interfaces.IHTHBattlePresenter;
@@ -466,7 +464,6 @@ public class FootballBattleScoreActivity extends BaseActivity implements IHTHBat
                 mPointsLosingTV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
                 mOppentCV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
             }
-
         } else {
             if (!mYouWin) {
                 mPointsWinningTV.setOnClickListener(v -> points(mResultList.get(0).getCaptain()));

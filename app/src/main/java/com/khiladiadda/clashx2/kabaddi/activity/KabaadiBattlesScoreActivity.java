@@ -68,7 +68,7 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
     ImageView mTPlayerFiveEditIV;
     @BindView(R.id.iv_player6edit)
     ImageView mTPlayerSixEditIV;
-    
+
     @BindView(R.id.tv_player1edit)
     TextView mTPlayerOneEditTV;
     @BindView(R.id.tv_player2edit)
@@ -475,7 +475,6 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
                 mTPlayerFourIV.setImageResource(R.drawable.splash_logo);
             }
 
-
         } else if (mResultList.get(0).getCaptainPoints() == mResultList.get(0).getOpponentPoints()) {
             playerdatawithoutpoints();
         }
@@ -500,20 +499,19 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
                 mWinningCV.setOnClickListener(v -> points(mResultList.get(0).getCaptain()));
                 mPointsLosingTV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getOpponent()));
                 mOppentCV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getOpponent()));
-            }else {
+            } else {
                 mPointsWinningTV.setOnClickListener(v -> points(mResultList.get(0).getOpponent()));
                 mWinningCV.setOnClickListener(v -> points(mResultList.get(0).getOpponent()));
                 mPointsLosingTV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
                 mOppentCV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
             }
-
         } else {
             if (mYouWin) {
                 mPointsWinningTV.setOnClickListener(v -> points(mResultList.get(0).getOpponent()));
                 mWinningCV.setOnClickListener(v -> points(mResultList.get(0).getOpponent()));
                 mPointsLosingTV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
                 mOppentCV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
-            }else {
+            } else {
                 mPointsWinningTV.setOnClickListener(v -> points(mResultList.get(0).getCaptain()));
                 mWinningCV.setOnClickListener(v -> points(mResultList.get(0).getCaptain()));
                 mPointsLosingTV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getOpponent()));
@@ -528,8 +526,6 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
     }
 
     private void playerdatawithoutpoints() {
-
-
         List<CaptainTeamHTH> mBattleCaptainDetails = mBattleList.getCaptainTeam();
         List<CaptainTeamHTH> mBattleOpponentDetails = mBattleList.getOpponentTeam();
         setCaptionOpponentClick();
