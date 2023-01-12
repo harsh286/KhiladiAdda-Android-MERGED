@@ -67,6 +67,7 @@ import com.khiladiadda.network.model.request.OpponentLudoRequest;
 import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.LudoContest;
 import com.khiladiadda.network.model.response.LudoContestResponse;
+import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.DownloadApk;
@@ -176,10 +177,10 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
 
     @Override
     protected void initViews() {
-        Bundle intent=getIntent().getExtras();
-        if (intent!=null){
+        Bundle intent = getIntent().getExtras();
+        if (intent != null) {
             String redirect = intent.getString(AppConstant.PushFrom);
-            if (redirect!=null)
+            if (redirect != null)
                 if (redirect.equalsIgnoreCase(AppConstant.MoEngage)) {
                     mAppPreference.setIsDeepLinking(true);
                 }
@@ -612,7 +613,6 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
     };
 
 
-
     ActivityResultLauncher<Intent> ludoResultActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (mAppPreference.getBoolean(AppConstant.IS_DATA_CHANGE, false)) {
             getLudoContest(false, mSyncProfile = true);
@@ -737,8 +737,9 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         public void onDownloadVersion() {
             if (mLink != null && !mLink.isEmpty()) {
                 new DownloadApk(mOnFileDownloadedListener).execute(mLink);
+            }else {
+                new DownloadApk(mOnFileDownloadedListener).execute(AppSharedPreference.getInstance().getVersion().getVersion().getLudoApkLink());
             }
-
         }
     };
 

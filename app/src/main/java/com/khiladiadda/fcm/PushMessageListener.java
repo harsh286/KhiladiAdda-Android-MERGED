@@ -97,6 +97,14 @@ public class PushMessageListener implements NonMoEngagePushListener {
                     Intent intent = new Intent(AppConstant.GAME_DROIDO_CLASS_PACKAGE);
                     intent.putExtra(AppConstant.FROM, AppConstant.DROIDO);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                }else if (mType == 62) { //LUDO TOURNAMENT - When Participants Full (FIRST ROUND)
+                    Intent intent = new Intent(AppConstant.LUDO_TOURNAMENT_PACKAGE);
+                    intent.putExtra(AppConstant.FROM, "62");
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                }else if (mType == 63) { //LUDO TOURNAMENT - When Opponent Joined
+                    Intent intent = new Intent(AppConstant.LUDO_TOURNAMENT_PACKAGE);
+                    intent.putExtra(AppConstant.FROM, AppConstant.LUDOTMT_OPP_JOINED);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                 }
                 sendNotification(mTitle, mMessage);
             } catch (Exception e) {

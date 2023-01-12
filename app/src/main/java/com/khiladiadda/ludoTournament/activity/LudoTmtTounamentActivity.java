@@ -3,17 +3,22 @@ package com.khiladiadda.ludoTournament.activity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -81,7 +86,9 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
     @BindView(R.id.pb_joined)
     ProgressBar joinedPb;
 
-
+    private Context context;
+    private Activity activity;
+    private IOnClickListener onClickListener;
     private LudoTmtJoinPresenter mPresenter;
     private LudoTmtRoundsPresenter mRoundPresenter;
     private LudoTmtAllTournamentResponse matchDetailsResponse;
@@ -91,7 +98,14 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
     private double mDepositWinWallet;
     private double mTotalWalletBal;
     private boolean mIsRequestingAppInstallPermission;
+    private LudoTmtRoundsDetailsMainResponse mDataResponse;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLudoTmtNotificationReceiver, new IntentFilter(AppConstant.LUDO_TOURNAMENT_PACKAGE));
+
+    }
 
     @Override
     protected int getContentView() {
@@ -100,6 +114,9 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
 
     @Override
     protected void initViews() {
+        context = this;
+        activity = this;
+        onClickListener = this;
         AppSharedPreference.initialize(this);
         mPresenter = new LudoTmtJoinPresenter(this);
         mRoundPresenter = new LudoTmtRoundsPresenter(this);
@@ -209,8 +226,8 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
         hideProgress();
         if (response.isStatus()) {
 //            if (response.getR) // todo hide round recycler
-
-            matchRoundsRv.setAdapter(new LudoTmtRoundAdapter(this, this, response.getResponse(), response.getTournamentDetails(), response.isExist()));
+            mDataResponse = response;
+            matchRoundsRv.setAdapter(new LudoTmtRoundAdapter(this, this, response.getResponse(), response.getTournamentDetails(), response.isExist(), false));
         } else {
             AppDialog.showStatusFailureDialog(this, response.getMessage());
         }
@@ -384,6 +401,16 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
         dialog.show();
     }
 
+    //NOTIFICATION
+    private BroadcastReceiver mLudoTmtNotificationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String mFrom = intent.getStringExtra(AppConstant.FROM);
+            if (mFrom.equalsIgnoreCase(AppConstant.LUDOTMT_OPP_JOINED)) {
+                matchRoundsRv.setAdapter(new LudoTmtRoundAdapter(context, onClickListener, mDataResponse.getResponse(), mDataResponse.getTournamentDetails(), mDataResponse.isExist(), false));
+            }
+        }
+    };
 
     @Override
     protected void onResume() {

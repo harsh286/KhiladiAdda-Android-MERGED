@@ -25,7 +25,6 @@
             android:layout_height="wrap_content"
             android:elevation="8dp"
             android:fontFamily="@font/productsansregular"
-            tools:text="ROUND 1"
             android:textColor="@color/white"
             android:textFontWeight="700"
             android:textSize="19dp"
@@ -33,7 +32,8 @@
             app:layout_constraintBottom_toTopOf="@+id/materialCardView20"
             app:layout_constraintEnd_toEndOf="@+id/materialCardView20"
             app:layout_constraintStart_toStartOf="@+id/materialCardView20"
-            app:layout_constraintTop_toTopOf="@+id/materialCardView20" />
+            app:layout_constraintTop_toTopOf="@+id/materialCardView20"
+            tools:text="ROUND 1" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView20"
@@ -60,13 +60,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    tools:text="Match 13"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_12"
                     android:textStyle="bold|italic"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Match 13" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/materialCardView17"
@@ -150,9 +150,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
+                    android:visibility="invisible"
                     app:cardBackgroundColor="#8976FF"
                     app:cardCornerRadius="8dp"
-                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
@@ -165,6 +165,7 @@
                         android:text="In-Progress"
                         android:textColor="@color/white" />
                 </com.google.android.material.card.MaterialCardView>
+
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/btn_waiting"
                     android:layout_width="0dp"
@@ -190,16 +191,20 @@
                         android:gravity="center"
                         android:text="Waiting for the opponent"
                         android:textColor="#70FFFFFF" />
-                </com.google.android.material.card.MaterialCardView>                <com.google.android.material.card.MaterialCardView
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!--  WON  -->
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/btn_won"
                     android:layout_width="0dp"
                     android:layout_height="36dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
+                    android:visibility="invisible"
                     app:cardBackgroundColor="#4CAF50"
                     app:cardCornerRadius="8dp"
-                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
@@ -208,11 +213,37 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="You Won!"
                         android:fontFamily="@font/productsansregular"
-                        android:textFontWeight="700"
-                        android:textColor="@color/white" />
+                        android:text="You Won!"
+                        android:textColor="@color/white"
+                        android:textFontWeight="700" />
                 </com.google.android.material.card.MaterialCardView>
+
+                <!--  PLAY NOW  -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btn_play_now"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="visible"
+                    app:cardBackgroundColor="#8976FF"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/productsansregular"
+                        android:text="Play Now!"
+                        android:textColor="@color/white"
+                        android:textFontWeight="700" />
+                </com.google.android.material.card.MaterialCardView>
+
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/btn_opp_won"
                     android:layout_width="0dp"
@@ -233,20 +264,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:gravity="center"
                         android:background="@drawable/ic_opp_won"
-                        android:text="Opponent Won"
                         android:backgroundTint="#CEFFFFFF"
                         android:fontFamily="@font/productsansregular"
-                        android:textFontWeight="700"
-                        android:textColor="@color/white" />
+                        android:gravity="center"
+                        android:text="Opponent Won"
+                        android:textColor="@color/white"
+                        android:textFontWeight="700" />
                 </com.google.android.material.card.MaterialCardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_out_of_tmt"
                 android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/img_emoji"

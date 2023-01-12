@@ -302,6 +302,7 @@ public class FootballBattleScoreActivity extends BaseActivity implements IHTHBat
             } else
                 mYouWin = true;
         }
+//        setCaptionOpponentClick();
 
         if (mResultList.get(0).getOpponentPoints() > mResultList.get(0).getCaptainPoints()) {
             if (mIsCaptain) {
@@ -433,6 +434,7 @@ public class FootballBattleScoreActivity extends BaseActivity implements IHTHBat
         } else if (mResultList.get(0).getCaptainPoints() == mResultList.get(0).getOpponentPoints()) {
             playerdatawithoutpoints();
         }
+        setCaptionOpponentClick();
     }
 
     private void oppentpoints(List<CaptainResultHTH> list) {
@@ -467,15 +469,15 @@ public class FootballBattleScoreActivity extends BaseActivity implements IHTHBat
 
         } else {
             if (!mYouWin) {
-                mPointsWinningTV.setOnClickListener(v -> points(mResultList.get(0).getOpponent()));
-                mWinningCV.setOnClickListener(v -> points(mResultList.get(0).getOpponent()));
-                mPointsLosingTV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
-                mOppentCV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
-            } else {
                 mPointsWinningTV.setOnClickListener(v -> points(mResultList.get(0).getCaptain()));
                 mWinningCV.setOnClickListener(v -> points(mResultList.get(0).getCaptain()));
                 mPointsLosingTV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getOpponent()));
                 mOppentCV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getOpponent()));
+            } else {
+                mPointsWinningTV.setOnClickListener(v -> points(mResultList.get(0).getOpponent()));
+                mWinningCV.setOnClickListener(v -> points(mResultList.get(0).getOpponent()));
+                mPointsLosingTV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
+                mOppentCV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
             }
         }
     }

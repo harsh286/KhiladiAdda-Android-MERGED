@@ -926,6 +926,8 @@ public class AppConstant {
     public static String WordSearchPackageName = "com.tb.ka.wordsearch";
     public static String LudoAddaPackageName = "com.tb.ludouniverse.in";
     public static final String LUDOADDA_KOMMUNI_CATEGORY = "LudoADDA";
+    public static final String LUDO_TOURNAMENT_PACKAGE = "com.khiladiadda.ludoTournament.activity";
+    public static final String LUDOTMT_OPP_JOINED = "OPPONENT_JOINED";
     public static final String WS_VERSION = "WS_VERSION";
     public static final String WS_LINK = "WS_LINK";
 
