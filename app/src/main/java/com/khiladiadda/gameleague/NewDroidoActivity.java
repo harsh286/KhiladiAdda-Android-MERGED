@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.appsflyer.AFInAppEventParameterName;
+import com.appsflyer.AppsFlyerLib;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -30,13 +32,17 @@ import com.khiladiadda.gameleague.interfaces.ITrendingTournamentView;
 import com.khiladiadda.gameleague.ip.TrendingTournamentPresenter;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.response.droid_doresponse.MyTournamentResponse;
+import com.khiladiadda.network.model.response.droid_doresponse.ResponseData;
 import com.khiladiadda.network.model.response.droid_doresponse.ResponseDataMyTournament;
 import com.khiladiadda.network.model.response.droid_doresponse.TournamentTrendingList;
 import com.khiladiadda.network.model.response.droid_doresponse.TrendingTournamentResponse;
+import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.NetworkStatus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -48,9 +54,9 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
     @BindView(R.id.tab_layout_droido)
     TabLayout tabLayout;
     @BindView(R.id.mcv_rules)
-    MaterialCardView mcvRules;
+    MaterialCardView rulesMCV;
     @BindView(R.id.tv_rules_droido)
-    TextView tvRules;
+    TextView rulesTV;
     @BindView(R.id.rv_more_tournaments)
     RecyclerView mRecyclerViewMoreTournament;
     @BindView(R.id.tv_error)
@@ -62,13 +68,13 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
     @BindView(R.id.tv_trending_txt)
     TextView tvTrending;
     @BindView(R.id.rv_my_tournaments)
-    RecyclerView rvMyTournament;
+    RecyclerView myTournamentRv;
     @BindView(R.id.tv_filter_number)
-    TextView tvFilterNumbers;
+    TextView filterNumbersTV;
     private ITrendingTournamentPresenter mPresenter;
     private TournamentMoreGameAdapter mAllTournamentGameAdapter;
     private MyTournamentGameAdapter myTournamentGameAdapter;
-    private List<TournamentTrendingList> gameAllTournamentList = new ArrayList<>();
+    private List<ResponseData> gameAllTournamentList = new ArrayList<>();
     private List<ResponseDataMyTournament> gameMyTournamentList = new ArrayList<>();
     private int size = 0;
 
@@ -83,17 +89,17 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
         mIvBack.setOnClickListener(this);
         mCvTvFilters.setOnClickListener(this);
         tvFilters.setOnClickListener(this);
-        tvRules.setVisibility(View.VISIBLE);
-        mcvRules.setVisibility(View.VISIBLE);
-        tvRules.setOnClickListener(this);
+        rulesTV.setVisibility(View.VISIBLE);
+        rulesMCV.setVisibility(View.VISIBLE);
+        rulesTV.setOnClickListener(this);
         mPresenter = new TrendingTournamentPresenter(this);
-        tvFilterNumbers.setVisibility(View.GONE);
+        filterNumbersTV.setVisibility(View.GONE);
         mRecyclerViewMoreTournament.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mAllTournamentGameAdapter = new TournamentMoreGameAdapter(this, this, gameAllTournamentList);
         mRecyclerViewMoreTournament.setAdapter(mAllTournamentGameAdapter);
-        rvMyTournament.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        myTournamentRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         myTournamentGameAdapter = new MyTournamentGameAdapter(this, this, gameMyTournamentList);
-        rvMyTournament.setAdapter(myTournamentGameAdapter);
+        myTournamentRv.setAdapter(myTournamentGameAdapter);
         tabData();
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -115,7 +121,7 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
                     case 1:
                         tvFilters.setVisibility(View.INVISIBLE);
                         tvTrending.setVisibility(View.GONE);
-                        tvFilterNumbers.setVisibility(View.GONE);
+                        filterNumbersTV.setVisibility(View.GONE);
                         mCvTvFilters.setVisibility(View.INVISIBLE);
                         switchSecondAdapter();
                         break;
@@ -135,7 +141,6 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-//                getTrendingTournamentList();
                 switch (tab.getPosition()) {
                     case 0:
                         tvFilters.setVisibility(View.VISIBLE);
@@ -146,7 +151,7 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
                     case 1:
                         tvFilters.setVisibility(View.INVISIBLE);
                         tvTrending.setVisibility(View.GONE);
-                        tvFilterNumbers.setVisibility(View.GONE);
+                        filterNumbersTV.setVisibility(View.GONE);
                         mCvTvFilters.setVisibility(View.INVISIBLE);
                         switchSecondAdapter();
                         break;
@@ -176,16 +181,14 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
     private void switchFirstAdapter() {
         mRecyclerViewMoreTournament.setVisibility(View.VISIBLE);
         tvTrending.setText(getString(R.string.tournament));
-        rvMyTournament.setVisibility(View.GONE);
-//        tvFilterNumbers.setVisibility(View.GONE);
+        myTournamentRv.setVisibility(View.GONE);
         gameAllTournamentList.clear();
         getTrendingTournamentList();
     }
 
     private void switchSecondAdapter() {
         mRecyclerViewMoreTournament.setVisibility(View.GONE);
-        rvMyTournament.setVisibility(View.VISIBLE);
-//        tvFilterNumbers.setVisibility(View.GONE);
+        myTournamentRv.setVisibility(View.VISIBLE);
         gameMyTournamentList.clear();
         getMyTournament();
     }
@@ -199,7 +202,7 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
             showProgress(getString(R.string.txt_progress_authentication));
             mPresenter.getMyTournamentData();
         } else {
-            Snackbar.make(rvMyTournament, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(myTournamentRv, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -239,15 +242,13 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
     @Override
     public void onGameTrendingTournamentSuccess(TrendingTournamentResponse response) {
         new Handler(Looper.getMainLooper()).postDelayed(() -> hideProgress(), 500);
-        if (response.getResponseData().getTrendingList().size() != 0) {
-            size = response.getResponseData().getTournamentList().size();
-
-            tvFilterNumbers.setVisibility(View.VISIBLE);
-
-            tvFilterNumbers.setText(String.valueOf("(" + size + ")"));
+        if (!response.getResponse().isEmpty()) {
+            size = response.getResponse().size();
+            filterNumbersTV.setVisibility(View.VISIBLE);
+            filterNumbersTV.setText(String.valueOf("(" + size + ")"));
             tvError.setVisibility(View.GONE);
             gameAllTournamentList.clear();
-            gameAllTournamentList.addAll(response.getResponseData().getTournamentList());
+            gameAllTournamentList.addAll(response.getResponse());
             mAllTournamentGameAdapter.notifyDataSetChanged();
         } else {
             gameAllTournamentList.clear();
@@ -267,9 +268,7 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
         new Handler(Looper.getMainLooper()).postDelayed(() -> hideProgress(), 500);
         if (!response.getTournamentList().isEmpty()) {
             tvError.setVisibility(View.GONE);
-
-            tvFilterNumbers.setVisibility(View.GONE);
-
+            filterNumbersTV.setVisibility(View.GONE);
             gameMyTournamentList.clear();
             gameMyTournamentList.addAll(response.getTournamentList());
             myTournamentGameAdapter.notifyDataSetChanged();
@@ -281,7 +280,7 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
 
     @Override
     public void onMyTournamentFailure(ApiError error) {
-        Toast.makeText(this, "" + error, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "" + error, Toast.LENGTH_SHORT).show();
         hideProgress();
     }
 
@@ -323,18 +322,17 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
     @Override
     public void getFiltersTournamentSuccess(TrendingTournamentResponse response) {
         new Handler(Looper.getMainLooper()).postDelayed(() -> hideProgress(), 500);
-        if (response.getResponseData().getTrendingList().size() != 0) {
+        if (!response.getResponse().isEmpty()) {
             tvError.setVisibility(View.GONE);
-            size = response.getResponseData().getTournamentList().size();
-//            tvFilterNumbers.setVisibility(View.VISIBLE);
-            tvFilterNumbers.setText(String.valueOf("(" + size + ")"));
+            size = response.getResponse().size();
+            filterNumbersTV.setText(String.valueOf("(" + size + ")"));
             gameAllTournamentList.clear();
-            gameAllTournamentList.addAll(response.getResponseData().getTournamentList());
+            gameAllTournamentList.addAll(response.getResponse());
             mAllTournamentGameAdapter.notifyDataSetChanged();
         } else {
             gameAllTournamentList.clear();
             mAllTournamentGameAdapter.notifyDataSetChanged();
-            tvFilterNumbers.setVisibility(View.GONE);
+            filterNumbersTV.setVisibility(View.GONE);
             tvError.setVisibility(View.VISIBLE);
             hideProgress();
         }

@@ -142,6 +142,7 @@ public class LudoTmtRoundAdapter extends RecyclerView.Adapter<LudoTmtRoundAdapte
         holder.waitingBtn.setVisibility(View.INVISIBLE);
         holder.wonBtn.setVisibility(View.INVISIBLE);
         holder.oppWonBtn.setVisibility(View.INVISIBLE);
+        holder.playNowBtn.setVisibility(View.INVISIBLE);
 
         if (status == 1) {
             holder.statusBtn.setVisibility(View.VISIBLE);
@@ -151,6 +152,8 @@ public class LudoTmtRoundAdapter extends RecyclerView.Adapter<LudoTmtRoundAdapte
             holder.wonBtn.setVisibility(View.VISIBLE);
         } else if (opp_won == 1) {
             holder.oppWonBtn.setVisibility(View.VISIBLE);
+        }else {
+            holder.playNowBtn.setVisibility(View.VISIBLE);
         }
     }
 

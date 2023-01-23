@@ -34,6 +34,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
+    <TextView
+        android:id="@+id/tv_no_data_other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="We are creating new Word Search Tournament for you."
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inc_toolbar" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_footer"
         android:layout_width="match_parent"

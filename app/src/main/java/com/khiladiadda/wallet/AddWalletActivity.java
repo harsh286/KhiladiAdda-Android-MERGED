@@ -151,6 +151,7 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
     @BindView(R.id.tv_neokred)
     TextView mNeokredTV;
 
+    //GamerCash
     @BindView(R.id.tv_gamercash)
     TextView mGamerCashTV;
     @BindView(R.id.tv_gamercash_verified)

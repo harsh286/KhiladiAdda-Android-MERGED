@@ -44,6 +44,7 @@ public class WordSearchQuizAdapter extends RecyclerView.Adapter<WordSearchQuizAd
         WordSearchCategoriesQuizzesResponse categoriesQuizzesResponse = mCategoriesQuizzesResponseList.get(position);
         Glide.with(holder.itemView.getContext()).load(categoriesQuizzesResponse.getImage()).placeholder(R.drawable.wordsearch_placeholder).into(holder.mQuizIV);
         holder.mQuizNameTV.setText(categoriesQuizzesResponse.getName());
+//        holder.mCategoryName.setVisibility(View.INVISIBLE);
         holder.mCategoryName.setText("Category: " + categoryName);
 
         if (categoriesQuizzesResponse.getAttemptedQuiz() != 0) {
@@ -65,7 +66,7 @@ public class WordSearchQuizAdapter extends RecyclerView.Adapter<WordSearchQuizAd
         holder.mWinPrizeTV.setText(" " + categoriesQuizzesResponse.getPrizePoolBreakthrough().get(0).getPrizeMoney() + " Coins");
         holder.mEntryFeeTV.setText("Entry: " + categoriesQuizzesResponse.getEntryFees() + " Coins");
         holder.mTotalParticipants.setText("" + categoriesQuizzesResponse.getPlayedparticipants() + "/" + categoriesQuizzesResponse.getTotalparticipants());
-        holder.mJoinedPb.setProgress(categoriesQuizzesResponse.getPlayedparticipants() );
+        holder.mJoinedPb.setProgress(categoriesQuizzesResponse.getPlayedparticipants());
         holder.mJoinedPb.setMax(categoriesQuizzesResponse.getTotalparticipants());
     }
 

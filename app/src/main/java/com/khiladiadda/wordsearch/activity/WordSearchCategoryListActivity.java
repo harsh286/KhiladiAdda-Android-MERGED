@@ -49,6 +49,8 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
     ConstraintLayout mToolBarCl;
     @BindView(R.id.tv_no_data)
     TextView mNoDataTv;
+    @BindView(R.id.tv_no_data_other)
+    TextView mNoDataOtherTv;
     @BindView(R.id.tv_trending)
     TextView mTrendingTv;
     @BindView(R.id.tv_categories)
@@ -151,9 +153,13 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
     @Override
     public void onWordSearchQuizComplete(WordSearchCategoriesQuizzesMainResponse responseModel) {
         hideProgress();
-        mCategoriesQuizzesResponseList = responseModel.getResponse();
-        mQuizzesRv.setAdapter(new WordSearchQuizAdapter(this, mCategoriesQuizzesResponseList,mCategoryName));
-
+        if (!responseModel.getResponse().isEmpty()) {
+            mNoDataOtherTv.setVisibility(View.GONE);
+            mCategoriesQuizzesResponseList = responseModel.getResponse();
+            mQuizzesRv.setAdapter(new WordSearchQuizAdapter(this, mCategoriesQuizzesResponseList, mCategoryName));
+        }else {
+            mNoDataOtherTv.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

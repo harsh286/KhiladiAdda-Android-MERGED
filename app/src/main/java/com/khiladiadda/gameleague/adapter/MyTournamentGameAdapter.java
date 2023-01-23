@@ -75,7 +75,7 @@ public class MyTournamentGameAdapter extends RecyclerView.Adapter<MyTournamentGa
             holder.acbPlay.setText(mContext.getString(R.string.view));
             holder.tvEnded.setText(mContext.getString(R.string.completed));
             if (tournamentTrendingData.getWinPrize() != 0 && tournamentTrendingData.is_won) {
-                holder.tvEnded.setText(mContext.getString(R.string.won) + ":  ₹ " + tournamentTrendingData.getPrizePools().get(0).getPrizeMoney());
+                holder.tvEnded.setText(mContext.getString(R.string.won) + ":  ₹ " + tournamentTrendingData.getWinning_amount());
                 holder.itemView.setClickable(false);
                 holder.itemView.setEnabled(false);
             } else if (tournamentTrendingData.getTournament_status() == 1 && !tournamentTrendingData.is_won) {
@@ -89,7 +89,6 @@ public class MyTournamentGameAdapter extends RecyclerView.Adapter<MyTournamentGa
             holder.itemView.setClickable(false);
             holder.itemView.setEnabled(false);
         }
-
         holder.itemView.setOnClickListener(view -> {
             if (holder.acbPlay.getText().equals(mContext.getString(R.string.play))) {
                 Intent intent = new Intent(mContext, TournamenetDetailActivity.class);
@@ -101,7 +100,7 @@ public class MyTournamentGameAdapter extends RecyclerView.Adapter<MyTournamentGa
                 intent.putExtra(AppConstant.DROIDO_TOTAL_PARTICIPANTS, String.valueOf(tournamentTrendingData.totalparticipants));
                 intent.putExtra(AppConstant.DROIDO_PLAYED_PARTICIPANTS, String.valueOf(tournamentTrendingData.playedparticipants));
                 intent.putExtra("id", tournamentTrendingData.getTournament_id());
-                intent.putExtra(AppConstant.DROIDO_ENDS_IN, tournamentTrendingData.endIn);
+                intent.putExtra(AppConstant.DROIDO_ENDS_IN, tournamentTrendingData.getEndIn() + "");
                 intent.putExtra(AppConstant.DROIDO_PRIZEPOOL, tournamentTrendingData.getPrizePools());
                 mContext.startActivity(intent);
             } else {
@@ -133,7 +132,7 @@ public class MyTournamentGameAdapter extends RecyclerView.Adapter<MyTournamentGa
         intent.putExtra(AppConstant.DROIDO_TOTAL_PARTICIPANTS, String.valueOf(tournamentTrendingList.totalparticipants));
         intent.putExtra(AppConstant.DROIDO_PLAYED_PARTICIPANTS, String.valueOf(tournamentTrendingList.playedparticipants));
         intent.putExtra("id", tournamentTrendingList.getTournament_id());
-        intent.putExtra(AppConstant.DROIDO_ENDS_IN, tournamentTrendingList.endIn);
+        intent.putExtra(AppConstant.DROIDO_ENDS_IN, tournamentTrendingList.endIn + "");
         intent.putExtra(AppConstant.DROIDO_PRIZEPOOL, tournamentTrendingList.getPrizePools());
         mContext.startActivity(intent);
     }

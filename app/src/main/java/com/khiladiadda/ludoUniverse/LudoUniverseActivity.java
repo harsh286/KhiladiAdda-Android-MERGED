@@ -649,6 +649,7 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
             launchIntent.putExtra("winAmount", mWAmount);
             launchIntent.putExtra("randomName", mRandomName);
             launchIntent.putExtra("randomPhoto", mRandomDp);
+            launchIntent.putExtra("is_tournament", "false");
             startActivity(launchIntent);
             isSuccessfulGameOpen = true;
         }

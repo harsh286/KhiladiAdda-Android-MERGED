@@ -99,6 +99,7 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
     private double mTotalWalletBal;
     private boolean mIsRequestingAppInstallPermission;
     private LudoTmtRoundsDetailsMainResponse mDataResponse;
+    private String tournamentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -227,6 +228,7 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
         if (response.isStatus()) {
 //            if (response.getR) // todo hide round recycler
             mDataResponse = response;
+            tournamentId = response.getTournamentDetails().getId();
             matchRoundsRv.setAdapter(new LudoTmtRoundAdapter(this, this, response.getResponse(), response.getTournamentDetails(), response.isExist(), false));
         } else {
             AppDialog.showStatusFailureDialog(this, response.getMessage());
@@ -241,6 +243,27 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
 
     @Override
     public void onItemClick(int pos) {
+        launchUnityWithData(matchDetailsResponse.getId(), matchDetailsResponse.getEntryFees(), matchDetailsResponse.getId(), Double.parseDouble(matchDetailsResponse.getPrize().toString()), "", "", tournamentId);
+    }
+
+    private void launchUnityWithData(String cId, double Amount, String mContestCode, double mWinAmount, String mRandomName, String mRandomDp, String tournamentId) {
+        String mAmount = String.valueOf(Amount);
+        String mWAmount = String.valueOf(mWinAmount);
+        if (launchIntent != null) {
+            launchIntent.putExtra("userToken", mAppPreference.getSessionToken());
+            launchIntent.putExtra("contestId", cId);
+            launchIntent.putExtra("ka_version", AppUtilityMethods.getVersion());
+            launchIntent.putExtra("playerId", mAppPreference.getProfileData().getId());
+            launchIntent.putExtra("amount", mAmount);
+            launchIntent.putExtra("contestCode", mContestCode);
+            launchIntent.putExtra("winAmount", mWAmount);
+            launchIntent.putExtra("randomName", mRandomName);
+            launchIntent.putExtra("randomPhoto", mRandomDp);
+            launchIntent.putExtra("is_tournament", "true");
+            launchIntent.putExtra("tournament_id", tournamentId);
+            startActivity(launchIntent);
+//            isSuccessfulGameOpen = true;
+        }
 
     }
 

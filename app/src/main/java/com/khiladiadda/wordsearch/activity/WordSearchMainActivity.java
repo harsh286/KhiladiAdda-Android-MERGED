@@ -173,12 +173,10 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
     @Override
     public void onWordSearchQuizComplete(WordSearchTrendingMainResponse responseModel) {
         new Handler(Looper.getMainLooper()).postDelayed(() -> hideProgress(), 500);
-        if (responseModel.getResponse().getCategoryQuiz().isEmpty() &&
-                responseModel.getResponse().getTrendingQuiz().isEmpty()) {
+        if (responseModel.getResponse().getTrendingQuiz().isEmpty()) {
             mNoDataTv.setVisibility(View.VISIBLE);
         } else {
             mNoDataTv.setVisibility(View.GONE);
-//            mCategorgiesTV.setVisibility(View.VISIBLE);
         }
         mLink = responseModel.getResponse().getWSLink();
         mCurrentVersion = responseModel.getResponse().getApk_version();

@@ -1,18 +1,22 @@
 package com.khiladiadda.network.model.response.droid_doresponse;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.khiladiadda.network.model.BaseResponse;
+
+import java.util.List;
 
 public class TrendingTournamentResponse extends BaseResponse {
 
     @SerializedName("response")
-    private ResponseData responseData;
+    @Expose
+    private List<ResponseData> response;
 
-    public ResponseData getResponseData() {
-        return responseData;
+    public List<ResponseData> getResponse() {
+        return response;
     }
 
-    public void setResponseData(ResponseData responseData) {
-        this.responseData = responseData;
+    public void setResponse(List<ResponseData> response) {
+        this.response = response;
     }
 }

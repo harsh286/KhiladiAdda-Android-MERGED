@@ -48,6 +48,7 @@ public class WordSearchTrendingQuizAdapter extends RecyclerView.Adapter<WordSear
         holder.mQuizNameTV.setText(trendingQuizResponse.getQuiz().get(0).getName());
         holder.mEntryTV.setText("Entry: " + trendingQuizResponse.getEntryFees() + " Coins");
         holder.mCategoryName.setText("Category: " + categoryName);
+        holder.mCategoryName.setVisibility(View.INVISIBLE);
         holder.mJoinedPb.setProgress(trendingQuizResponse.getQuiz().get(0).getPlayedparticipants());
         holder.mJoinedPb.setMax(trendingQuizResponse.getQuiz().get(0).getTotalparticipants());
         if (trendingQuizResponse.getQuiz().get(0).getQuizStatus() == 1) {
