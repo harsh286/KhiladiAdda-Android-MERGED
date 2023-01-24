@@ -7,53 +7,63 @@
     android:background="@drawable/ludo_tournament_bg"
     tools:context=".ludoTournament.activity.LudoTmtTounamentActivity">
 
-
-    <ImageView
-        android:id="@+id/iv_back"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/ic_arrow_back_white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_arrow_back_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageView
-        android:id="@+id/img_rules"
-        android:layout_width="@dimen/margin_20"
-        android:layout_height="@dimen/margin_20"
-        android:layout_marginEnd="20dp"
-        android:contentDescription="@string/s3"
-        android:gravity="center_horizontal"
-        android:src="@drawable/ic_help"
-        android:text="@string/text_rules"
-        android:textSize="@dimen/text_12"
-        android:textStyle="bold"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_back"
-        app:tint="@color/white" />
+        <ImageView
+            android:id="@+id/img_rules"
+            android:layout_width="@dimen/margin_20"
+            android:layout_height="@dimen/margin_20"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="@string/s3"
+            android:gravity="center_horizontal"
+            android:src="@drawable/ic_help"
+            android:text="@string/text_rules"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_back"
+            app:tint="@color/white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@+id/mcv_join"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/margin_50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_back">
+        app:layout_constraintTop_toBottomOf="@+id/cl_toolbar"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout18"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_2">
 
             <ImageView
                 android:id="@+id/imageView5"
                 android:layout_width="wrap_content"
-                android:layout_height="207dp"
+                android:layout_height="197dp"
                 android:src="@drawable/ludoadda_details"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +76,8 @@
                 android:fontFamily="@font/bebas_neue"
                 android:text="WIN ₹2500"
                 android:textColor="#49E850"
-                android:textSize="32dp"
+                android:textSize="28dp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -75,7 +86,6 @@
                 android:id="@+id/textView27"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:text="Knockout"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
@@ -104,6 +114,7 @@
                 android:text="Estimated End Time of Tournament: 21 Aug, 05:30 PM"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_12"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view8" />
@@ -115,7 +126,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="14dp"
                 android:layout_marginEnd="4dp"
-                app:cardBackgroundColor="#17FFFFFF"
+                app:cardBackgroundColor="#16FFFFFF"
+                app:cardCornerRadius="@dimen/margin_8"
                 app:layout_constraintEnd_toStartOf="@+id/materialCardView15"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView28">
@@ -123,6 +135,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/shape_tab_ludo"
+                    android:elevation="@dimen/margin_8"
                     app:layout_constraintBottom_toTopOf="@+id/textView30"
                     app:layout_constraintTop_toTopOf="@+id/textView30">
 
@@ -157,6 +171,7 @@
                         android:text="2.0 Coins"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_12"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/imageView6"
@@ -173,7 +188,8 @@
                 android:layout_height="38dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                app:cardBackgroundColor="#17FFFFFF"
+                app:cardBackgroundColor="#16FFFFFF"
+                app:cardCornerRadius="@dimen/margin_8"
                 app:layout_constraintEnd_toStartOf="@+id/materialCardView16"
                 app:layout_constraintStart_toEndOf="@+id/materialCardView14"
                 app:layout_constraintTop_toTopOf="@+id/materialCardView14">
@@ -181,6 +197,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/shape_tab_ludo"
                     app:layout_constraintBottom_toTopOf="@+id/textView30"
                     app:layout_constraintTop_toTopOf="@+id/textView30">
 
@@ -215,6 +232,7 @@
                         android:text="2.0 Coins"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_12"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/imageView7"
@@ -231,7 +249,8 @@
                 android:layout_height="38dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="16dp"
-                app:cardBackgroundColor="#17FFFFFF"
+                app:cardBackgroundColor="#16FFFFFF"
+                app:cardCornerRadius="@dimen/margin_8"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/materialCardView15"
                 app:layout_constraintTop_toTopOf="@+id/materialCardView15">
@@ -239,6 +258,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/shape_tab_ludo"
                     app:layout_constraintBottom_toTopOf="@+id/textView30"
                     app:layout_constraintTop_toTopOf="@+id/textView30">
 
@@ -272,7 +292,8 @@
                         android:layout_marginEnd="8dp"
                         android:text="21 Aug, 02:34 pm"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_12"
+                        android:textSize="@dimen/text_11"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/imageView8"
@@ -325,7 +346,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_participants" />
 
             <TextView
-                android:id="@+id/textView34"
+                android:id="@+id/tvTipsEnglish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -333,21 +354,73 @@
                 android:fontFamily="@font/productsansregular"
                 android:text="Tips and Information"
                 android:textColor="@color/white"
+                android:textSize="@dimen/text_14"
                 android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/img_winner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pb_joined" />
 
+            <TextView
+                android:id="@+id/tv_tipsHindi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/productsansregular"
+                android:text="युक्तियाँ और जानकारी"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pb_joined" />
+
+
+            <TextView
+                android:id="@+id/tv_hindi_me_dekhe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/dimen_16sp"
+                android:fontFamily="@font/productsansregular"
+                android:text="हिंदी में देखें  >"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pb_joined" />
+
+            <TextView
+                android:id="@+id/tv_view_in_english"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/dimen_16sp"
+                android:fontFamily="@font/productsansregular"
+                android:text="View in English  >"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pb_joined" />
+
             <ImageView
-                android:id="@+id/imageView9"
+                android:id="@+id/img_winner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="12dp"
                 android:src="@drawable/ic_trophy_ludo"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView34" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTipsEnglish" />
 
             <TextView
+                android:id="@+id/tv_win_english"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -355,23 +428,39 @@
                 android:text="Winning every round will take you into finals of this Tournament, where winning amount is waiting for you"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_12"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView9"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/img_winner"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView9"
-                app:layout_constraintTop_toTopOf="@+id/imageView9" />
+                app:layout_constraintStart_toEndOf="@+id/img_winner"
+                app:layout_constraintTop_toTopOf="@+id/img_winner" />
+
+            <TextView
+                android:id="@+id/tv_win_hindi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="हर राउंड जीतना आपको इस टूर्नामेंट के फाइनल में ले जाएगा, जहां जीत की रकम आपका इंतजार कर रही है"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/img_winner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_winner"
+                app:layout_constraintTop_toTopOf="@+id/img_winner" />
 
             <ImageView
                 android:id="@+id/imageView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/margin_8"
                 android:src="@drawable/ic_game_icon_ludo"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+                app:layout_constraintTop_toBottomOf="@+id/img_winner" />
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/tv_lose_english"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -379,22 +468,40 @@
                 android:text="Loosing a single match take you out of this tournament, so play wisely and try to win most of the matches"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_12"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView10"
                 app:layout_constraintTop_toTopOf="@+id/imageView10" />
+
+            <TextView
+                android:id="@+id/tv_lose_hindi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="एक भी मैच हारने से आप इस टूर्नामेंट से बाहर हो जाते हैं, समझदारी से खेलने के लिए और अधिकांश मैच जीतने की कोशिश करते हैं"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView10"
+                app:layout_constraintTop_toTopOf="@+id/imageView10" />
+
 
             <View
                 android:id="@+id/view9"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/margin_1"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="@dimen/margin_20"
                 android:layout_marginEnd="32dp"
                 android:background="#2BFFFFFF"
+                app:layout_constraintBottom_toTopOf="@+id/rv_match_tournament"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView35" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_lose_english" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_match_close"
@@ -441,16 +548,29 @@
                 android:id="@+id/rv_match_tournament"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="@dimen/dimen_12dp"
                 android:orientation="horizontal"
-                tools:orientation="horizontal"
                 android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/items_of_ludotmt_round"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view9" />
+                app:layout_constraintTop_toBottomOf="@+id/view9"
+                tools:listitem="@layout/items_of_ludotmt_round"
+                tools:orientation="horizontal" />
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_view_all_brackets"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/dimen_16sp"-->
+            <!--                android:text="View all brackets and matches  >"-->
+            <!--                android:textColor="@color/white"-->
+            <!--                android:textSize="@dimen/text_16"-->
+            <!--                android:textStyle="bold"-->
+            <!--                app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--                app:layout_constraintRight_toRightOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/rv_match_tournament" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

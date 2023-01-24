@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ludo_tournament_bg"
+    android:background="@color/black"
     tools:context=".ludoTournament.activity.LudoTmtFullRulesActivity">
 
     <ImageView
@@ -34,8 +34,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/brackets_full"
         android:scaleType="fitXY"
+        android:src="@drawable/brackets_full"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -54,13 +54,33 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_view_full" />
 
     <TextView
+        android:id="@+id/tv_english_rules"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:lineHeight="@dimen/text_16"
         android:text="@string/ludotmt_rules"
         android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_rules" />
+
+    <TextView
+        android:id="@+id/tv_hindi_rules"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:lineHeight="@dimen/text_16"
+        android:text="@string/ludo_rules_hindi"
+        android:textAlignment="textStart"
+        android:textColor="@color/white"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

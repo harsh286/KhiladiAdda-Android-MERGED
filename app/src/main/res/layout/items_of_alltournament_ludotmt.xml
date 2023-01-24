@@ -148,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:fontFamily="@font/productsansregular"
-                        android:text="@string/price"
+                        android:text="@string/Prize"
                         android:textColor="@color/ludotmt_text"
                         android:textSize="@dimen/text_10"
                         app:layout_constraintBottom_toBottomOf="@+id/iv_prize"

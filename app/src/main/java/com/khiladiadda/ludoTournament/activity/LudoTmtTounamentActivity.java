@@ -85,6 +85,22 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
     TextView totalParticipantsNew;
     @BindView(R.id.pb_joined)
     ProgressBar joinedPb;
+    @BindView(R.id.tv_hindi_me_dekhe)
+    TextView hindiDekheTv;
+    @BindView(R.id.tv_view_in_english)
+    TextView viewInEnglishTv;
+    @BindView(R.id.tv_win_english)
+    TextView winEnglishTv;
+    @BindView(R.id.tv_lose_english)
+    TextView loseEnglishTv;
+    @BindView(R.id.tv_win_hindi)
+    TextView winHindiTv;
+    @BindView(R.id.tv_lose_hindi)
+    TextView loseHindiTv;
+    @BindView(R.id.tv_tipsHindi)
+    TextView tipsInfoHindi;
+    @BindView(R.id.tvTipsEnglish)
+    TextView tipsInfoEnglish;
 
     private Context context;
     private Activity activity;
@@ -131,6 +147,7 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
         mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
         getJoined();
         setupUi();
+        getCheck();
 //        callRoundsApi();
 
     }
@@ -141,34 +158,59 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
         mcvJoin.setOnClickListener(this);
         backIv.setOnClickListener(this);
         joinTournamentCl.setOnClickListener(this);
+        hindiDekheTv.setOnClickListener(this);
+        viewInEnglishTv.setOnClickListener(this);
+    }
+
+    private void getCheck() {
+        if (matchDetailsResponse.getnParticipants() == matchDetailsResponse.getnParticipated()) {
+            mcvJoin.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
     public void onClick(View p0) {
-        if (p0.getId() == R.id.img_rules) {
-            startActivity(new Intent(this, LudoTmtRulesActivity.class));
-        } else if (p0.getId() == R.id.iv_back) {
-            finish();
-        } else if (p0.getId() == R.id.mcv_join) {
-            if (launchIntent != null) {
-                if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
-                    showConfirmation(Double.parseDouble(matchDetailsResponse.getEntryFees().toString()));
+        switch (p0.getId()) {
+            case R.id.img_rules:
+//            startActivity(new Intent(this, LudoTmtRulesActivity.class));
+//                AppUtilityMethods.showTooltip(this, rulesImg, getString(R.string.english_rules));
+            launchUnityWithData(matchDetailsResponse.getId(), matchDetailsResponse.getEntryFees(), matchDetailsResponse.getId(), Double.parseDouble(matchDetailsResponse.getPrize().toString()), "test", "", tournamentId);
+                break;
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.mcv_join:
+            case R.id.cl_join_tournaments:
+                if (launchIntent != null) {
+                    if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
+                        showConfirmation(Double.parseDouble(matchDetailsResponse.getEntryFees().toString()));
+                    } else {
+                        mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
+                    }
                 } else {
                     mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
                 }
-            } else {
-                mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
-            }
-        } else if (p0.getId() == R.id.cl_join_tournaments) {
-            if (launchIntent != null) {
-                if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
-                    showConfirmation(Double.parseDouble(matchDetailsResponse.getEntryFees().toString()));
-                } else {
-                    mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
-                }
-            } else {
-                mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
-            }
+                break;
+            case R.id.tv_hindi_me_dekhe:
+                viewInEnglishTv.setVisibility(View.VISIBLE);
+                winEnglishTv.setVisibility(View.GONE);
+                loseEnglishTv.setVisibility(View.GONE);
+                hindiDekheTv.setVisibility(View.GONE);
+                tipsInfoHindi.setVisibility(View.VISIBLE);
+                tipsInfoEnglish.setVisibility(View.INVISIBLE);
+                winHindiTv.setVisibility(View.VISIBLE);
+                loseHindiTv.setVisibility(View.VISIBLE);
+                break;
+            case R.id.tv_view_in_english:
+                viewInEnglishTv.setVisibility(View.GONE);
+                winEnglishTv.setVisibility(View.VISIBLE);
+                loseEnglishTv.setVisibility(View.VISIBLE);
+                tipsInfoHindi.setVisibility(View.INVISIBLE);
+                tipsInfoEnglish.setVisibility(View.VISIBLE);
+                hindiDekheTv.setVisibility(View.VISIBLE);
+                winHindiTv.setVisibility(View.INVISIBLE);
+                loseHindiTv.setVisibility(View.INVISIBLE);
+                break;
         }
     }
 

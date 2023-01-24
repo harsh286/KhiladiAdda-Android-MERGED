@@ -295,6 +295,7 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
             } else
                 mYouWin = true;
         }
+
         if (mResultList.get(0).getOpponentPoints() > mResultList.get(0).getCaptainPoints()) {
             if (mIsCaptain) {
                 mNameTV.setText(AppConstant.TEXT_OPPONENT_COMBO);
@@ -506,22 +507,17 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
                 mOppentCV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
             }
         } else {
-            if (mYouWin) {
-                mPointsWinningTV.setOnClickListener(v -> points(mResultList.get(0).getOpponent()));
-                mWinningCV.setOnClickListener(v -> points(mResultList.get(0).getOpponent()));
-                mPointsLosingTV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
-                mOppentCV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
-            } else {
+            if (!mYouWin) {
                 mPointsWinningTV.setOnClickListener(v -> points(mResultList.get(0).getCaptain()));
                 mWinningCV.setOnClickListener(v -> points(mResultList.get(0).getCaptain()));
                 mPointsLosingTV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getOpponent()));
                 mOppentCV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getOpponent()));
+            } else {
+                mPointsWinningTV.setOnClickListener(v -> points(mResultList.get(0).getOpponent()));
+                mWinningCV.setOnClickListener(v -> points(mResultList.get(0).getOpponent()));
+                mPointsLosingTV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
+                mOppentCV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getCaptain()));
             }
-//
-//            mPointsWinningTV.setOnClickListener(v -> points(mResultList.get(0).getCaptain()));
-//            mWinningCV.setOnClickListener(v -> points(mResultList.get(0).getCaptain()));
-//            mPointsLosingTV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getOpponent()));
-//            mOppentCV.setOnClickListener(v -> oppentpoints(mResultList.get(0).getOpponent()));
         }
     }
 

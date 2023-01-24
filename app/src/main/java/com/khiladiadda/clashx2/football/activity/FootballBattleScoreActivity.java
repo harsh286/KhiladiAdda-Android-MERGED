@@ -500,14 +500,14 @@ public class FootballBattleScoreActivity extends BaseActivity implements IHTHBat
                 Glide.with(this).clear(mTPlayerTwoEditIV);
                 mTPlayerTwoEditIV.setImageResource(R.drawable.splash_logo);
             }
-            if (!TextUtils.isEmpty(mBattleList.getOpponentTeam().get(2).getImg()) && mBattleList.getOpponentTeam().get(2).getImg().startsWith("https")) {
-                setOpponentImage(mBattleOpponentDetails, 3, mTPlayerThreeEditIV, mTPlayerThreeEditTV);
+            if (!TextUtils.isEmpty(mBattleList.getOpponentTeam().get(3).getImg()) && mBattleList.getOpponentTeam().get(3).getImg().startsWith("https")) {
+                setOpponentImage(mBattleOpponentDetails, 4, mTPlayerThreeEditIV, mTPlayerThreeEditTV);
             } else {
                 Glide.with(this).clear(mTPlayerThreeEditIV);
                 mTPlayerThreeEditIV.setImageResource(R.drawable.splash_logo);
             }
-            if (!TextUtils.isEmpty(mBattleList.getOpponentTeam().get(3).getImg()) && mBattleList.getOpponentTeam().get(3).getImg().startsWith("https")) {
-                setOpponentImage(mBattleOpponentDetails, 4, mTPlayerFourEditIV, mTPlayerFourEditTV);
+            if (!TextUtils.isEmpty(mBattleList.getOpponentTeam().get(2).getImg()) && mBattleList.getOpponentTeam().get(2).getImg().startsWith("https")) {
+                setOpponentImage(mBattleOpponentDetails, 3, mTPlayerFourEditIV, mTPlayerFourEditTV);
             } else {
                 Glide.with(mTPlayerFourEditIV.getContext()).clear(mTPlayerFourEditIV);
                 mTPlayerFourEditIV.setImageResource(R.drawable.splash_logo);
@@ -528,14 +528,14 @@ public class FootballBattleScoreActivity extends BaseActivity implements IHTHBat
                 Glide.with(this).clear(mTPlayerTwoIV);
                 mTPlayerTwoIV.setImageResource(R.drawable.splash_logo);
             }
-            if (!TextUtils.isEmpty(mBattleList.getCaptainTeam().get(2).getImg()) && mBattleList.getCaptainTeam().get(2).getImg().startsWith("https")) {
-                setCaptainImage(mBattleCaptainDetails, 3, mTPlayerThreeIV, mTPlayerThreeTV);
+            if (!TextUtils.isEmpty(mBattleList.getCaptainTeam().get(3).getImg()) && mBattleList.getCaptainTeam().get(3).getImg().startsWith("https")) {
+                setCaptainImage(mBattleCaptainDetails, 4, mTPlayerThreeIV, mTPlayerThreeTV);
             } else {
                 Glide.with(this).clear(mTPlayerThreeIV);
                 mTPlayerThreeIV.setImageResource(R.drawable.splash_logo);
             }
-            if (!TextUtils.isEmpty(mBattleList.getCaptainTeam().get(3).getImg()) && mBattleList.getCaptainTeam().get(3).getImg().startsWith("https")) {
-                setCaptainImage(mBattleCaptainDetails, 4, mTPlayerFourIV, mTPlayerFourTV);
+            if (!TextUtils.isEmpty(mBattleList.getCaptainTeam().get(2).getImg()) && mBattleList.getCaptainTeam().get(2).getImg().startsWith("https")) {
+                setCaptainImage(mBattleCaptainDetails, 3, mTPlayerFourIV, mTPlayerFourTV);
             } else {
                 Glide.with(this).clear(mTPlayerFourIV);
                 mTPlayerFourIV.setImageResource(R.drawable.splash_logo);

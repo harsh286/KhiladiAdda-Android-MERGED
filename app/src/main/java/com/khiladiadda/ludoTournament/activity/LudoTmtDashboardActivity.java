@@ -2,6 +2,7 @@ package com.khiladiadda.ludoTournament.activity;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -25,6 +26,7 @@ import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtAllTournamentMainResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtAllTournamentResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtMyMatchMainResponse;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 
 import java.util.List;
@@ -44,6 +46,8 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     ImageView rulesImg;
     @BindView(R.id.iv_back_arroww)
     ImageView backArrowIv;
+    @BindView(R.id.swipe_ludo_tournament)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private MyTournamentViewPagerAdapter mMyTournamentViewPagerAdapter;
     private LudoTmtPresenter mPresenter;
@@ -63,6 +67,7 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         viewPagerData();
         setSubMyTmttabData();
         setupMyTournamentViewPager();
+        swipeRefreshLayout();
     }
 
     @Override
@@ -75,10 +80,18 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     @Override
     public void onClick(View p0) {
         if (p0.getId() == R.id.img_rules) {
-            startActivity(new Intent(this, LudoTmtRulesActivity.class));
+//            startActivity(new Intent(this, LudoTmtRulesActivity.class));
+            AppUtilityMethods.showTooltip(this, rulesImg, getString(R.string.english_rules));
         } else if (p0.getId() == R.id.img_rules) {
             finish();
+        }else{
+            finish();
         }
+    }
+
+    private void swipeRefreshLayout() {
+        swipeRefreshLayout.setOnRefreshListener(() ->
+                callAllTournamentApi());
     }
 
     private void callAllTournamentApi() {
@@ -218,6 +231,7 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     @Override
     public void onGetAllTournamentComplete(LudoTmtAllTournamentMainResponse response) {
         hideProgress();
+        swipeRefreshLayout.setRefreshing(false);
         try {
             if (response.isStatus()) {
                 responses = response.getResponse();
@@ -231,6 +245,7 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     @Override
     public void onGetAllTournamentFailure(ApiError errorMsg) {
         hideProgress();
+        swipeRefreshLayout.setRefreshing(false);
     }
 
 

@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.Window;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ import com.khiladiadda.gamercash.VerifiedActivity;
 import com.khiladiadda.interfaces.IOnDateSetListener;
 import com.khiladiadda.interfaces.IOnLeagueJoinListener;
 import com.khiladiadda.login.LoginActivity;
+import com.khiladiadda.ludoTournament.activity.LudoTmtRulesActivity;
 import com.khiladiadda.network.model.response.Active;
 import com.khiladiadda.network.model.response.CategoryList;
 import com.khiladiadda.network.model.response.GameCategory;
@@ -1020,15 +1022,6 @@ public class AppUtilityMethods {
         try {
             boolean isAppInstall = AppUtilityMethods.isAppInstalled(activity, "com.gamerpe.in");
             return isAppInstall;
-//            if (isAppInstall) {
-//                Intent i = new Intent(activity, PayActivity.class);
-//                activity.startActivity(i);
-//                activity.finish();
-//            } else {
-//                Intent i = new Intent(activity, InstallActivity.class);
-//                activity.startActivity(i);
-//                activity.finish();
-//            }
         } catch (Exception e) {
             activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.gamerpe.in")));
         }
@@ -1443,6 +1436,33 @@ public class AppUtilityMethods {
             }
         });
         dialog.show();
+    }
+
+    //LUDO Tournament
+    public static void showTooltip(Activity activity, ImageView mTV, String textMsg) {
+        View ludoToolTip = LayoutInflater.from(activity).inflate(R.layout.rules_info_tooltip, null);
+        PopupWindow mWindow = new PopupWindow(ludoToolTip, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        if (Build.VERSION.SDK_INT >= 21) {
+            mWindow.setElevation(5.0f);
+        }
+        mWindow.setOutsideTouchable(true);
+        mWindow.setFocusable(true);
+        mWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        TextView tvEnglish = ludoToolTip.findViewById(R.id.tv_english);
+        TextView tvhindi = ludoToolTip.findViewById(R.id.tv_hindi);
+        tvEnglish.setOnClickListener(view -> {
+            Intent intent = new Intent(activity, LudoTmtRulesActivity.class);
+            intent.putExtra("lang", "english");
+            activity.startActivity(intent);
+            mWindow.dismiss();
+        });
+        tvhindi.setOnClickListener(view -> {
+            Intent intent = new Intent(activity, LudoTmtRulesActivity.class);
+            intent.putExtra("lang", "hindi");
+            activity.startActivity(intent);
+            mWindow.dismiss();
+        });
+        mWindow.showAsDropDown(mTV, (int) -(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, activity.getResources().getDisplayMetrics())), 0, Gravity.END);
     }
 
 }

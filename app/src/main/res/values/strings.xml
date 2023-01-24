@@ -904,6 +904,11 @@
     <string name="status_pending">There is some technical issue. Your amount will be reflected in 2-3hrs in your deposit wallet.</string>
     <string name="gamer_cash_coins">GamerCash \nTotal = </string>
     <string name="insuffiecient_GC">Your GC amount is insufficient.\nPlease earn more GC for successful transaction.</string>
+    <string name="ludo_rules_hindi">1. प्रत्येक खिलाड़ी एक पासा फेंकता है; उच्चतम रोलर खेल शुरू करता है। खिलाड़ी बारी-बारी से दक्षिणावर्त दिशा में मुड़ते हैं।\n\n
+2. एक टोकन को उसके यार्ड से उसके शुरुआती वर्ग तक खेलने के लिए प्रवेश करने के लिए, एक खिलाड़ी को एक छक्का लगाना चाहिए।
+[7] [8] खिलाड़ी घर से हर बार एक छक्का प्राप्त करने के लिए एक टोकन ले सकते हैं जब तक कि घर खाली न हो या एक टुकड़ा छह बार स्थानांतरित न हो। स्टार्ट बॉक्स में दो स्वयं के टोकन हैं (दोगुना है)। यदि खिलाड़ी के पास खेलने के लिए अभी तक कोई टोकन नहीं है और एक छक्के के अलावा अन्य रोल करता है, तो बारी अगले खिलाड़ी के पास जाती है।खिलाड़ियों को हमेशा रोल किए गए डाई वैल्यू के अनुसार टोकन ले जाना चाहिए।\n
+\n
+3. एक बार जब खिलाड़ियों के पास खेलने के लिए एक या एक से अधिक टोकन होते हैं, तो वे एक टोकन का चयन करते हैं और इसे ट्रैक के साथ आगे की ओर ले जाते हैं, मरने से संकेतित वर्गों की संख्या।</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="view_image_in_full_screen"><u>View Image in Full Screen</u></string>
@@ -912,4 +917,5 @@
 <!--    <string name="insuffiecient_GC">Your GC amount is insufficient.\nPlease earn more GC for successful \ntransaction.</string>-->
     <string name="min_amount">Please add amount to proceed.\nMinimum amount to be added is Rs.10</string>
     <string name="ended">Ended</string>
+    <string name="english_rules">Click on this button to know more about the brackets and matches</string>
 </resources>
