@@ -978,4 +978,23 @@ public class AppDialog {
         dialog.show();
         return dialog;
     }
+
+    public static Dialog showAlertDialog(Activity activity, String msg) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.setContentView(R.layout.dialog_alert_dialog);
+        Button btnOkay = dialog.findViewById(R.id.btn_okay_dialog);
+        TextView msgTv = dialog.findViewById(R.id.tv_amt);
+        msgTv.setText(msg);
+        btnOkay.setOnClickListener(v -> {
+            activity.finish();
+            dialog.dismiss();
+
+        });
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        return dialog;
+    }
+
+
 }

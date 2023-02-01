@@ -5,19 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".ludoTournament.fragment.UpcomingLudoTmtFragment">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/srl_matches"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_upcoming_tournament"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_5"/>
 
     <TextView
         android:id="@+id/tv_no_data"

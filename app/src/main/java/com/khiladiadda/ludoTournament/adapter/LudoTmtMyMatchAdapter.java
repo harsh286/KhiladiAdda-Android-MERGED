@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.khiladiadda.R;
 import com.khiladiadda.ludoTournament.listener.IOnClickListener;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtMyMatchMainResponse;
@@ -46,16 +47,30 @@ public class LudoTmtMyMatchAdapter extends RecyclerView.Adapter<LudoTmtMyMatchAd
     @Override
     public void onBindViewHolder(@NonNull LudoTmtMyMatchAdapter.ViewHolder holder, int position) {
         LudoTmtMyMatchResponse item = myMatchLists.get(position);
-
+        if (item.gettStatus() == 1) {
+            holder.joinBtn.setText("Match Ended");
+            holder.joinBtn.setBackgroundColor(Color.parseColor("#6C56EF"));
+        } else if (item.gettStatus() == 2) {
+            holder.joinBtn.setText("You Won!");
+            holder.joinBtn.setBackgroundColor(Color.parseColor("#29A93C"));
+        } else if (item.gettStatus() == 3) {
+            holder.joinBtn.setText("Opponent Won");
+            holder.joinBtn.setBackgroundColor(Color.parseColor("#909090"));
+        } else if (item.gettStatus() == 4) {
+            holder.joinBtn.setText("Match Cancelled");
+            holder.joinBtn.setBackgroundColor(Color.parseColor("#C54444"));
+        } else {
+            holder.joinBtn.setText("View Tournaments");
+            holder.joinBtn.setBackgroundColor(Color.parseColor("#6C56EF"));
+        }
         holder.tournamentTv.setText(item.getName());
-        holder.entryTv.setText("" +Double.parseDouble(item.getEntryFees().toString())+" Coins");
-        holder.priceTv.setText("" + Double.parseDouble(item.getPrize().toString())+" Coins");
+        holder.entryTv.setText(String.format("%s Coins", Double.parseDouble(item.getEntryFees().toString())));
+        holder.priceTv.setText(String.format("%s Coins", Double.parseDouble(item.getPrize().toString())));
         holder.roundTv.setText("" + item.getTtLevel());
         holder.startTimeTv.setText(AppUtilityMethods.getConvertDateTimeMatch(item.getStartDate()));
         holder.totalParticipantsTv.setText("" + item.getnParticipants());
-        holder.totalParticipantsNew.setText(item.getnParticipated()+"/"+item.getnParticipants());
-//        holder.joinedPb.setProgress(item.getnParticipated());
-        holder.joinedPb.setProgress(3);
+        holder.totalParticipantsNew.setText(item.getnParticipated() + "/" + item.getnParticipants());
+        holder.joinedPb.setProgress(item.getnParticipated());
         holder.joinedPb.setMax(item.getnParticipants());
     }
 
@@ -84,6 +99,8 @@ public class LudoTmtMyMatchAdapter extends RecyclerView.Adapter<LudoTmtMyMatchAd
         TextView totalParticipantsNew;
         @BindView(R.id.pb_joined)
         ProgressBar joinedPb;
+        @BindView(R.id.mcv_tournaments)
+        MaterialCardView tournamentMcv;
         IOnClickListener iOnClickListener;
 
         public ViewHolder(View view, IOnClickListener mIOnClickListener) {
@@ -91,11 +108,14 @@ public class LudoTmtMyMatchAdapter extends RecyclerView.Adapter<LudoTmtMyMatchAd
             ButterKnife.bind(this, itemView);
             iOnClickListener = mIOnClickListener;
             joinBtn.setOnClickListener(this);
+            tournamentMcv.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (view.getId() == R.id.btn_join) {
+                iOnClickListener.onItemClick(getAbsoluteAdapterPosition());
+            }else if (view.getId() == R.id.mcv_tournaments) {
                 iOnClickListener.onItemClick(getAbsoluteAdapterPosition());
             }
         }

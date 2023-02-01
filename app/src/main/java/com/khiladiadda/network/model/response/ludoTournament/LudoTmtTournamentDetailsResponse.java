@@ -13,6 +13,28 @@ public class LudoTmtTournamentDetailsResponse {
     @SerializedName("ttMatch")
     @Expose
     private Integer ttMatch;
+    @SerializedName("tStatus")
+    @Expose
+    private int tStatus;
+    @SerializedName("is_out")
+    @Expose
+    private boolean isOut;
+
+    public boolean isOut() {
+        return isOut;
+    }
+
+    public void setOut(boolean out) {
+        isOut = out;
+    }
+
+    public int gettStatus() {
+        return tStatus;
+    }
+
+    public void settStatus(int tStatus) {
+        this.tStatus = tStatus;
+    }
 
     public String getId() {
         return id;

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView6"
+        android:id="@+id/mcv_tournaments"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -38,7 +38,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ludo_img" />
+                    android:src="@drawable/ludotmt_tournament_logo" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -339,10 +339,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:fontFamily="@font/productsansregular"
-                        android:maxLines="@integer/int_1"
-                        android:text="21 Aug, 02:34 pm"
+                        android:maxLines="2"
+                        android:text="21 Aug, 02:34pm"
                         android:textColor="@color/ludotmt_text_green"
-                        android:textSize="@dimen/text_12"
+                        android:textSize="10sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/iv_start_time"

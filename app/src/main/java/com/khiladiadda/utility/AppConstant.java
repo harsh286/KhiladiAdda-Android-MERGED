@@ -245,9 +245,10 @@ public class AppConstant {
     public static final String API_LUDO_ALL_TOURNAMENT = "user/ludo/tournament/fetch";
     public static final String API_LUDO_JOIN_TOURNAMENT = "user/ludo/tournament/join-tournament/{id}";
     public static final String API_LUDO_PAST_TOURNAMENT = "user/ludo/tournament/my/past-tournaments";
-    public static final String API_LUDO_LIVE_TOURNAMENT = "user/ludo/tournament/my/upcoming-tournaments";
-    public static final String API_LUDO_UPCOMING_TOURNAMENT = "user/ludo/tournament/my/live-tournaments";
+    public static final String API_LUDO_LIVE_TOURNAMENT = "user/ludo/tournament/my/live-tournaments";
+    public static final String API_LUDO_UPCOMING_TOURNAMENT = "user/ludo/tournament/my/upcoming-tournaments";
     public static final String API_LUDO_TOURNAMENT_ROUNDS = "user/ludo/tournament/tournament/room-details/{id}";
+    public static final String API_LUDO_TOURNAMENT_PAST_ROUNDS = "user/ludo/tournament/tournament/past-rooms-details/{id}";
 
 
     public static final int FROM_WON = 1;
@@ -928,6 +929,7 @@ public class AppConstant {
     public static final String LUDOADDA_KOMMUNI_CATEGORY = "LudoADDA";
     public static final String LUDO_TOURNAMENT_PACKAGE = "com.khiladiadda.ludoTournament.activity";
     public static final String LUDOTMT_OPP_JOINED = "OPPONENT_JOINED";
+    public static final String LUDOTMT_OPP_ROOM_JOINED = "OPPONENT_JOINED_ROOM";
     public static final String WS_VERSION = "WS_VERSION";
     public static final String WS_LINK = "WS_LINK";
 

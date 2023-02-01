@@ -3,6 +3,7 @@ package com.khiladiadda.ludoTournament.ip;
 import com.khiladiadda.ludoTournament.LudoTmtInteractor;
 import com.khiladiadda.network.IApiListener;
 import com.khiladiadda.network.model.ApiError;
+import com.khiladiadda.network.model.request.ludoTournament.LudoTournamentFetchRequest;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtAllTournamentMainResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtJoinMainResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtMyMatchMainResponse;
@@ -28,8 +29,8 @@ public class LudoTmtPresenter implements ILudoTmtPresenter {
     }
 
     @Override
-    public void getAllTournament() {
-        mSubscription = mInteractor.getLudoTmtAllTournament(ludoTmtAllTournamentMainResponseIApiListener);
+    public void getAllTournament(boolean startDate) {
+        mSubscription = mInteractor.getLudoTmtAllTournament(ludoTmtAllTournamentMainResponseIApiListener, startDate);
     }
 
     private IApiListener<LudoTmtAllTournamentMainResponse> ludoTmtAllTournamentMainResponseIApiListener = new IApiListener<LudoTmtAllTournamentMainResponse>() {

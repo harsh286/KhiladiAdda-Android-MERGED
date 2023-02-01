@@ -4,7 +4,6 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -28,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
@@ -35,18 +35,18 @@ import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.dialogs.AppDialog;
 import com.khiladiadda.dialogs.interfaces.IOnVesrionDownloadListener;
 import com.khiladiadda.interfaces.IOnFileDownloadedListener;
-import com.khiladiadda.ludoTournament.adapter.LudoTmtRoundAdapter;
 import com.khiladiadda.ludoTournament.ip.ILudoTmtDetailsView;
 import com.khiladiadda.ludoTournament.ip.ILudoTmtRoundsView;
 import com.khiladiadda.ludoTournament.ip.LudoTmtJoinPresenter;
 import com.khiladiadda.ludoTournament.ip.LudoTmtRoundsPresenter;
 import com.khiladiadda.ludoTournament.listener.IOnClickListener;
-import com.khiladiadda.ludoUniverse.LudoUniverseActivity;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtAllTournamentResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtJoinMainResponse;
+import com.khiladiadda.network.model.response.ludoTournament.LudoTmtMyMatchResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtRoundsDetailsMainResponse;
+import com.khiladiadda.network.model.response.ludoTournament.LudoTmtRoundsDetailsResponse;
 import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
@@ -56,6 +56,7 @@ import com.khiladiadda.utility.providers.GenericFileProvider;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
@@ -79,8 +80,8 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
     TextView startTimeTv;
     @BindView(R.id.cl_join_tournaments)
     ConstraintLayout joinTournamentCl;
-    @BindView(R.id.rv_match_tournament)
-    RecyclerView matchRoundsRv;
+    //    @BindView(R.id.rv_match_tournament)
+//    RecyclerView matchRoundsRv;
     @BindView(R.id.tv_total_participants_new)
     TextView totalParticipantsNew;
     @BindView(R.id.pb_joined)
@@ -101,6 +102,40 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
     TextView tipsInfoHindi;
     @BindView(R.id.tvTipsEnglish)
     TextView tipsInfoEnglish;
+    @BindView(R.id.tv_rounds_)
+    TextView RoundsTv;
+    @BindView(R.id.tv_match)
+    TextView matchTv;
+
+    @BindView(R.id.tv_first_player)
+    TextView firstPlayerTv;
+    @BindView(R.id.tv_second_player)
+    TextView secondPlayerTv;
+    //    @BindView(R.id.tv_view_all_rounds)
+//    TextView ViewAllRoundsTv;
+    @BindView(R.id.iv_first_player)
+    ImageView firstPlayerIv;
+    @BindView(R.id.iv_second_player)
+    ImageView secondPlayerIv;
+    @BindView(R.id.cl_rounds)
+    ConstraintLayout RoundsCl;
+    @BindView(R.id.btn_status)
+    MaterialCardView statusBtn;
+    @BindView(R.id.btn_waiting)
+    MaterialCardView waitingBtn;
+    @BindView(R.id.btn_won)
+    MaterialCardView wonBtn;
+    @BindView(R.id.btn_opp_won)
+    MaterialCardView oppWonBtn;
+    @BindView(R.id.btn_play_now)
+    MaterialCardView playNowBtn;
+
+    @BindView(R.id.tv_win_prize)
+    TextView winPrizeTv;
+    @BindView(R.id.tv_view_all_rounds)
+    TextView viewAllRoundTv;
+    @BindView(R.id.cl_out_of_ludotmt)
+    ConstraintLayout outOfLudoTmtCl;
 
     private Context context;
     private Activity activity;
@@ -108,6 +143,7 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
     private LudoTmtJoinPresenter mPresenter;
     private LudoTmtRoundsPresenter mRoundPresenter;
     private LudoTmtAllTournamentResponse matchDetailsResponse;
+    private LudoTmtMyMatchResponse ludoTmtMyMatchResponse;
     private String mVersion, mCurrentVersion, mLink, mFilePath;
     private Intent launchIntent;
     private Dialog mVersionDialog;
@@ -121,7 +157,7 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LocalBroadcastManager.getInstance(this).registerReceiver(mLudoTmtNotificationReceiver, new IntentFilter(AppConstant.LUDO_TOURNAMENT_PACKAGE));
-
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLudoTmtNotificationRoomReceiver, new IntentFilter(AppConstant.LUDO_TOURNAMENT_PACKAGE));
     }
 
     @Override
@@ -137,7 +173,13 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
         AppSharedPreference.initialize(this);
         mPresenter = new LudoTmtJoinPresenter(this);
         mRoundPresenter = new LudoTmtRoundsPresenter(this);
-        matchDetailsResponse = getIntent().getParcelableExtra("AllLudoTournaments");
+        if (getIntent().getParcelableExtra("AllLudoTournaments") != null) {
+            matchDetailsResponse = getIntent().getParcelableExtra("AllLudoTournaments");
+            winPrizeTv.setText("WIN ₹" + matchDetailsResponse.getPrize());
+        } else {
+            ludoTmtMyMatchResponse = getIntent().getParcelableExtra("MyLudoTournaments");
+            winPrizeTv.setText("WIN ₹" + ludoTmtMyMatchResponse.getPrize());
+        }
         mLink = AppSharedPreference.getInstance().getVersion().getVersion().getLudoApkLink();
         launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
         if (launchIntent != null) getVersion();
@@ -148,7 +190,6 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
         getJoined();
         setupUi();
         getCheck();
-//        callRoundsApi();
 
     }
 
@@ -160,11 +201,20 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
         joinTournamentCl.setOnClickListener(this);
         hindiDekheTv.setOnClickListener(this);
         viewInEnglishTv.setOnClickListener(this);
+        playNowBtn.setOnClickListener(this);
+        statusBtn.setOnClickListener(this);
+        viewAllRoundTv.setOnClickListener(this);
     }
 
     private void getCheck() {
-        if (matchDetailsResponse.getnParticipants() == matchDetailsResponse.getnParticipated()) {
-            mcvJoin.setVisibility(View.INVISIBLE);
+        if (matchDetailsResponse != null) {
+            if (matchDetailsResponse.getnParticipants() == matchDetailsResponse.getnParticipated()) {
+                mcvJoin.setVisibility(View.INVISIBLE);
+            }
+        } else {
+            if (ludoTmtMyMatchResponse.getnParticipants() == ludoTmtMyMatchResponse.getnParticipated()) {
+                mcvJoin.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
@@ -173,17 +223,22 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
         switch (p0.getId()) {
             case R.id.img_rules:
 //            startActivity(new Intent(this, LudoTmtRulesActivity.class));
-//                AppUtilityMethods.showTooltip(this, rulesImg, getString(R.string.english_rules));
-            launchUnityWithData(matchDetailsResponse.getId(), matchDetailsResponse.getEntryFees(), matchDetailsResponse.getId(), Double.parseDouble(matchDetailsResponse.getPrize().toString()), "test", "", tournamentId);
+                AppUtilityMethods.showTooltip(this, rulesImg, getString(R.string.english_rules));
                 break;
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.mcv_join:
             case R.id.cl_join_tournaments:
+                launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
+                if (launchIntent != null) getVersion();
                 if (launchIntent != null) {
                     if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
-                        showConfirmation(Double.parseDouble(matchDetailsResponse.getEntryFees().toString()));
+                        if (matchDetailsResponse != null) {
+                            showConfirmation(Double.parseDouble(matchDetailsResponse.getEntryFees().toString()));
+                        } else {
+                            showConfirmation(Double.parseDouble(ludoTmtMyMatchResponse.getEntryFees().toString()));
+                        }
                     } else {
                         mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
                     }
@@ -211,31 +266,77 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
                 winHindiTv.setVisibility(View.INVISIBLE);
                 loseHindiTv.setVisibility(View.INVISIBLE);
                 break;
+            case R.id.btn_play_now:
+                if (matchDetailsResponse != null) {
+                    if (!Objects.equals(mDataResponse.getResponse().get(0).getUserFirst(), AppSharedPreference.getInstance().getMasterData().getResponse().getProfile().getId()))
+                        launchUnityWithData(mDataResponse.getResponse().get(0).getId(), matchDetailsResponse.getEntryFees(), matchDetailsResponse.getId(), Double.parseDouble(matchDetailsResponse.getPrize().toString()), "" + mDataResponse.getResponse().get(0).getUserFirstInfo().getRandomName(), "" + mDataResponse.getResponse().get(0).getUserFirstInfo().getRandomDp(), tournamentId);
+                    else
+                        launchUnityWithData(mDataResponse.getResponse().get(0).getId(), matchDetailsResponse.getEntryFees(), matchDetailsResponse.getId(), Double.parseDouble(matchDetailsResponse.getPrize().toString()), "" + mDataResponse.getResponse().get(0).getUserSecondInfo().getRandomName(), "" + mDataResponse.getResponse().get(0).getUserSecondInfo().getRandomDp(), tournamentId);
+
+                } else {
+                    if (!Objects.equals(mDataResponse.getResponse().get(0).getUserFirst(), AppSharedPreference.getInstance().getMasterData().getResponse().getProfile().getId()))
+                        launchUnityWithData(mDataResponse.getResponse().get(0).getId(), ludoTmtMyMatchResponse.getEntryFees(), ludoTmtMyMatchResponse.getId(), Double.parseDouble(ludoTmtMyMatchResponse.getPrize().toString()), "" + mDataResponse.getResponse().get(0).getUserFirstInfo().getRandomName(), "" + mDataResponse.getResponse().get(0).getUserFirstInfo().getRandomDp(), tournamentId);
+                    else
+                        launchUnityWithData(mDataResponse.getResponse().get(0).getId(), ludoTmtMyMatchResponse.getEntryFees(), ludoTmtMyMatchResponse.getId(), Double.parseDouble(ludoTmtMyMatchResponse.getPrize().toString()), "" + mDataResponse.getResponse().get(0).getUserSecondInfo().getRandomName(), "" + mDataResponse.getResponse().get(0).getUserSecondInfo().getRandomDp(), tournamentId);
+
+                }
+                break;
+            case R.id.btn_status:
+                AppDialog.showAlertDialog(this, "Match is in-progress");
+                break;
+            case R.id.tv_view_all_rounds:
+                Intent intent = new Intent(this, LudoTmtAllRoundActivity.class);
+                if (matchDetailsResponse != null)
+                    intent.putExtra("AllLudoTournaments", matchDetailsResponse);
+                else
+                    intent.putExtra("MyLudoTournaments", ludoTmtMyMatchResponse);
+                startActivity(intent);
+                break;
+
         }
     }
 
     private void getJoined() {
-        if (matchDetailsResponse.isJoined()) {
+        if (matchDetailsResponse != null) {
+            if (matchDetailsResponse.isJoined()) {
+                mcvJoin.setVisibility(View.GONE);
+                callRoundsApi();
+            } else {
+                mcvJoin.setVisibility(View.VISIBLE);
+            }
+        } else {
             mcvJoin.setVisibility(View.GONE);
             callRoundsApi();
-        } else {
-            mcvJoin.setVisibility(View.VISIBLE);
         }
     }
 
     private void setupUi() {
-        entryFee.setText("" + Double.parseDouble(matchDetailsResponse.getEntryFees().toString()) + " Coins");
-        roundsTv.setText("" + matchDetailsResponse.getTtLevel());
-        startTimeTv.setText(AppUtilityMethods.getConvertDateTimeMatch(matchDetailsResponse.getStartDate()));
-        totalParticipantsNew.setText(matchDetailsResponse.getnParticipated() + "/" + matchDetailsResponse.getnParticipants());
-        joinedPb.setProgress(matchDetailsResponse.getnParticipated());
-        joinedPb.setMax(matchDetailsResponse.getnParticipants());
+        if (matchDetailsResponse != null) {
+            entryFee.setText(String.format("%s Coins", Double.parseDouble(matchDetailsResponse.getEntryFees().toString())));
+            roundsTv.setText("" + matchDetailsResponse.getTtLevel());
+            startTimeTv.setText(AppUtilityMethods.getConvertDateTimeMatch(matchDetailsResponse.getStartDate()));
+            totalParticipantsNew.setText(matchDetailsResponse.getnParticipated() + "/" + matchDetailsResponse.getnParticipants());
+            joinedPb.setProgress(matchDetailsResponse.getnParticipated());
+            joinedPb.setMax(matchDetailsResponse.getnParticipants());
+        } else {
+            entryFee.setText(String.format("%s Coins", Double.parseDouble(ludoTmtMyMatchResponse.getEntryFees().toString())));
+            roundsTv.setText("" + ludoTmtMyMatchResponse.getTtLevel());
+            startTimeTv.setText(AppUtilityMethods.getConvertDateTimeMatch(ludoTmtMyMatchResponse.getStartDate()));
+            totalParticipantsNew.setText(ludoTmtMyMatchResponse.getnParticipated() + "/" + ludoTmtMyMatchResponse.getnParticipants());
+            joinedPb.setProgress(ludoTmtMyMatchResponse.getnParticipated());
+            joinedPb.setMax(ludoTmtMyMatchResponse.getnParticipants());
+        }
     }
 
     private void callJoinApi() {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
-            mPresenter.onJoinTournament(matchDetailsResponse.getId());
+            if (matchDetailsResponse != null) {
+                mPresenter.onJoinTournament(matchDetailsResponse.getId());
+            } else {
+                mPresenter.onJoinTournament(ludoTmtMyMatchResponse.getId());
+            }
+
         } else {
             Snackbar.make(backIv, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
@@ -243,8 +344,12 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
 
     private void callRoundsApi() {
         if (new NetworkStatus(this).isInternetOn()) {
-            showProgress(getString(R.string.txt_progress_authentication));
-            mRoundPresenter.getTournamentRounds(matchDetailsResponse.getId());
+//            showProgress(getString(R.string.txt_progress_authentication));
+            if (matchDetailsResponse != null) {
+                mRoundPresenter.getTournamentRounds(matchDetailsResponse.getId());
+            } else {
+                mRoundPresenter.getTournamentRounds(ludoTmtMyMatchResponse.getId());
+            }
         } else {
             Snackbar.make(backIv, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
@@ -255,6 +360,9 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
         hideProgress();
         Snackbar.make(backIv, response.getMessage(), Snackbar.LENGTH_SHORT).show();
         mcvJoin.setVisibility(View.INVISIBLE);
+        joinedPb.setProgress(matchDetailsResponse.getnParticipated() + 1);
+        joinedPb.setMax(matchDetailsResponse.getnParticipants());
+        totalParticipantsNew.setText((matchDetailsResponse.getnParticipated() + 1) + "/" + matchDetailsResponse.getnParticipants());
         callRoundsApi();
     }
 
@@ -271,7 +379,28 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
 //            if (response.getR) // todo hide round recycler
             mDataResponse = response;
             tournamentId = response.getTournamentDetails().getId();
-            matchRoundsRv.setAdapter(new LudoTmtRoundAdapter(this, this, response.getResponse(), response.getTournamentDetails(), response.isExist(), false));
+            if (!response.getResponse().isEmpty()) {
+                viewAllRoundTv.setVisibility(View.VISIBLE);
+                RoundsCl.setVisibility(View.VISIBLE);
+                setRoundData(response);
+            } else {
+                if (response.getTournamentDetails().isOut()) {
+                    outOfLudoTmtCl.setVisibility(View.VISIBLE);
+                } else {
+                    outOfLudoTmtCl.setVisibility(View.GONE);
+                }
+                if (response.getTournamentDetails().gettStatus() == 1 || response.getTournamentDetails().gettStatus() == 0)
+                    viewAllRoundTv.setVisibility(View.VISIBLE);
+                else
+                    viewAllRoundTv.setVisibility(View.GONE);
+
+                RoundsCl.setVisibility(View.GONE);
+            }
+//            if (matchDetailsResponse!= null)
+//            matchRoundsRv.setAdapter(new LudoTmtRoundAdapter(this, this, response.getResponse(), response.getTournamentDetails(), response.isExist(), false, matchDetailsResponse.getStartDate()));
+//            else
+//                matchRoundsRv.setAdapter(new LudoTmtRoundAdapter(this, this, response.getResponse(), response.getTournamentDetails(), response.isExist(), false, ludoTmtMyMatchResponse.getStartDate()));
+
         } else {
             AppDialog.showStatusFailureDialog(this, response.getMessage());
         }
@@ -283,9 +412,103 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
 
     }
 
+    private void setRoundData(LudoTmtRoundsDetailsMainResponse response) {
+        LudoTmtRoundsDetailsResponse item = response.getResponse().get(0);
+        RoundsTv.setText(String.format("ROUND %s", response.getTournamentDetails().getCurrentLevelInfo().getLevel().toString()));
+        matchTv.setText(String.format("MATCH %s", response.getTournamentDetails().getTtMatch().toString()));
+        Glide.with(firstPlayerIv.getContext()).load(response.getResponse().get(0).getUserFirstInfo().getDp()).fallback(R.drawable.profile).into(firstPlayerIv);
+        if (Objects.equals(item.getUserFirst(), AppSharedPreference.initialize(this).getMasterData().getResponse().getProfile().getId())) {
+            firstPlayerTv.setText("You");
+            Glide.with(firstPlayerIv.getContext()).load(item.getUserFirstInfo().getDp()).fallback(R.drawable.profile).into(firstPlayerIv);
+        } else {
+            firstPlayerTv.setText(item.getUserFirstInfo().getRandomName());
+            Glide.with(firstPlayerIv.getContext()).load(item.getUserFirstInfo().getRandomDp()).fallback(R.drawable.profile).into(firstPlayerIv);
+        }
+        if (Objects.equals(item.getUserSecond(), AppSharedPreference.initialize(this).getMasterData().getResponse().getProfile().getId())) {
+            secondPlayerTv.setText("You");
+            Glide.with(secondPlayerIv.getContext()).load(item.getUserSecondInfo().getDp()).fallback(R.drawable.profile).into(secondPlayerIv);
+        } else {
+            secondPlayerTv.setText(item.getUserSecondInfo().getRandomName());
+            Glide.with(secondPlayerIv.getContext()).load(item.getUserSecondInfo().getRandomDp()).fallback(R.drawable.profile).into(secondPlayerIv);
+        }
+        playNowBtn.setVisibility(View.GONE);
+        if (false) {
+            playNowBtn.setVisibility(View.VISIBLE);
+        } else {
+            if (item.getRoomStatus() == 1) {
+                secondPlayerTv.setText("waiting...");
+                ButtonEnable(item, 0, 1, 0, 0, 0);
+                Glide.with(secondPlayerIv.getContext()).load(R.drawable.ludo_img).fallback(R.drawable.profile).into(secondPlayerIv);
+            } else if (item.getRoomStatus() == 2) {
+                ButtonEnable(item, 1, 0, 0, 0, 0);
+            } else if (item.getRoomStatus() == 3) {
+                ButtonEnable(item, 0, 0, 1, 0, 0);
+            } else if (item.getRoomStatus() == 4) {
+                ButtonEnable(item, 0, 0, 0, 1, 0);
+            } else {
+                ButtonEnable(item, 0, 0, 0, 0, 1);
+            }
+        }
+    }
+
+    void ButtonEnable(LudoTmtRoundsDetailsResponse item, int status, int waiting, int won, int opp_won, int play_now) {
+        statusBtn.setVisibility(View.INVISIBLE);
+        waitingBtn.setVisibility(View.INVISIBLE);
+        wonBtn.setVisibility(View.INVISIBLE);
+        oppWonBtn.setVisibility(View.INVISIBLE);
+        playNowBtn.setVisibility(View.INVISIBLE);
+
+        if (status == 1) {
+//            holder.statusBtn.setVisibility(View.VISIBLE);
+            if (matchDetailsResponse != null) {
+                if (AppUtilityMethods.getTimeLeftWithMilliSec(matchDetailsResponse.getStartDate()) >= 0) {
+                    playNowBtn.setVisibility(View.VISIBLE);
+                } else
+                    statusBtn.setVisibility(View.VISIBLE);
+            } else {
+                if (AppUtilityMethods.getTimeLeftWithMilliSec(ludoTmtMyMatchResponse.getStartDate()) >= 0) {
+                    playNowBtn.setVisibility(View.VISIBLE);
+                } else
+                    statusBtn.setVisibility(View.VISIBLE);
+            }
+        } else if (waiting == 1) {
+            waitingBtn.setVisibility(View.VISIBLE);
+        } else if (won == 1) {
+            if (Objects.equals(item.getUserFirst(), AppSharedPreference.getInstance().getMasterData().getResponse().getProfile().getId()))
+                wonBtn.setVisibility(View.VISIBLE);
+            else
+                oppWonBtn.setVisibility(View.VISIBLE);
+        } else if (opp_won == 1) {
+            if (Objects.equals(item.getUserSecond(), AppSharedPreference.getInstance().getMasterData().getResponse().getProfile().getId()))
+                wonBtn.setVisibility(View.VISIBLE);
+            else
+                oppWonBtn.setVisibility(View.VISIBLE);
+        } else {
+            playNowBtn.setVisibility(View.VISIBLE);
+        }
+    }
+
+
     @Override
     public void onItemClick(int pos) {
-        launchUnityWithData(matchDetailsResponse.getId(), matchDetailsResponse.getEntryFees(), matchDetailsResponse.getId(), Double.parseDouble(matchDetailsResponse.getPrize().toString()), "", "", tournamentId);
+        if (matchDetailsResponse != null) {
+            if (!Objects.equals(mDataResponse.getResponse().get(pos).getUserFirst(), AppSharedPreference.getInstance().getMasterData().getResponse().getProfile().getId()))
+                launchUnityWithData(mDataResponse.getResponse().get(pos).getId(), matchDetailsResponse.getEntryFees(), matchDetailsResponse.getId(), Double.parseDouble(matchDetailsResponse.getPrize().toString()), "" + mDataResponse.getResponse().get(pos).getUserFirstInfo().getRandomName(), "" + mDataResponse.getResponse().get(pos).getUserFirstInfo().getRandomDp(), tournamentId);
+            else
+                launchUnityWithData(mDataResponse.getResponse().get(pos).getId(), matchDetailsResponse.getEntryFees(), matchDetailsResponse.getId(), Double.parseDouble(matchDetailsResponse.getPrize().toString()), "" + mDataResponse.getResponse().get(pos).getUserSecondInfo().getRandomName(), "" + mDataResponse.getResponse().get(pos).getUserSecondInfo().getRandomDp(), tournamentId);
+
+        } else {
+            if (!Objects.equals(mDataResponse.getResponse().get(pos).getUserFirst(), AppSharedPreference.getInstance().getMasterData().getResponse().getProfile().getId()))
+                launchUnityWithData(mDataResponse.getResponse().get(pos).getId(), ludoTmtMyMatchResponse.getEntryFees(), ludoTmtMyMatchResponse.getId(), Double.parseDouble(ludoTmtMyMatchResponse.getPrize().toString()), "" + mDataResponse.getResponse().get(pos).getUserFirstInfo().getRandomName(), "" + mDataResponse.getResponse().get(pos).getUserFirstInfo().getRandomDp(), tournamentId);
+            else
+                launchUnityWithData(mDataResponse.getResponse().get(pos).getId(), ludoTmtMyMatchResponse.getEntryFees(), ludoTmtMyMatchResponse.getId(), Double.parseDouble(ludoTmtMyMatchResponse.getPrize().toString()), "" + mDataResponse.getResponse().get(pos).getUserSecondInfo().getRandomName(), "" + mDataResponse.getResponse().get(pos).getUserSecondInfo().getRandomDp(), tournamentId);
+
+        }
+    }
+
+    @Override
+    public void onInProgressClick() {
+        AppDialog.showAlertDialog(this, "Match is in-progress");
     }
 
     private void launchUnityWithData(String cId, double Amount, String mContestCode, double mWinAmount, String mRandomName, String mRandomDp, String tournamentId) {
@@ -350,10 +573,10 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
             AppCompatButton iv_playstore = mVersionDialog.findViewById(R.id.iv_download);
             ProgressBar progressBar = mVersionDialog.findViewById(R.id.pb_apk_download);
             TextView tv = mVersionDialog.findViewById(R.id.textView9);
-            tv.setText("Hey You have Successfully downloaded the Ludo Adda game, Now please click on install button to continue.");
+            tv.setText(R.string.successful_download_ludo_adda);
             progressBar.setVisibility(View.GONE);
             iv_playstore.setVisibility(View.VISIBLE);
-            iv_playstore.setText("Install Now");
+            iv_playstore.setText(R.string.install_now);
             iv_playstore.setOnClickListener(view -> {
                 try {
                     installApk(filePath);
@@ -433,7 +656,7 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
         TextView hintTV = dialog.findViewById(R.id.tv_hint);
         mEntryFeeTV.setText(String.valueOf(amt));
         TextView heading = dialog.findViewById(R.id.tv_heading);
-        heading.setText("Battle Amount");
+        heading.setText(R.string.tournament_amount);
         hintTV.setText(R.string.amout_cannotbechanged);
         LinearLayout hide = dialog.findViewById(R.id.ll_hide);
         hide.setVisibility(View.GONE);
@@ -467,12 +690,22 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
     }
 
     //NOTIFICATION
-    private BroadcastReceiver mLudoTmtNotificationReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mLudoTmtNotificationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String mFrom = intent.getStringExtra(AppConstant.FROM);
             if (mFrom.equalsIgnoreCase(AppConstant.LUDOTMT_OPP_JOINED)) {
-                matchRoundsRv.setAdapter(new LudoTmtRoundAdapter(context, onClickListener, mDataResponse.getResponse(), mDataResponse.getTournamentDetails(), mDataResponse.isExist(), false));
+//                matchRoundsRv.setAdapter(new LudoTmtRoundAdapter(context, onClickListener, mDataResponse.getResponse(), mDataResponse.getTournamentDetails(), mDataResponse.isExist(), false, matchDetailsResponse.getStartDate()));
+            }
+        }
+    };
+    private final BroadcastReceiver mLudoTmtNotificationRoomReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String mFrom = intent.getStringExtra(AppConstant.FROM);
+            if (mFrom.equalsIgnoreCase(AppConstant.LUDOTMT_OPP_ROOM_JOINED)) {
+                callRoundsApi();
+//                matchRoundsRv.setAdapter(new LudoTmtRoundAdapter(context, onClickListener, mDataResponse.getResponse(), mDataResponse.getTournamentDetails(), mDataResponse.isExist(), false));
             }
         }
     };
@@ -480,8 +713,25 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
     @Override
     protected void onResume() {
         super.onResume();
-        if (mIsRequestingAppInstallPermission) {
-            installApk(mFilePath);
+//        if (mIsRequestingAppInstallPermission) {
+//            installApk(mFilePath);
+//        }
+        if (mAppPreference.getBoolean("LudoDownload", false)) {
+            try {
+                Intent launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
+//                if (launchIntent != null) {
+//                    startActivity(new Intent(this, LudoTmtTounamentActivity.class));
+//                    finish();
+//                } else {
+//                    mWalletLL.setVisibility(View.GONE);
+//                    mDownloadLL.setVisibility(View.VISIBLE);
+
+//                }
+            } catch (Exception e) {
+                finish();
+                startActivity(new Intent(this, LudoTmtDashboardActivity.class));
+            }
         }
+
     }
 }

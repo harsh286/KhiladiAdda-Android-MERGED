@@ -1,9 +1,12 @@
 package com.khiladiadda.network.model.response.ludoTournament;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LudoTmtMyMatchResponse {
+public class LudoTmtMyMatchResponse implements Parcelable {
     @SerializedName("_id")
     @Expose
     private String id;
@@ -31,6 +34,9 @@ public class LudoTmtMyMatchResponse {
     @SerializedName("startDate")
     @Expose
     private String startDate;
+    @SerializedName("tStatus")
+    @Expose
+    private int tStatus;
 
     public String getId() {
         return id;
@@ -103,4 +109,72 @@ public class LudoTmtMyMatchResponse {
     public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
+
+    public int gettStatus() {
+        return tStatus;
+    }
+
+    public void settStatus(int tStatus) {
+        this.tStatus = tStatus;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeValue(this.nParticipants);
+        dest.writeValue(this.nParticipated);
+        dest.writeValue(this.tMode);
+        dest.writeValue(this.ttLevel);
+        dest.writeString(this.name);
+        dest.writeValue(this.entryFees);
+        dest.writeValue(this.prize);
+        dest.writeString(this.startDate);
+        dest.writeInt(this.tStatus);
+    }
+
+    public void readFromParcel(Parcel source) {
+        this.id = source.readString();
+        this.nParticipants = (Integer) source.readValue(Integer.class.getClassLoader());
+        this.nParticipated = (Integer) source.readValue(Integer.class.getClassLoader());
+        this.tMode = (Integer) source.readValue(Integer.class.getClassLoader());
+        this.ttLevel = (Integer) source.readValue(Integer.class.getClassLoader());
+        this.name = source.readString();
+        this.entryFees = (Integer) source.readValue(Integer.class.getClassLoader());
+        this.prize = (Integer) source.readValue(Integer.class.getClassLoader());
+        this.startDate = source.readString();
+        this.tStatus = source.readInt();
+    }
+
+    public LudoTmtMyMatchResponse() {
+    }
+
+    protected LudoTmtMyMatchResponse(Parcel in) {
+        this.id = in.readString();
+        this.nParticipants = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.nParticipated = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.tMode = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.ttLevel = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.name = in.readString();
+        this.entryFees = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.prize = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.startDate = in.readString();
+        this.tStatus = in.readInt();
+    }
+
+    public static final Creator<LudoTmtMyMatchResponse> CREATOR = new Creator<LudoTmtMyMatchResponse>() {
+        @Override
+        public LudoTmtMyMatchResponse createFromParcel(Parcel source) {
+            return new LudoTmtMyMatchResponse(source);
+        }
+
+        @Override
+        public LudoTmtMyMatchResponse[] newArray(int size) {
+            return new LudoTmtMyMatchResponse[size];
+        }
+    };
 }

@@ -7,6 +7,7 @@ import com.khiladiadda.login.TrueCallerRequest;
 import com.khiladiadda.login.TrueCallerResponse;
 import com.khiladiadda.network.model.request.RaceConditionPayoutRequest;
 import com.khiladiadda.network.model.request.deposite.DepositLimitRequest;
+import com.khiladiadda.network.model.request.ludoTournament.LudoTournamentFetchRequest;
 import com.khiladiadda.network.model.response.CxBannerMainResponse;
 import com.khiladiadda.network.model.response.NeokredResponse;
 import com.khiladiadda.network.model.response.deposite.DepositLimitMainResponse;
@@ -153,6 +154,7 @@ import com.khiladiadda.network.model.response.WordSearchLiveLeaderBoardMainRespo
 import com.khiladiadda.network.model.response.WordSearchMyQuizzesMainResponse;
 import com.khiladiadda.network.model.response.WordSearchStartMainResponse;
 import com.khiladiadda.network.model.response.WordSearchTrendingMainResponse;
+import com.khiladiadda.network.model.response.ludoTournament.LudoTmtAllPastRoundsMainResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtAllTournamentMainResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtJoinMainResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtMyMatchMainResponse;
@@ -892,7 +894,7 @@ public interface ApiService {
      * LUDO TOURNAMNET
      **/
     @GET(AppConstant.API_LUDO_ALL_TOURNAMENT)
-    Observable<LudoTmtAllTournamentMainResponse> onGetLudoTmtAllTournament();
+    Observable<LudoTmtAllTournamentMainResponse> onGetLudoTmtAllTournament(@Query("startDate") boolean startDate);
 
     @GET(AppConstant.API_LUDO_JOIN_TOURNAMENT)
     Observable<LudoTmtJoinMainResponse> onJoinLudoTournament(@Path("id") String tournament_id);
@@ -908,6 +910,9 @@ public interface ApiService {
 
     @GET(AppConstant.API_LUDO_TOURNAMENT_ROUNDS)
     Observable<LudoTmtRoundsDetailsMainResponse> onLudoTournamentRound(@Path("id") String tournament_id);
+
+    @GET(AppConstant.API_LUDO_TOURNAMENT_PAST_ROUNDS)
+    Observable<LudoTmtAllPastRoundsMainResponse> onLudoTournamentPastRound(@Path("id") String tournament_id);
 
 
 

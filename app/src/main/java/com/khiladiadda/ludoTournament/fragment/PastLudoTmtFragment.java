@@ -1,5 +1,6 @@
 package com.khiladiadda.ludoTournament.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseFragment;
+import com.khiladiadda.dialogs.AppDialog;
+import com.khiladiadda.ludoTournament.activity.LudoTmtTounamentActivity;
 import com.khiladiadda.ludoTournament.adapter.LudoTmtDashboardAdapter;
 import com.khiladiadda.ludoTournament.adapter.LudoTmtMyMatchAdapter;
 import com.khiladiadda.ludoTournament.ip.ILudoTmtMyMatchView;
@@ -21,7 +24,10 @@ import com.khiladiadda.ludoTournament.ip.LudoTmtPresenter;
 import com.khiladiadda.ludoTournament.listener.IOnClickListener;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtMyMatchMainResponse;
+import com.khiladiadda.network.model.response.ludoTournament.LudoTmtMyMatchResponse;
 import com.khiladiadda.utility.NetworkStatus;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -34,6 +40,8 @@ public class PastLudoTmtFragment extends BaseFragment implements IOnClickListene
     TextView noDataTv;
 
     private LudoTmtPresenter mPresenter;
+    private List<LudoTmtMyMatchResponse> ludoTmtMyMatchResponses;
+
 
 
     @Override
@@ -71,7 +79,14 @@ public class PastLudoTmtFragment extends BaseFragment implements IOnClickListene
 
     @Override
     public void onItemClick(int pos) {
+        Intent intent = new Intent(getContext(), LudoTmtTounamentActivity.class);
+        intent.putExtra("MyLudoTournaments", ludoTmtMyMatchResponses.get(pos));
+        startActivity(intent);
+    }
 
+    @Override
+    public void onInProgressClick() {
+        AppDialog.showAlertDialog(getActivity(), "Match is in-progress");
     }
 
 
@@ -88,10 +103,12 @@ public class PastLudoTmtFragment extends BaseFragment implements IOnClickListene
     public void onGetMyMatchTournamentComplete(LudoTmtMyMatchMainResponse response) {
         hideProgress();
         if (response.isStatus()) {
+            ludoTmtMyMatchResponses = response.getResponse();
             if (response.getResponse().size() > 0) {
                 noDataTv.setVisibility(View.GONE);
                 pastTmtRv.setAdapter(new LudoTmtMyMatchAdapter(getContext(), this, response.getResponse()));
             } else {
+                pastTmtRv.setAdapter(new LudoTmtMyMatchAdapter(getContext(), this, response.getResponse()));
                 noDataTv.setVisibility(View.VISIBLE);
                 noDataTv.setText(response.getMessage());
             }

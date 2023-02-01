@@ -913,9 +913,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="view_image_in_full_screen"><u>View Image in Full Screen</u></string>
     <string name="ludotmt_rules">"Each player rolls a die; the highest roller begins the game. Players alternate turns in a clockwise direction.\n\nTo enter a token into play from its yard to its starting square, a player must roll a six.[7][8] Players can draw a token from home every time they get a six unless home is empty or move a piece six times. The start box has two own tokens (is doubled). If the player has no tokens yet in play and rolls other than a six, the turn passes to the next player.\n\nPlayers must always move a token according to the die value rolled. Once players have one or more tokens in play, they select a token and move it forwards along the track the number of squares indicated by the die. "</string>
-<!--    <string name="gamer_cash_coins">GamerCash \nTotal = \u20B9 </string>-->
-<!--    <string name="insuffiecient_GC">Your GC amount is insufficient.\nPlease earn more GC for successful \ntransaction.</string>-->
+    <!--    <string name="gamer_cash_coins">GamerCash \nTotal = \u20B9 </string>-->
+    <!--    <string name="insuffiecient_GC">Your GC amount is insufficient.\nPlease earn more GC for successful \ntransaction.</string>-->
     <string name="min_amount">Please add amount to proceed.\nMinimum amount to be added is Rs.10</string>
     <string name="ended">Ended</string>
     <string name="english_rules">Click on this button to know more about the brackets and matches</string>
+    <string name="successful_download_ludo_adda">Hey You have Successfully downloaded the Ludo Adda game, Now please click on install button to continue.</string>
+    <string name="install_now">Install Now</string>
+    <string name="battle_amount">Battle Amount</string>
+    <string name="tournament_amount">Tournament Amount</string>
+    <string name="out_of_tournament">Out of Tournament</string>
 </resources>

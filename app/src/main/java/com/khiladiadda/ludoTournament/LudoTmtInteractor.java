@@ -5,8 +5,10 @@ import com.khiladiadda.network.ApiService;
 import com.khiladiadda.network.IApiListener;
 import com.khiladiadda.network.SubscriberCallback;
 import com.khiladiadda.network.model.request.AddBeneficiaryRequest;
+import com.khiladiadda.network.model.request.ludoTournament.LudoTournamentFetchRequest;
 import com.khiladiadda.network.model.response.AddBeneficiaryResponse;
 import com.khiladiadda.network.model.response.PayoutResponse;
+import com.khiladiadda.network.model.response.ludoTournament.LudoTmtAllPastRoundsMainResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtAllTournamentMainResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtJoinMainResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtMyMatchMainResponse;
@@ -16,10 +18,10 @@ import rx.Subscription;
 
 public class LudoTmtInteractor {
 
-    public Subscription getLudoTmtAllTournament(IApiListener<LudoTmtAllTournamentMainResponse> listener) {
+    public Subscription getLudoTmtAllTournament(IApiListener<LudoTmtAllTournamentMainResponse> listener, boolean startDate) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
-        return manager.createObservable(service.onGetLudoTmtAllTournament()).subscribe(new SubscriberCallback<>(listener));
+        return manager.createObservable(service.onGetLudoTmtAllTournament(startDate)).subscribe(new SubscriberCallback<>(listener));
     }
 
     public Subscription onJoinLudoTournament(IApiListener<LudoTmtJoinMainResponse> listener, String tournament_id) {
@@ -49,5 +51,10 @@ public class LudoTmtInteractor {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
         return manager.createObservable(service.onLudoTournamentRound(id)).subscribe(new SubscriberCallback<>(listener));
+    }
+    public Subscription onLudoTournamentPastRound(IApiListener<LudoTmtAllPastRoundsMainResponse> listener, String id) {
+        ApiManager manager = ApiManager.getInstance();
+        ApiService service = manager.createService();
+        return manager.createObservable(service.onLudoTournamentPastRound(id)).subscribe(new SubscriberCallback<>(listener));
     }
 }

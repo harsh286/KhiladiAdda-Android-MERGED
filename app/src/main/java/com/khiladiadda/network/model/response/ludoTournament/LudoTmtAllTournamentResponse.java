@@ -37,6 +37,9 @@ public class LudoTmtAllTournamentResponse implements Parcelable {
     @SerializedName("is_played")
     @Expose
     private boolean isJoined;
+    @SerializedName("nJoined")
+    @Expose
+    private int nJoined;
 
     public String getId() {
         return id;
@@ -118,6 +121,14 @@ public class LudoTmtAllTournamentResponse implements Parcelable {
         isJoined = joined;
     }
 
+    public int getnJoined() {
+        return nJoined;
+    }
+
+    public void setnJoined(int nJoined) {
+        this.nJoined = nJoined;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -135,6 +146,7 @@ public class LudoTmtAllTournamentResponse implements Parcelable {
         dest.writeString(this.startDate);
         dest.writeValue(this.nParticipated);
         dest.writeByte(this.isJoined ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.nJoined);
     }
 
     public void readFromParcel(Parcel source) {
@@ -148,6 +160,7 @@ public class LudoTmtAllTournamentResponse implements Parcelable {
         this.startDate = source.readString();
         this.nParticipated = (Integer) source.readValue(Integer.class.getClassLoader());
         this.isJoined = source.readByte() != 0;
+        this.nJoined = source.readInt();
     }
 
     public LudoTmtAllTournamentResponse() {
@@ -164,6 +177,7 @@ public class LudoTmtAllTournamentResponse implements Parcelable {
         this.startDate = in.readString();
         this.nParticipated = (Integer) in.readValue(Integer.class.getClassLoader());
         this.isJoined = in.readByte() != 0;
+        this.nJoined = in.readInt();
     }
 
     public static final Creator<LudoTmtAllTournamentResponse> CREATOR = new Creator<LudoTmtAllTournamentResponse>() {

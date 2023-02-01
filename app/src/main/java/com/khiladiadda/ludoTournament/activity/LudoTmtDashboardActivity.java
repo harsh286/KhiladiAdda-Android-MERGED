@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
+import com.khiladiadda.dialogs.AppDialog;
 import com.khiladiadda.gameleague.adapter.NewDroidoAdapterViewPager;
 import com.khiladiadda.ludoTournament.adapter.LudoTmtDashboardAdapter;
 import com.khiladiadda.ludoTournament.adapter.MyTournamentViewPagerAdapter;
@@ -23,6 +24,7 @@ import com.khiladiadda.ludoTournament.ip.LudoTmtPresenter;
 import com.khiladiadda.ludoTournament.ip.ILudoTmtView;
 import com.khiladiadda.ludoTournament.listener.IOnClickListener;
 import com.khiladiadda.network.model.ApiError;
+import com.khiladiadda.network.model.request.ludoTournament.LudoTournamentFetchRequest;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtAllTournamentMainResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtAllTournamentResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtMyMatchMainResponse;
@@ -46,8 +48,6 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     ImageView rulesImg;
     @BindView(R.id.iv_back_arroww)
     ImageView backArrowIv;
-    @BindView(R.id.swipe_ludo_tournament)
-    SwipeRefreshLayout swipeRefreshLayout;
 
     private MyTournamentViewPagerAdapter mMyTournamentViewPagerAdapter;
     private LudoTmtPresenter mPresenter;
@@ -67,7 +67,8 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         viewPagerData();
         setSubMyTmttabData();
         setupMyTournamentViewPager();
-        swipeRefreshLayout();
+//        swipeRefreshLayout.setRefreshing(false);
+//        swipeRefreshLayout();
     }
 
     @Override
@@ -89,15 +90,15 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         }
     }
 
-    private void swipeRefreshLayout() {
-        swipeRefreshLayout.setOnRefreshListener(() ->
-                callAllTournamentApi());
-    }
+//    private void swipeRefreshLayout() {
+//        swipeRefreshLayout.setOnRefreshListener(() ->
+//                callAllTournamentApi());
+//    }
 
     private void callAllTournamentApi() {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
-            mPresenter.getAllTournament();
+            mPresenter.getAllTournament(true);
         } else {
             Snackbar.make(backArrowIv, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
@@ -218,7 +219,6 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         NewDroidoAdapterViewPager newDroidoAdapterViewPager = new NewDroidoAdapterViewPager(this);
         viewPager.setAdapter(newDroidoAdapterViewPager);
         viewPager.setCurrentItem(newDroidoAdapterViewPager.getCount() - 1);
-
     }
 
     @Override
@@ -229,9 +229,14 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     }
 
     @Override
+    public void onInProgressClick() {
+        AppDialog.showAlertDialog(this, "Match is in-progress");
+    }
+
+    @Override
     public void onGetAllTournamentComplete(LudoTmtAllTournamentMainResponse response) {
         hideProgress();
-        swipeRefreshLayout.setRefreshing(false);
+//        swipeRefreshLayout.setRefreshing(false);
         try {
             if (response.isStatus()) {
                 responses = response.getResponse();
@@ -245,7 +250,7 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     @Override
     public void onGetAllTournamentFailure(ApiError errorMsg) {
         hideProgress();
-        swipeRefreshLayout.setRefreshing(false);
+//        swipeRefreshLayout.setRefreshing(false);
     }
 
 

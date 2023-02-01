@@ -105,6 +105,10 @@ public class PushMessageListener implements NonMoEngagePushListener {
                     Intent intent = new Intent(AppConstant.LUDO_TOURNAMENT_PACKAGE);
                     intent.putExtra(AppConstant.FROM, AppConstant.LUDOTMT_OPP_JOINED);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                }else if (mType == 64) { //LUDO TOURNAMENT - When Opponent Joined on my Room
+                    Intent intent = new Intent(AppConstant.LUDO_TOURNAMENT_PACKAGE);
+                    intent.putExtra(AppConstant.FROM, AppConstant.LUDOTMT_OPP_ROOM_JOINED);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                 }
                 sendNotification(mTitle, mMessage);
             } catch (Exception e) {

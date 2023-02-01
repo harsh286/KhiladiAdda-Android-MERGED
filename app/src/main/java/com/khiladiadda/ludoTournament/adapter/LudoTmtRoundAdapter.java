@@ -22,6 +22,7 @@ import com.khiladiadda.network.model.response.ludoTournament.LudoTmtRoundsDetail
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtRoundsDetailsResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtTournamentDetailsResponse;
 import com.khiladiadda.preference.AppSharedPreference;
+import com.khiladiadda.utility.AppUtilityMethods;
 
 import org.w3c.dom.Text;
 
@@ -37,17 +38,20 @@ public class LudoTmtRoundAdapter extends RecyclerView.Adapter<LudoTmtRoundAdapte
     private List<LudoTmtRoundsDetailsResponse> ludoTmtRoundsDetailsResponseList;
     private LudoTmtTournamentDetailsResponse ludoTmtTournamentDetailsResponse;
     private boolean isExist, mIsPlayAvailable;
+    private String startTime;
 
 
     public LudoTmtRoundAdapter(Context mContext, IOnClickListener mIOnClickListener, List<LudoTmtRoundsDetailsResponse> ludoTmtRoundsDetailsResponseList,
                                LudoTmtTournamentDetailsResponse ludoTmtTournamentDetailsResponse,
-                               boolean isExist, boolean mIsPlayAvailable) {
+                               boolean isExist, boolean mIsPlayAvailable,
+                               String startTime) {
         this.mContext = mContext;
         this.mIOnClickListener = mIOnClickListener;
         this.ludoTmtRoundsDetailsResponseList = ludoTmtRoundsDetailsResponseList;
         this.ludoTmtTournamentDetailsResponse = ludoTmtTournamentDetailsResponse;
         this.isExist = isExist;
         this.mIsPlayAvailable = mIsPlayAvailable;
+        this.startTime = startTime;
     }
 
     @NonNull
@@ -65,8 +69,8 @@ public class LudoTmtRoundAdapter extends RecyclerView.Adapter<LudoTmtRoundAdapte
                 holder.ludoTmtCl.setVisibility(View.VISIBLE);
                 holder.OutOfTmtCl.setVisibility(View.GONE);
                 LudoTmtRoundsDetailsResponse item = ludoTmtRoundsDetailsResponseList.get(position);
-                holder.roundsTv.setText("ROUND " + ludoTmtTournamentDetailsResponse.getCurrentLevelInfo().getLevel().toString());
-                holder.matchTv.setText("MATCH " + ludoTmtTournamentDetailsResponse.getTtMatch().toString());
+                holder.roundsTv.setText(String.format("ROUND %s", ludoTmtTournamentDetailsResponse.getCurrentLevelInfo().getLevel().toString()));
+                holder.matchTv.setText(String.format("MATCH %s", ludoTmtTournamentDetailsResponse.getTtMatch().toString()));
                 Glide.with(holder.firstPlayerIv.getContext()).load(item.getUserFirstInfo().getDp()).fallback(R.drawable.profile).into(holder.firstPlayerIv);
                 if (Objects.equals(item.getUserFirst(), AppSharedPreference.initialize(mContext).getMasterData().getResponse().getProfile().getId())) {
                     holder.firstPlayerTv.setText("You");
@@ -82,18 +86,24 @@ public class LudoTmtRoundAdapter extends RecyclerView.Adapter<LudoTmtRoundAdapte
                     holder.secondPlayerTv.setText(item.getUserSecondInfo().getRandomName());
                     Glide.with(holder.secondPlayerIv.getContext()).load(item.getUserFirstInfo().getRandomDp()).fallback(R.drawable.profile).into(holder.firstPlayerIv);
                 }
-                if (item.getRoomStatus() == 1) {
-                    holder.secondPlayerTv.setText("waiting...");
-                    ButtonEnable(holder, 0, 1, 0, 0);
-                } else if (item.getRoomStatus() == 2) {
-                    ButtonEnable(holder, 1, 0, 0, 0);
-                } else if (item.getRoomStatus() == 3) {
-                    ButtonEnable(holder, 0, 0, 1, 0);
-                } else if (item.getRoomStatus() == 4) {
-                    ButtonEnable(holder, 0, 0, 0, 1);
+                if (mIsPlayAvailable) {
+                    holder.playNowBtn.setVisibility(View.VISIBLE);
+                } else {
+                    if (item.getRoomStatus() == 1) {
+                        holder.secondPlayerTv.setText("waiting...");
+                        ButtonEnable(holder, 0, 1, 0, 0, 0);
+                    } else if (item.getRoomStatus() == 2) {
+                        ButtonEnable(holder, 1, 0, 0, 0, 0);
+                    } else if (item.getRoomStatus() == 3) {
+                        ButtonEnable(holder, 0, 0, 1, 0, 0);
+                    } else if (item.getRoomStatus() == 4) {
+                        ButtonEnable(holder, 0, 0, 0, 1, 0);
+                    } else {
+                        ButtonEnable(holder, 0, 0, 0, 0, 1);
+                    }
                 }
             } else {
-                holder.roundsTv.setText("Out of Tournament");
+                holder.roundsTv.setText(R.string.out_of_tournament);
                 holder.ludoTmtCl.setVisibility(View.GONE);
                 holder.OutOfTmtCl.setVisibility(View.VISIBLE);
             }
@@ -101,8 +111,8 @@ public class LudoTmtRoundAdapter extends RecyclerView.Adapter<LudoTmtRoundAdapte
             holder.ludoTmtCl.setVisibility(View.VISIBLE);
             holder.OutOfTmtCl.setVisibility(View.GONE);
             LudoTmtRoundsDetailsResponse item = ludoTmtRoundsDetailsResponseList.get(position);
-            holder.roundsTv.setText("ROUND " + ludoTmtTournamentDetailsResponse.getCurrentLevelInfo().getLevel().toString());
-            holder.matchTv.setText("MATCH " + ludoTmtTournamentDetailsResponse.getTtMatch().toString());
+            holder.roundsTv.setText(String.format("ROUND %s", ludoTmtTournamentDetailsResponse.getCurrentLevelInfo().getLevel().toString()));
+            holder.matchTv.setText(String.format("MATCH %s", ludoTmtTournamentDetailsResponse.getTtMatch().toString()));
             Glide.with(holder.firstPlayerIv.getContext()).load(item.getUserFirstInfo().getDp()).fallback(R.drawable.profile).into(holder.firstPlayerIv);
             if (Objects.equals(item.getUserFirst(), AppSharedPreference.initialize(mContext).getMasterData().getResponse().getProfile().getId())) {
                 holder.firstPlayerTv.setText("You");
@@ -111,7 +121,7 @@ public class LudoTmtRoundAdapter extends RecyclerView.Adapter<LudoTmtRoundAdapte
                 holder.firstPlayerTv.setText(item.getUserFirstInfo().getRandomName());
                 Glide.with(holder.firstPlayerIv.getContext()).load(item.getUserFirstInfo().getRandomDp()).fallback(R.drawable.profile).into(holder.firstPlayerIv);
             }
-            if (Objects.equals(item.getUserFirst(), AppSharedPreference.initialize(mContext).getMasterData().getResponse().getProfile().getId())) {
+            if (Objects.equals(item.getUserSecond(), AppSharedPreference.initialize(mContext).getMasterData().getResponse().getProfile().getId())) {
                 holder.secondPlayerTv.setText("You");
                 Glide.with(holder.secondPlayerIv.getContext()).load(item.getUserFirstInfo().getDp()).fallback(R.drawable.profile).into(holder.firstPlayerIv);
             } else {
@@ -124,20 +134,22 @@ public class LudoTmtRoundAdapter extends RecyclerView.Adapter<LudoTmtRoundAdapte
                 holder.playNowBtn.setVisibility(View.GONE);
                 if (item.getRoomStatus() == 1) {
                     holder.secondPlayerTv.setText("waiting...");
-                    ButtonEnable(holder, 0, 1, 0, 0);
+                    ButtonEnable(holder, 0, 1, 0, 0, 0);
                 } else if (item.getRoomStatus() == 2) {
-                    ButtonEnable(holder, 1, 0, 0, 0);
+                    ButtonEnable(holder, 1, 0, 0, 0, 0);
                 } else if (item.getRoomStatus() == 3) {
-                    ButtonEnable(holder, 0, 0, 1, 0);
+                    ButtonEnable(holder, 0, 0, 1, 0, 0);
                 } else if (item.getRoomStatus() == 4) {
-                    ButtonEnable(holder, 0, 0, 0, 1);
+                    ButtonEnable(holder, 0, 0, 0, 1, 0);
+                } else {
+                    ButtonEnable(holder, 0, 0, 0, 0, 1);
+
                 }
             }
-
         }
     }
 
-    private void ButtonEnable(@NonNull LudoTmtRoundAdapter.ViewHolder holder, int status, int waiting, int won, int opp_won) {
+    private void ButtonEnable(@NonNull LudoTmtRoundAdapter.ViewHolder holder, int status, int waiting, int won, int opp_won, int play_now) {
         holder.statusBtn.setVisibility(View.INVISIBLE);
         holder.waitingBtn.setVisibility(View.INVISIBLE);
         holder.wonBtn.setVisibility(View.INVISIBLE);
@@ -145,14 +157,19 @@ public class LudoTmtRoundAdapter extends RecyclerView.Adapter<LudoTmtRoundAdapte
         holder.playNowBtn.setVisibility(View.INVISIBLE);
 
         if (status == 1) {
-            holder.statusBtn.setVisibility(View.VISIBLE);
+//            holder.statusBtn.setVisibility(View.VISIBLE);
+            if (AppUtilityMethods.getTimeLeftWithMilliSec(startTime) >= 0) {
+                holder.playNowBtn.setVisibility(View.VISIBLE);
+            } else
+                holder.statusBtn.setVisibility(View.VISIBLE);
+
         } else if (waiting == 1) {
             holder.waitingBtn.setVisibility(View.VISIBLE);
         } else if (won == 1) {
             holder.wonBtn.setVisibility(View.VISIBLE);
         } else if (opp_won == 1) {
             holder.oppWonBtn.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.playNowBtn.setVisibility(View.VISIBLE);
         }
     }
@@ -200,12 +217,16 @@ public class LudoTmtRoundAdapter extends RecyclerView.Adapter<LudoTmtRoundAdapte
             super(view);
             ButterKnife.bind(this, itemView);
             iOnClickListener = mIOnClickListener;
+            playNowBtn.setOnClickListener(this);
+            statusBtn.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (view.getId() == R.id.btn_play_now) {
                 iOnClickListener.onItemClick(getAbsoluteAdapterPosition());
+            }else if (view.getId() == R.id.btn_status){
+                iOnClickListener.onInProgressClick();
             }
         }
     }

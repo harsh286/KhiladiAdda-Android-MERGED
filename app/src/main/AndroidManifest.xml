@@ -48,6 +48,13 @@
         tools:node="merge"
         tools:replace="android:allowBackup, android:theme,android:icon">
         <activity
+            android:name=".ludoTournament.activity.LudoTmtAllRoundActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".gamercash.PayActivity"
             android:exported="false">
             <meta-data
@@ -642,11 +649,9 @@
         <!-- </service> -->
         <meta-data
             android:name="com.truecaller.android.sdk.PartnerKey"
-            android:value="@string/truecaller_partnerKey" />
-<!--        <meta-data-->
-<!--            android:name="preloaded_fonts"-->
-<!--            android:resource="@array/preloaded_fonts" />-->
-
+            android:value="@string/truecaller_partnerKey" /> <!-- <meta-data -->
+        <!-- android:name="preloaded_fonts" -->
+        <!-- android:resource="@array/preloaded_fonts" /> -->
         <service
             android:name="com.moengage.firebase.MoEFireBaseMessagingService"
             android:exported="false">

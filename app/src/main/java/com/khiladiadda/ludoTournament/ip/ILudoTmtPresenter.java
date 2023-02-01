@@ -1,11 +1,12 @@
 package com.khiladiadda.ludoTournament.ip;
 
 import com.khiladiadda.base.interfaces.IBasePresenter;
+import com.khiladiadda.network.model.request.ludoTournament.LudoTournamentFetchRequest;
 
 public interface ILudoTmtPresenter extends IBasePresenter {
 
     //Get All Ludo Tournament
-    void getAllTournament();
+    void getAllTournament(boolean startDate);
 
     //Get All Ludo Tournament
     void getPastTournament();

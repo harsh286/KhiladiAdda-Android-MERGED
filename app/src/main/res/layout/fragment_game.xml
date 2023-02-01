@@ -227,7 +227,7 @@
                     android:layout_weight="1"
                     android:layout_marginEnd="@dimen/margin_10"
                     android:contentDescription="@string/room_id"
-                    android:src="@drawable/ludo_img" />
+                    android:src="@drawable/ludotmt_tournament_mainlogo" />
 
             </LinearLayout>
 

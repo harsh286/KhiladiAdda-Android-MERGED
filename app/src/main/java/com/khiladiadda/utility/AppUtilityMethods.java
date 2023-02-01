@@ -1418,6 +1418,21 @@ public class AppUtilityMethods {
         }
         return "";
     }
+    public static long getTimeLeftWithMilliSec(String codeDateTime) {
+        try {
+            //current date - code date
+            codeDateTime = codeDateTime.replace("T", " ");
+            codeDateTime = codeDateTime.replace("Z", " ");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            Date currentDate = Calendar.getInstance().getTime();
+            Date codeDate = dateFormat.parse(codeDateTime);
+            long timeDiff = currentDate.getTime() - codeDate.getTime();
+            return timeDiff;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0l;
+    }
 
     public static void showMsgNew(final Context context, Activity activity, String msg, boolean isCancel, boolean doFinish) {
         final Dialog dialog = new Dialog(context);
