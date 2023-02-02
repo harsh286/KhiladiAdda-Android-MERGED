@@ -85,7 +85,6 @@ public class LudoTmtPastAllRoundAdapter extends RecyclerView.Adapter<LudoTmtPast
             } else if (item.getRoomStatus() == 2) {
                 ButtonEnable(item, holder, 1, 0, 0, 0, 0);
             }
-
             if (item.getWon()) {
                 ButtonEnable(item, holder, 0, 0, 1, 0, 0);
             } else {

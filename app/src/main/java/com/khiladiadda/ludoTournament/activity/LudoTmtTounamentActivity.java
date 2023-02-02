@@ -385,7 +385,10 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
                 setRoundData(response);
             } else {
                 if (response.getTournamentDetails().isOut()) {
-                    outOfLudoTmtCl.setVisibility(View.VISIBLE);
+                    if (response.getTournamentDetails().gettStatus() != 1)
+                        outOfLudoTmtCl.setVisibility(View.VISIBLE);
+                    else
+                        outOfLudoTmtCl.setVisibility(View.GONE);
                 } else {
                     outOfLudoTmtCl.setVisibility(View.GONE);
                 }
