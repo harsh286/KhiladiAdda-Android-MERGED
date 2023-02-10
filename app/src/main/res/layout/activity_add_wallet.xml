@@ -19,7 +19,6 @@
         android:text="@string/text_total_coins"
         android:textSize="@dimen/text_15" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -168,7 +167,7 @@
                 <ImageView
                     android:id="@+id/iv_gpay"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="55dp"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
@@ -178,18 +177,18 @@
                 <ImageView
                     android:id="@+id/iv_apay"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="55dp"
                     android:layout_marginStart="@dimen/margin_5"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
-                    android:src="@drawable/amazonpay"
+                    android:src="@drawable/paytm_help"
                     android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/iv_phonepe"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="55dp"
                     android:layout_marginStart="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
@@ -218,7 +217,7 @@
                 <TextView
                     android:id="@+id/tv_paytm"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="55dp"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
@@ -234,7 +233,7 @@
                 <TextView
                     android:id="@+id/tv_cashfree"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="55dp"
                     android:layout_marginTop="@dimen/margin_10"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
@@ -251,7 +250,7 @@
                 <TextView
                     android:id="@+id/tv_paysharp"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="55dp"
                     android:layout_marginTop="@dimen/margin_10"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
@@ -268,7 +267,7 @@
                 <TextView
                     android:id="@+id/tv_apexpay"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="55dp"
                     android:layout_marginTop="@dimen/margin_10"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
@@ -285,7 +284,7 @@
                 <TextView
                     android:id="@+id/tv_easebuzz"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="55dp"
                     android:layout_marginTop="@dimen/margin_10"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
@@ -302,7 +301,7 @@
                 <TextView
                     android:id="@+id/tv_neokred"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="55dp"
                     android:layout_marginTop="@dimen/margin_10"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
@@ -315,6 +314,23 @@
                     android:textSize="@dimen/text_15"
                     android:visibility="gone"
                     app:drawableStartCompat="@drawable/easebuzz" />
+
+                <TextView
+                    android:id="@+id/tv_phonepe"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_selector_merchant"
+                    android:drawablePadding="@dimen/padding_15"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/padding_15"
+                    android:paddingEnd="@dimen/padding_15"
+                    android:text="@string/phonepe_upi"
+                    android:textSize="@dimen/text_15"
+                    android:visibility="gone"
+                    app:drawableStartCompat="@drawable/phonepe_small" />
 
                 <TextView
                     android:id="@+id/tv_gamercash"
@@ -351,7 +367,6 @@
                     android:visibility="gone"
                     app:drawableStartCompat="@drawable/gccc" />
 
-
             </LinearLayout>
 
             <Button
@@ -364,24 +379,6 @@
         </LinearLayout>
 
     </ScrollView>
-
-    <TextView
-        android:id="@+id/tv_error"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="160dp"
-        android:fontFamily="@font/rowdies_regular"
-        android:gravity="center"
-        android:text="You are not a user"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_16"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <include layout="@layout/bannermoengage" />
 </LinearLayout>

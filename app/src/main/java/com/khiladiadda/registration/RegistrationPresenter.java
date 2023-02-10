@@ -44,10 +44,10 @@ public class RegistrationPresenter implements IRegistrationPresenter {
             mView.onValidationFailure("Mobile number should be 10 digit");
             return;
         }
-//        if (TextUtils.isEmpty(email)) {
-//            mView.onValidationFailure("Please select email id");
-//            return;
-//        }
+        if (TextUtils.isEmpty(email)) {
+            mView.onValidationFailure("Please select email id");
+            return;
+        }
         if (!AppUtilityMethods.isMobileValidator(mobileNumber)) {
             mView.onValidationFailure("Please provide valid mobile number");
             return;
@@ -56,8 +56,8 @@ public class RegistrationPresenter implements IRegistrationPresenter {
     }
 
     @Override
-    public void doRegister() {
-        RegistrationRequest request = new RegistrationRequest(mView.getName(), mView.getMobileNumber(), mView.getReferenceNo());
+    public void doRegister(String gmailId) {
+        RegistrationRequest request = new RegistrationRequest(mView.getName(), mView.getMobileNumber(), mView.getReferenceNo(), mView.getEmail(), gmailId);
         mSubscription = mInteractor.doRegister(request, mLoginApiListener);
     }
 

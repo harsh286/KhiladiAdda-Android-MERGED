@@ -105,16 +105,21 @@ public class AppConstant {
     public static final int FROM_FAVOURITE = 777;
     public static final String MATCH_LIVE = "MATCH_LIVE";
     public static final int FROM_NEOKRED = 8;
-    public static final int FROM_GAMECASE = 9;
+//    public static final int FROM_GAMECASE = 9;
     public static final String MATCH_TYPE = "MATCH_TYPE";
     public static final String API_CX_BANNER = "user/fantasy/fetch-banners";
 
     public static final String API_RACE_CONDITION = "racecondition/createContact";
     public static final String API_RACE_CONDITION_FINAL = "racecondition/transfer/{beneId}/{amount}/{otp}";
     public static final String API_INSTANT_PAY = "ipay/transfer/{beneId}/{amount}/{otp}/{latitude}/{longitude}";
-    public static final String API_GAMER_CASH_VERFIYUSER = "/user/gamercash/link-wallet";
-    public static final String API_FETCH_GAMER_CASH = "/user/gamercash/fethc-gc";
-    public static final String API_SWITCH_GAMER_CASH = "/user/gamercash/add-coins";
+//    public static final String API_GAMER_CASH_VERFIYUSER = "/user/gamercash/link-wallet";
+//    public static final String API_FETCH_GAMER_CASH = "/user/gamercash/fethc-gc";
+//    public static final String API_SWITCH_GAMER_CASH = "/user/gamercash/add-coins";
+
+    public static final String API_GET_RUMMY_LIST = "/user/rummy/fetchCards";
+    public static final String API_GET_RUMMY_REFRESH_TOKEN = "/user/rummy/fetchRefreshToken";
+    public static final String API_GET_CALLBREAK_LIST = "/user/callbreak/fetchCards";
+    public static final String API_GET_CALLBREAK_JOIN = "/user/callbreak/joinCard/{id}";
 
 
     public static String API_PAYU_UPI_CHECKSUM = "payumoney/generate/hash-checksum";
@@ -149,9 +154,13 @@ public class AppConstant {
     public static final String API_LU_CANCEL_CONTEST = "user/ludo-universe/cancel-challange/{contest_id}";
     public static final String API_LU_BUDDY_OPPONENT = "user/ludo-universe/recent-opponents";
     public static final String API_LU_STATUS = "user/ludo-universe/join-contest-status/{contest_id}";
+    public static final String API_LU_MODE = "user/ludo-universe/fetch-ludoconfig/{bannerType}";
     public static final String API_LU_OVERALLEADERBOARD = "user/ludo-universe/fetch-leaderboard";
     public static final String API_DROID_DO_OVERALLEADERBOARD = "user/gamekite/tournament/all-leaderboard";
     public static final String API_WS_OVERALLEADERBOARD = "/user/word-search/final-leaderboard";
+    public static final String API_LUDO_TOURNAMENT = "user/ludo/tournament/tournament/leaderboard";
+    public static final String API_CALL_BREAK = "/user/callbreak/leaderboard";
+    public static final String API_RUMMY = "/user/rummy/leaderboard";
 
     public static final String API_ADD_CASHFREE_BENEFICIARY = "cashfree/add/beneficiary";
     public static final String TEXT_KEY_TYPE = "type";
@@ -274,6 +283,9 @@ public class AppConstant {
     public static final int LEADERBOARD_TYPE_LUDOADDA = 7;
     public static final int LEADERBOARD_TYPE_DROID_DO = 8;
     public static final int LEADERBOARD_TYPE_WS = 9;
+    public static final int LEADERBOARD_TYPE_LUDO_TOURNAMENT = 10;
+    public static final int LEADERBOARD_TYPE_COURTPIECE = 11;
+    public static final int LEADERBOARD_TYPE_RUMMY = 12;
     public static final int LEADERBOARD_FROM_LEADERBOARD = 1;
     public static final int REQUEST_ADD_WALLET = 5001;
     public static final int FROM_LOGIN = 1;
@@ -575,6 +587,13 @@ public class AppConstant {
     public static final String FF_MAX_SQUAD = "FF_MAX_SQUAD";
     public static final String FROM_VIEW_FF_MAX = "FF_MAX";
 
+    public static final String LUDO_TOURNAMENT_ID = "LUDO_TOURNAMENT_ID";
+
+    public static final String RUMMY_ID = "LUDO_TOURNAMENT_ID";
+
+
+
+
     public static final int TYPE_LUDO = 1;
     public static final int TYPE_SNAKE_LADDER = 2;
 
@@ -850,6 +869,7 @@ public class AppConstant {
     public static final String API_PAYSHARP_PAYOUT = "paysharp/transfer/{bene_id}/{amount}/{otp}";
     public static final String API_SEND_OTP_EMAIL = "/user/email-verify/{email}";
     public static final String API_VERIFY_EMAIL = "/user/email-verify-otp/{email}/{otp}";
+    public static final String API_UPDATE_EMAIL = "auth/gmail_verification/{email}";
     public static final String TEXT_ENCRYPTION = "secure_pass_key_";
     public static final String WebPayment = "WebPayment";
     public static final int PaymentDone = 1005;
@@ -905,6 +925,9 @@ public class AppConstant {
     public static final String WORD_SEARCH_CATEGORY_QUIZZES = "category_quizzes";
     public static final String WORD_SEARCH_MY_QUIZZES = "category_quizzes";
     public static final String WORD_SEARCH_TYPE = "wordsearch_type";
+    public static final String PC_ESPORTS_TYPE = "pcesports_type";
+    public static final String COURTPIECE_TYPE = "courtpiece_type";
+    public static final String RUMMY_TYPE = "rummy_type";
     public static final String WORD_SEARCH_COLOR_NAME = "color_name";
     public static final String WORD_SEARCH_CATEGORY_NAME = "category_name";
 
@@ -926,6 +949,7 @@ public class AppConstant {
 
     public static String WordSearchPackageName = "com.tb.ka.wordsearch";
     public static String LudoAddaPackageName = "com.tb.ludouniverse.in";
+    public static String CallBreakPackageName = "com.KhiladiAdda.CourtPiecePro";
     public static final String LUDOADDA_KOMMUNI_CATEGORY = "LudoADDA";
     public static final String LUDO_TOURNAMENT_PACKAGE = "com.khiladiadda.ludoTournament.activity";
     public static final String LUDOTMT_OPP_JOINED = "OPPONENT_JOINED";
@@ -959,5 +983,21 @@ public class AppConstant {
     public static int FROM_CRICKET = 1;
     public static int FROM_FOOTBALL = 2;
     public static int FROM_KABAADI = 3;
+
+    public static final String API_PAYMENT_URL = "phonepay/start-payment/";
+    public static final String API_CHECK_PAYMENT_SUCCESS = "phonepay/check-payment-processed/";
+
+    public static final int FROM_PHONEPE_PhonePePAY = 91;
+    public static final int FROM_PHONEPE_GPAY = 92;
+    public static final int FROM_PHONEPE_PaytmPAY = 93;
+    public static final int FROM_PHONEPE = 90;
+    public static final String API_GAMER_CASH_VERFIYUSER = "/user/gamercash/link-wallet";
+    public static final String API_FETCH_GAMER_CASH = "/user/gamercash/fethc-gc";
+    public static final String API_SWITCH_GAMER_CASH = "/user/gamercash/add-coins";
+    public static final int FROM_GAMECASE = 9;
+
+    public static final int FROM_GPAY_UPI = 501;
+    public static final int FROM_PAYTM_UPI = 502;
+    public static final int FROM_PHONEPAY_UPI = 503;
 
 }

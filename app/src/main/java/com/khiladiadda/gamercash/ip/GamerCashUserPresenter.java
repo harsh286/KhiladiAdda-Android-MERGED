@@ -4,7 +4,7 @@ import com.khiladiadda.gamercash.interfaces.IGamerCashView;
 import com.khiladiadda.gamercash.interfaces.IVerifyingGamerCashUserPresenter;
 import com.khiladiadda.network.IApiListener;
 import com.khiladiadda.network.model.ApiError;
-import com.khiladiadda.network.model.response.gamer_cash.GamerCashResponse;
+import com.khiladiadda.network.model.response.GamerCashResponse;
 
 import rx.Subscription;
 

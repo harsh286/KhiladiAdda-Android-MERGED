@@ -10,16 +10,16 @@ import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_ORDER_ID;
 import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_ORDER_NOTE;
 
 import android.Manifest;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -33,9 +33,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Lifecycle;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.appsflyer.AFInAppEventParameterName;
 import com.appsflyer.AppsFlyerLib;
@@ -49,31 +46,31 @@ import com.khiladiadda.dialogs.interfaces.IOnPaymentListener;
 import com.khiladiadda.dialogs.interfaces.IOnPaymentWaitListener;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.gamercash.GamerCashActivity;
-import com.khiladiadda.gamercash.NotInstalledActivity;
 import com.khiladiadda.gamercash.PayActivity;
-import com.khiladiadda.gamercash.interfaces.IGetGamerCashPresenter;
-import com.khiladiadda.gamercash.interfaces.IGetGamerCashView;
-import com.khiladiadda.gamercash.ip.GetGamerCashPresenter;
 import com.khiladiadda.main.MainActivity;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.request.CashfreeSavePayment;
 import com.khiladiadda.network.model.request.PaySharpRequest;
 import com.khiladiadda.network.model.request.PaymentRequest;
+import com.khiladiadda.network.model.request.PhonepeCheckPaymentRequest;
+import com.khiladiadda.network.model.request.PhonepeRequest;
 import com.khiladiadda.network.model.response.ApexPayChecksumResponse;
 import com.khiladiadda.network.model.response.CashfreeChecksumResponse;
 import com.khiladiadda.network.model.response.ChecksumResponse;
 import com.khiladiadda.network.model.response.Coins;
+import com.khiladiadda.network.model.response.GetGamerCashResponse;
 import com.khiladiadda.network.model.response.InvoiceResponse;
 import com.khiladiadda.network.model.response.NeokredResponse;
 import com.khiladiadda.network.model.response.PaySharpResponse;
 import com.khiladiadda.network.model.response.PaykunOrderResponse;
 import com.khiladiadda.network.model.response.PayuChecksumResponse;
+import com.khiladiadda.network.model.response.PhonePePaymentResponse;
+import com.khiladiadda.network.model.response.PhonepeCheckPaymentResponse;
 import com.khiladiadda.network.model.response.ProfileTransactionResponse;
 import com.khiladiadda.network.model.response.RazorpayOrderIdResponse;
 import com.khiladiadda.network.model.response.VersionResponse;
 import com.khiladiadda.network.model.response.ZaakpayChecksumResponse;
-import com.khiladiadda.network.model.response.gamer_cash.GetGamerCashResponse;
 import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
@@ -87,11 +84,17 @@ import com.moengage.widgets.NudgeView;
 import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
+import com.phonepe.intent.sdk.api.B2BPGRequest;
+import com.phonepe.intent.sdk.api.B2BPGRequestBuilder;
+import com.phonepe.intent.sdk.api.PhonePe;
+import com.phonepe.intent.sdk.api.PhonePeInitException;
+import com.phonepe.intent.sdk.api.UPIApplicationInfo;
 
 import org.json.JSONObject;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -99,7 +102,7 @@ import java.util.UUID;
 
 import butterknife.BindView;
 
-public class AddWalletActivity extends BaseActivity implements IWalletView, IGetGamerCashView, PaytmPaymentTransactionCallback {
+public class AddWalletActivity extends BaseActivity implements IWalletView, PaytmPaymentTransactionCallback {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1001;
 
@@ -147,36 +150,31 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
     TextView mPGTV;
     @BindView(R.id.tv_upi)
     TextView mUPITV;
-
     @BindView(R.id.tv_neokred)
     TextView mNeokredTV;
-
     //GamerCash
     @BindView(R.id.tv_gamercash)
     TextView mGamerCashTV;
     @BindView(R.id.tv_gamercash_verified)
     TextView mGamerCashVerifiedTV;
-
-    @BindView(R.id.tv_error)
-    TextView tvError;
-    private String mCouponCode, mOrderId, mAmount, mCallbackURL;
-    private IWalletPresenter mPresenter;
-    private long mCoins;
-    private int mPaymentFrom, mUpiPaymentType;
-    private boolean mApexPay, mPaySharp;
-    private String mApexPayOrderId, mPaySharpOrderId;
-    private PaymentWaitDialog dialog;
     @BindView(R.id.nudge)
     NudgeView mNV;
+    @BindView(R.id.tv_phonepe)
+    TextView mPhonepeTV;
 
-    private IGetGamerCashPresenter mGetGamerCashPresenter;
-    //    private GetGamerCashResponse response;
-    private int coins, getmPaymentFrom = 0;
+    private String mCouponCode, mOrderId, mAmount, mCallbackURL, mPhonepeOrderId, mApexPayOrderId, mPaySharpOrderId;
+    private IWalletPresenter mPresenter;
+    private long mCoins;
+    private int mPaymentFrom, mUpiPaymentType, coins, getmPaymentFrom = 0;
+    private boolean mApexPay, mPaySharp;
+    private final String mApiEndPoint = "/pg/v1/pay";
+    private static final int B2B_PG_REQUEST_CODE = 777;
+    private boolean mIsPhoneUPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mWebPayment, new IntentFilter("com.khiladiadda.WEBPAYMENTPAY_NOTIFY"));
+        PhonePe.init(this);
     }
 
     @Override
@@ -193,8 +191,6 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
 
     @Override
     protected void initViews() {
-        AppSharedPreference.initialize(this);
-        mGetGamerCashPresenter = new GetGamerCashPresenter(this);
         Bundle intent = getIntent().getExtras();
         if (intent != null) {
             String redirect = intent.getString(AppConstant.PushFrom);
@@ -219,18 +215,9 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
         mPhonePayIV.setOnClickListener(this);
         mPayBTN.setOnClickListener(this);
         mNeokredTV.setOnClickListener(this);
+        mPhonepeTV.setOnClickListener(this);
         mGamerCashTV.setOnClickListener(this);
         mGamerCashVerifiedTV.setOnClickListener(this);
-
-    }
-
-    private void payGamerCashVerifyAPI() {
-        if (new NetworkStatus(this).isInternetOn()) {
-            showProgress(getString(R.string.txt_progress_authentication));
-            mGetGamerCashPresenter.getGamerCashUserData();
-        } else {
-            Snackbar.make(tvError, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
-        }
     }
 
     @Override
@@ -251,7 +238,7 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
         if (String.valueOf(total).contains(".")) {
             mTotalCoinsTV.setText("Total Balance\n" + "₹" + String.format("%.2f", total));
         } else {
-            mTotalCoinsTV.setText("Total Balance\n" + "₹" + String.valueOf(total));
+            mTotalCoinsTV.setText("Total Balance\n" + "₹" + total);
         }
         SpannableString totalCoin = new SpannableString(mTotalCoinsTV.getText().toString());
         totalCoin.setSpan(new RelativeSizeSpan(1.5f), 13, totalCoin.length(), 0); // set size
@@ -271,6 +258,9 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
                 break;
             case R.id.iv_notification:
                 startActivity(new Intent(this, NotificationActivity.class));
+                break;
+            case R.id.tv_phonepe:
+                setPaymentGateway(11);
                 break;
             case R.id.iv_gpay:
                 setPaymentGateway(1);
@@ -334,47 +324,17 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
                 mConfirmCouponBTN.setEnabled(true);
                 break;
             case R.id.btn_pay:
-                if (getmPaymentFrom == 0) {
-                    validateAmount();
+                if (getmPaymentFrom == 1) {
+                    checkGamerCashStatus();
                 } else {
-                    amountValidation();
+                    validateAmount();
                 }
                 break;
-
             case R.id.tv_gamercash:
             case R.id.tv_gamercash_verified:
                 setPaymentGateway(10);
                 getmPaymentFrom = 1;
                 break;
-        }
-    }
-
-    private void amountValidation() {
-        String amount = mAmountET.getText().toString();
-        if (TextUtils.isEmpty(amount) || amount.equalsIgnoreCase("0")) {
-            Toast.makeText(this, "Please add amount to proceed.\nMinimum amount to be added is Rs.10", Toast.LENGTH_SHORT).show();
-        } else if (AppSharedPreference.getInstance().getIsGamerCashLinked() && !amount.equals("")) {
-            if (Integer.parseInt(amount) > coins) {
-                AppDialog.showInsufficientGCDialog(this);
-//                mGamerCashTV.setVisibility(View.GONE);
-//                mGamerCashVerifiedTV.setVisibility(View.VISIBLE);
-            } else {
-                if (Integer.parseInt(amount) > 5000 && mAppPreference.getProfileData().getAadharUpdated() != 3) {
-                    checkPanStatus();
-                } else {
-                    Intent intent = new Intent(this, PayActivity.class);
-                    intent.putExtra("coins", coins);
-                    intent.putExtra("coupon", mCouponCode);
-                    intent.putExtra("enter_amount", amount);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        } else {
-            Intent intent = new Intent(this, GamerCashActivity.class);
-            intent.putExtra("coins", coins);
-            intent.putExtra("enter_amount", amount);
-            startActivity(intent);
         }
     }
 
@@ -388,33 +348,20 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
         mApexPayTV.setSelected(false);
         mEasebuzzTV.setSelected(false);
         mNeokredTV.setSelected(false);
+        mPhonepeTV.setSelected(false);
         mGamerCashTV.setSelected(false);
-        mGamerCashVerifiedTV.setSelected(false);
-
         switch (from) {
             case 1:
                 mGPayIV.setSelected(true);
-                if (mUpiPaymentType == 1) {
-                    mPaymentFrom = AppConstant.FROM_CASHFREE_UPI;
-                } else {
-                    mPaymentFrom = AppConstant.FROM_PAYSHARP;
-                }
+                mPaymentFrom = AppConstant.FROM_GPAY_UPI;
                 break;
             case 2:
                 mAPayIV.setSelected(true);
-                if (mUpiPaymentType == 1) {
-                    mPaymentFrom = AppConstant.FROM_CASHFREE_UPI;
-                } else {
-                    mPaymentFrom = AppConstant.FROM_PAYSHARP;
-                }
+                mPaymentFrom = AppConstant.FROM_PAYTM_UPI;
                 break;
             case 3:
                 mPhonePayIV.setSelected(true);
-                if (mUpiPaymentType == 1) {
-                    mPaymentFrom = AppConstant.FROM_CASHFREE_UPI;
-                } else {
-                    mPaymentFrom = AppConstant.FROM_PAYSHARP;
-                }
+                mPaymentFrom = AppConstant.FROM_PHONEPAY_UPI;
                 break;
             case 4:
                 mCashfreeTV.setSelected(true);
@@ -448,6 +395,10 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
                 mGamerCashVerifiedTV.setSelected(true);
                 mPaymentFrom = AppConstant.FROM_GAMECASE;
                 break;
+            case 11:
+                mPhonepeTV.setSelected(true);
+                mPaymentFrom = AppConstant.FROM_PHONEPE;
+                break;
         }
         mPayBTN.setVisibility(View.VISIBLE);
     }
@@ -462,6 +413,9 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
 
     private void checkPanStatus() {
         switch (mAppPreference.getProfileData().getAadharUpdated()) {
+            case 0:
+                AppUtilityMethods.showProfileUpdateMsg(this, getString(R.string.text_pan_verify), 2, false);
+                break;
             case 1:
                 AppUtilityMethods.showProfileUpdateMsg(this, getString(R.string.text_pan_verify), 2, false);
                 break;
@@ -488,6 +442,27 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
             checkPanStatus();
         } else {
             showProgress(getString(R.string.txt_progress_authentication));
+            if(mPaymentFrom == AppConstant.FROM_GPAY_UPI){
+                if(mUpiPaymentType == 1){
+                    mPaymentFrom = AppConstant.FROM_CASHFREE_UPI;
+                } else  if(mUpiPaymentType == 2){
+                    mPaymentFrom = AppConstant.FROM_PHONEPE_GPAY;
+                }
+            }
+            else if(mPaymentFrom == AppConstant.FROM_PAYTM_UPI){
+                if(mUpiPaymentType == 1){
+                    mPaymentFrom = AppConstant.FROM_CASHFREE_UPI;
+                } else  if(mUpiPaymentType == 2){
+                    mPaymentFrom = AppConstant.FROM_PHONEPE_PaytmPAY;
+                }
+            }
+            else if(mPaymentFrom == AppConstant.FROM_PHONEPAY_UPI){
+                if(mUpiPaymentType == 1){
+                    mPaymentFrom = AppConstant.FROM_CASHFREE_UPI;
+                } else  if(mUpiPaymentType == 2){
+                    mPaymentFrom = AppConstant.FROM_PHONEPE_PhonePePAY;
+                }
+            }
             if (mPaymentFrom == AppConstant.FROM_PAYTM) {
                 mOrderId = UUID.randomUUID().toString();
                 mOrderId = mOrderId.replaceAll("-", "");
@@ -505,8 +480,37 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
                 mPresenter.getEasebuzzHash(mEaseBuzzAmount, mCouponCode);
             } else if (mPaymentFrom == AppConstant.FROM_NEOKRED) {
                 mPresenter.checkNeokredPG(mEaseBuzzAmount, mCouponCode);
-            } else if (mPaymentFrom == AppConstant.FROM_GAMECASE) {
-                mPresenter.checkNeokredPG(mEaseBuzzAmount, mCouponCode);
+            } else if (mPaymentFrom == AppConstant.FROM_PHONEPE || mPaymentFrom == AppConstant.FROM_PHONEPE_PhonePePAY || mPaymentFrom == AppConstant.FROM_PHONEPE_GPAY || mPaymentFrom == AppConstant.FROM_PHONEPE_PaytmPAY) {
+                paymentIntegration();
+            }
+        }
+    }
+
+    private void checkGamerCashStatus() {
+        mCoins = Long.parseLong(mAmountET.getText().toString().trim());
+        if (mAmountET.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "Please add amount to proceed.\nMinimum amount to be added is Rs.10", Toast.LENGTH_SHORT).show();
+        } else {
+            if (mAppPreference.getIsGamerCashLinked()) {
+                if (mCoins > coins) {
+                    AppDialog.showInsufficientGCDialog(this);
+                } else {
+                    if (mCoins > 5000 && mAppPreference.getProfileData().getAadharUpdated() != 3) {
+                        checkPanStatus();
+                    } else {
+                        Intent intent = new Intent(this, PayActivity.class);
+                        intent.putExtra("coins", coins);
+                        intent.putExtra("coupon", mCouponCode);
+                        intent.putExtra("enter_amount", mAmountET.getText().toString().trim());
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            } else {
+                Intent intent = new Intent(this, GamerCashActivity.class);
+                intent.putExtra("coins", coins);
+                intent.putExtra("enter_amount", mAmountET.getText().toString().trim());
+                startActivity(intent);
             }
         }
     }
@@ -528,6 +532,10 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
     public void onVersionSuccess(VersionResponse response) {
         if (response.isStatus()) {
             mUpiPaymentType = response.getVersion().getUpiEnable();
+//            mIsPhoneUPI = response.getVersion().isPhonepeUpi();
+            if (response.getVersion().isGamerCashEnabled()) {
+                mGamerCashTV.setVisibility(View.VISIBLE);
+            }
             if (response.getVersion().isCashfreeEnable()) {
                 mCashfreeTV.setVisibility(View.VISIBLE);
                 enableUPI();
@@ -548,11 +556,15 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
             if (response.getVersion().isNeokredEnable()) {
                 mNeokredTV.setVisibility(View.VISIBLE);
             }
+            if (response.getVersion().isPhonepeEnabled()) {
+                enableUPI();
+                mPhonepeTV.setVisibility(View.VISIBLE);
+            }
             if (response.getVersion().isCashfreeEnable() || response.getVersion().isPaytmEnable() || response.getVersion().isRazorpayEnable() || response.getVersion().isPaykunEnable() || response.getVersion().isEasebuzzEnable()) {
                 mPGTV.setVisibility(View.VISIBLE);
             }
         }
-        hideProgress();
+        payGamerCashVerifyAPI();
     }
 
     @Override
@@ -804,11 +816,15 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
     @Override
     public void onEaseBuzzChecksumComplete(ChecksumResponse responseModel) {
         hideProgress();
-        Intent intentProceed = new Intent(this, PWECouponsActivity.class);
-        intentProceed.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);     // This is mandatory flag
-        intentProceed.putExtra(AppConstant.TEXT_ACCESS_KEY_EASEBUZZ, responseModel.getResponse());
-        intentProceed.putExtra(AppConstant.TEXT_PAY_MODE, AppConstant.TEXT_PAY_MODE_VALUE);
-        easebuzzResultLauncher.launch(intentProceed);
+        if (responseModel.isStatus()) {
+            Intent intentProceed = new Intent(this, PWECouponsActivity.class);
+            intentProceed.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);     // This is mandatory flag
+            intentProceed.putExtra(AppConstant.TEXT_ACCESS_KEY_EASEBUZZ, responseModel.getResponse());
+            intentProceed.putExtra(AppConstant.TEXT_PAY_MODE, AppConstant.TEXT_PAY_MODE_VALUE);
+            easebuzzResultLauncher.launch(intentProceed);
+        } else {
+            AppUtilityMethods.showMsg(this, responseModel.getMessage(), false);
+        }
     }
 
     ActivityResultLauncher<Intent> easebuzzResultLauncher = registerForActivityResult(
@@ -854,8 +870,6 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
             intent.setAction(Intent.ACTION_VIEW);
             String UPI = "upi://pay?pa=" + responseModel.getResponse().trim() + "&pn=" + mAppPreference.getName().trim()
                     + "&am=" + mAmount + "&tn=" + "pay_" + responseModel.getTid().trim() + "&tid=" + responseModel.getTid().trim();
-//            String UPI = "upi://pay?pa=" + responseModel.getResponse().trim() + "&pn=" + mAppPreference.getName().trim()
-//                    + "&am=" + mAmount + "&tn=" +"pay_166776565456123"+ "&tid=166776565456123";
             intent.setData(Uri.parse(UPI));
             Intent chooser = Intent.createChooser(intent, "Pay with...");
             if (intent.resolveActivity(getPackageManager()) != null) {
@@ -869,6 +883,32 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
     @Override
     public void onNeokredFailure(ApiError error) {
         hideProgress();
+    }
+
+    @Override
+    public void onGetGamerCashSuccess(GetGamerCashResponse response) {
+        hideProgress();
+        if (response.isStatus()) {
+            AppSharedPreference.getInstance().setIsGamerCashLinked(response.getAlreadyLinked() || response.getLinked());
+            if (response.getAlreadyLinked() || response.getLinked()) {
+                coins = response.getResponse().getCoins();
+                mGamerCashTV.setVisibility(View.GONE);
+                mGamerCashVerifiedTV.setVisibility(View.VISIBLE);
+                mGamerCashVerifiedTV.setText(getString(R.string.gamer_cash_coins) + coins + " GC");
+            } else {
+                mGamerCashTV.setVisibility(View.VISIBLE);
+                mGamerCashVerifiedTV.setVisibility(View.GONE);
+                mGamerCashTV.setText(getString(R.string.gamercash));
+            }
+        } else {
+            Snackbar.make(mAmountET, response.getMessage(), Snackbar.LENGTH_LONG);
+        }
+    }
+
+    @Override
+    public void onGetGamerCashFailure(ApiError error) {
+        hideProgress();
+        Toast.makeText(this, "" + error, Toast.LENGTH_SHORT).show();
     }
 
     private void startPaytm(String checksumHash) {
@@ -970,6 +1010,35 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
     }
 
     @Override
+    public void onPaymentComplete(PhonePePaymentResponse response) {
+        if (response.isStatus()) {
+            phonePePayment(response);
+        } else {
+            hideProgress();
+            AppUtilityMethods.showMsg(this, response.getMessage(), false);
+        }
+    }
+
+    @Override
+    public void onPaymentFailure(ApiError errorMsg) {
+        hideProgress();
+    }
+
+    @Override
+    public void onPaymentCheckComplete(PhonepeCheckPaymentResponse response) {
+        if (response.isStatus()) {
+            onPaymentSuccess(response.getPayment_via());
+        } else {
+            onPaymentFailed(2, "", response.getPayment_via());
+        }
+    }
+
+    @Override
+    public void onPaymentCheckFailure(ApiError errorMsg) {
+
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CFPaymentService.REQ_CODE && resultCode == RESULT_OK && data != null) {
@@ -991,6 +1060,21 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
                         mPresenter.saveCashfreePayment(request);
                     }
                 }
+            }
+        } else if (requestCode == B2B_PG_REQUEST_CODE) {  //phonepe
+            showProgress("");
+            if (resultCode == RESULT_OK) {
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(() -> {
+                    hideProgress();
+                    PhonepeCheckPaymentRequest phonepeCheckPaymentRequest = new PhonepeCheckPaymentRequest();
+                    phonepeCheckPaymentRequest.setCoupon(mCouponCodeET.getText().toString());
+                    phonepeCheckPaymentRequest.setOrderId(mPhonepeOrderId);
+                    mPresenter.getPaymentCheckData(phonepeCheckPaymentRequest);
+                }, 10000);
+            } else {
+                hideProgress();
+                AppDialog.showPaymentConfirmation(this, onPaymentListener, getString(R.string.text_payment_failed), "Payment Failed!", false);
             }
         } else if (requestCode == AppConstant.PaymentDone && resultCode == RESULT_OK) {
             showProgress("");
@@ -1023,7 +1107,6 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
         eventParameters5.put(AFInAppEventParameterName.REVENUE, mCoins); // Amount of the top-up
         eventParameters5.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR);
         AppsFlyerLib.getInstance().logEvent(getApplicationContext(), "top_up_success", eventParameters5);
-
         //Mo Engage
         Properties properties = new Properties();
         properties.addAttribute("Transaction Date & Time", new Date())
@@ -1056,7 +1139,6 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
                 .addAttribute("Currency", "INR")
                 .addAttribute("pay via", payment_via)
                 .addAttribute("coupon code", mCouponCode);
-        ;
         MoEAnalyticsHelper.INSTANCE.trackEvent(this, "Add Wallet Failed", properties);
     }
 
@@ -1100,17 +1182,6 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
         }
     };
 
-    private final BroadcastReceiver mWebPayment = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
-                dialog.dialogcancel();
-                showProgress(getString(R.string.txt_progress_authentication));
-                mPresenter.getPaySharpStatus(mPaySharpOrderId, mCouponCode);
-            }
-        }
-    };
-
     @Override
     public void onBackPressed() {
         if (mAppPreference.getIsDeepLinking()) {
@@ -1125,42 +1196,81 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, IGet
     protected void onResume() {
         super.onResume();
         if (mPaySharp) {
-            dialog = new PaymentWaitDialog(this, mOnPaymentWaitListener);
+            PaymentWaitDialog dialog = new PaymentWaitDialog(this, mOnPaymentWaitListener);
         }
-        payGamerCashVerifyAPI();
+//        payGamerCashVerifyAPI();
+    }
+
+    private void payGamerCashVerifyAPI() {
+        if (new NetworkStatus(this).isInternetOn()) {
+            mPresenter.getGamerCashUserData();
+        } else {
+            Snackbar.make(mAmountET, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     protected void onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mWebPayment);
         mPresenter.destroy();
         super.onDestroy();
     }
 
-
-    @Override
-    public void onGetGamerCashSuccess(GetGamerCashResponse response) {
-        hideProgress();
-        if (response.isStatus()) {
-            AppSharedPreference.getInstance().setIsGamerCashLinked(response.getAlreadyLinked() || response.getLinked());
-            if (response.getAlreadyLinked() || response.getLinked()) {
-                coins = response.getResponse().getCoins();
-                mGamerCashTV.setVisibility(View.GONE);
-                mGamerCashVerifiedTV.setVisibility(View.VISIBLE);
-                mGamerCashVerifiedTV.setText(getString(R.string.gamer_cash_coins) + coins + " GC");
-            } else {
-                mGamerCashTV.setVisibility(View.VISIBLE);
-                mGamerCashVerifiedTV.setVisibility(View.GONE);
-                mGamerCashTV.setText(getString(R.string.gamercash));
-            }
+    //PhonePe Payment Integration
+    private void paymentIntegration() {
+        if (new NetworkStatus(this).isInternetOn()) {
+            PhonepeRequest phonepeRequest = new PhonepeRequest();
+            if (!mAmountET.getText().toString().equals("")) {
+                if (Integer.parseInt(mAmountET.getText().toString()) != 0) {
+                    phonepeRequest.setAmount(Integer.parseInt(mAmountET.getText().toString()));
+                    if (mPaymentFrom == AppConstant.FROM_PHONEPE_PhonePePAY || mPaymentFrom == AppConstant.FROM_PHONEPE) {
+                        phonepeRequest.setTargetApp(1);
+                    } else if (mPaymentFrom == AppConstant.FROM_PHONEPE_GPAY) {
+                        phonepeRequest.setTargetApp(2);
+                    } else {
+                        phonepeRequest.setTargetApp(3);
+                    }
+                    phonepeRequest.setCoupon(mCouponCode);
+                    phonepeRequest.setTargetApp(mPaymentFrom);
+                    mPresenter.getPaymentUrlData(phonepeRequest);
+                } else Toast.makeText(this, "Please enter amount", Toast.LENGTH_SHORT).show();
+            } else Toast.makeText(this, "Please enter amount", Toast.LENGTH_SHORT).show();
         } else {
-            Snackbar.make(mAmountET, response.getMessage(), Snackbar.LENGTH_LONG);
+            Snackbar.make(mAmountET, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
     }
 
-    @Override
-    public void onGetGamerCashFailure(ApiError error) {
-        hideProgress();
-        Toast.makeText(this, "" + error, Toast.LENGTH_SHORT).show();
+    private void phonePePayment(PhonePePaymentResponse response) {
+        String mPaymentPackage = "";
+        try {
+            List<UPIApplicationInfo> upiApps = PhonePe.getUpiApps();
+            mPaymentPackage = upiApps.get(0).getPackageName();
+        } catch (PhonePeInitException exception) {
+            exception.printStackTrace();
+        }
+        if (mPaymentPackage.isEmpty()) {
+            Snackbar.make(mPayBTN, "No UPI option on your device.", Snackbar.LENGTH_LONG).show();
+        } else {
+            //prod //String string_signature = PhonePe.getPackageSignature();
+            mPhonepeOrderId = response.getTransactionId();
+            B2BPGRequest b2BPGRequest = new B2BPGRequestBuilder()
+                    .setData(response.getBase64())
+                    .setChecksum(response.getChecksum())
+                    .setUrl(mApiEndPoint)
+                    .build();
+            //Package name should be dynamic //UAT = com.phonepe.app.preprod //PROD = com.phonepe.app
+            String upiPackage = "com.phonepe.app";
+            try {
+                if (mPaymentFrom == AppConstant.FROM_PHONEPE_GPAY) {
+                    upiPackage = "com.google.android.apps.nbu.paisa.user";
+                } else if (mPaymentFrom == AppConstant.FROM_PHONEPE_PaytmPAY) {
+                    upiPackage = "net.one97.paytm";
+                }
+                startActivityForResult(PhonePe.getImplicitIntent(
+                        this, b2BPGRequest, upiPackage), B2B_PG_REQUEST_CODE);
+            } catch (PhonePeInitException e) {
+                Log.e("TAG", "onPaymentComplete: " + e.getMessage());
+            }
+        }
     }
+
 }

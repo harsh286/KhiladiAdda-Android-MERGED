@@ -6,7 +6,7 @@ import com.khiladiadda.network.model.request.ludoTournament.LudoTournamentFetchR
 public interface ILudoTmtPresenter extends IBasePresenter {
 
     //Get All Ludo Tournament
-    void getAllTournament(boolean startDate);
+    void getAllTournament(boolean startDate, int type);
 
     //Get All Ludo Tournament
     void getPastTournament();

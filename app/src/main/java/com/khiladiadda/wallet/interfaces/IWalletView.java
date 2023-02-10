@@ -5,11 +5,14 @@ import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.response.ApexPayChecksumResponse;
 import com.khiladiadda.network.model.response.CashfreeChecksumResponse;
 import com.khiladiadda.network.model.response.ChecksumResponse;
+import com.khiladiadda.network.model.response.GetGamerCashResponse;
 import com.khiladiadda.network.model.response.InvoiceResponse;
 import com.khiladiadda.network.model.response.NeokredResponse;
 import com.khiladiadda.network.model.response.PaySharpResponse;
 import com.khiladiadda.network.model.response.PaykunOrderResponse;
 import com.khiladiadda.network.model.response.PayuChecksumResponse;
+import com.khiladiadda.network.model.response.PhonePePaymentResponse;
+import com.khiladiadda.network.model.response.PhonepeCheckPaymentResponse;
 import com.khiladiadda.network.model.response.ProfileTransactionResponse;
 import com.khiladiadda.network.model.response.RazorpayOrderIdResponse;
 import com.khiladiadda.network.model.response.VersionResponse;
@@ -105,7 +108,6 @@ public interface IWalletView {
 
     void onPaySharpStatusFailure(ApiError error);
 
-
     void onEaseBuzzChecksumComplete(ChecksumResponse responseModel);
 
     void onEaseBuzzChecksumFailure(ApiError error);
@@ -118,5 +120,16 @@ public interface IWalletView {
 
     void onNeokredFailure(ApiError error);
 
+    void onPaymentComplete(PhonePePaymentResponse response);
+
+    void onPaymentFailure(ApiError errorMsg);
+
+    void onPaymentCheckComplete(PhonepeCheckPaymentResponse response);
+
+    void onPaymentCheckFailure(ApiError errorMsg);
+
+    void onGetGamerCashSuccess(GetGamerCashResponse response);
+
+    void onGetGamerCashFailure(ApiError errorMsg);
 
 }

@@ -9,6 +9,5 @@ public interface ILudoBuddyPresenter extends IBasePresenter {
 
     void sendChallengeRequest(LudoBuddyChallengeRequest ludoRequest);
 
-    void getBuddyListUniverse();
-
+    void getBuddyListUniverse(int mode);
 }

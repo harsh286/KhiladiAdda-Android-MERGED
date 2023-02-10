@@ -19,6 +19,7 @@ import com.khiladiadda.leaderboard.interfaces.ILeaderboardView;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.response.AllLeaderBoardResponse;
 import com.khiladiadda.network.model.response.AllLederBoardDetails;
+import com.khiladiadda.network.model.response.LeaderboardMainResponse;
 import com.khiladiadda.network.model.response.LudoAddaMainResponse;
 import com.khiladiadda.network.model.response.LudoLeaderboardResponse;
 import com.khiladiadda.network.model.response.OverallLeadBoardResponse;
@@ -170,6 +171,16 @@ public class MyLeagueLeaderboardActivity extends BaseActivity implements ILeader
 
     @Override
     public void onLeaderDroidError(ApiError error) {
+
+    }
+
+    @Override
+    public void onAllLeaderBoardComplete(LeaderboardMainResponse responseModel) {
+
+    }
+
+    @Override
+    public void onAllLeaderBoardError(ApiError error) {
 
     }
 

@@ -138,22 +138,16 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     CardView mBankTickCV;
     @BindView(R.id.rl_paytm_wallet)
     RelativeLayout mPaytmWalletRV;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
     private IWithdrawPresenter mPresenter;
     private NewBeneficiaryAdapter mAdapter;
     private ArrayList<BeneficiaryDetails> mList = null;
-    private int mAmount;
-    private String mPaymentMode = AppConstant.UPI, mBeneficiaryId, mFundAccountId, mBID;
+    private String mName, mBank, mIfsc, mPayoutGatewayName, mPaymentMode = AppConstant.UPI, mBeneficiaryId, mFundAccountId, mBID;
     private double mWinningCoins;
-    private int mPayoutGateway, mParallelPayoutGateway;
-    private int selectedPos = RecyclerView.NO_POSITION;
-    private int mPayoutSelect = 0;
+    private int mAmount, mPayoutGateway, mParallelPayoutGateway, selectedPos = RecyclerView.NO_POSITION, mPayoutSelect = 0;
     private List<WithdrawComissionDetails> mWithdrawCommission = null;
-    private boolean mKYCVerified;
-    private String mName, mBank, mIfsc;
-    private boolean mIsWithdrawVerified, mIsDataRefresh;
-    private String mPayoutGatewayName;
-    @BindView(R.id.nudge)
-    NudgeView mNV;
+    private boolean mKYCVerified, mIsDataRefresh;
     private Activity activity;
 
     @Override
@@ -167,7 +161,6 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         mNV.initialiseNudgeView(this);
         MoEInAppHelper.getInstance().showInApp(this);
     }
-
 
     @Override
     protected void initViews() {
@@ -203,13 +196,11 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
             string.setSpan(new UnderlineSpan(), 0, string.length(), 0);
             mPoliciesUpdateTV.setText(string);
         }
-
         if (LocationCheckUtils.getInstance().hasLocationPermission()) {
             LocationCheckUtils.getInstance().statusCheck();
             LocationCheckUtils.getInstance().requestNewLocationData();
         }
     }
-
 
     @Override
     protected void initVariables() {
@@ -257,9 +248,6 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
             case R.id.iv_notification:
                 startActivity(new Intent(this, NotificationActivity.class));
                 break;
-//            case R.id.tv_existing_withdraw_option:
-//                mPaymentAddressET.setText(mAppPreference.getMobile());
-//                break;
             case R.id.rl_paytm:
                 setData(AppConstant.PATYMUPI);
                 break;
@@ -280,6 +268,8 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                     AppUtilityMethods.showMsg(this, getString(R.string.text_paytm_mobilenumber_required), false);
                 } else if ((mPayoutSelect == 1) && (mPaymentAddressET.getText().toString().trim().length() < 10)) {
                     AppUtilityMethods.showMsg(this, getString(R.string.text_paytm_mobilenumber_length), false);
+                } else if ((mPayoutSelect == 1 || mPayoutSelect == 2 || mPayoutSelect == 3) && (mUpiNameET.getText().toString().trim().isEmpty())) {
+                    AppUtilityMethods.showMsg(this, getString(R.string.text_beneficiary_name_required), false);
                 } else if (TextUtils.isEmpty(mPaymentAddressET.getText().toString().trim()) && ((mPayoutSelect == 2) || (mPayoutSelect == 3))) {
                     AppUtilityMethods.showMsg(this, getString(R.string.text_upi_address_required), false);
                 } else if ((mPayoutSelect == 4) && (TextUtils.isEmpty(mBankAccountNumberET.getText().toString().trim()) || TextUtils.isEmpty(mIFSCCodeET.getText().toString().trim()) || TextUtils.isEmpty(mAddressET.getText().toString().trim()))) {
@@ -288,36 +278,28 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                     AppUtilityMethods.showMsg(this, getString(R.string.text_bank_incorrect), false);
                 } else {
                     showProgress(getString(R.string.txt_progress_authentication));
-                    if (mPayoutGateway == 1) {   //cashfree
-                        if (mPayoutSelect == 1) {
-                            mPresenter.onCashfreeAddBeneficiary(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mAddressET.getText().toString().trim(), mPaymentMode, mPaymentAddressET.getText().toString() + PATYMWALLTERUPI, mUpiNameET.getText().toString().trim(), mPayoutSelect);
-                        } else {
-                            mPresenter.onCashfreeAddBeneficiary(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mAddressET.getText().toString().trim(), mPaymentMode, mPaymentAddressET.getText().toString().trim(), mUpiNameET.getText().toString().trim(), mPayoutSelect);
-                        }
+                    if (mPayoutGateway == 1 && mPayoutSelect == 1) {   //cashfree
+                        mPresenter.onCashfreeAddBeneficiary(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mAddressET.getText().toString().trim(), mPaymentMode, mPaymentAddressET.getText().toString() + PATYMWALLTERUPI, mUpiNameET.getText().toString().trim(), mPayoutSelect);
+                    } else if (mPayoutGateway == 1) {
+                        mPresenter.onCashfreeAddBeneficiary(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mAddressET.getText().toString().trim(), mPaymentMode, mPaymentAddressET.getText().toString().trim(), mUpiNameET.getText().toString().trim(), mPayoutSelect);
+                    } else if (mPayoutGateway == 3 && mPayoutSelect == 1) { //apexpay
+                        mPresenter.onAddBeneficiaryEasebuzz(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mPaymentMode, mPaymentAddressET.getText().toString().trim() + PATYMWALLTERUPI, mPayoutSelect, mPayoutGateway + 3);
                     } else if (mPayoutGateway == 3) {
-                        mPresenter.onAddBeneficiary(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mAddressET.getText().toString().trim(), mPaymentMode, mPaymentAddressET.getText().toString().trim(), mUpiNameET.getText().toString().trim(), mPayoutSelect, "apexpay");
+                        mPresenter.onAddBeneficiaryEasebuzz(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mPaymentMode, mPaymentAddressET.getText().toString().trim(), mPayoutSelect, mPayoutGateway + 3);
+                    } else if (mPayoutGateway == 4 && mPayoutSelect == 1) { //paysharp
+                        mPresenter.onAddBeneficiaryEasebuzz(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mPaymentMode, mPaymentAddressET.getText().toString().trim() + PATYMWALLTERUPI, mPayoutSelect, mPayoutGateway + 2);
                     } else if (mPayoutGateway == 4) {
-                        mPresenter.onAddBeneficiary(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mAddressET.getText().toString().trim(), mPaymentMode, mPaymentAddressET.getText().toString().trim(), mUpiNameET.getText().toString().trim(), mPayoutSelect, "paysharp");
-                    } else if (mPayoutGateway == 5 || mPayoutGateway == 6) {
-//                        if(mPayoutSelect == 3 || mPayoutSelect == 4) {
-//                            mPresenter.onAddBeneficiaryEasebuzz(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mPaymentMode, mPaymentAddressET.getText().toString().trim(), mPayoutSelect);
-//                        }else{
-//                            String upi = mPaymentAddressET.getText().toString().trim() + ".wallet@paytm";
-//                            mPresenter.onAddBeneficiaryEasebuzz(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mPaymentMode, upi, mPayoutSelect);
-//                        }
+                        mPresenter.onAddBeneficiaryEasebuzz(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mPaymentMode, mPaymentAddressET.getText().toString().trim(), mPayoutSelect, mPayoutGateway + 2);
+                    } else if (mPayoutGateway == 5 || mPayoutGateway == 6) { //5- Easebuzz, 6-Neokred
                         mPresenter.onAddBeneficiaryEasebuzz(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mPaymentMode, mPaymentAddressET.getText().toString().trim(), mPayoutSelect, mPayoutGateway);
+                    } else if (mPayoutGateway == 7 && mPayoutSelect == 1) {  //Race-condition
+                        mPresenter.onRaceConditionTransfer(new RaceConditionPayoutRequest(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mPaymentAddressET.getText().toString() + PATYMWALLTERUPI, mAddressET.getText().toString().trim(), mPaymentMode, mUpiNameET.getText().toString().trim(), mPayoutSelect));
                     } else if (mPayoutGateway == 7) {
-                        //Race-condition
-                        if (mPayoutSelect == 1) {
-                            mPresenter.onRaceConditionTransfer(new RaceConditionPayoutRequest(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mPaymentAddressET.getText().toString() + PATYMWALLTERUPI, mAddressET.getText().toString().trim(), mPaymentMode, mUpiNameET.getText().toString().trim(), mPayoutSelect));
-                        } else {
-                            mPresenter.onRaceConditionTransfer(new RaceConditionPayoutRequest(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mPaymentAddressET.getText().toString().trim(), mAddressET.getText().toString().trim(), mPaymentMode, mUpiNameET.getText().toString().trim(), mPayoutSelect));
-                        }
-//                        if (mPaymentMode == AppConstant.UPI) {
-//                            mPresenter.onRaceConditionTransfer(new RaceConditionPayoutRequest(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mBankNameEt.getText().toString().trim(), AppConstant.BANK_TRANSFER, 4));
-//                        } else
-//                            mPresenter.onRaceConditionTransfer(new RaceConditionPayoutRequest(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mBankNameEt.getText().toString().trim(), AppConstant.BANK_TRANSFER, 4));
-//                    }
+                        mPresenter.onRaceConditionTransfer(new RaceConditionPayoutRequest(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mPaymentAddressET.getText().toString().trim(), mAddressET.getText().toString().trim(), mPaymentMode, mUpiNameET.getText().toString().trim(), mPayoutSelect));
+                    } else if (mPayoutGateway == 8 && mPayoutSelect == 1) { //instantpay
+                        mPresenter.onAddBeneficiaryEasebuzz(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mPaymentMode, mPaymentAddressET.getText().toString().trim() + PATYMWALLTERUPI, mPayoutSelect, mPayoutGateway);
+                    } else if (mPayoutGateway == 8) {
+                        mPresenter.onAddBeneficiaryEasebuzz(mBankAccountNumberET.getText().toString().trim(), mIFSCCodeET.getText().toString().trim().toUpperCase(), mPaymentMode, mPaymentAddressET.getText().toString().trim(), mPayoutSelect, mPayoutGateway);
                     } else {  //razorpay
                         AddBeneficieryRazorpay addBeneficieryRazorpay = new AddBeneficieryRazorpay();
                         addBeneficieryRazorpay.setAccountNumber(mBankAccountNumberET.getText().toString().trim());
@@ -346,7 +328,10 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         mPaymentAddressET.setVisibility(View.VISIBLE);
         mBankLL.setVisibility(View.GONE);
         mPaymentAddressET.setText("");
-        if (mPayoutGateway == 1 || mPayoutGateway == 7) {
+        mUpiNameET.setText("");
+        if (mPayoutGateway == 6) {
+            mPaymentMode = AppConstant.BANK_TRANSFER;
+        } else {
             if (from.equalsIgnoreCase(PATYMUPI) || from.equalsIgnoreCase(PATYM)) {
                 mPaymentMode = AppConstant.UPI;
             } else if (from.equalsIgnoreCase(AppConstant.BANK_TRANSFER)) {
@@ -354,24 +339,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
             } else {
                 mPaymentMode = from;
             }
-        } else if (mPayoutGateway == 2 && from.equalsIgnoreCase(AppConstant.UPI)) {
-            mPaymentMode = AppConstant.VPA;
-        } else if (mPayoutGateway == 2 && from.equalsIgnoreCase(AppConstant.BANK_TRANSFER)) {
-            mPaymentMode = AppConstant.BANK_ACCOUNT;
-        } else if ((mPayoutGateway == 2) && (from.equalsIgnoreCase(AppConstant.UPI))) {
-            mPaymentMode = AppConstant.UPI;
-        } else if (((mPayoutGateway == 5) && (from.equalsIgnoreCase(AppConstant.UPI) || from.equalsIgnoreCase(PATYM)))) {
-            mPaymentMode = AppConstant.UPI;
-        } else if ((mPayoutGateway == 3) || (mPayoutGateway == 4) || (((mPayoutGateway == 5) || mPayoutGateway == 6) && (from.equalsIgnoreCase(AppConstant.BANK_TRANSFER)))) {
-            mPaymentMode = AppConstant.BANK_TRANSFER;
         }
-//        else if (mPayoutGateway == 7) {
-//            if (from.equalsIgnoreCase(AppConstant.UPI))
-//                mPaymentMode = AppConstant.UPI;
-//            else
-//                mPaymentMode = AppConstant.BANK_TRANSFER;
-//        }
-
         if (mList.size() > 0) {
             mAdapter.setSelectedPos(selectedPos);
             mAdapter.notifyDataSetChanged();
@@ -385,15 +353,17 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                     AppDialog.showPaytmUpi(this);
                     mAppPreference.setIsPaytmUpi(true);
                 }
+                mUpiNameET.setVisibility(View.VISIBLE);
+                mUpiNameET.setHint(getString(R.string.text_paytm_name));
                 mPaytmTickCV.setVisibility(View.VISIBLE);
                 mPaymentAddressET.setHint(getString(R.string.paytm_upi));
-                mUpiNameET.setVisibility(View.GONE);
                 mPayoutSelect = 2;
                 break;
             case AppConstant.UPI:
                 mUpiRL.setSelected(true);
                 mUPITickCV.setVisibility(View.VISIBLE);
                 mUpiNameET.setVisibility(View.VISIBLE);
+                mUpiNameET.setHint(getString(R.string.text_account_holder_name));
                 mPaymentAddressET.setHint(getString(R.string.text_upi_address));
                 mPayoutSelect = 3;
                 mPaymentAddressET.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -420,8 +390,9 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                 mPaytmWalletRV.setSelected(true);
                 mPayoutSelect = 1;
                 mPaytmTickCV.setVisibility(View.VISIBLE);
+                mUpiNameET.setVisibility(View.VISIBLE);
+                mUpiNameET.setHint(getString(R.string.text_paytm_name));
                 mPaymentAddressET.setHint(getString(R.string.text_paytm_number));
-                mUpiNameET.setVisibility(View.GONE);
                 mPaymentAddressET.setInputType(InputType.TYPE_CLASS_NUMBER);
                 InputFilter[] filters = new InputFilter[1];
                 filters[0] = new InputFilter.LengthFilter(10);
@@ -447,11 +418,9 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
 
     @Override
     public void onValidationComplete() {
-        //todo changed here back to 20
-        if (mAmount < 10) {
+        if (mAmount < 20) {
             AppUtilityMethods.showMsg(this, getString(R.string.text_amount_less_ten), false);
         } else if ((mAmount) <= mWinningCoins) {
-//            if (mAppPreference.getProfileData().getAadharUpdated() == 3) {
             if (mKYCVerified) {
                 showConfirmWithdrawDialog();
             } else {
@@ -479,7 +448,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         mPayoutGateway = responseModel.getPayoutEnable();
         mParallelPayoutGateway = responseModel.getParallelPayout();
         mWithdrawCommission = responseModel.getWithdrawCommission();
-        mIsWithdrawVerified = responseModel.isWithdrawVerified();
+//        mIsWithdrawVerified = responseModel.isWithdrawVerified();
         if (responseModel.isManualWithdraw()) {
             showWithdrawConfirmation(getString(R.string.text_manual_withdraw), responseModel.getMessage(), false, responseModel.isManualWithdraw());
         } else {
@@ -493,7 +462,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
             }
         }
         mAdapter.notifyDataSetChanged();
-        if (mPayoutGateway == 3 || mPayoutGateway == 4) {
+        if (mPayoutGateway == 3) {  //|| mPayoutGateway == 4
             mUpiRL.setVisibility(View.GONE);
             mPaytmRV.setVisibility(View.GONE);
             mPaytmWalletRV.setVisibility(View.GONE);
@@ -504,16 +473,6 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
             mPaytmRV.setVisibility(View.GONE);
             mPaytmWalletRV.setVisibility(View.GONE);
         }
-        if (mParallelPayoutGateway == 37 || mParallelPayoutGateway == 39) {
-            mUpiRL.setVisibility(View.GONE);
-            mPaytmRV.setVisibility(View.GONE);
-            mPaytmWalletRV.setVisibility(View.GONE);
-        }
-//        else if (mPayoutGateway == 7) {
-//            mUpiRL.setVisibility(View.VISIBLE);
-//            mPaytmRV.setVisibility(View.GONE);
-//            mPaytmWalletRV.setVisibility(View.VISIBLE);
-//        }
         hideProgress();
     }
 
@@ -531,7 +490,6 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         hideProgress();
         mLinkDetailsLL.setVisibility(View.GONE);
         if (response.isStatus()) {
-//            showMsg(this, getString(R.string.text_benefeciary_added), false, 1);
             showMsg(this, response.getMessage(), false, 1);
         } else if (response.isManual_withdraw()) {
             showWithdrawConfirmation(getString(R.string.text_msg_manual_wiithdraw), response.getMessage(), false, true);
@@ -654,27 +612,19 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     @Override
     public void onWithdrawLimitComplete(WIthdrawLimitResponse response) {
         hideProgress();
+//        boolean isWithdrawLimitExceeded = response.getResponse().isWithdrawLimitExceeded();
         if (response.isStatus()) {
             if (response.getResponse().isKycEnabled()) {
-                if (!response.getResponse().isIsLimitExceeded() && ((response.getResponse().getTotalWithdrawal() + mAmount) < (response.getResponse().getLimitAmount() + 1))) {
-                    showConfirmWithdrawDialog();
+                //addahr not verified then check limit amount
+                //aadhar verified and withdraw limit
+                if (!response.getResponse().isAadharVerified() && (mAmount > response.getResponse().getLimitAmount())) {
+                    new WithdrawVerificationDialog(NewWithdrawActivity.this, response.getMessage(), mName, mBank, mIfsc, mBID);
+                } else if (response.getResponse().isAadharVerified() && (mAmount > response.getResponse().getnWithdrawalLimit())) {
+                    showProgress(getString(R.string.txt_progress_authentication));
+                    mPresenter.verifyBeneficiary(mBID);
                 } else {
-                    if ((mAppPreference.getProfileData().getAadharUpdated() == 3 || response.getResponse().isAadharVerified()) && mKYCVerified) {
-                        showConfirmWithdrawDialog();
-                    } else if ((mAppPreference.getProfileData().getAadharUpdated() == 3 || response.getResponse().isAadharVerified()) && !mIsWithdrawVerified) {
-                        showConfirmWithdrawDialog();
-                    }
-                    //beneficiary verify
-                    else if ((mAppPreference.getProfileData().getAadharUpdated() == 3 || response.getResponse().isAadharVerified()) && !mKYCVerified) {
-                        showProgress(getString(R.string.txt_progress_authentication));
-                        mPresenter.verifyBeneficiary(mBID);
-                    } else { //aadhar verify
-//                        showMsg(this, response.getMessage(), false, 3);
-                        new WithdrawVerificationDialog(NewWithdrawActivity.this, response.getMessage(), mName, mBank, mIfsc, mBID);
-                    }
+                    showConfirmWithdrawDialog();
                 }
-            } else {
-                showConfirmWithdrawDialog();
             }
         } else {
             showConfirmWithdrawDialog();
@@ -693,11 +643,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
             mKYCVerified = true;
             AppUtilityMethods.showMsg(this, "!!!Thank You!!!\nYour bank details and aadhar card details has matched. Now you can withdraw amount easily.", false);
             getBeneficiaryList();
-        }
-//        else if (responseModel.getType() == 1) {
-//            showMsg(this, responseModel.getMessage(), false, 4);
-//        }
-        else {
+        } else {
             new WithdrawReVerifyDialog(this, onWithdrawListener, 1, mBID, mAppPreference.getProfileData().getName(), responseModel.getResponse());
         }
     }
@@ -743,30 +689,17 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         hideProgress();
         mLinkDetailsLL.setVisibility(View.GONE);
         if (response.isStatus()) {
-//            showMsg(this, getString(R.string.text_benefeciary_added), false, 1);
             showMsg(this, response.getMessage(), false, 1);
         } else if (response.isManual_withdraw()) {
             showWithdrawConfirmation(getString(R.string.text_msg_manual_wiithdraw), response.getMessage(), false, true);
         } else {
             showMsg(this, response.getMessage(), false, 1);
         }
-
-//        if(response.isStatus() == true){
-//            if (response.isStatus()) {
-//                if (response.getResponse().size() > 0) {
-//                    mList.addAll(response.getResponse());
-//                    mWithdrawRV.setVisibility(View.VISIBLE);
-//                } else {
-//                    Snackbar.make(mSubmitBTN, getString(R.string.text_link_details_to_new_withdraw), Snackbar.LENGTH_LONG).show();
-//                }
-//            }
-//        }
     }
 
     @Override
     public void onRaceConditionFailed(ApiError error) {
         Toast.makeText(this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -1000,22 +933,14 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
             showProgress(getString(R.string.txt_progress_authentication));
             if (mPayoutGateway == 1) {//cashfree
                 mPayoutGatewayName = "CashFree";
-                if (mParallelPayoutGateway == 37) {
-                    mPayoutGatewayName = "PaySharp";
-                    mPresenter.onPaySharpTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
-                } else if (mParallelPayoutGateway == 38) {
-                    mPayoutGatewayName = "InstantPay";
+                if (mParallelPayoutGateway == 17)
+                    mPresenter.onCashfreeTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
+                else {
                     if (LocationCheckUtils.getInstance().hasLocationPermission()) {
                         mPresenter.onIPayTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp, LocationCheckUtils.getInstance().getmLatitute(), LocationCheckUtils.getInstance().getmLongitude());
                     } else {
                         LocationCheckUtils.getInstance().DialogWithCallBack(activity, "KhiladiAdda need to access your location.");
                     }
-                } else if (mParallelPayoutGateway == 39) {
-                    mPayoutGatewayName = "Neokred";
-                    double amount = Double.parseDouble(mAmountET.getText().toString().trim());
-                    mPresenter.onEasebuzzTransfer(mBeneficiaryId, amount, otp, 6);
-                } else {
-                    mPresenter.onCashfreeTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
                 }
             } else if (mPayoutGateway == 2) {  //razorpay - bank_account
                 mPayoutGatewayName = "Razorpay";
@@ -1030,38 +955,17 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                     mPayoutGatewayName = "Neokred";
                 }
                 double amount = Double.parseDouble(mAmountET.getText().toString().trim());
-                if (mParallelPayoutGateway == 37) {
-                    mPayoutGatewayName = "PaySharp";
-                    mPresenter.onPaySharpTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
-                } else if (mParallelPayoutGateway == 38) {
-                    mPayoutGatewayName = "InstantPay";
-                    if (LocationCheckUtils.getInstance().hasLocationPermission()) {
-                        mPresenter.onIPayTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp, LocationCheckUtils.getInstance().getmLatitute(), LocationCheckUtils.getInstance().getmLongitude());
-                    }
-                } else if (mParallelPayoutGateway == 39) {
-                    mPayoutGatewayName = "Neokred";
-                    mPresenter.onEasebuzzTransfer(mBeneficiaryId, amount, otp, 6);
-                } else {
+                if (mParallelPayoutGateway == 17)
                     mPresenter.onEasebuzzTransfer(mBeneficiaryId, amount, otp, mPayoutGateway);
-                }
-            } else if (mPayoutGateway == 7) { /* ===Race-Condition after OTP Verify=== */
-                if (mParallelPayoutGateway == 37) {
-                    mPayoutGatewayName = "PaySharp";
-                    mPresenter.onPaySharpTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
-                } else if (mParallelPayoutGateway == 38) {
-                    mPayoutGatewayName = "InstantPay";
+                else {
                     if (LocationCheckUtils.getInstance().hasLocationPermission()) {
                         mPresenter.onIPayTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp, LocationCheckUtils.getInstance().getmLatitute(), LocationCheckUtils.getInstance().getmLongitude());
                     } else {
                         LocationCheckUtils.getInstance().DialogWithCallBack(activity, "KhiladiAdda need to access your location.");
                     }
-                } else if (mParallelPayoutGateway == 39) {
-                    mPayoutGatewayName = "Neokred";
-                    double amount = Double.parseDouble(mAmountET.getText().toString().trim());
-                    mPresenter.onEasebuzzTransfer(mBeneficiaryId, amount, otp, 6);
-                } else {
-                    mPresenter.onRaceConditionTransferFinal(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
                 }
+            } else if (mPayoutGateway == 7) { /* ===Race-Condition after OTP Verify=== */
+                mPresenter.onRaceConditionTransferFinal(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
             } else {
                 mPresenter.onPaySharpTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
             }
@@ -1128,4 +1032,5 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     public void iOnAddressFailure() {
 
     }
+
 }

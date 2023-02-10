@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseFragment;
+import com.khiladiadda.callbreak.CallBreakActivity;
 import com.khiladiadda.clashx2.main.activity.ClashXDashBoardActivity;
 import com.khiladiadda.fanbattle.FanBattleActivity;
 import com.khiladiadda.gameleague.NewDroidoActivity;
@@ -23,10 +24,13 @@ import com.khiladiadda.ludo.LudoChallengeActivity;
 import com.khiladiadda.ludo.luodhelp.LudoHelpActivity;
 import com.khiladiadda.ludoTournament.activity.LudoTmtDashboardActivity;
 import com.khiladiadda.ludoUniverse.LudoUniverseActivity;
+import com.khiladiadda.ludoUniverse.ModeActivity;
 import com.khiladiadda.main.fragment.HomeFragment;
 import com.khiladiadda.main.game.adapter.TopKhiladiAdapter;
 import com.khiladiadda.network.model.response.DashboardDetailResponse;
+import com.khiladiadda.network.model.response.ModeConfig;
 import com.khiladiadda.quiz.all.AllQuizListActivity;
+import com.khiladiadda.rummy.RummyActivity;
 import com.khiladiadda.scratchcard.ScratchCardActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.wordsearch.activity.WordSearchMainActivity;
@@ -48,7 +52,7 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
     TextView mHelpTV;
     @BindView(R.id.iv_ludo)
     ImageView mLudoIV;
-    @BindView(R.id.iv_droidd)
+    @BindView(R.id.iv_droido)
     ImageView mDroidIV;
     @BindView(R.id.iv_wordsearch)
     ImageView mWordSearchIV;
@@ -76,6 +80,10 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
     RecyclerView mTopKhiladiRV;
     @BindView(R.id.iv_ludotournament)
     ImageView mLudoTournamentIv;
+    @BindView(R.id.iv_rummy)
+    ImageView mRummyIv;
+    @BindView(R.id.iv_codepieces)
+    ImageView mCallBreakIv;
 
     public static Fragment getInstance() {
         return new GameFragment();
@@ -106,6 +114,8 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
         mPubgGobalLiteIV.setOnClickListener(this);
         mEsportsPremiumIV.setOnClickListener(this);
         mLudoTournamentIv.setOnClickListener(this);
+        mRummyIv.setOnClickListener(this);
+        mCallBreakIv.setOnClickListener(this);
 
     }
 
@@ -260,7 +270,7 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
                         .addAttribute(AppConstant.ClickedDate, new Date());
                 MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
                 break;
-            case R.id.iv_droidd:
+            case R.id.iv_droido:
                 i = new Intent(getActivity(), NewDroidoActivity.class);
                 properties
                         // tracking click
@@ -269,7 +279,7 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
                 MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
                 break;
             case R.id.iv_ludo_universe:
-                i = new Intent(getActivity(), LudoUniverseActivity.class);
+                i = new Intent(getActivity(), ModeActivity.class);
                 properties
                         // tracking click
                         .addAttribute(AppConstant.ScreenName, "Ludo Adda")
@@ -278,6 +288,12 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
                 break;
             case R.id.iv_ludotournament:
                 i = new Intent(getActivity(), LudoTmtDashboardActivity.class);
+                break;
+            case R.id.iv_rummy:
+                i = new Intent(getActivity(), RummyActivity.class);
+                break;
+            case R.id.iv_codepieces:
+                i = new Intent(getActivity(), CallBreakActivity.class);
                 break;
 
         }

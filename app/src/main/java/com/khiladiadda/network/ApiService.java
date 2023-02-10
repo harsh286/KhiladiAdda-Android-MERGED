@@ -5,11 +5,22 @@ import com.khiladiadda.battle.model.BattleGroupResponse;
 import com.khiladiadda.battle.model.BattleResponse;
 import com.khiladiadda.login.TrueCallerRequest;
 import com.khiladiadda.login.TrueCallerResponse;
+import com.khiladiadda.network.model.request.PhonepeCheckPaymentRequest;
+import com.khiladiadda.network.model.request.PhonepeRequest;
 import com.khiladiadda.network.model.request.RaceConditionPayoutRequest;
 import com.khiladiadda.network.model.request.deposite.DepositLimitRequest;
-import com.khiladiadda.network.model.request.ludoTournament.LudoTournamentFetchRequest;
+import com.khiladiadda.network.model.response.CallBreakJoinMainResponse;
+import com.khiladiadda.network.model.response.CallBreakResponse;
 import com.khiladiadda.network.model.response.CxBannerMainResponse;
+import com.khiladiadda.network.model.response.GamerCashResponse;
+import com.khiladiadda.network.model.response.GetGamerCashResponse;
+import com.khiladiadda.network.model.response.LeaderboardMainResponse;
+import com.khiladiadda.network.model.response.ModeResponse;
 import com.khiladiadda.network.model.response.NeokredResponse;
+import com.khiladiadda.network.model.response.PhonePePaymentResponse;
+import com.khiladiadda.network.model.response.PhonepeCheckPaymentResponse;
+import com.khiladiadda.network.model.response.RummyRefreshTokenMainResponse;
+import com.khiladiadda.network.model.response.RummyResponse;
 import com.khiladiadda.network.model.response.deposite.DepositLimitMainResponse;
 import com.khiladiadda.network.model.response.deposite.FetchDepositLimitMainResponse;
 import com.khiladiadda.network.model.response.droid_doresponse.DroidoHistoryGameList;
@@ -139,8 +150,6 @@ import com.khiladiadda.network.model.response.WIthdrawLimitResponse;
 import com.khiladiadda.network.model.response.WalletTransactionResponse;
 import com.khiladiadda.network.model.response.WithdrawResponse;
 import com.khiladiadda.network.model.response.ZaakpayChecksumResponse;
-import com.khiladiadda.network.model.response.gamer_cash.GamerCashResponse;
-import com.khiladiadda.network.model.response.gamer_cash.GetGamerCashResponse;
 import com.khiladiadda.network.model.response.gamer_cash.SwitchGamerCashRequest;
 import com.khiladiadda.network.model.response.gamer_cash.SwitchGamerCashResponse;
 import com.khiladiadda.network.model.response.hth.BattleResponseHTH;
@@ -177,7 +186,6 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
@@ -695,10 +703,11 @@ public interface ApiService {
 
     //Ludo Universe
     @GET(AppConstant.API_LU_CONTEST)
-    Observable<LudoContestResponse> getList(@Query("date") String date, @Query("contest_type") String contest_type, @Query("banners") boolean banners, @Query("banner_type") String banner_type, @Query("profile") boolean profile, @Query("mode") int mode, @Query("entry_fees_filter") int entry_fees_filter, @Query("from") int from, @Query("to") int to);
+    Observable<LudoContestResponse> getList(@Query("date") String date, @Query("contest_type") String contest_type, @Query("banners") boolean banners, @Query("banner_type") String banner_type, @Query("profile") boolean profile, @Query("mode") int mode, @Query("entry_fees_filter") int entry_fees_filter, @Query("from") int from, @Query("to") int to, @Query("contest_mode") int contest_mode);
 
     @GET(AppConstant.API_LU_MY_CONTEST)
-    Observable<LudoContestResponse> getAllList(@Query("page") int page, @Query("limit") int limit);
+    Observable<LudoContestResponse> getAllList(@Query("page") int page, @Query("limit") int limit,
+                                               @Query("contest_mode") int contestMode);
 
     @POST(AppConstant.API_LU_ADD_CONTEST)
     Observable<BaseResponse> addChallenge(@Body LudoContestRequest request);
@@ -710,11 +719,14 @@ public interface ApiService {
     Observable<BaseResponse> cancelChallenge(@Path("contest_id") String contestId);
 
     @GET(AppConstant.API_LU_BUDDY_OPPONENT)
-    Observable<BuddyResponse> getLUBuddyList();
+    Observable<BuddyResponse> getLUBuddyList(@Query("contest_mode") int contestMode);
 
     @GET(AppConstant.API_LU_STATUS)
     Observable<BaseResponse> getLUStatus(@Path("contest_id") String contestId);
 
+    //Ludo Universe Mode
+    @GET(AppConstant.API_LU_MODE)
+    Observable<ModeResponse> getMode(@Path("bannerType") String banner_type);
     //Zaakpay
     @POST(AppConstant.API_ZAAKPAY_CHECKSUM)
     Observable<ZaakpayChecksumResponse> getZaakpayChecksumHash();
@@ -758,6 +770,10 @@ public interface ApiService {
     //Verify Email
     @GET(AppConstant.API_VERIFY_EMAIL)
     Observable<BaseResponse> verifyEmail(@Path("email") String email, @Path("otp") String otp);
+
+    //Update Email
+    @GET(AppConstant.API_UPDATE_EMAIL)
+    Observable<BaseResponse> updateEmail(@Path("email") String email);
 
     //LudoAdda
     @GET(AppConstant.API_LU_OVERALLEADERBOARD)
@@ -847,6 +863,20 @@ public interface ApiService {
     Observable<AllLeaderBoardResponse> getLeaderBoardGKAll(@Query("page") int page, @Query("limit") int limit, @Query("type") String type);
 
 
+    //LeaderBoardAll - LudoTournament
+    @GET(AppConstant.API_LUDO_TOURNAMENT)
+    Observable<LeaderboardMainResponse> getLeaderBoardLudoTournament(@Query("type") String type, @Query("page") int page, @Query("limit") int limit);
+
+    //LeaderBoardAll - CallBreak
+    @GET(AppConstant.API_CALL_BREAK)
+    Observable<LeaderboardMainResponse> getLeaderBoardCallBreak(@Query("type") String type, @Query("page") int page, @Query("limit") int limit);
+
+    //LeaderBoardAll - Rummy
+    @GET(AppConstant.API_RUMMY)
+    Observable<LeaderboardMainResponse> getLeaderBoardRummy(@Query("type") String type, @Query("page") int page, @Query("limit") int limit);
+
+
+
     //Neokred
     @POST(AppConstant.API_NEOKRED_PG)
     Observable<NeokredResponse> checkNeokredPG(@Body EaseBuzzSaveRequest request);
@@ -894,7 +924,7 @@ public interface ApiService {
      * LUDO TOURNAMNET
      **/
     @GET(AppConstant.API_LUDO_ALL_TOURNAMENT)
-    Observable<LudoTmtAllTournamentMainResponse> onGetLudoTmtAllTournament(@Query("startDate") boolean startDate);
+    Observable<LudoTmtAllTournamentMainResponse> onGetLudoTmtAllTournament(@Query("startDate") boolean startDate, @Query("type") int type);
 
     @GET(AppConstant.API_LUDO_JOIN_TOURNAMENT)
     Observable<LudoTmtJoinMainResponse> onJoinLudoTournament(@Path("id") String tournament_id);
@@ -927,5 +957,25 @@ public interface ApiService {
     //GamerCash Switch Coins
     @POST(AppConstant.API_SWITCH_GAMER_CASH)
     Observable<SwitchGamerCashResponse> switchGamerData(@Body SwitchGamerCashRequest switchGamerCashRequest);
+
+    //Rummy Get List
+    @GET(AppConstant.API_GET_RUMMY_LIST)
+    Observable<RummyResponse> getRummyList(@Query("arenaType") String arenaType, @Query("bannerType") String bannerType);
+
+    @GET(AppConstant.API_GET_RUMMY_REFRESH_TOKEN)
+    Observable<RummyRefreshTokenMainResponse> getRummyRefershToken();
+
+    //Call Break Get List
+    @GET(AppConstant.API_GET_CALLBREAK_LIST)
+    Observable<CallBreakResponse> getCallBreak();
+    @GET(AppConstant.API_GET_CALLBREAK_JOIN)
+    Observable<CallBreakJoinMainResponse> getCallBreakJoin(@Path("id") String id);
+
+    //New Added
+    @POST(AppConstant.API_PAYMENT_URL)
+    Observable<PhonePePaymentResponse> getPaymentUrl(@Body() PhonepeRequest phonepeRequest);
+
+    @POST(AppConstant.API_CHECK_PAYMENT_SUCCESS)
+    Observable<PhonepeCheckPaymentResponse> getCheckPaymentSuccess(@Body() PhonepeCheckPaymentRequest phonepeCheckPaymentRequest);
 
 }

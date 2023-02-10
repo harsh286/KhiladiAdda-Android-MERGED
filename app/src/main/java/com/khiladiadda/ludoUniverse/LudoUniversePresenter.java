@@ -1,8 +1,5 @@
 package com.khiladiadda.ludoUniverse;
 
-import com.khiladiadda.ludo.LudoChallengeInteractor;
-import com.khiladiadda.ludo.interfaces.ILudoChallengePresenter;
-import com.khiladiadda.ludo.interfaces.ILudoChallengeView;
 import com.khiladiadda.ludoUniverse.interfaces.ILudoUniversePresenter;
 import com.khiladiadda.ludoUniverse.interfaces.ILudoUniverseView;
 import com.khiladiadda.network.IApiListener;
@@ -11,6 +8,7 @@ import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.request.LudoContestRequest;
 import com.khiladiadda.network.model.request.OpponentLudoRequest;
 import com.khiladiadda.network.model.response.LudoContestResponse;
+import com.khiladiadda.network.model.response.ModeResponse;
 
 import rx.Subscription;
 
@@ -26,7 +24,7 @@ public class LudoUniversePresenter implements ILudoUniversePresenter {
     }
 
     @Override
-    public void getContestList(String date, String contestType, boolean banner, String bannerType, boolean profile, int mode, int entryFees) {
+    public void getContestList(String date, String contestType, boolean banner, String bannerType, boolean profile, int mode, int entryFees, int fromMode) {
         int from = 0, to = 0;
         int entry_fees_filter = 0;
         if (entryFees == 1) {
@@ -50,12 +48,12 @@ public class LudoUniversePresenter implements ILudoUniversePresenter {
             from = 0;
             to = 0;
         }
-        mSubscription = mInteractor.getLudoContestList(mGetLudoApiListener, date, contestType, banner, bannerType, profile, mode, entry_fees_filter, from, to);
+        mSubscription = mInteractor.getLudoContestList(mGetLudoApiListener, date, contestType, banner, bannerType, profile, mode, entry_fees_filter, from, to, fromMode);
     }
 
     @Override
-    public void getAllContestList(int page, int limit) {
-        mSubscription = mInteractor.getAllLudoContestList(mGetLudoApiListener, page, limit);
+    public void getAllContestList(int page, int limit, int contestMode) {
+        mSubscription = mInteractor.getAllLudoContestList(mGetLudoApiListener, page, limit, contestMode);
     }
 
     @Override
@@ -138,6 +136,24 @@ public class LudoUniversePresenter implements ILudoUniversePresenter {
             mView.cancelContestFailure(error);
         }
     };
+
+    @Override
+    public void getMode(String bannerType) {
+        mSubscription = mInteractor.getMode(mGetModeApiListener, bannerType);
+    }
+
+    private IApiListener<ModeResponse> mGetModeApiListener = new IApiListener<ModeResponse>() {
+        @Override
+        public void onSuccess(ModeResponse response) {
+            mView.onGetModeSuccess(response);
+        }
+
+        @Override
+        public void onError(ApiError error) {
+            mView.onGetModeFailure(error);
+        }
+    };
+
 
     @Override
     public void destroy() {

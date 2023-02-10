@@ -31,7 +31,6 @@ public class LudoContestResponse extends BaseResponse {
     @SerializedName("apk_version")
     private String apk_version;
 
-
     public List<LudoContest> getResponse() {
         return response;
     }
@@ -95,6 +94,5 @@ public class LudoContestResponse extends BaseResponse {
     public void setApk_version(String apk_version) {
         this.apk_version = apk_version;
     }
-
 
 }

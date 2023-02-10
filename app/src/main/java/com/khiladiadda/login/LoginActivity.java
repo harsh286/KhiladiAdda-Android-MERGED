@@ -229,12 +229,12 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
 
                 break;
             case R.id.iv_truecaller:
+                showProgress("");
                 if (isAllowed) {
                     if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
                         return;
                     }
                     mLastClickTime = SystemClock.elapsedRealtime();
-                    setupTruecaller();
                 } else
                     Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
 

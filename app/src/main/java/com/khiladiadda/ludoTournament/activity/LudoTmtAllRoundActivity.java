@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
@@ -34,6 +35,8 @@ public class LudoTmtAllRoundActivity extends BaseActivity implements ILudoTmtPas
     ImageView backIv;
     @BindView(R.id.rv_all_round)
     RecyclerView allPastRoundRv;
+    @BindView(R.id.tv_no_data)
+    TextView noDataTv;
 
     private LudoTmtPastRoundsPresenter mPresenter;
     private LudoTmtAllTournamentResponse matchDetailsResponse;
@@ -71,7 +74,7 @@ public class LudoTmtAllRoundActivity extends BaseActivity implements ILudoTmtPas
 
     private void callApi() {
         if (new NetworkStatus(this).isInternetOn()) {
-//            showProgress(getString(R.string.txt_progress_authentication));
+            showProgress(getString(R.string.txt_progress_authentication));
             if (matchDetailsResponse != null)
                 mPresenter.getTournamentPastRounds(matchDetailsResponse.getId());
             else
@@ -84,18 +87,23 @@ public class LudoTmtAllRoundActivity extends BaseActivity implements ILudoTmtPas
 
     @Override
     public void onGetPastRoundsTournamentComplete(LudoTmtAllPastRoundsMainResponse response) {
+        hideProgress();
         if (response.isStatus()) {
-            if (matchDetailsResponse != null)
-                allPastRoundRv.setAdapter(new LudoTmtPastAllRoundAdapter(this, this, response.getResponse(), false, matchDetailsResponse.getStartDate()));
-            else
-                allPastRoundRv.setAdapter(new LudoTmtPastAllRoundAdapter(this, this, response.getResponse(), false, ludoTmtMyMatchResponse.getStartDate()));
-
+            if(response.getResponse().size() != 0) {
+                noDataTv.setVisibility(View.GONE);
+                if (matchDetailsResponse != null)
+                    allPastRoundRv.setAdapter(new LudoTmtPastAllRoundAdapter(this, this, response.getResponse(), false, matchDetailsResponse.getStartDate()));
+                else
+                    allPastRoundRv.setAdapter(new LudoTmtPastAllRoundAdapter(this, this, response.getResponse(), false, ludoTmtMyMatchResponse.getStartDate()));
+            }else {
+                noDataTv.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     @Override
     public void onGetPastRoundsTournamentFailure(ApiError errorMsg) {
-
+        hideProgress();
     }
 
     @Override

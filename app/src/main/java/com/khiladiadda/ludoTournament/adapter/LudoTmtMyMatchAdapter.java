@@ -50,13 +50,13 @@ public class LudoTmtMyMatchAdapter extends RecyclerView.Adapter<LudoTmtMyMatchAd
         if (item.gettStatus() == 1) {
             holder.joinBtn.setText("Match Ended");
             holder.joinBtn.setBackgroundColor(Color.parseColor("#6C56EF"));
-        } else if (item.gettStatus() == 2) {
+        } else if (item.gettStatus() == 4) {
             holder.joinBtn.setText("You Won!");
             holder.joinBtn.setBackgroundColor(Color.parseColor("#29A93C"));
         } else if (item.gettStatus() == 3) {
             holder.joinBtn.setText("Opponent Won");
             holder.joinBtn.setBackgroundColor(Color.parseColor("#909090"));
-        } else if (item.gettStatus() == 4) {
+        } else if (item.gettStatus() == 2) {
             holder.joinBtn.setText("Match Cancelled");
             holder.joinBtn.setBackgroundColor(Color.parseColor("#C54444"));
         } else {

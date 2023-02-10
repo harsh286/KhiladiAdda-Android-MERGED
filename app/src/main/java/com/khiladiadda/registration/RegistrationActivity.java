@@ -31,7 +31,6 @@ import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.login.LoginActivity;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
-import com.khiladiadda.network.model.request.GmailRegisterRequest;
 import com.khiladiadda.otp.OtpActivity;
 import com.khiladiadda.registration.interfaces.IRegistrationView;
 import com.khiladiadda.utility.AppConstant;
@@ -39,7 +38,6 @@ import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.LocationCheckUtils;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.utility.PermissionUtils;
-import com.truecaller.android.sdk.TruecallerSDK;
 
 import butterknife.BindView;
 
@@ -73,7 +71,7 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
     private RegistrationPresenter mPresenter;
     private String mUsername = "", mMobileno = "", mEmail = "";
     private int RC_SIGN_IN = 101;
-
+    private String mGmailId;
 
     @Override
     protected int getContentView() {
@@ -168,6 +166,7 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
         try {
             GoogleSignInAccount account = task.getResult(ApiException.class);
             mEmailET.setText(account.getEmail());
+            mGmailId = account.getId();
         } catch (ApiException e) {
             e.printStackTrace();
         }
@@ -188,7 +187,6 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
             }
         }
     }
-
 
     @Override
     public String getName() {
@@ -216,7 +214,7 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
             if (mAgeTermCB.isChecked()) {
                 if (new NetworkStatus(this).isInternetOn()) {
                     showProgress(getString(R.string.txt_progress_authentication));
-                    mPresenter.doRegister();
+                    mPresenter.doRegister(mGmailId);
                 } else {
                     Snackbar.make(mNextBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
                 }

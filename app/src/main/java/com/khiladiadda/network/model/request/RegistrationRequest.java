@@ -10,13 +10,23 @@ public class RegistrationRequest {
     @SerializedName("email") @Expose private String email;
     @SerializedName("password") @Expose private String password;
     @SerializedName("invitecode") @Expose private String inviteCode;
+    @SerializedName("gmail_id") @Expose public String gmailId;
 
-    public RegistrationRequest(String userName,String mobileNumber, String inviteCode) {
+    public RegistrationRequest(String userName,String mobileNumber, String inviteCode, String email, String gmailId) {
         this.userName = userName;
         this.mobileNumber = mobileNumber;
         this.email = email;
         this.password = password;
         this.inviteCode = inviteCode;
+        this.gmailId = gmailId;
+    }
+
+    public String getGmailId() {
+        return gmailId;
+    }
+
+    public void setGmailId(String gmailId) {
+        this.gmailId = gmailId;
     }
 
     public String getUserName() {

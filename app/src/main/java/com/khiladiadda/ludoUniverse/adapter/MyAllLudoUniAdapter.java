@@ -29,7 +29,7 @@ public class MyAllLudoUniAdapter extends RecyclerView.Adapter<MyAllLudoUniAdapte
     private Context mContext;
     private List<LudoContest> mLudoChallengeList;
     private IOnItemClickListener mOnItemClickListener;
-    private MyAllLudoUniAdapter.IOnItemChildClickListener mOnItemChildClickListener;
+    private IOnItemChildClickListener mOnItemChildClickListener;
 
     public MyAllLudoUniAdapter(Context context, List<LudoContest> ludoChallengeList) {
         this.mContext = context;
@@ -40,19 +40,19 @@ public class MyAllLudoUniAdapter extends RecyclerView.Adapter<MyAllLudoUniAdapte
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
-    public void setOnItemChildClickListener(MyAllLudoUniAdapter.IOnItemChildClickListener mOnItemChildClickListener) {
+    public void setOnItemChildClickListener(IOnItemChildClickListener mOnItemChildClickListener) {
         this.mOnItemChildClickListener = mOnItemChildClickListener;
     }
 
     @NonNull
     @Override
-    public MyAllLudoUniAdapter.LudoContestHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public LudoContestHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_all_my_ludo_uni, parent, false);
-        return new MyAllLudoUniAdapter.LudoContestHolder(itemView, mOnItemClickListener, mOnItemChildClickListener);
+        return new LudoContestHolder(itemView, mOnItemClickListener, mOnItemChildClickListener);
     }
 
     @Override
-    public void onBindViewHolder(MyAllLudoUniAdapter.LudoContestHolder holder, int position) {
+    public void onBindViewHolder(LudoContestHolder holder, int position) {
         LudoContest ludoContestBean = mLudoChallengeList.get(position);
         String userId = AppSharedPreference.getInstance().getString(AppConstant.USER_ID, "");
         holder.mWinningAmountTV.setText(String.format("Winning: %s Coins", ludoContestBean.getWinningAmount()));
@@ -122,7 +122,7 @@ public class MyAllLudoUniAdapter extends RecyclerView.Adapter<MyAllLudoUniAdapte
         }
     }
 
-    private void setCaptainData(LudoContest ludoContestBean, MyAllLudoUniAdapter.LudoContestHolder holder) {
+    private void setCaptainData(LudoContest ludoContestBean, LudoContestHolder holder) {
         holder.mTitleTV.setText("You accepted challenge for \n" + ludoContestBean.getEntryFees() + " Coins");
         if (!TextUtils.isEmpty(ludoContestBean.getCaptain().getLudoDp())) {
             Glide.with(mContext).load(ludoContestBean.getCaptain().getLudoDp()).placeholder(R.drawable.profile).into(holder.mProfileAccepterIV);
@@ -133,7 +133,7 @@ public class MyAllLudoUniAdapter extends RecyclerView.Adapter<MyAllLudoUniAdapte
         holder.mPlayerNameTV.setText(ludoContestBean.getCaptain().getLudoName());
     }
 
-    private void setOpponentData(LudoContest ludoContestBean, MyAllLudoUniAdapter.LudoContestHolder holder) {
+    private void setOpponentData(LudoContest ludoContestBean, LudoContestHolder holder) {
         holder.mTitleTV.setText("Your challenge has been accepted\n" + ludoContestBean.getEntryFees() + " Coins");
         if (ludoContestBean.getOpponent() != null && ludoContestBean.getOpponent().getLudoDp() != null && !TextUtils.isEmpty(ludoContestBean.getOpponent().getLudoDp())) {
             Glide.with(mContext).load(ludoContestBean.getOpponent().getLudoDp()).placeholder(R.drawable.profile).into(holder.mProfileAccepterIV);
@@ -171,9 +171,9 @@ public class MyAllLudoUniAdapter extends RecyclerView.Adapter<MyAllLudoUniAdapte
         TextView mModeTV;
 
         private IOnItemClickListener mOnItemClickListener;
-        private MyAllLudoUniAdapter.IOnItemChildClickListener mOnItemChildClickListener;
+        private IOnItemChildClickListener mOnItemChildClickListener;
 
-        public LudoContestHolder(View view, IOnItemClickListener onItemClickListener, MyAllLudoUniAdapter.IOnItemChildClickListener onItemChildClickListener) {
+        public LudoContestHolder(View view, IOnItemClickListener onItemClickListener, IOnItemChildClickListener onItemChildClickListener) {
             super(view);
             mOnItemClickListener = onItemClickListener;
             mOnItemChildClickListener = onItemChildClickListener;

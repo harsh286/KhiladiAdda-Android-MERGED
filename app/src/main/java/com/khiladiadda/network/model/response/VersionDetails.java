@@ -23,16 +23,11 @@ public class VersionDetails {
     @SerializedName("easebuzz_enabled") @Expose private boolean easebuzzEnable;
     @SerializedName("neokred_enabled") @Expose private boolean neokredEnable;
     @SerializedName("upi_enable") @Expose private int upiEnable;
+    @SerializedName("phonepe_enabled") @Expose private boolean phonepeEnabled;
+    @SerializedName("phonepe_upi") @Expose private boolean phonepeUpi;
+    @SerializedName("gamercash_enabled") @Expose private boolean gamerCashEnabled;
     @SerializedName("ludoadda_apk_version") @Expose private String ludoAddaVersion;
     @SerializedName("ludo_apk_link") @Expose private String ludoApkLink;
-
-    public String getLudoApkLink() {
-        return ludoApkLink;
-    }
-
-    public void setLudoApkLink(String ludoApkLink) {
-        this.ludoApkLink = ludoApkLink;
-    }
 
     public String getLudoAddaVersion() {
         return ludoAddaVersion;
@@ -40,6 +35,14 @@ public class VersionDetails {
 
     public void setLudoAddaVersion(String ludoAddaVersion) {
         this.ludoAddaVersion = ludoAddaVersion;
+    }
+
+    public String getLudoApkLink() {
+        return ludoApkLink;
+    }
+
+    public void setLudoApkLink(String ludoApkLink) {
+        this.ludoApkLink = ludoApkLink;
     }
 
     public String getAppVersion() {
@@ -167,5 +170,29 @@ public class VersionDetails {
 
     public void setNeokredEnable(boolean neokredEnable) {
         this.neokredEnable = neokredEnable;
+    }
+
+    public boolean isPhonepeEnabled() {
+        return phonepeEnabled;
+    }
+
+    public void setPhonepeEnabled(boolean phonepeEnabled) {
+        this.phonepeEnabled = phonepeEnabled;
+    }
+
+    public boolean isPhonepeUpi() {
+        return phonepeUpi;
+    }
+
+    public void setPhonepeUpi(boolean phonepeUpi) {
+        this.phonepeUpi = phonepeUpi;
+    }
+
+    public boolean isGamerCashEnabled() {
+        return gamerCashEnabled;
+    }
+
+    public void setGamerCashEnabled(boolean gamerCashEnabled) {
+        this.gamerCashEnabled = gamerCashEnabled;
     }
 }

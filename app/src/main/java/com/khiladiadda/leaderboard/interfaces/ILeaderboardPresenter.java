@@ -35,5 +35,11 @@ public interface ILeaderboardPresenter extends IBasePresenter {
 
     void getDroidDo(int page, int limit, String type);
 
+    void getLudoTournament(String type, int page, int limit);
+
+    void getCourtPiece(String type, int page, int limit);
+
+    void getRummy(String type, int page, int limit);
+
 
 }

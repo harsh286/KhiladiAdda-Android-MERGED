@@ -24,9 +24,9 @@ public class LudoBuddyInteractor {
         return manager.createObservable(service.sendChallengeRequest(request)).subscribe(new SubscriberCallback<>(listener));
     }
 
-    Subscription getBuddyListUniverse(IApiListener<BuddyResponse> listener) {
+    Subscription getBuddyListUniverse(IApiListener<BuddyResponse> listener, int mode) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
-        return manager.createObservable(service.getLUBuddyList()).subscribe(new SubscriberCallback<>(listener));
+        return manager.createObservable(service.getLUBuddyList(mode)).subscribe(new SubscriberCallback<>(listener));
     }
 }

@@ -33,6 +33,7 @@
         <package android:name="com.whatsapp" />
         <package android:name="com.tb.ka.wordsearch" />
         <package android:name="com.tb.ludouniverse.in" />
+        <package android:name="com.KhiladiAdda.CourtPiecePro" />
     </queries>
 
     <application
@@ -48,64 +49,89 @@
         tools:node="merge"
         tools:replace="android:allowBackup, android:theme,android:icon">
         <activity
+            android:name=".rummy.RummyGameWebActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ludoUniverse.ModeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rummy.RummyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".callbreak.CallBreakActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ludoTournament.activity.LudoTmtAllRoundActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".gamercash.PayActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".gamercash.NotInstalledActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".gamercash.InstallActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".gamercash.VerifiedActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".gamercash.GamerCashActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ludoTournament.activity.LudoTmtTounamentActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ludoTournament.activity.LudoTmtFullRulesActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ludoTournament.activity.LudoTmtRulesActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

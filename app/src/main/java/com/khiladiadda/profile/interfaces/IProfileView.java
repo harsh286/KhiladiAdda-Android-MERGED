@@ -31,4 +31,8 @@ public interface IProfileView {
 
     void onVerifyEmailFailure(ApiError error);
 
+    void onUpdateEmailComplete(BaseResponse responseModel);
+
+    void onUpdateEmailFailure(ApiError error);
+
 }

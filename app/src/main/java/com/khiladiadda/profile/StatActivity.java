@@ -90,6 +90,27 @@ public class StatActivity extends BaseActivity implements IOnRedeemVoucherListen
     @BindView(R.id.tv_droid_loses)
     TextView mDroidLosesTV;
 
+    @BindView(R.id.ludotmt_contest)
+    TextView mLudoTmtContestTv;
+    @BindView(R.id.ludotmt_wins)
+    TextView getmLudoTmtWinsTV;
+    @BindView(R.id.ludotmt_loses)
+    TextView getmLudoTmtLosesTV;
+
+    @BindView(R.id.codepieces_contest)
+    TextView mCodePiecesContestTv;
+    @BindView(R.id.codepieces_wins)
+    TextView mCodePiecesWinTv;
+    @BindView(R.id.codepieces_loses)
+    TextView mCodePiecesLosesTv;
+
+    @BindView(R.id.rummy_contest)
+    TextView mRummyContestTv;
+    @BindView(R.id.rummy_wins)
+    TextView mRummyWinTv;
+    @BindView(R.id.rummy_loses)
+    TextView mRummyLoseTv;
+
     private IProfilePresenter mPresenter;
 
     @Override
@@ -187,6 +208,16 @@ public class StatActivity extends BaseActivity implements IOnRedeemVoucherListen
     }
 
     @Override
+    public void onUpdateEmailComplete(BaseResponse responseModel) {
+
+    }
+
+    @Override
+    public void onUpdateEmailFailure(ApiError error) {
+
+    }
+
+    @Override
     public void voucher(String number, String pin) {
         showProgress(getString(R.string.txt_progress_authentication));
         mPresenter.applyVocher(number, pin);
@@ -222,24 +253,33 @@ public class StatActivity extends BaseActivity implements IOnRedeemVoucherListen
         setGameContest(profileData.getNQuiz(), mQuizContestTV);
         setGameContest(profileData.getNGame(), mGameContestTV);
         setGameContest(profileData.getnClashOfFans(), mCXContestTV);
-        setGameContest(profileData.getnWordSearch(),mWSContestTV);
-        setGameContest(profileData.getnGKite(),mDroidContestTV);
+        setGameContest(profileData.getnWordSearch(), mWSContestTV);
+        setGameContest(profileData.getnGKite(), mDroidContestTV);
+        setGameContest(profileData.getNQuiz(), mLudoTmtContestTv);
+        setGameContest(profileData.getnRummy(), mRummyContestTv);
+        setGameContest(profileData.getnCallBreak(), mCodePiecesContestTv);
 
         setGameWon(profileData.getnLudo(), mLudoWinsTV);
         setGameWon(profileData.getnSnake(), mSnakeWinsTV);
         setGameWon(profileData.getNQuiz(), mQuizWinsTV);
         setGameWon(profileData.getNGame(), mGameWinsTV);
         setGameWon(profileData.getnClashOfFans(), mCXWinsTV);
-        setGameWon(profileData.getnWordSearch(),mWSWinsTV);
-        setGameWon (profileData.getnGKite(),mDroidWinsTV);
+        setGameWon(profileData.getnWordSearch(), mWSWinsTV);
+        setGameWon(profileData.getnGKite(), mDroidWinsTV);
+        setGameWon(profileData.getnLudoTournament(), getmLudoTmtWinsTV);
+        setGameWon(profileData.getnRummy(), mRummyWinTv);
+        setGameWon(profileData.getnCallBreak(), mCodePiecesWinTv);
 
         setGameLoss(profileData.getnLudo(), mLudoLosesTV);
         setGameLoss(profileData.getnSnake(), mSnakeLosesTV);
         setGameLoss(profileData.getNQuiz(), mQuizLosesTV);
         setGameLoss(profileData.getNGame(), mGameLosesTV);
         setGameLoss(profileData.getnClashOfFans(), mCXLosesTV);
-        setGameLoss(profileData.getnWordSearch(),mWSLosesTV);
-        setGameLoss(profileData.getnGKite(),mDroidLosesTV);
+        setGameLoss(profileData.getnWordSearch(), mWSLosesTV);
+        setGameLoss(profileData.getnGKite(), mDroidLosesTV);
+        setGameLoss(profileData.getnLudoTournament(), getmLudoTmtLosesTV);
+        setGameLoss(profileData.getnRummy(), mRummyLoseTv);
+        setGameLoss(profileData.getnCallBreak(), mCodePiecesLosesTv);
 
         setFanBattleGameContest(profileData.getnFanBattle());
 

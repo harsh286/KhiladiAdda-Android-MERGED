@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -21,9 +22,15 @@ import androidx.cardview.widget.CardView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
+import com.khiladiadda.callbreak.CallBreakActivity;
 import com.khiladiadda.clashroyale.ClashRoyaleActivity;
 import com.khiladiadda.dialogs.interfaces.IOnChangeDOBListener;
 import com.khiladiadda.dialogs.interfaces.IOnChangePasswordListener;
@@ -32,6 +39,8 @@ import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.forgotpassword.ForgotPasswordActivity;
 import com.khiladiadda.league.LeagueActivity;
 import com.khiladiadda.ludo.LudoChallengeActivity;
+import com.khiladiadda.ludoTournament.activity.LudoTmtAllRoundActivity;
+import com.khiladiadda.ludoTournament.activity.LudoTmtDashboardActivity;
 import com.khiladiadda.main.MainActivity;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
@@ -44,6 +53,7 @@ import com.khiladiadda.profile.interfaces.IProfileView;
 import com.khiladiadda.profile.update.AadharActivity;
 import com.khiladiadda.profile.update.PanActivity;
 import com.khiladiadda.profile.update.UpdateProfileActivity;
+import com.khiladiadda.rummy.RummyActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
@@ -166,11 +176,32 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
     TextView mFFMaxTV;
     @BindView(R.id.btn_ff_max)
     AppCompatButton mFFMaxBTN;
+
+    @BindView(R.id.rl_ludo_tournament)
+    RelativeLayout mLudoTournamentRl;
+    @BindView(R.id.tv_ludo_tournament)
+    TextView mLudoTournamentTv;
+    @BindView(R.id.btn_ludo_tournament)
+    AppCompatButton mLudoTournamentBtn;
+
+    @BindView(R.id.rl_rummy)
+    RelativeLayout mRummyRl;
+    @BindView(R.id.tv_rummy)
+    TextView mRummyTv;
+    @BindView(R.id.btn_rummy)
+    AppCompatButton mRummyBtn;
+
+    @BindView(R.id.btn_callbreak)
+    AppCompatButton mCallBreakBtn;
+
+
     @BindView(R.id.nudge)
     NudgeView mNV;
 
     private IProfilePresenter mPresenter;
     private String mNewEmail;
+    private String mGmailId;
+    private int RC_SIGN_IN = 101;
 
     @Override
     protected int getContentView() {
@@ -214,6 +245,9 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
         mEsportsPermiumBTN.setOnClickListener(this);
         mPubglobalBTN.setOnClickListener(this);
         mFFMaxBTN.setOnClickListener(this);
+        mLudoTournamentBtn.setOnClickListener(this);
+        mRummyBtn.setOnClickListener(this);
+        mCallBreakBtn.setOnClickListener(this);
     }
 
     @Override
@@ -307,7 +341,13 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
                 startActivity(ludo);
                 break;
             case R.id.tv_update_email:
-                new EmailDialog(this, onVerifyEmailAddressListener, 1, "", false);
+                if (!mAppPreference.getProfileData().isEmailVerified()) {
+                    if (mAppPreference.getMasterData().getResponse().getVersion().isGmail()) {
+                        verifyEmailViaGoogle();
+                    } else {
+                        new EmailDialog(this, onVerifyEmailAddressListener, 1, "", false);
+                    }
+                }
                 break;
             case R.id.btn_pubg_global:
                 Intent pubglobal = new Intent(this, LeagueActivity.class);
@@ -327,8 +367,23 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
                 i.putExtra(AppConstant.FROM_TYPE, AppConstant.FF_MAX_SOLO);
                 startActivity(i);
                 break;
-
+            case R.id.btn_ludo_tournament:
+                Intent ludotmt = new Intent(this, LudoTmtDashboardActivity.class);
+                startActivity(ludotmt);
+                break;
+            case R.id.btn_rummy:
+                Intent rummyIntent = new Intent(this, RummyActivity.class);
+                startActivity(rummyIntent);
+                break;
+            case R.id.btn_callbreak:
+                Intent cbIntent = new Intent(this, CallBreakActivity.class);
+                startActivity(cbIntent);
+                break;
         }
+    }
+
+    private void verifyEmailViaGoogle() {
+        googleSignIn();
     }
 
     @Override
@@ -448,6 +503,16 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
         hideProgress();
     }
 
+    @Override
+    public void onUpdateEmailComplete(BaseResponse responseModel) {
+        mPresenter.getProfile();
+    }
+
+    @Override
+    public void onUpdateEmailFailure(ApiError error) {
+        hideProgress();
+    }
+
     private void setProfileData() {
         ProfileDetails mProfileDetails = mAppPreference.getProfileData();
         mAppPreference.setEmail(mProfileDetails.getEmail());
@@ -512,7 +577,7 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
         } else {
             mUpdateEmailTV.setText(R.string.text_update_email);
             mUpdateEmailTV.setEnabled(true);
-            mShowEmailTV.setText("");
+            mShowEmailTV.setText(mAppPreference.getEmail());
             mUpdateEmailTV.setTextColor(getResources().getColor(R.color.battle_red));
         }
         mProfileProgressPB.setProgress(mProgress);
@@ -600,5 +665,44 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
         MoEAnalyticsHelper.INSTANCE.setMobileNumber(this, mAppPreference.getMobile());
     }
 
+    //get email
+    //Google SignIn
+    private GoogleSignInOptions setUpGoogle() {
+        // Configure Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.server_client_id)).requestEmail().requestProfile().build();
+        return gso;
+    }
+
+    private void googleSignIn() {
+        Intent signInIntent = GoogleSignIn.getClient(this, setUpGoogle()).getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void handleGoogleSignInResult(Task<GoogleSignInAccount> task) {
+        try {
+            GoogleSignInAccount account = task.getResult(ApiException.class);
+            mEmailTV.setText(account.getEmail());
+            showProgress(getString(R.string.txt_progress_authentication));
+            mPresenter.updateEmail(account.getEmail());
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            try {
+                // The Task returned from this call is always completed, no need to attach a listener.
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                handleGoogleSignInResult(task);
+            } catch (ApiException e) {
+                e.printStackTrace();
+                Log.e("TAG", "onActivityResult: " + e.getLocalizedMessage());
+            }
+        }
+    }
 
 }

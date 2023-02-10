@@ -1,5 +1,7 @@
 package com.khiladiadda.ludoTournament.activity;
 
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -19,6 +21,7 @@ import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.dialogs.AppDialog;
 import com.khiladiadda.gameleague.adapter.NewDroidoAdapterViewPager;
 import com.khiladiadda.ludoTournament.adapter.LudoTmtDashboardAdapter;
+import com.khiladiadda.ludoTournament.adapter.ModeTournamentViewPagerAdapter;
 import com.khiladiadda.ludoTournament.adapter.MyTournamentViewPagerAdapter;
 import com.khiladiadda.ludoTournament.ip.LudoTmtPresenter;
 import com.khiladiadda.ludoTournament.ip.ILudoTmtView;
@@ -48,9 +51,25 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     ImageView rulesImg;
     @BindView(R.id.iv_back_arroww)
     ImageView backArrowIv;
+    @BindView(R.id.btn_classic)
+    AppCompatButton ClassicBtn;
+    @BindView(R.id.btn_series)
+    AppCompatButton SeriesBtn;
+    @BindView(R.id.btn_timer)
+    AppCompatButton TimerBtn;
+    @BindView(R.id.cl_mode)
+    ConstraintLayout modeCl;
+    @BindView(R.id.vv_classic)
+    View classicVvl;
+    @BindView(R.id.vv_series)
+    View seriesVv;
+    @BindView(R.id.vv_timer)
+    View timerVv;
 
     private MyTournamentViewPagerAdapter mMyTournamentViewPagerAdapter;
+    private ModeTournamentViewPagerAdapter mModeTournamentViewPagerAdapter;
     private LudoTmtPresenter mPresenter;
+    private int gameMode = 1;
     private List<LudoTmtAllTournamentResponse> responses;
 
     @Override
@@ -66,6 +85,8 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         setupTablayout();
         viewPagerData();
         setSubMyTmttabData();
+//        setModeTmttabData();
+//        setupModeTournamentViewPager();
         setupMyTournamentViewPager();
 //        swipeRefreshLayout.setRefreshing(false);
 //        swipeRefreshLayout();
@@ -75,7 +96,9 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     protected void initVariables() {
         rulesImg.setOnClickListener(this);
         backArrowIv.setOnClickListener(this);
-
+        ClassicBtn.setOnClickListener(this);
+        SeriesBtn.setOnClickListener(this);
+        TimerBtn.setOnClickListener(this);
     }
 
     @Override
@@ -85,7 +108,25 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
             AppUtilityMethods.showTooltip(this, rulesImg, getString(R.string.english_rules));
         } else if (p0.getId() == R.id.img_rules) {
             finish();
-        }else{
+        } else if (p0.getId() == R.id.btn_classic) {
+            callAllTournamentApi(1);
+            gameMode = 1;
+            classicVvl.setVisibility(View.VISIBLE);
+            seriesVv.setVisibility(View.GONE);
+            timerVv.setVisibility(View.GONE);
+        } else if (p0.getId() == R.id.btn_series) {
+            callAllTournamentApi(2);
+            gameMode = 3;
+            classicVvl.setVisibility(View.GONE);
+            seriesVv.setVisibility(View.VISIBLE);
+            timerVv.setVisibility(View.GONE);
+        } else if (p0.getId() == R.id.btn_timer) {
+            callAllTournamentApi(3);
+            gameMode = 2;
+            classicVvl.setVisibility(View.GONE);
+            seriesVv.setVisibility(View.GONE);
+            timerVv.setVisibility(View.VISIBLE);
+        } else {
             finish();
         }
     }
@@ -95,10 +136,10 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
 //                callAllTournamentApi());
 //    }
 
-    private void callAllTournamentApi() {
+    private void callAllTournamentApi(int type) {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
-            mPresenter.getAllTournament(true);
+            mPresenter.getAllTournament(true, type);
         } else {
             Snackbar.make(backArrowIv, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
@@ -128,6 +169,7 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         thirdTab.setText(R.string.text__upcoming);
         subMyTmtTl.addTab(thirdTab);
     }
+
 
     private void setupTablayout() {
         ludoTmtTL.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -178,13 +220,20 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     private void switchFirstAdapter() {
 //        getTrendingTournamentList();
         allTournamentRv.setVisibility(View.VISIBLE);
+        modeCl.setVisibility(View.VISIBLE);
         subMyTmtTl.setVisibility(View.GONE);
         ludotmtVP.setVisibility(View.GONE);
-        callAllTournamentApi();
+        classicVvl.setVisibility(View.VISIBLE);
+        seriesVv.setVisibility(View.GONE);
+        timerVv.setVisibility(View.GONE);
+        callAllTournamentApi(1);
+//        allTournamentRv.setVisibility(View.GONE);
+//        callAllTournamentApi();
     }
 
     private void switchSecondAdapter() {
 //        getMyTournament();
+        modeCl.setVisibility(View.GONE);
         allTournamentRv.setVisibility(View.GONE);
         subMyTmtTl.setVisibility(View.VISIBLE);
         ludotmtVP.setVisibility(View.VISIBLE);
@@ -211,7 +260,6 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
 
             }
         });
-
     }
 
     private void viewPagerData() {
@@ -225,6 +273,7 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     public void onItemClick(int pos) {
         Intent intent = new Intent(this, LudoTmtTounamentActivity.class);
         intent.putExtra("AllLudoTournaments", responses.get(pos));
+        intent.putExtra("gameMode", gameMode);
         startActivity(intent);
     }
 
@@ -257,6 +306,7 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     @Override
     protected void onResume() {
         super.onResume();
-        callAllTournamentApi();
+        callAllTournamentApi(1);
+
     }
 }

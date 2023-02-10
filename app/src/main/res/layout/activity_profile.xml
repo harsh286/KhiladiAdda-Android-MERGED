@@ -151,7 +151,7 @@
                 <include
                     android:id="@+id/cv_credential"
                     layout="@layout/profile_pubg"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
             </LinearLayout>
             <include layout="@layout/bannermoengage" />
         </RelativeLayout>

@@ -17,6 +17,9 @@ public class ProfileDetails {
     @SerializedName("n_fan_battle") @Expose private NFanBattle nFanBattle;
     @SerializedName("n_wordsearch") @Expose private NWordSearch nWordSearch;
     @SerializedName("n_gKite") @Expose private NGKITE nGKite;
+    @SerializedName("n_ludoTournament") @Expose private NLudoTournament nLudoTournament;
+    @SerializedName("n_rummy") @Expose private NRummy nRummy;
+    @SerializedName("n_callBreak") @Expose private NCallBreak nCallBreak;
     @SerializedName("username") @Expose private String username;
     @SerializedName("dp") @Expose private String dp;
     @SerializedName("pan") @Expose private String pan;
@@ -41,6 +44,46 @@ public class ProfileDetails {
     @SerializedName("aadhar_info") @Expose private PanDetails aadharDetails;
     @SerializedName("address") @Expose private String address;
     @SerializedName("email_verified") @Expose private boolean emailVerified;
+
+    public NQuiz getnQuiz() {
+        return nQuiz;
+    }
+
+    public void setnQuiz(NQuiz nQuiz) {
+        this.nQuiz = nQuiz;
+    }
+
+    public NGame getnGame() {
+        return nGame;
+    }
+
+    public void setnGame(NGame nGame) {
+        this.nGame = nGame;
+    }
+
+    public NLudoTournament getnLudoTournament() {
+        return nLudoTournament;
+    }
+
+    public void setnLudoTournament(NLudoTournament nLudoTournament) {
+        this.nLudoTournament = nLudoTournament;
+    }
+
+    public NRummy getnRummy() {
+        return nRummy;
+    }
+
+    public void setnRummy(NRummy nRummy) {
+        this.nRummy = nRummy;
+    }
+
+    public NCallBreak getnCallBreak() {
+        return nCallBreak;
+    }
+
+    public void setnCallBreak(NCallBreak nCallBreak) {
+        this.nCallBreak = nCallBreak;
+    }
 
     public int getPanUpdated() {
         return panUpdated;

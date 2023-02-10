@@ -33,7 +33,7 @@ public class BattleHelpActivity extends BaseActivity {
     private int mNextCount;
     private int[] mFBHelpDrawables = {R.drawable.fb_help_one, R.drawable.fb_help_two, R.drawable.fb_help_three, R.drawable.fb_help_four, R.drawable.refer_help};
     private int[] mFBCategoryDrawables = {R.drawable.reverse_1, R.drawable.reverse_2, R.drawable.reverse_3, R.drawable.reverse_4, R.drawable.refer_help};
-    private int[] mHTHDrawables = {R.drawable.hth_step1, R.drawable.hth_step2, R.drawable.hth_step3, R.drawable.hth_step4, R.drawable.hth_step5, R.drawable.hth_step6, R.drawable.refer_help};
+    private int[] mHTHDrawables = {R.drawable.hth_step1, R.drawable.hth_step2, R.drawable.hth_step3, R.drawable.hth_step4, R.drawable.hth_step5, R.drawable.hth_step6,R.drawable.hth_step7,R.drawable.hth_step8,R.drawable.hth_step9, R.drawable.refer_help};
     private int mHowToPLay;
 
     @Override

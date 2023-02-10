@@ -46,6 +46,7 @@ public class BuddyActivity extends BaseActivity implements ILudoBuddyView, LudoB
     private LudoBuddyAdapter mAdapter;
     private List<BuddyDetails> mList;
     private int mContestType;
+    private int mFrom;
 
     @Override
     protected int getContentView() {
@@ -65,6 +66,7 @@ public class BuddyActivity extends BaseActivity implements ILudoBuddyView, LudoB
         }
         mBackIV.setOnClickListener(this);
         mNotificationIV.setOnClickListener(this);
+        mFrom = getIntent().getIntExtra(AppConstant.FROM, 0);
     }
 
     @Override
@@ -79,7 +81,7 @@ public class BuddyActivity extends BaseActivity implements ILudoBuddyView, LudoB
         if (mContestType == AppConstant.TYPE_LUDO) {
             mPresenter.getBuddyList(String.valueOf(mContestType));
         } else {
-            mPresenter.getBuddyListUniverse();
+            mPresenter.getBuddyListUniverse(mFrom);
         }
     }
 

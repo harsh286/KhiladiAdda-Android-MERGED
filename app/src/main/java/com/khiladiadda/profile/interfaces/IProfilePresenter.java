@@ -15,4 +15,6 @@ public interface IProfilePresenter extends IBasePresenter {
     void doSendOTP(String email);
 
     void doVerifyEmail(String email, String otp);
+
+    void updateEmail(String email);
 }

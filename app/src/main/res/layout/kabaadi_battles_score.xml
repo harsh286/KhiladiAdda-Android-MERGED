@@ -179,7 +179,7 @@
                     android:layout_height="280dp"
                     android:layout_below="@+id/editable"
                     android:layout_marginStart="@dimen/margin_10"
-                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_marginTop="31dp"
                     android:layout_marginEnd="@dimen/margin_10"
                     android:layout_marginBottom="@dimen/margin_10" />
             </RelativeLayout>

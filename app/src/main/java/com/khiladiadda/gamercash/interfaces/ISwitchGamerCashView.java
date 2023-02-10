@@ -1,7 +1,6 @@
 package com.khiladiadda.gamercash.interfaces;
 
 import com.khiladiadda.network.model.ApiError;
-import com.khiladiadda.network.model.response.gamer_cash.GamerCashResponse;
 import com.khiladiadda.network.model.response.gamer_cash.SwitchGamerCashResponse;
 
 public interface ISwitchGamerCashView {

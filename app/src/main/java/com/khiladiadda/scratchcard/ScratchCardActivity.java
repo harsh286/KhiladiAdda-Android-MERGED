@@ -1,6 +1,7 @@
 package com.khiladiadda.scratchcard;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -50,25 +51,31 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
     @BindView(R.id.tv_amount_earned)
     TextView mAmountEarnedTV;
     @BindView(R.id.rl_ludo)
-    RelativeLayout mLudoCardRL;
+    ImageView mLudoCardRL;
     @BindView(R.id.rl_fanbattle)
-    RelativeLayout mFanBattleCardRL;
+    ImageView mFanBattleCardRL;
     @BindView(R.id.rl_leagues)
-    RelativeLayout mLeaguesCardRL;
+    ImageView mLeaguesCardRL;
     @BindView(R.id.rl_quiz)
-    RelativeLayout mQuizCardRL;
+    ImageView mQuizCardRL;
     @BindView(R.id.rl_hth)
-    RelativeLayout mHTHRL;
+    ImageView mHTHRL;
     @BindView(R.id.rl_lu)
-    RelativeLayout mLURL;
+    ImageView mLURL;
     @BindView(R.id.rl_droid)
-    RelativeLayout mDroidRl;
+    ImageView mDroidRl;
     @BindView(R.id.rl_wordsearch)
-    RelativeLayout mWSRl;
+    ImageView mWSRl;
     @BindView(R.id.txt_nodata)
     TextView mNoDataTV;
     @BindView(R.id.tv_categories)
     TextView mGamecountTV;
+    @BindView(R.id.iv_pcesports)
+    ImageView mPcEsports;
+    @BindView(R.id.iv_courtpiece)
+    ImageView mCourtPiece;
+    @BindView(R.id.iv_rummy)
+    ImageView mRummyIv;
     @BindView(R.id.nudge)
     NudgeView mNV;
 
@@ -89,6 +96,7 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
         mNV.initialiseNudgeView(this);
         MoEInAppHelper.getInstance().showInApp(this);
     }
+
     @Override
     protected void initViews() {
         mActivityNameTV.setText(R.string.scratch_cards);
@@ -107,6 +115,9 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
         mLURL.setOnClickListener(this);
         mDroidRl.setOnClickListener(this);
         mWSRl.setOnClickListener(this);
+        mPcEsports.setOnClickListener(this);
+        mCourtPiece.setOnClickListener(this);
+        mRummyIv.setOnClickListener(this);
         mScratchList = new ArrayList<>();
         mAdapter = new ScratchCardAdapter(mScratchList);
         mScratchCardRV.setLayoutManager(new GridLayoutManager(this, 3));
@@ -148,6 +159,15 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
             case R.id.rl_wordsearch:
                 getCategory(AppConstant.WORD_SEARCH_TYPE);
                 break;
+            case R.id.iv_pcesports:
+                getCategory(AppConstant.PC_ESPORTS_TYPE);
+                break;
+            case R.id.iv_courtpiece:
+                getCategory(AppConstant.COURTPIECE_TYPE);
+                break;
+            case R.id.iv_rummy:
+                getCategory(AppConstant.RUMMY_TYPE);
+                break;
         }
     }
 
@@ -178,7 +198,7 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
         } else if (mFromCategory.equalsIgnoreCase(AppConstant.LUDO_UNIVERSE_ID)) {
             mLURL.setBackground(getResources().getDrawable(R.drawable.card_selected));
             mCardType = 6;
-        }else if (mFromCategory.equalsIgnoreCase(AppConstant.DROIDO)) {
+        } else if (mFromCategory.equalsIgnoreCase(AppConstant.DROIDO)) {
             mDroidRl.setBackground(getResources().getDrawable(R.drawable.card_selected));
             mCardType = 8;
         } else if (mFromCategory.equalsIgnoreCase(AppConstant.WORD_SEARCH_TYPE)) {
@@ -314,7 +334,9 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
     }
 
     @Override
-    public void onScratchedCardFailure(ApiError error) {hideProgress();}
+    public void onScratchedCardFailure(ApiError error) {
+        hideProgress();
+    }
 
     @Override
     public void onItemClick(View view, int position, int tag) {

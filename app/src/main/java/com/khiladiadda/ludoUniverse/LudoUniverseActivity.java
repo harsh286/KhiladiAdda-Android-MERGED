@@ -1,9 +1,7 @@
 package com.khiladiadda.ludoUniverse;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,9 +13,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -35,9 +31,7 @@ import androidx.core.content.FileProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.test.InstrumentationRegistry;
 
-import com.airbnb.lottie.L;
 import com.appsflyer.AFInAppEventParameterName;
 import com.appsflyer.AppsFlyerLib;
 import com.bumptech.glide.Glide;
@@ -67,7 +61,7 @@ import com.khiladiadda.network.model.request.OpponentLudoRequest;
 import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.LudoContest;
 import com.khiladiadda.network.model.response.LudoContestResponse;
-import com.khiladiadda.preference.AppSharedPreference;
+import com.khiladiadda.network.model.response.ModeResponse;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.DownloadApk;
@@ -80,7 +74,6 @@ import com.moengage.inapp.MoEInAppHelper;
 import com.moengage.widgets.NudgeView;
 
 import java.io.File;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -127,34 +120,22 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
     LinearLayout mDownloadLL;
     @BindView(R.id.tv_download)
     TextView mDownloadTV;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
     private LudoUniAdapter mAllChallengeAdapter;
     private MyLudoUniAdapter mMyChallengeAdapter;
     private ILudoUniversePresenter mPresenter;
     private List<LudoContest> mLudoContestList, mMyContestList;
     private Dialog mAddChallengeDialog;
-    private boolean mGetData, mSyncProfile;
-    private int mContestType, mFilters = 0;
-    private String pos, mAmount;
+    private int mContestType, mFilters = 0, mFrom;
     private Coins mCoins;
-    private double mTotalWalletBal;
     private Intent launchIntent;
-    private boolean isSuccessfulGameOpen;
-    private boolean mIsRequestingAppInstallPermission;
-    private String mFilePath;
-    private double Amount;
+    private boolean mGetData, mSyncProfile, isSuccessfulGameOpen, mIsRequestingAppInstallPermission;
     private Dialog mVersionDialog;
-    private String mLink;
-    private String mContestCode;
-    private String mCurrentVersion;
-    private String mVersion;
-    private boolean isDownload;
-    private String mRandomName;
-    private double mWinAmount;
-    private String mRandomDp;
-    @BindView(R.id.nudge)
-    NudgeView mNV;
-
+    private String pos, mAmount, mFilePath, mLink, mContestCode, mCurrentVersion, mVersion, mRandomName, mRandomDp;
+    private double mWinAmount, Amount, mTotalWalletBal;
+    private boolean mDownloadClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,7 +149,6 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         mNV.initialiseNudgeView(this);
         MoEInAppHelper.getInstance().showInApp(this);
     }
-
 
     @Override
     protected int getContentView() {
@@ -185,10 +165,8 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
                     mAppPreference.setIsDeepLinking(true);
                 }
         }
-        mActivityNameTV.setText(R.string.text_ludo_adda);
         Window window = getWindow();
         window.setStatusBarColor(getResources().getColor(R.color.ludo_uni_actionbar));
-        mContestType = getIntent().getIntExtra(AppConstant.CONTEST_TYPE, 0);
         mBackIV.setOnClickListener(this);
         mNotificationIV.setOnClickListener(this);
         mViewAllChallengesTV.setOnClickListener(this);
@@ -200,15 +178,26 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         mViewVideoTV.setOnClickListener(this);
         mWalletLL.setOnClickListener(this);
         mDownloadLL.setOnClickListener(this);
-        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
-        mAppPreference.setBoolean("LudoDownload", false);
-        if (launchIntent != null) getVersion();
-
-
+        getVersion();
+//        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
+//        if (launchIntent != null) getVersion();
     }
 
     @Override
     protected void initVariables() {
+        mContestType = getIntent().getIntExtra(AppConstant.CONTEST_TYPE, 0);
+        mFrom = getIntent().getIntExtra(AppConstant.FROM, 0);
+        switch (mFrom) {
+            case 1:
+                mActivityNameTV.setText("Ludo Adda" + " Classic");
+                break;
+            case 2:
+                mActivityNameTV.setText("Ludo Adda" + " Timer");
+                break;
+            case 3:
+                mActivityNameTV.setText("Ludo Adda" + " Series");
+                break;
+        }
         mPresenter = new LudoUniversePresenter(this);
         mLudoContestList = new ArrayList<>();
         mAllChallengeAdapter = new LudoUniAdapter(this, mLudoContestList);
@@ -229,7 +218,6 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
             createChallenge();
         }
         getLudoContest(true, mSyncProfile = true);
-
     }
 
     @Override
@@ -239,12 +227,11 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
                 AppUtilityMethods.openLudoVideo(LudoUniverseActivity.this);
                 break;
             case R.id.tv_add_challenge:
-                if (launchIntent != null) {
+                if (mAppPreference.getBoolean("LudoDownload", false)) {
                     if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
                         createChallenge();
                     } else {
                         mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
-
                     }
                 } else {
                     mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
@@ -264,6 +251,7 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
             case R.id.tv_view_all_challenge:
                 Intent i = new Intent(this, MyLudoUniverseActivity.class);
                 i.putExtra(AppConstant.CONTEST_TYPE, mContestType);
+                i.putExtra(AppConstant.FROM, mFrom);
                 ludoResultActivityResultLauncher.launch(i);
                 break;
             case R.id.tv_refresh:
@@ -271,6 +259,7 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
                 break;
             case R.id.tv_buddy_list:
                 Intent buddy = new Intent(this, BuddyActivity.class);
+                buddy.putExtra(AppConstant.FROM, mFrom);
                 startActivity(buddy);
                 break;
             case R.id.tv_filters:
@@ -296,7 +285,7 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         String date = AppUtilityMethods.getLudoCurrentDate();
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
-            mPresenter.getContestList(date, String.valueOf(mContestType), banner, String.valueOf(mContestType + 1), profile, 1, mFilters);
+            mPresenter.getContestList(date, String.valueOf(mContestType), banner, String.valueOf(mContestType + 1), profile, 1, mFilters, mFrom);
         } else {
             Snackbar.make(mLudoContestRV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
@@ -325,10 +314,9 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         } else {
             mViewAllChallengesTV.setEnabled(false);
             mAddChallengeTV.setEnabled(false);
-
         }
         hideProgress();
-        if (launchIntent != null) {
+        if (mAppPreference.getBoolean("LudoDownload", false)) {
             if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
                 mWalletLL.setVisibility(View.VISIBLE);
                 mDownloadLL.setVisibility(View.GONE);
@@ -338,18 +326,16 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
                 mWalletLL.setVisibility(View.GONE);
             }
         } else {
-            mWalletLL.setVisibility(View.GONE);
-            mDownloadLL.setVisibility(View.VISIBLE);
-
+            mWalletLL.setVisibility(View.VISIBLE);
+            mDownloadLL.setVisibility(View.GONE);
         }
-        if (mLink != null) {
-            mAppPreference.setString("LudoVersion", mCurrentVersion);
-            mAppPreference.setString("mLudoLink", mLink);
-            Properties properties = new Properties();
-            properties.addAttribute("LudoADDAVersion", mCurrentVersion);
-            MoEAnalyticsHelper.INSTANCE.trackEvent(this, "LudoADDA", properties);
-        }
-
+//        if (mLink != null) {
+//            mAppPreference.setString("LudoVersion", mCurrentVersion);
+//            mAppPreference.setString("mLudoLink", mLink);
+//            Properties properties = new Properties();
+//            properties.addAttribute("LudoADDAVersion", mCurrentVersion);
+//            MoEAnalyticsHelper.INSTANCE.trackEvent(this, "LudoADDA", properties);
+//        }
     }
 
     private void setData(LudoContestResponse responseModel) {
@@ -459,7 +445,11 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
     public void JoinedContestStatusSuccess(BaseResponse response) {
         hideProgress();
         if (response.isStatus()) {
-            launchUnityWithData(pos, Amount, mContestCode, mWinAmount, mRandomName, mRandomDp);
+            if (mAppPreference.getProfileData().getId().isEmpty() || mFrom == 0) {
+                AppUtilityMethods.showLogout(this, AppConstant.LEADERBOARD_TYPE_LUDOADDA, "You have to logout and login again to continue the game due to security reason. ");
+            } else {
+                launchUnityWithData(pos, Amount, mContestCode, mWinAmount, mRandomName, mRandomDp);
+            }
         } else {
             AppUtilityMethods.showMsg(this, response.getMessage(), true);
         }
@@ -468,6 +458,16 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
     @Override
     public void JoinedContestStatusFailure(ApiError error) {
         hideProgress();
+    }
+
+    @Override
+    public void onGetModeSuccess(ModeResponse responseModel) {
+
+    }
+
+    @Override
+    public void onGetModeFailure(ApiError error) {
+
     }
 
     @Override
@@ -480,7 +480,7 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
     @Override
     public void onAcceptClicked(int position) {
         if (new NetworkStatus(this).isInternetOn()) {
-            if (launchIntent != null) {
+            if (mAppPreference.getBoolean("LudoDownload", false)) {
                 if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
                     if (mLudoContestList.get(position).getEntryFees() <= mTotalWalletBal) {
                         OpponentLudoRequest request = new OpponentLudoRequest("");
@@ -497,8 +497,6 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         } else {
             Snackbar.make(mLudoContestRV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
-
-
     }
 
     @Override
@@ -517,7 +515,7 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
             if (mMyContestList.get(position).getContestStatus() == 0) {
                 acceptAlert(this, 0.0, mMyContestList.get(position).getId(), request, AppConstant.FROM_CANCEL, null, 0, null, null);
             } else if (mMyContestList.get(position).getContestStatus() == 1) {
-                if (launchIntent != null) {
+                if (mAppPreference.getBoolean("LudoDownload", false)) {
                     if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
                         if (mMyContestList.get(position).getCaptainId().equalsIgnoreCase(mAppPreference.getProfileData().getId())) {
                             acceptAlert(this, mMyContestList.get(position).getEntryFees(), mMyContestList.get(position).getId(), request, AppConstant.FROM_PLAY, mMyContestList.get(position).getContestCode(), mMyContestList.get(position).getWinningAmount(), mMyContestList.get(position).getOpponent().getLudoName(), mMyContestList.get(position).getOpponent().getLudoDp());
@@ -530,8 +528,6 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
                 } else {
                     mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
                 }
-
-
             }
         } else {
             Snackbar.make(mLudoContestRV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
@@ -561,7 +557,7 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
             } else if (from == AppConstant.FROM_CANCEL) {
                 mPresenter.cancelContest(ludoId);
             } else if (from == AppConstant.FROM_PLAY) {
-                if (launchIntent != null) {
+                if (mAppPreference.getBoolean("LudoDownload", false)) {
                     if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
                         pos = ludoId;
                         Amount = entryFee;
@@ -576,8 +572,6 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
                 } else {
                     mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
                 }
-
-
             }
         });
         Button mNoBTN = dialog.findViewById(R.id.btn_no);
@@ -627,7 +621,7 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
     @Override
     public void onAddLuodUniverseListener(String amount) {
         mAmount = amount;
-        LudoContestRequest request = new LudoContestRequest(Long.parseLong(amount));
+        LudoContestRequest request = new LudoContestRequest(Long.parseLong(amount), mFrom);
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
             mPresenter.addChallenge(request);
@@ -639,7 +633,8 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
     private void launchUnityWithData(String cId, double Amount, String mContestCode, double mWinAmount, String mRandomName, String mRandomDp) {
         String mAmount = String.valueOf(Amount);
         String mWAmount = String.valueOf(mWinAmount);
-        if (launchIntent != null) {
+        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
+        if (mAppPreference.getBoolean("LudoDownload", false)) {
             launchIntent.putExtra("userToken", mAppPreference.getSessionToken());
             launchIntent.putExtra("contestId", cId);
             launchIntent.putExtra("ka_version", AppUtilityMethods.getVersion());
@@ -649,54 +644,38 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
             launchIntent.putExtra("winAmount", mWAmount);
             launchIntent.putExtra("randomName", mRandomName);
             launchIntent.putExtra("randomPhoto", mRandomDp);
-            launchIntent.putExtra("is_tournament", "false");
+            launchIntent.putExtra("contestMode", String.valueOf(mFrom));
+//            Snackbar.make(mWalletBalanceTV, +mFrom, Snackbar.LENGTH_LONG).show();
             startActivity(launchIntent);
             isSuccessfulGameOpen = true;
         }
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-//        if (AppUtilityMethods.isDeviceRooted()) {
-//            AppUtilityMethods.showMsgCancel(this, "This is a rooted device and we do not allow users to play on rooted device as it might not be a good experience. Please play safely", false);
-//        } else {
-//            if (AppUtilityMethods.isDevMode()) {
-//                dialog();
-//            } else {
-//                showDialogMsg("", 2);
-//            }
-//        }
         if (isSuccessfulGameOpen) {
             getLudoContest(false, mSyncProfile = true);
         }
         if (mIsRequestingAppInstallPermission) {
             installApk(mFilePath);
         }
-
-        if (mAppPreference.getBoolean("LudoDownload", false)) {
+        if (mDownloadClick && mAppPreference.getBoolean("LudoDownload", false)) {
             try {
-                Intent launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
+                launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
                 if (launchIntent != null) {
                     finish();
                     startActivity(new Intent(this, LudoUniverseActivity.class));
                 } else {
                     mWalletLL.setVisibility(View.GONE);
                     mDownloadLL.setVisibility(View.VISIBLE);
-
                 }
             } catch (Exception e) {
                 finish();
                 startActivity(new Intent(this, LudoUniverseActivity.class));
-
-
             }
         }
-
     }
-
 
 //    private void dialog() {
 //        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
@@ -723,6 +702,7 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         });
         iv_playstore.setOnClickListener(view -> {
             if (listener != null) {
+                mDownloadClick = true;
                 progressBar.setVisibility(View.VISIBLE);
                 listener.onDownloadVersion();
                 iv_playstore.setVisibility(View.GONE);
@@ -738,8 +718,6 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         public void onDownloadVersion() {
             if (mLink != null && !mLink.isEmpty()) {
                 new DownloadApk(mOnFileDownloadedListener).execute(mLink);
-            }else {
-                new DownloadApk(mOnFileDownloadedListener).execute(AppSharedPreference.getInstance().getVersion().getVersion().getLudoApkLink());
             }
         }
     };
@@ -764,8 +742,6 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
                     Toast.makeText(LudoUniverseActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
-
-
         }
 
         @Override
@@ -774,7 +750,6 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
                 ProgressBar progressBar = mVersionDialog.findViewById(R.id.pb_apk_download);
                 AppCompatButton iv_playstore = mVersionDialog.findViewById(R.id.iv_download);
                 progressBar.setProgress(progress);
-
             }
         }
     };
@@ -812,7 +787,6 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -825,4 +799,5 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
             finish();
         }
     }
+
 }

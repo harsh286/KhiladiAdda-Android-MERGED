@@ -50,4 +50,11 @@ public class ProfileInteractor {
         ApiService service = manager.createService();
         return manager.createObservable(service.verifyEmail(email, otp)).subscribe(new SubscriberCallback<>(listener));
     }
+
+    Subscription updateEmail(IApiListener<BaseResponse> listener, String email) {
+        ApiManager manager = ApiManager.getInstance();
+        ApiService service = manager.createService();
+        return manager.createObservable(service.updateEmail(email)).subscribe(new SubscriberCallback<>(listener));
+    }
+
 }

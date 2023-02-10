@@ -149,6 +149,7 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
     private Dialog mVersionDialog;
     private double mDepositWinWallet;
     private double mTotalWalletBal;
+    private int gameMode = 1;
     private boolean mIsRequestingAppInstallPermission;
     private LudoTmtRoundsDetailsMainResponse mDataResponse;
     private String tournamentId;
@@ -175,6 +176,7 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
         mRoundPresenter = new LudoTmtRoundsPresenter(this);
         if (getIntent().getParcelableExtra("AllLudoTournaments") != null) {
             matchDetailsResponse = getIntent().getParcelableExtra("AllLudoTournaments");
+            gameMode = getIntent().getIntExtra("gameMode",1);
             winPrizeTv.setText("WIN ₹" + matchDetailsResponse.getPrize());
         } else {
             ludoTmtMyMatchResponse = getIntent().getParcelableExtra("MyLudoTournaments");
@@ -384,7 +386,7 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
                 RoundsCl.setVisibility(View.VISIBLE);
                 setRoundData(response);
             } else {
-                if (response.getTournamentDetails().isOut()) {
+                if (response.getTournamentDetails().getOut()) {
                     if (response.getTournamentDetails().gettStatus() != 1)
                         outOfLudoTmtCl.setVisibility(View.VISIBLE);
                     else
@@ -417,8 +419,8 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
 
     private void setRoundData(LudoTmtRoundsDetailsMainResponse response) {
         LudoTmtRoundsDetailsResponse item = response.getResponse().get(0);
-        RoundsTv.setText(String.format("ROUND %s", response.getTournamentDetails().getCurrentLevelInfo().getLevel().toString()));
-        matchTv.setText(String.format("MATCH %s", response.getTournamentDetails().getTtMatch().toString()));
+        RoundsTv.setText(String.format("ROUND %s", response.getResponse().get(0).getLevel().toString()));
+//        matchTv.setText(String.format("MATCH %s", response.getTournamentDetails().getTtMatch().toString()));
         Glide.with(firstPlayerIv.getContext()).load(response.getResponse().get(0).getUserFirstInfo().getDp()).fallback(R.drawable.profile).into(firstPlayerIv);
         if (Objects.equals(item.getUserFirst(), AppSharedPreference.initialize(this).getMasterData().getResponse().getProfile().getId())) {
             firstPlayerTv.setText("You");
@@ -529,6 +531,7 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
             launchIntent.putExtra("randomPhoto", mRandomDp);
             launchIntent.putExtra("is_tournament", "true");
             launchIntent.putExtra("tournament_id", tournamentId);
+            launchIntent.putExtra("gameMode", gameMode);
             startActivity(launchIntent);
 //            isSuccessfulGameOpen = true;
         }

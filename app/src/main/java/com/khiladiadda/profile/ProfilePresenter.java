@@ -120,6 +120,24 @@ public class ProfilePresenter implements IProfilePresenter {
         }
     };
 
+    @Override
+    public void updateEmail(String email) {
+        mSubscription = mInteractor.updateEmail(mUpdateEmailApiListener, email);
+    }
+
+    private IApiListener<BaseResponse> mUpdateEmailApiListener = new IApiListener<BaseResponse>() {
+        @Override
+        public void onSuccess(BaseResponse response) {
+            mView.onUpdateEmailComplete(response);
+        }
+
+        @Override
+        public void onError(ApiError error) {
+            mView.onUpdateEmailFailure(error);
+        }
+    };
+
+    
     @Override public void destroy() {
         if (mSubscription != null && !mSubscription.isUnsubscribed()) {
             mSubscription.unsubscribe();

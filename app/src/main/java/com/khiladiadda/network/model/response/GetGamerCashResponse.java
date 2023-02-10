@@ -1,13 +1,16 @@
-package com.khiladiadda.network.model.response.gamer_cash;
+package com.khiladiadda.network.model.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.khiladiadda.network.model.BaseResponse;
+import com.khiladiadda.network.model.response.gamer_cash.ResponseFetchDetail;
 
-public class GamerCashResponse extends BaseResponse {
+public class GetGamerCashResponse extends BaseResponse {
+
     @SerializedName("response")
     @Expose
-    private ResponseGamerCash response;
+    private ResponseFetchDetail response = null;
+
     @SerializedName("is_already_linked")
     @Expose
     private Boolean isAlreadyLinked;
@@ -15,17 +18,17 @@ public class GamerCashResponse extends BaseResponse {
     @Expose
     private Boolean isLinked;
 
-    public GamerCashResponse(ResponseGamerCash response, Boolean isAlreadyLinked, Boolean isLinked) {
+    public GetGamerCashResponse(ResponseFetchDetail response, Boolean isAlreadyLinked, Boolean isLinked) {
         this.response = response;
         this.isAlreadyLinked = isAlreadyLinked;
         this.isLinked = isLinked;
     }
 
-    public ResponseGamerCash getResponse() {
+    public ResponseFetchDetail getResponse() {
         return response;
     }
 
-    public void setResponse(ResponseGamerCash response) {
+    public void setResponse(ResponseFetchDetail response) {
         this.response = response;
     }
 

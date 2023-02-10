@@ -81,19 +81,22 @@ public class LudoTmtPastAllRoundAdapter extends RecyclerView.Adapter<LudoTmtPast
             holder.playNowBtn.setVisibility(View.GONE);
             if (item.getRoomStatus() == 1) {
                 holder.secondPlayerTv.setText("waiting...");
-                ButtonEnable(item, holder, 0, 1, 0, 0, 0);
+                ButtonEnable(item, holder, 0, 1, 0, 0, 0,0);
             } else if (item.getRoomStatus() == 2) {
-                ButtonEnable(item, holder, 1, 0, 0, 0, 0);
+                ButtonEnable(item, holder, 1, 0, 0, 0, 0,0);
             }
             if (item.getWon()) {
-                ButtonEnable(item, holder, 0, 0, 1, 0, 0);
+                ButtonEnable(item, holder, 0, 0, 1, 0, 0,0);
             } else {
-                ButtonEnable(item, holder, 0, 0, 0, 1, 0);
+                ButtonEnable(item, holder, 0, 0, 0, 1, 0,0);
+            }
+            if (item.getRoomStatus() == 5){
+                ButtonEnable(item, holder, 0, 0, 0, 0, 1,0);
             }
         }
     }
 
-    private void ButtonEnable(LudoTmtAllPastRoundsResponse item, @NonNull LudoTmtPastAllRoundAdapter.ViewHolder holder, int status, int waiting, int won, int opp_won, int play_now) {
+    private void ButtonEnable(LudoTmtAllPastRoundsResponse item, @NonNull LudoTmtPastAllRoundAdapter.ViewHolder holder, int status, int waiting, int won, int opp_won, int cancelled, int play_now) {
         holder.statusBtn.setVisibility(View.INVISIBLE);
         holder.waitingBtn.setVisibility(View.INVISIBLE);
         holder.wonBtn.setVisibility(View.INVISIBLE);
@@ -112,6 +115,8 @@ public class LudoTmtPastAllRoundAdapter extends RecyclerView.Adapter<LudoTmtPast
             holder.wonBtn.setVisibility(View.VISIBLE);
         } else if (opp_won == 1) {
             holder.oppWonBtn.setVisibility(View.VISIBLE);
+        }else if (cancelled == 1){
+            holder.mTournamentCancelled.setVisibility(View.VISIBLE);
         } else {
             holder.playNowBtn.setVisibility(View.VISIBLE);
         }
@@ -149,6 +154,8 @@ public class LudoTmtPastAllRoundAdapter extends RecyclerView.Adapter<LudoTmtPast
         ConstraintLayout ludoTmtCl;
         @BindView(R.id.cl_out_of_tmt)
         ConstraintLayout OutOfTmtCl;
+        @BindView(R.id.btn_tournament_cancelled)
+        MaterialCardView mTournamentCancelled;
 
 
         IOnClickListener iOnClickListener;

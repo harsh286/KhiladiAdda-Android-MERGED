@@ -12,8 +12,9 @@ public class LudoContestRequest {
     @SerializedName("contest_type") private long contestType;
     @SerializedName("start") @Expose private String start;
     @SerializedName("mode") @Expose private int mode;
+    @SerializedName("contest_mode") @Expose private int contestMode;
 
-    public LudoContestRequest(String end, long entryFees, String gameId, String ludoId, long contestType, String start, int mode) {
+    public LudoContestRequest(String end, long entryFees, String gameId, String ludoId, long contestType, String start, int mode, int contestMode) {
         this.end = end;
         this.entryFees = entryFees;
         this.gameId = gameId;
@@ -21,10 +22,12 @@ public class LudoContestRequest {
         this.contestType = contestType;
         this.start = start;
         this.mode = mode;
+        this.contestMode = contestMode;
     }
 
-    public LudoContestRequest(long entryFees) {
+    public LudoContestRequest(long entryFees, int contestMode) {
         this.entryFees = entryFees;
+        this.contestMode = contestMode;
     }
 
     public String getEnd() {
@@ -81,5 +84,13 @@ public class LudoContestRequest {
 
     public void setMode(int mode) {
         this.mode = mode;
+    }
+
+    public int getContestMode() {
+        return contestMode;
+    }
+
+    public void setContestMode(int contestMode) {
+        this.contestMode = contestMode;
     }
 }

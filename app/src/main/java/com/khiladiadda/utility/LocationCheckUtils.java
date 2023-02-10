@@ -158,11 +158,13 @@ public class LocationCheckUtils {
     public void statusCheck() {
         try {
             final LocationManager manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-            if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//            if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 buildAlertMessageNoGps();
-            } else {
-                getLastLocation();
             }
+//            else {
+//                getLastLocation();
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }

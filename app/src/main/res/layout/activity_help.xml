@@ -44,12 +44,13 @@
                     android:src="@drawable/ic_bgmisupport" />
 
                 <ImageView
-                    android:id="@+id/cv_ludo"
+                    android:id="@+id/cv_ff_max"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:contentDescription="@string/text_call_duty"
-                    android:src="@drawable/ic_ludo" />
+                    android:contentDescription="@string/room_id"
+                    android:src="@drawable/freefire_max" />
+
 
             </LinearLayout>
 
@@ -64,13 +65,6 @@
                 android:orientation="horizontal"
                 android:visibility="visible">
 
-                <ImageView
-                    android:id="@+id/cv_ff_max"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/room_id"
-                    android:src="@drawable/freefire_max" />
 
                 <ImageView
                     android:id="@+id/iv_ludo_universe"
@@ -79,15 +73,71 @@
                     android:layout_marginStart="@dimen/margin_3"
                     android:layout_weight="1"
                     android:contentDescription="@string/room_id"
-                    android:src="@drawable/ludoadda_help"/>
+                    android:src="@drawable/ludoadda_help" />
 
                 <ImageView
-                    android:id="@+id/cv_withdraw"
+                    android:id="@+id/cv_ludo"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:contentDescription="@string/text_call_duty"
+                    android:src="@drawable/ic_ludo" />
+
+                <ImageView
+                    android:id="@+id/iv_ludo_tournament"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/text_call_duty"
+                    android:src="@drawable/ic_ludo_tournament" />
+
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/cv_withdraw"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:contentDescription="@string/room_id"-->
+                <!--                    android:src="@drawable/ic_withdraw" />-->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/game_dashboard_height"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_marginBottom="@dimen/margin_15"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+
+                <ImageView
+                    android:id="@+id/iv_wscoming"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/margin_3"
+                    android:layout_weight="1"
                     android:contentDescription="@string/room_id"
-                    android:src="@drawable/ic_withdraw" />
+                    android:src="@drawable/wordsearch_help" />
+
+                <ImageView
+                    android:id="@+id/iv_codepieces"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/text_call_duty"
+                    android:src="@drawable/codepiece_help" />
+
+                <ImageView
+                    android:id="@+id/iv_rummy"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/text_call_duty"
+                    android:src="@drawable/rummy_help" />
+
 
             </LinearLayout>
 
@@ -102,40 +152,12 @@
                 android:visibility="visible">
 
                 <ImageView
-                    android:id="@+id/cv_deposit"
+                    android:id="@+id/iv_droid"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:contentDescription="@string/room_id"
-                    android:src="@drawable/deposit" />
-
-                <ImageView
-                    android:id="@+id/iv_hthhelp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/room_id"
-                    android:src="@drawable/helpfantasy" />
-
-                <ImageView
-                    android:id="@+id/iv_fanbattle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/room_id"
-                    android:src="@drawable/helpfanbattle" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/game_dashboard_height"
-                android:layout_marginStart="@dimen/margin_10"
-                android:layout_marginEnd="@dimen/margin_10"
-                android:layout_marginBottom="@dimen/margin_15"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:visibility="visible">
+                    android:src="@drawable/droid_help" />
 
                 <ImageView
                     android:id="@+id/cv_quiz"
@@ -146,20 +168,13 @@
                     android:src="@drawable/quiz" />
 
                 <ImageView
-                    android:id="@+id/cv_other"
+                    android:id="@+id/cv_withdraw"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:contentDescription="@string/room_id"
-                    android:src="@drawable/other_query" />
+                    android:src="@drawable/ic_withdraw" />
 
-                <ImageView
-                    android:id="@+id/iv_esports_help"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/room_id"
-                    android:src="@drawable/velorant" />
 
             </LinearLayout>
 
@@ -173,6 +188,23 @@
                 android:orientation="horizontal"
                 android:visibility="visible">
 
+
+                <ImageView
+                    android:id="@+id/cv_other"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/room_id"
+                    android:src="@drawable/other_query" />
+
+                <ImageView
+                    android:id="@+id/cv_deposit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/room_id"
+                    android:src="@drawable/deposit" />
+
                 <ImageView
                     android:id="@+id/cv_kyc"
                     android:layout_width="0dp"
@@ -180,25 +212,47 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/room_id"
                     android:src="@drawable/ic_kyc" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/game_dashboard_height"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_marginBottom="@dimen/margin_15"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
                 <ImageView
-                    android:id="@+id/iv_wscoming"
+                    android:id="@+id/iv_fanbattle"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:contentDescription="@string/room_id"
-                    android:src="@drawable/dash_ws" />
+                    android:src="@drawable/helpfanbattle" />
+
                 <ImageView
-                    android:id="@+id/iv_droid"
+                    android:id="@+id/iv_esports_help"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:contentDescription="@string/room_id"
-                    android:src="@drawable/droid_help" />
+                    android:src="@drawable/velorant" />
+
+                <ImageView
+                    android:id="@+id/iv_hthhelp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/room_id"
+                    android:src="@drawable/helpfantasy" />
 
             </LinearLayout>
 
 
         </LinearLayout>
     </ScrollView>
+
     <include layout="@layout/bannermoengage" />
 </LinearLayout>

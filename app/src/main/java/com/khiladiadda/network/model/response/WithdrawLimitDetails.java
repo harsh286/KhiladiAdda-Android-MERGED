@@ -23,6 +23,15 @@ public class WithdrawLimitDetails {
     @SerializedName("aadharVerified")
     @Expose
     private boolean isAadharVerified;
+    @SerializedName("isWithdrawLimitExceeded")
+    @Expose
+    private boolean isWithdrawLimitExceeded;
+    @SerializedName("nWithdrawalLimit")
+    @Expose
+    private int nWithdrawalLimit;
+    @SerializedName("amountData")
+    @Expose
+    private int amountData;
 
     public long getTotalWithdrawal() {
         return totalWithdrawal;
@@ -80,4 +89,19 @@ public class WithdrawLimitDetails {
         isAadharVerified = aadharVerified;
     }
 
+    public boolean isWithdrawLimitExceeded() {
+        return isWithdrawLimitExceeded;
+    }
+
+    public void setWithdrawLimitExceeded(boolean withdrawLimitExceeded) {
+        isWithdrawLimitExceeded = withdrawLimitExceeded;
+    }
+
+    public int getnWithdrawalLimit() {
+        return nWithdrawalLimit;
+    }
+
+    public void setnWithdrawalLimit(int nWithdrawalLimit) {
+        this.nWithdrawalLimit = nWithdrawalLimit;
+    }
 }

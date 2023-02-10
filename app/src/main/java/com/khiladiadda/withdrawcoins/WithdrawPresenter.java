@@ -422,7 +422,6 @@ public class WithdrawPresenter implements IWithdrawPresenter {
     @Override
     public void onIPayTransfer(String beneficiaryId, String amount, String otp, String lat, String lon) {
         mSubscription = mInteractor.onInstantPayTransfer(mIPayApiListener, beneficiaryId, amount, otp, lat, lon);
-
     }
 
     private IApiListener<PayoutResponse> mIPayApiListener = new IApiListener<PayoutResponse>() {

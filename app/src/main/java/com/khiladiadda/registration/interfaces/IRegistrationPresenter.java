@@ -6,5 +6,6 @@ public interface IRegistrationPresenter extends IBasePresenter {
 
     void validateData();
 
-    void doRegister();
+    void doRegister(String gmailId);
+
 }

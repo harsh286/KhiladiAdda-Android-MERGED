@@ -16,7 +16,6 @@ buildscript {
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-
     }
 }
 
@@ -25,11 +24,13 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
-        
+        maven {
+//            url  "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-snapshots"
+            url  "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android"
+        }
         maven { url 'https://maven.cashfree.com/release' }
         maven { url 'https://kommunicate.jfrog.io/artifactory/kommunicate-android-sdk' }
         maven { url "https://google.bintray.com/flexbox-layout" }
-
     }
 }
 

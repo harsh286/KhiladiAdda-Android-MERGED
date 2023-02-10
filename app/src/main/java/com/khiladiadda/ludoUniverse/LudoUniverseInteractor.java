@@ -8,21 +8,22 @@ import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.request.LudoContestRequest;
 import com.khiladiadda.network.model.request.OpponentLudoRequest;
 import com.khiladiadda.network.model.response.LudoContestResponse;
+import com.khiladiadda.network.model.response.ModeResponse;
 
 import rx.Subscription;
 
 public class LudoUniverseInteractor {
 
-    Subscription getLudoContestList(IApiListener<LudoContestResponse> listener, String date, String contestType, boolean banner, String bannerType, boolean profile, int mode, int entryFee, int from, int to) {
+    Subscription getLudoContestList(IApiListener<LudoContestResponse> listener, String date, String contestType, boolean banner, String bannerType, boolean profile, int mode, int entryFee, int from, int to, int fromMode) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
-        return manager.createObservable(service.getList(date, contestType, banner, bannerType, profile, mode, entryFee, from, to)).subscribe(new SubscriberCallback<>(listener));
+        return manager.createObservable(service.getList(date, contestType, banner, bannerType, profile, mode, entryFee, from, to, fromMode)).subscribe(new SubscriberCallback<>(listener));
     }
 
-    Subscription getAllLudoContestList(IApiListener<LudoContestResponse> listener, int page, int limit) {
+    Subscription getAllLudoContestList(IApiListener<LudoContestResponse> listener, int page, int limit, int contestMode) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
-        return manager.createObservable(service.getAllList(page, limit)).subscribe(new SubscriberCallback<>(listener));
+        return manager.createObservable(service.getAllList(page, limit, contestMode)).subscribe(new SubscriberCallback<>(listener));
     }
 
     Subscription addLudoChallenge(LudoContestRequest request, IApiListener<BaseResponse> listener) {
@@ -47,6 +48,12 @@ public class LudoUniverseInteractor {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
         return manager.createObservable(service.getLUStatus(contestId)).subscribe(new SubscriberCallback<>(listener));
+    }
+
+    Subscription getMode(IApiListener<ModeResponse> listener, String bannerType) {
+        ApiManager manager = ApiManager.getInstance();
+        ApiService service = manager.createService();
+        return manager.createObservable(service.getMode(bannerType)).subscribe(new SubscriberCallback<>(listener));
     }
 
 }

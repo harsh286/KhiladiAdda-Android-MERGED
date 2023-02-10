@@ -5,6 +5,8 @@ import com.khiladiadda.network.model.request.CashfreeSavePayment;
 import com.khiladiadda.network.model.request.PaySharpRequest;
 import com.khiladiadda.network.model.request.PaymentRequest;
 import com.khiladiadda.network.model.request.PayuSavePayment;
+import com.khiladiadda.network.model.request.PhonepeCheckPaymentRequest;
+import com.khiladiadda.network.model.request.PhonepeRequest;
 import com.khiladiadda.network.model.request.RazorpayRequest;
 
 public interface IWalletPresenter extends IBasePresenter {
@@ -39,24 +41,30 @@ public interface IWalletPresenter extends IBasePresenter {
 
     void getZaakpayChecksum();
 
-    void getApexPayChecksum(String amount,String couponCode);
+    void getApexPayChecksum(String amount, String couponCode);
 
-    void getApexPayStatus(String orderId,String couponCode);
+    void getApexPayStatus(String orderId, String couponCode);
 
     void getPayuChecksum(String amount, String couponCode);
 
     void getPayuHash(String hash, String orderId);
 
-    void getPaySharp(PaySharpRequest request,String couponCode);
+    void getPaySharp(PaySharpRequest request, String couponCode);
 
-    void getPaySharpStatus(String orderId,String couponCode);
+    void getPaySharpStatus(String orderId, String couponCode);
 
     void getPayuCheckum(String trans, long amnt);
 
-    void getEasebuzzHash(double amount, String coupon);
+    void getEasebuzzHash(double amount, String couponCode);
 
     void saveEasebuzzPayment(double amount, String coupon, String orderId, String status);
 
-    void checkNeokredPG(double amount,String couponCode);
+    void checkNeokredPG(double amount, String couponCode);
+
+    void getPaymentUrlData(PhonepeRequest phonepeRequest);
+
+    void getPaymentCheckData(PhonepeCheckPaymentRequest phonepeRequest);
+
+    void getGamerCashUserData();
 
 }

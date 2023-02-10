@@ -798,6 +798,9 @@
     <string name="text_droid">Droid-O</string>
     <string name="text_wordsearch">WordSearch</string>
     <string name="text_droid_leaderboard">Droid-O LeaderBoard</string>
+    <string name="text_ludo_tournament_leaderboard">Ludo Tournament LeaderBoard</string>
+    <string name="text_court_piece_leaderboard">CourtPiece LeaderBoard</string>
+    <string name="text_rummy_leaderboard">Rummy LeaderBoard</string>
     <string name="text_wordsearch_leaderboard">WordSearch LeaderBoard</string>
 
     <string name="no_games_avaliable_now">We are creating new Tournaments for you.</string>
@@ -923,4 +926,14 @@
     <string name="battle_amount">Battle Amount</string>
     <string name="tournament_amount">Tournament Amount</string>
     <string name="out_of_tournament">Out of Tournament</string>
+
+    <string name="text_paytm_name">Paytm Registered Name</string>
+    <string name="text_account_holder_name">Account Holder Name</string>
+    <string name="text_points_underline">Points</string>
+    <string name="play_classic">Play Classic Mode</string>
+    <string name="play_series">Play Series Mode</string>
+    <string name="play_timer">Play Timer Mode</string>
+    <string name="text_disable_ludoadda">Hi Khiladi, \n There is some issue in LudoAdda. Please connect on support</string>
+    <string name="phonepe_upi">PhonePe</string>
+    <string name="text_beneficiary_name_required">Your account beneficiary name is required.</string>
 </resources>

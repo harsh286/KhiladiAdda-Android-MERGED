@@ -43,7 +43,6 @@ public interface IWithdrawPresenter extends IBasePresenter {
 
     void onEasebuzzTransfer(String beneficiaryId, double amount, String otp, int from);
 
-
     void onRaceConditionTransfer(RaceConditionPayoutRequest raceConditionPayoutRequest);
 
     void onRaceConditionTransferFinal(String beneficiaryId, String amount, String otp);

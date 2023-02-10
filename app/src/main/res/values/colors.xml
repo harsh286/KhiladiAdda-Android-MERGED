@@ -99,4 +99,15 @@
     <color name="center_color">#F2EDED</color>
     <color name="gamercash_color">#4CAF50</color>
     <color name="droido_color_play_bg">#F6DB6F</color>
+
+    //cb
+    <color name="cb_item_text">#5C5C5C</color>
+    <color name="cb_background">#380A62</color>
+
+    <color name="classic_outline">#FB8282</color>
+    <color name="classic_inside">#3118B7</color>
+    <color name="timer_outline">#7ADAAC</color>
+    <color name="timer_inside">#395347</color>
+    <color name="series_outline">#F8B84E</color>
+    <color name="series_inside">#362F24</color>
 </resources>

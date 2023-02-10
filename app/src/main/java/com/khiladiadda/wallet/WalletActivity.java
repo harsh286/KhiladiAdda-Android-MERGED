@@ -28,11 +28,14 @@ import com.khiladiadda.network.model.response.ApexPayChecksumResponse;
 import com.khiladiadda.network.model.response.CashfreeChecksumResponse;
 import com.khiladiadda.network.model.response.ChecksumResponse;
 import com.khiladiadda.network.model.response.Coins;
+import com.khiladiadda.network.model.response.GetGamerCashResponse;
 import com.khiladiadda.network.model.response.InvoiceResponse;
 import com.khiladiadda.network.model.response.NeokredResponse;
 import com.khiladiadda.network.model.response.PaySharpResponse;
 import com.khiladiadda.network.model.response.PaykunOrderResponse;
 import com.khiladiadda.network.model.response.PayuChecksumResponse;
+import com.khiladiadda.network.model.response.PhonePePaymentResponse;
+import com.khiladiadda.network.model.response.PhonepeCheckPaymentResponse;
 import com.khiladiadda.network.model.response.ProfileTransactionResponse;
 import com.khiladiadda.network.model.response.RazorpayOrderIdResponse;
 import com.khiladiadda.network.model.response.TransactionDetails;
@@ -55,7 +58,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class WalletActivity extends BaseActivity implements IWalletView, TransactionAdapter.IOnItemChildClickListener {
+public class WalletActivity extends BaseActivity implements IWalletView, TransactionAdapter.IOnItemChildClickListener, LocationCheckUtils.IOnAdressPassed {
 
     @BindView(R.id.iv_back)
     ImageView mBackIV;
@@ -86,6 +89,7 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
     private IWalletPresenter mPresenter;
     private TransactionAdapter mAdapter;
     private ArrayList<TransactionDetails> mList;
+    private boolean isAllowed = true;
     private double mDepositCoins;
 
     @Override
@@ -110,6 +114,12 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
         mTransactionTV.setOnClickListener(this);
         mPaymentHistoryTV.setOnClickListener(this);
         mPaymentHistoryTV.setVisibility(View.VISIBLE);
+        LocationCheckUtils.initialize(this, this, this);
+        if (!LocationCheckUtils.getInstance().hasLocationPermission()) {
+            LocationCheckUtils.getInstance().statusCheck();
+        } else {
+            LocationCheckUtils.getInstance().requestNewLocationData();
+        }
     }
 
     @Override
@@ -149,13 +159,33 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
                 startActivity(new Intent(this, NotificationActivity.class));
                 break;
             case R.id.btn_add_coins:
-                i = new Intent(this, AddWalletActivity.class);
-                walletActivityResultLauncher.launch(i);
+//                i = new Intent(this, AddWalletOldActivity.class);
+                if (LocationCheckUtils.getInstance().hasLocationPermission()) {
+                    LocationCheckUtils.getInstance().requestNewLocationData();
+                    if (isAllowed) {
+                        i = new Intent(this, AddWalletActivity.class);
+                        walletActivityResultLauncher.launch(i);
+                    } else
+                        Snackbar.make(mAddCoinsBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
+
+                } else {
+                    LocationCheckUtils.getInstance().statusCheck();
+                }
                 break;
+
             case R.id.btn_withdraw:
-                i = new Intent(this, NewWithdrawActivity.class);
-                mAppPreference.setBoolean(AppConstant.IS_PAYTMWALLET_ENABLED, mPaytm);
-                walletActivityResultLauncher.launch(i);
+                if (LocationCheckUtils.getInstance().hasLocationPermission()) {
+                    LocationCheckUtils.getInstance().requestNewLocationData();
+                    if (isAllowed) {
+                        i = new Intent(this, NewWithdrawActivity.class);
+                        mAppPreference.setBoolean(AppConstant.IS_PAYTMWALLET_ENABLED, mPaytm);
+                        walletActivityResultLauncher.launch(i);
+                    } else
+                        Snackbar.make(mAddCoinsBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
+
+                } else {
+                    LocationCheckUtils.getInstance().statusCheck();
+                }
                 break;
             case R.id.tv_payment_history:
                 i = new Intent(this, PaymentHistoryActivity.class);
@@ -474,6 +504,36 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
     }
 
     @Override
+    public void onPaymentComplete(PhonePePaymentResponse response) {
+
+    }
+
+    @Override
+    public void onPaymentFailure(ApiError errorMsg) {
+
+    }
+
+    @Override
+    public void onPaymentCheckComplete(PhonepeCheckPaymentResponse response) {
+
+    }
+
+    @Override
+    public void onPaymentCheckFailure(ApiError errorMsg) {
+
+    }
+
+    @Override
+    public void onGetGamerCashSuccess(GetGamerCashResponse response) {
+
+    }
+
+    @Override
+    public void onGetGamerCashFailure(ApiError errorMsg) {
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.destroy();
@@ -500,4 +560,13 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
     });
 
 
+    @Override
+    public void iOnAddressSuccess() {
+        isAllowed = true;
+    }
+
+    @Override
+    public void iOnAddressFailure() {
+        isAllowed = false;
+    }
 }

@@ -73,10 +73,16 @@ public class HelpActivity extends BaseActivity implements IHelpView {
     ImageView mLudoAddaIV;
     @BindView(R.id.iv_esports_help)
     ImageView mEsportsIV;
+    @BindView(R.id.iv_ludo_tournament)
+    ImageView mLudoTournamentTv;
     @BindView(R.id.iv_wscoming)
     ImageView mWordSearchIV;
+    @BindView(R.id.iv_codepieces)
+    ImageView mCodePieces;
     @BindView(R.id.iv_droid)
     ImageView mDroidIV;
+    @BindView(R.id.iv_rummy)
+    ImageView mRummyIV;
     @BindView(R.id.nudge)
     NudgeView mNV;
 
@@ -109,6 +115,9 @@ public class HelpActivity extends BaseActivity implements IHelpView {
         mEsportsIV.setOnClickListener(this);
         mWordSearchIV.setOnClickListener(this);
         mDroidIV.setOnClickListener(this);
+        mLudoTournamentTv.setOnClickListener(this);
+        mCodePieces.setOnClickListener(this);
+        mRummyIV.setOnClickListener(this);
     }
 
 
@@ -175,6 +184,9 @@ public class HelpActivity extends BaseActivity implements IHelpView {
                 }
                 break;
             case R.id.iv_ludo_universe:
+            case R.id.iv_codepieces:
+            case R.id.iv_rummy:
+            case R.id.iv_ludo_tournament:
                 if (mSupportVia) {
                     mFrom = AppConstant.LUDOADDA_KOMMUNI_CATEGORY;
                     openHelpScreen();

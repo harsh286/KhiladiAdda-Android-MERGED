@@ -582,7 +582,7 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
         Date endDate = new Date();
         endDate.setTime(startDate.getTime() + 3600000);
         String endTime = AppUtilityMethods.getConvertDateTimeForServer(dateFormat.format(endDate));
-        LudoContestRequest request = new LudoContestRequest(endTime, Long.parseLong(amount), mGameId, gameUsername, mContestType, startTime, mode);
+        LudoContestRequest request = new LudoContestRequest(endTime, Long.parseLong(amount), mGameId, gameUsername, mContestType, startTime, mode, 0);
         if (new NetworkStatus(this).isInternetOn()) {
             mAmount = amount;
             showProgress(getString(R.string.txt_progress_authentication));

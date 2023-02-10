@@ -1,7 +1,6 @@
 package com.khiladiadda.ludoUniverse;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,14 +43,12 @@ import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.request.OpponentLudoRequest;
 import com.khiladiadda.network.model.response.LudoContest;
 import com.khiladiadda.network.model.response.LudoContestResponse;
-import com.khiladiadda.preference.AppSharedPreference;
+import com.khiladiadda.network.model.response.ModeResponse;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.DownloadApk;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.utility.providers.GenericFileProvider;
-//import com.unity3d.player.UnityLauncherActivity;
-//import com.unity3d.player.UnityLauncherActivity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -88,7 +86,7 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
     private Dialog mVersionDialog;
     private String mCurrentVersion;
     private String mLink;
-
+    private int mFrom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +103,7 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
     protected void initViews() {
         Window window = getWindow();
         window.setStatusBarColor(getResources().getColor(R.color.ludo_uni_actionbar));
+        mFrom = getIntent().getIntExtra(AppConstant.FROM, 0);
         mActivityNameTV.setText(R.string.text_ludo_adda);
         mBackIV.setOnClickListener(this);
         mNotificationIV.setOnClickListener(this);
@@ -113,7 +112,6 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
         if (launchIntent != null) getVersion();
         mCurrentVersion = mAppPreference.getString("LudoVersion", mCurrentVersion);
         mLink = mAppPreference.getString("mLudoLink", mLink);
-
     }
 
     @Override
@@ -132,7 +130,7 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
         AppUtilityMethods.deleteCache(this);
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
-            mPresenter.getAllContestList(0, AppConstant.PAGE_SIZE);
+            mPresenter.getAllContestList(0, AppConstant.PAGE_SIZE, mFrom);
         } else {
             Snackbar.make(mLudoContestRV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
@@ -217,6 +215,16 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
         hideProgress();
     }
 
+    @Override
+    public void onGetModeSuccess(ModeResponse responseModel) {
+
+    }
+
+    @Override
+    public void onGetModeFailure(ApiError error) {
+
+    }
+
     private BroadcastReceiver mLudoNotificationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -277,9 +285,7 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
             launchIntent.putExtra("randomPhoto", mRandomDp);
             isSuccessfulGameOpen = true;
             startActivity(launchIntent);
-
         }
-
     }
 
     public void acceptAlert(final Activity activity, double entryFee, String ludoId, OpponentLudoRequest request, int from, String ContestCode, double Amt, String Rname, String RandomDp) {
@@ -391,9 +397,6 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
         public void onDownloadVersion() {
             if (mLink != null && !mLink.isEmpty()) {
                 new DownloadApk(mOnFileDownloadedListener).execute(mLink);
-            }
-            else{
-                new DownloadApk(mOnFileDownloadedListener).execute(AppSharedPreference.getInstance().getVersion().getVersion().getLudoApkLink());
             }
 
         }

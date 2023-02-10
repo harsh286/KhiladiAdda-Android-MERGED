@@ -29,8 +29,8 @@ public class LudoTmtPresenter implements ILudoTmtPresenter {
     }
 
     @Override
-    public void getAllTournament(boolean startDate) {
-        mSubscription = mInteractor.getLudoTmtAllTournament(ludoTmtAllTournamentMainResponseIApiListener, startDate);
+    public void getAllTournament(boolean startDate, int type) {
+        mSubscription = mInteractor.getLudoTmtAllTournament(ludoTmtAllTournamentMainResponseIApiListener, startDate, type);
     }
 
     private IApiListener<LudoTmtAllTournamentMainResponse> ludoTmtAllTournamentMainResponseIApiListener = new IApiListener<LudoTmtAllTournamentMainResponse>() {

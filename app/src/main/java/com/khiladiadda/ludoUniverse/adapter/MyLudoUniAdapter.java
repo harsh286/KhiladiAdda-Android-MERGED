@@ -29,7 +29,7 @@ public class MyLudoUniAdapter extends RecyclerView.Adapter<MyLudoUniAdapter.Ludo
     private Context mContext;
     private List<LudoContest> mLudoChallengeList;
     private IOnItemClickListener mOnItemClickListener;
-    private MyLudoUniAdapter.IOnItemChildClickListener mOnItemChildClickListener;
+    private IOnItemChildClickListener mOnItemChildClickListener;
 
     public MyLudoUniAdapter(Context context, List<LudoContest> ludoChallengeList) {
         this.mContext = context;
@@ -40,7 +40,7 @@ public class MyLudoUniAdapter extends RecyclerView.Adapter<MyLudoUniAdapter.Ludo
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
-    public void setOnItemChildClickListener(MyLudoUniAdapter.IOnItemChildClickListener mOnItemChildClickListener) {
+    public void setOnItemChildClickListener(IOnItemChildClickListener mOnItemChildClickListener) {
         this.mOnItemChildClickListener = mOnItemChildClickListener;
     }
 
@@ -172,9 +172,9 @@ public class MyLudoUniAdapter extends RecyclerView.Adapter<MyLudoUniAdapter.Ludo
         TextView mModeTV;
 
         private IOnItemClickListener mOnItemClickListener;
-        private MyLudoUniAdapter.IOnItemChildClickListener mOnItemChildClickListener;
+        private IOnItemChildClickListener mOnItemChildClickListener;
 
-        public LudoContestHolder(View view, IOnItemClickListener onItemClickListener, MyLudoUniAdapter.IOnItemChildClickListener onItemChildClickListener) {
+        public LudoContestHolder(View view, IOnItemClickListener onItemClickListener, IOnItemChildClickListener onItemChildClickListener) {
             super(view);
             mOnItemClickListener = onItemClickListener;
             mOnItemChildClickListener = onItemChildClickListener;

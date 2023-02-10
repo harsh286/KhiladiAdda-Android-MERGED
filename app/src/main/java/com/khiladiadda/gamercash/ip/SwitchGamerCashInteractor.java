@@ -4,8 +4,6 @@ import com.khiladiadda.network.ApiManager;
 import com.khiladiadda.network.ApiService;
 import com.khiladiadda.network.IApiListener;
 import com.khiladiadda.network.SubscriberCallback;
-import com.khiladiadda.network.model.request.RaceConditionPayoutRequest;
-import com.khiladiadda.network.model.response.gamer_cash.GamerCashResponse;
 import com.khiladiadda.network.model.response.gamer_cash.SwitchGamerCashRequest;
 import com.khiladiadda.network.model.response.gamer_cash.SwitchGamerCashResponse;
 

@@ -18,10 +18,10 @@ import rx.Subscription;
 
 public class LudoTmtInteractor {
 
-    public Subscription getLudoTmtAllTournament(IApiListener<LudoTmtAllTournamentMainResponse> listener, boolean startDate) {
+    public Subscription getLudoTmtAllTournament(IApiListener<LudoTmtAllTournamentMainResponse> listener, boolean startDate, int type) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
-        return manager.createObservable(service.onGetLudoTmtAllTournament(startDate)).subscribe(new SubscriberCallback<>(listener));
+        return manager.createObservable(service.onGetLudoTmtAllTournament(startDate, type)).subscribe(new SubscriberCallback<>(listener));
     }
 
     public Subscription onJoinLudoTournament(IApiListener<LudoTmtJoinMainResponse> listener, String tournament_id) {

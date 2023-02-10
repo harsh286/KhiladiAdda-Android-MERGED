@@ -30,8 +30,8 @@ public class LudoBuddyPresenter implements ILudoBuddyPresenter {
     }
 
     @Override
-    public void getBuddyListUniverse() {
-        mSubscription=mInteractor.getBuddyListUniverse(mLUBuddyListener);
+    public void getBuddyListUniverse(int mode) {
+        mSubscription=mInteractor.getBuddyListUniverse(mLUBuddyListener, mode);
 
 
     }

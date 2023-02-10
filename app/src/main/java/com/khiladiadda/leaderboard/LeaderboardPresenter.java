@@ -5,6 +5,7 @@ import com.khiladiadda.leaderboard.interfaces.ILeaderboardView;
 import com.khiladiadda.network.IApiListener;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.response.AllLeaderBoardResponse;
+import com.khiladiadda.network.model.response.LeaderboardMainResponse;
 import com.khiladiadda.network.model.response.LudoAddaMainResponse;
 import com.khiladiadda.network.model.response.LudoLeaderboardResponse;
 import com.khiladiadda.network.model.response.OverallLeadBoardResponse;
@@ -40,7 +41,7 @@ public class LeaderboardPresenter implements ILeaderboardPresenter {
 
     @Override
     public void getQuizMonth(int page, int limit) {
-        mSubscription = mInteractor.getQuizMonth(mAllApiListener, page, limit,0);
+        mSubscription = mInteractor.getQuizMonth(mAllApiListener, page, limit, 0);
     }
 
     @Override
@@ -89,7 +90,6 @@ public class LeaderboardPresenter implements ILeaderboardPresenter {
     }
 
 
-
     private IApiListener<LudoAddaMainResponse> mLudoAddaListerner = new IApiListener<LudoAddaMainResponse>() {
         @Override
         public void onSuccess(LudoAddaMainResponse response) {
@@ -104,16 +104,44 @@ public class LeaderboardPresenter implements ILeaderboardPresenter {
 
     @Override
     public void getWS(int page, int limit, String type) {
-        mSubscription = mInteractor.getWS(mWSListerner, page, limit,type);
+        mSubscription = mInteractor.getWS(mWSListerner, page, limit, type);
 
 
     }
 
     @Override
     public void getDroidDo(int page, int limit, String type) {
-        mSubscription = mInteractor.getDroid_Do(mDroidListerner, page, limit,type);
+        mSubscription = mInteractor.getDroid_Do(mDroidListerner, page, limit, type);
 
     }
+
+    @Override
+    public void getLudoTournament(String type, int page, int limit) {
+        mSubscription = mInteractor.getLeaderBoardLudoTournament(mAllLeaderboardListerner, page, limit, type);
+    }
+
+    @Override
+    public void getCourtPiece(String type, int page, int limit) {
+        mSubscription = mInteractor.getLeaderBoardCallBreak(mAllLeaderboardListerner, page, limit, type);
+    }
+
+    @Override
+    public void getRummy(String type, int page, int limit) {
+        mSubscription = mInteractor.getLeaderBoardRummy(mAllLeaderboardListerner, page, limit, type);
+    }
+
+    private IApiListener<LeaderboardMainResponse> mAllLeaderboardListerner = new IApiListener<LeaderboardMainResponse>() {
+        @Override
+        public void onSuccess(LeaderboardMainResponse response) {
+            mView.onAllLeaderBoardComplete(response);
+        }
+
+        @Override
+        public void onError(ApiError error) {
+            mView.onAllLeaderBoardError(error);
+        }
+    };
+
 
     private IApiListener<AllLeaderBoardResponse> mWSListerner = new IApiListener<AllLeaderBoardResponse>() {
         @Override

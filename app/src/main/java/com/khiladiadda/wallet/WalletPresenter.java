@@ -14,17 +14,21 @@ import com.khiladiadda.network.model.request.PaySharpRequest;
 import com.khiladiadda.network.model.request.PaymentRequest;
 import com.khiladiadda.network.model.request.PayuChecksumRequest;
 import com.khiladiadda.network.model.request.PayuSavePayment;
+import com.khiladiadda.network.model.request.PhonepeCheckPaymentRequest;
+import com.khiladiadda.network.model.request.PhonepeRequest;
 import com.khiladiadda.network.model.request.RazorpayRequest;
-import com.khiladiadda.network.model.request.VoucherRequest;
 import com.khiladiadda.network.model.response.ApexPayChecksumResponse;
 import com.khiladiadda.network.model.response.CashfreeChecksumResponse;
 import com.khiladiadda.network.model.response.ChecksumResponse;
+import com.khiladiadda.network.model.response.GetGamerCashResponse;
 import com.khiladiadda.network.model.response.InvoiceResponse;
 import com.khiladiadda.network.model.response.NeokredResponse;
 import com.khiladiadda.network.model.response.PaySharpResponse;
 import com.khiladiadda.network.model.response.PaykunOrderResponse;
 import com.khiladiadda.network.model.response.PaymentStatusRequest;
 import com.khiladiadda.network.model.response.PayuChecksumResponse;
+import com.khiladiadda.network.model.response.PhonePePaymentResponse;
+import com.khiladiadda.network.model.response.PhonepeCheckPaymentResponse;
 import com.khiladiadda.network.model.response.ProfileTransactionResponse;
 import com.khiladiadda.network.model.response.RazorpayOrderIdResponse;
 import com.khiladiadda.network.model.response.VersionResponse;
@@ -425,10 +429,10 @@ public class WalletPresenter implements IWalletPresenter {
     };
 
     @Override
-    public void getEasebuzzHash(double amount, String coupon) {
+    public void getEasebuzzHash(double amount, String couponCode) {
         EaseBuzzHashRequest request = new EaseBuzzHashRequest();
         request.setAmount(amount);
-        request.setCoupon(coupon);
+        request.setCoupon(couponCode);
         mSubscription = mInteractor.getEaseBuzzHash(request, mEaseBuzzAPIListener);
     }
 
@@ -486,5 +490,58 @@ public class WalletPresenter implements IWalletPresenter {
             mSubscription.unsubscribe();
         }
     }
+
+
+    @Override
+    public void getPaymentCheckData(PhonepeCheckPaymentRequest phonepeRequest) {
+        mSubscription = mInteractor.getPhonepeCheckData(mPaymentCheckApiListener, phonepeRequest);
+    }
+
+    private IApiListener<PhonepeCheckPaymentResponse> mPaymentCheckApiListener = new IApiListener<PhonepeCheckPaymentResponse>() {
+        @Override
+        public void onSuccess(PhonepeCheckPaymentResponse response) {
+            mView.onPaymentCheckComplete(response);
+        }
+
+        @Override
+        public void onError(ApiError error) {
+            mView.onPaymentCheckFailure(error);
+        }
+    };
+
+    @Override
+    public void getPaymentUrlData(PhonepeRequest phonepeRequest) {
+        mSubscription = mInteractor.getPaymentUrlData(mPaymentApiListener, phonepeRequest);
+    }
+
+    private IApiListener<PhonePePaymentResponse> mPaymentApiListener = new IApiListener<PhonePePaymentResponse>() {
+        @Override
+        public void onSuccess(PhonePePaymentResponse response) {
+            mView.onPaymentComplete(response);
+        }
+
+        @Override
+        public void onError(ApiError error) {
+            mView.onPaymentFailure(error);
+        }
+    };
+
+    @Override
+    public void getGamerCashUserData() {
+        mSubscription = mInteractor.getGamerData(mPayGamerCashListener);
+    }
+
+    private IApiListener<GetGamerCashResponse> mPayGamerCashListener = new IApiListener<GetGamerCashResponse>() {
+        @Override
+        public void onSuccess(GetGamerCashResponse response) {
+            mView.onGetGamerCashSuccess(response);
+        }
+
+        @Override
+        public void onError(ApiError error) {
+            mView.onGetGamerCashFailure(error);
+        }
+    };
+
 
 }

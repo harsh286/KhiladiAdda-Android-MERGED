@@ -633,7 +633,7 @@ public class BattlesScoreActivity extends BaseActivity implements IHTHBattleView
 
     private void substituteData(boolean isCaptain, BattlesDeatilsHTH mBattleList) {
         List<CaptainTeamHTH> battleDetails;
-        if (isCaptain) {
+        if (mBattleList.getCaptainId().equalsIgnoreCase(mAppPreference.getProfileData().getId())) {
             battleDetails = mBattleList.getCaptainTeam();
         } else {
             battleDetails = mBattleList.getOpponentTeam();

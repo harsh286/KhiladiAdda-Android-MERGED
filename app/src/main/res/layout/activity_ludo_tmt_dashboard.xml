@@ -74,22 +74,109 @@
             tools:layout_editor_absoluteX="12dp" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_tournament"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="@dimen/margin_20"
-            android:nestedScrollingEnabled="false"
-            android:scrollbars="vertical"
-            android:visibility="visible"
-            app:layout_anchorGravity="bottom"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tl_ludotmt">
+
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_classic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTransparent"
+            android:text="Classic"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_series"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/vv_classic"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/btn_classic"
+            app:layout_constraintStart_toStartOf="@+id/btn_classic"
+            app:layout_constraintTop_toTopOf="@+id/btn_classic" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_series"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTransparent"
+            android:text="Series"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_timer"
+            app:layout_constraintStart_toEndOf="@+id/btn_classic"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/vv_series"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:visibility="gone"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/btn_series"
+            app:layout_constraintStart_toEndOf="@+id/btn_classic"
+            app:layout_constraintTop_toBottomOf="@+id/btn_series" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_timer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTransparent"
+            android:text="Timer"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tab_sub_my_tournament"
-            tools:listitem="@layout/items_of_alltournament_ludotmt" />
+            app:layout_constraintStart_toEndOf="@+id/btn_series"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/vv_timer"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/white"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/btn_timer"
+            app:layout_constraintStart_toEndOf="@+id/btn_series"
+            app:layout_constraintTop_toBottomOf="@+id/btn_series" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_tournament"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:nestedScrollingEnabled="false"
+        android:scrollbars="vertical"
+        android:visibility="visible"
+        app:layout_anchorGravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_mode"
+        tools:listitem="@layout/items_of_alltournament_ludotmt" />
         <!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
         <TextView
             android:id="@+id/tv_error"

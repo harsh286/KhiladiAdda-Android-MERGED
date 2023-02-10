@@ -4,7 +4,7 @@ import com.khiladiadda.network.ApiManager;
 import com.khiladiadda.network.ApiService;
 import com.khiladiadda.network.IApiListener;
 import com.khiladiadda.network.SubscriberCallback;
-import com.khiladiadda.network.model.response.gamer_cash.GamerCashResponse;
+import com.khiladiadda.network.model.response.GamerCashResponse;
 
 import rx.Subscription;
 

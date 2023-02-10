@@ -314,34 +314,34 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
                 mTPlayerOneEditIV.setImageResource(R.drawable.splash_logo);
             }
             if (!TextUtils.isEmpty(mBattleOpponentDetails.get(1).getImg()) && mBattleOpponentDetails.get(1).getImg().startsWith("https")) {
-                setOpponentImage(mBattleOpponentDetails, 2, mTPlayerFourEditIV, mTPlayerOneTV);
+                setOpponentImage(mBattleOpponentDetails, 2, mTPlayerTwoEditIV, mTPlayerTwoEditTV); //todo changed
             } else {
-                Glide.with(mTPlayerFourEditIV.getContext()).clear(mTPlayerFourEditIV);
-                mTPlayerFourEditIV.setImageResource(R.drawable.splash_logo);
-            }
-            if (!TextUtils.isEmpty(mBattleOpponentDetails.get(2).getImg()) && mBattleOpponentDetails.get(2).getImg().startsWith("https")) {
-                setOpponentImage(mBattleOpponentDetails, 3, mTPlayerTwoEditIV, mTPlayerTwoEditTV);
-            } else {
-                Glide.with(this).clear(mTPlayerTwoEditIV);
+                Glide.with(mTPlayerTwoEditIV.getContext()).clear(mTPlayerTwoEditIV);
                 mTPlayerTwoEditIV.setImageResource(R.drawable.splash_logo);
             }
-            if (!TextUtils.isEmpty(mBattleOpponentDetails.get(3).getImg()) && mBattleOpponentDetails.get(3).getImg().startsWith("https")) {
-                setOpponentImage(mBattleOpponentDetails, 4, mTPlayerFiveEditIV, mTPlayerFourEditTV);
-            } else {
-                Glide.with(mTPlayerFourEditIV.getContext()).clear(mTPlayerFiveEditIV);
-                mTPlayerFourEditIV.setImageResource(R.drawable.splash_logo);
-            }
-            if (!TextUtils.isEmpty(mBattleOpponentDetails.get(4).getImg()) && mBattleOpponentDetails.get(4).getImg().startsWith("https")) {
-                setOpponentImage(mBattleOpponentDetails, 5, mTPlayerThreeEditIV, mTPlayerFiveEditTV);
+            if (!TextUtils.isEmpty(mBattleOpponentDetails.get(2).getImg()) && mBattleOpponentDetails.get(2).getImg().startsWith("https")) {
+                setOpponentImage(mBattleOpponentDetails, 3, mTPlayerThreeEditIV, mTPlayerThreeEditTV);
             } else {
                 Glide.with(this).clear(mTPlayerThreeEditIV);
                 mTPlayerThreeEditIV.setImageResource(R.drawable.splash_logo);
             }
-            if (!TextUtils.isEmpty(mBattleOpponentDetails.get(5).getImg()) && mBattleOpponentDetails.get(5).getImg().startsWith("https")) {
-                setOpponentImage(mBattleOpponentDetails, 6, mTPlayerSixEditIV, mTPlayerSixEditTV);
+            if (!TextUtils.isEmpty(mBattleOpponentDetails.get(3).getImg()) && mBattleOpponentDetails.get(3).getImg().startsWith("https")) {
+                setOpponentImage(mBattleOpponentDetails, 4, mTPlayerFourEditIV, mTPlayerFourEditTV);
             } else {
                 Glide.with(mTPlayerFourEditIV.getContext()).clear(mTPlayerFourEditIV);
                 mTPlayerFourEditIV.setImageResource(R.drawable.splash_logo);
+            }
+            if (!TextUtils.isEmpty(mBattleOpponentDetails.get(4).getImg()) && mBattleOpponentDetails.get(4).getImg().startsWith("https")) {
+                setOpponentImage(mBattleOpponentDetails, 5, mTPlayerFiveEditIV, mTPlayerFiveEditTV);
+            } else {
+                Glide.with(this).clear(mTPlayerFiveEditIV);
+                mTPlayerFiveEditIV.setImageResource(R.drawable.splash_logo);
+            }
+            if (!TextUtils.isEmpty(mBattleOpponentDetails.get(5).getImg()) && mBattleOpponentDetails.get(5).getImg().startsWith("https")) {
+                setOpponentImage(mBattleOpponentDetails, 6, mTPlayerSixEditIV, mTPlayerSixEditTV);
+            } else {
+                Glide.with(mTPlayerSixEditIV.getContext()).clear(mTPlayerSixEditIV);
+                mTPlayerSixEditIV.setImageResource(R.drawable.splash_logo);
             }
 
 ////////////////////////////////////////////////////////////OPPonentTeam////////////////////////////////////////////////////////////////////////////////////////////
@@ -354,36 +354,36 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
                 mTPlayerOneIV.setImageResource(R.drawable.splash_logo);
             }
             if (!TextUtils.isEmpty(mBattleCaptainDetails.get(1).getImg()) && mBattleCaptainDetails.get(1).getImg().startsWith("https")) {
-                setCaptainImage(mBattleCaptainDetails, 2, mTPlayerFourIV, mTPlayerThreeEditTV);
-            } else {
-                Glide.with(mTPlayerFourIV.getContext()).clear(mTPlayerFourIV);
-                mTPlayerFourIV.setImageResource(R.drawable.splash_logo);
-            }
-            if (!TextUtils.isEmpty(mBattleCaptainDetails.get(2).getImg()) && mBattleCaptainDetails.get(2).getImg().startsWith("https")) {
-                setCaptainImage(mBattleCaptainDetails, 3, mTPlayerTwoIV, mTPlayerTwoTV);
+                setCaptainImage(mBattleCaptainDetails, 2, mTPlayerTwoIV, mTPlayerTwoTV);
             } else {
                 Glide.with(mTPlayerTwoIV.getContext()).clear(mTPlayerTwoIV);
                 mTPlayerTwoIV.setImageResource(R.drawable.splash_logo);
             }
-
-            if (!TextUtils.isEmpty(mBattleCaptainDetails.get(3).getImg()) && mBattleCaptainDetails.get(3).getImg().startsWith("https")) {
-                setCaptainImage(mBattleCaptainDetails, 4, mTPlayerFiveIV, mTPlayerFourEditTV);
-            } else {
-                Glide.with(mTPlayerFourIV.getContext()).clear(mTPlayerFourIV);
-                mTPlayerFourIV.setImageResource(R.drawable.splash_logo);
-            }
-            if (!TextUtils.isEmpty(mBattleCaptainDetails.get(4).getImg()) && mBattleCaptainDetails.get(4).getImg().startsWith("https")) {
-                setCaptainImage(mBattleCaptainDetails, 5, mTPlayerThreeIV, mTPlayerThreeTV);
+            if (!TextUtils.isEmpty(mBattleCaptainDetails.get(2).getImg()) && mBattleCaptainDetails.get(2).getImg().startsWith("https")) {
+                setCaptainImage(mBattleCaptainDetails, 3, mTPlayerThreeIV, mTPlayerThreeTV);
             } else {
                 Glide.with(mTPlayerThreeIV.getContext()).clear(mTPlayerThreeIV);
                 mTPlayerThreeIV.setImageResource(R.drawable.splash_logo);
             }
 
-            if (!TextUtils.isEmpty(mBattleCaptainDetails.get(5).getImg()) && mBattleCaptainDetails.get(5).getImg().startsWith("https")) {
-                setCaptainImage(mBattleCaptainDetails, 6, mTPlayerSixIV, mTPlayerThreeEditTV);
+            if (!TextUtils.isEmpty(mBattleCaptainDetails.get(3).getImg()) && mBattleCaptainDetails.get(3).getImg().startsWith("https")) {
+                setCaptainImage(mBattleCaptainDetails, 4, mTPlayerFourIV, mTPlayerFourTV);
             } else {
                 Glide.with(mTPlayerFourIV.getContext()).clear(mTPlayerFourIV);
                 mTPlayerFourIV.setImageResource(R.drawable.splash_logo);
+            }
+            if (!TextUtils.isEmpty(mBattleCaptainDetails.get(4).getImg()) && mBattleCaptainDetails.get(4).getImg().startsWith("https")) {
+                setCaptainImage(mBattleCaptainDetails, 5, mTPlayerFiveIV, mTPlayerFiveTV);
+            } else {
+                Glide.with(mTPlayerFiveIV.getContext()).clear(mTPlayerFiveIV);
+                mTPlayerFiveIV.setImageResource(R.drawable.splash_logo);
+            }
+
+            if (!TextUtils.isEmpty(mBattleCaptainDetails.get(5).getImg()) && mBattleCaptainDetails.get(5).getImg().startsWith("https")) {
+                setCaptainImage(mBattleCaptainDetails, 6, mTPlayerSixIV, mTPlayerSixTV);
+            } else {
+                Glide.with(mTPlayerSixIV.getContext()).clear(mTPlayerSixIV);
+                mTPlayerSixIV.setImageResource(R.drawable.splash_logo);
             }
 //            substituteData(mIsCaptain, mBattleList);
         } else if (mResultList.get(0).getCaptainPoints() > mResultList.get(0).getOpponentPoints()) {
@@ -424,14 +424,14 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
             if (!TextUtils.isEmpty(mBattleCaptainDetails.get(4).getImg()) && mBattleCaptainDetails.get(4).getImg().startsWith("https")) {
                 setCaptainImage(mBattleCaptainDetails, 5, mTPlayerFiveEditIV, mTPlayerFiveEditTV);
             } else {
-                Glide.with(mTPlayerFourEditIV.getContext()).clear(mTPlayerFourEditIV);
-                mTPlayerFourEditIV.setImageResource(R.drawable.splash_logo);
+                Glide.with(mTPlayerFiveEditIV.getContext()).clear(mTPlayerFiveEditIV);
+                mTPlayerFiveEditIV.setImageResource(R.drawable.splash_logo);
             }
             if (!TextUtils.isEmpty(mBattleCaptainDetails.get(5).getImg()) && mBattleCaptainDetails.get(5).getImg().startsWith("https")) {
                 setCaptainImage(mBattleCaptainDetails, 6, mTPlayerSixEditIV, mTPlayerSixEditTV);
             } else {
-                Glide.with(mTPlayerFourEditIV.getContext()).clear(mTPlayerFourEditIV);
-                mTPlayerFourEditIV.setImageResource(R.drawable.splash_logo);
+                Glide.with(mTPlayerSixEditIV.getContext()).clear(mTPlayerSixEditIV);
+                mTPlayerSixEditIV.setImageResource(R.drawable.splash_logo);
             }
 
 
@@ -466,14 +466,14 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
             if (!TextUtils.isEmpty(mBattleOpponentDetails.get(4).getImg()) && mBattleOpponentDetails.get(4).getImg().startsWith("https")) {
                 setOpponentImage(mBattleOpponentDetails, 5, mTPlayerFiveIV, mTPlayerFiveTV);
             } else {
-                Glide.with(this).clear(mTPlayerFourIV);
-                mTPlayerFourIV.setImageResource(R.drawable.splash_logo);
+                Glide.with(this).clear(mTPlayerFiveIV);
+                mTPlayerFiveIV.setImageResource(R.drawable.splash_logo);
             }
             if (!TextUtils.isEmpty(mBattleOpponentDetails.get(5).getImg()) && mBattleOpponentDetails.get(5).getImg().startsWith("https")) {
                 setOpponentImage(mBattleOpponentDetails, 6, mTPlayerSixIV, mTPlayerSixTV);
             } else {
-                Glide.with(this).clear(mTPlayerFourIV);
-                mTPlayerFourIV.setImageResource(R.drawable.splash_logo);
+                Glide.with(this).clear(mTPlayerSixIV);
+                mTPlayerSixIV.setImageResource(R.drawable.splash_logo);
             }
 
         } else if (mResultList.get(0).getCaptainPoints() == mResultList.get(0).getOpponentPoints()) {
@@ -558,14 +558,14 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
             if (!TextUtils.isEmpty(mBattleList.getOpponentTeam().get(4).getImg()) && mBattleList.getOpponentTeam().get(4).getImg().startsWith("https")) {
                 setOpponentImage(mBattleOpponentDetails, 5, mTPlayerFiveEditIV, mTPlayerFiveEditTV);
             } else {
-                Glide.with(mTPlayerFourEditIV.getContext()).clear(mTPlayerFourEditIV);
-                mTPlayerFourEditIV.setImageResource(R.drawable.splash_logo);
+                Glide.with(mTPlayerFiveEditIV.getContext()).clear(mTPlayerFiveEditIV);
+                mTPlayerFiveEditIV.setImageResource(R.drawable.splash_logo);
             }
             if (!TextUtils.isEmpty(mBattleList.getOpponentTeam().get(5).getImg()) && mBattleList.getOpponentTeam().get(5).getImg().startsWith("https")) {
                 setOpponentImage(mBattleOpponentDetails, 6, mTPlayerSixEditIV, mTPlayerSixEditTV);
             } else {
-                Glide.with(mTPlayerFourEditIV.getContext()).clear(mTPlayerFourEditIV);
-                mTPlayerFourEditIV.setImageResource(R.drawable.splash_logo);
+                Glide.with(mTPlayerFiveEditIV.getContext()).clear(mTPlayerFiveEditIV);
+                mTPlayerFiveEditIV.setImageResource(R.drawable.splash_logo);
             }
 
 ////////////////////////////////////////////////////////////OPPonentTeam////////////////////////////////////////////////////////////////////////////////////////////
@@ -599,14 +599,14 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
             if (!TextUtils.isEmpty(mBattleList.getCaptainTeam().get(4).getImg()) && mBattleList.getCaptainTeam().get(4).getImg().startsWith("https")) {
                 setCaptainImage(mBattleCaptainDetails, 5, mTPlayerFiveIV, mTPlayerFiveTV);
             } else {
-                Glide.with(this).clear(mTPlayerFourIV);
-                mTPlayerFourIV.setImageResource(R.drawable.splash_logo);
+                Glide.with(this).clear(mTPlayerFiveIV);
+                mTPlayerFiveIV.setImageResource(R.drawable.splash_logo);
             }
             if (!TextUtils.isEmpty(mBattleList.getCaptainTeam().get(5).getImg()) && mBattleList.getCaptainTeam().get(5).getImg().startsWith("https")) {
                 setCaptainImage(mBattleCaptainDetails, 6, mTPlayerSixIV, mTPlayerSixTV);
             } else {
-                Glide.with(this).clear(mTPlayerFourIV);
-                mTPlayerFourIV.setImageResource(R.drawable.splash_logo);
+                Glide.with(this).clear(mTPlayerFiveIV);
+                mTPlayerFiveIV.setImageResource(R.drawable.splash_logo);
             }
 
         } else {
@@ -642,14 +642,14 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
             if (!TextUtils.isEmpty(mBattleList.getCaptainTeam().get(4).getImg()) && mBattleList.getCaptainTeam().get(4).getImg().startsWith("https")) {
                 setCaptainImage(mBattleCaptainDetails, 5, mTPlayerFiveEditIV, mTPlayerFiveEditTV);
             } else {
-                Glide.with(this).clear(mTPlayerFourEditIV);
-                mTPlayerFourEditIV.setImageResource(R.drawable.splash_logo);
+                Glide.with(this).clear(mTPlayerFiveEditIV);
+                mTPlayerFiveEditIV.setImageResource(R.drawable.splash_logo);
             }
             if (!TextUtils.isEmpty(mBattleList.getCaptainTeam().get(5).getImg()) && mBattleList.getCaptainTeam().get(5).getImg().startsWith("https")) {
                 setCaptainImage(mBattleCaptainDetails, 6, mTPlayerSixEditIV, mTPlayerSixEditTV);
             } else {
-                Glide.with(this).clear(mTPlayerFourEditIV);
-                mTPlayerFourEditIV.setImageResource(R.drawable.splash_logo);
+                Glide.with(this).clear(mTPlayerFiveEditIV);
+                mTPlayerFiveEditIV.setImageResource(R.drawable.splash_logo);
             }
 
 ////////////////////////////////////////////////////////////OPPONENTTeam////////////////////////////////////////////////////////////////////////////////////////////
@@ -683,14 +683,14 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
             if (!TextUtils.isEmpty(mBattleList.getOpponentTeam().get(4).getImg()) && mBattleList.getOpponentTeam().get(4).getImg().startsWith("https")) {
                 setOpponentImage(mBattleOpponentDetails, 5, mTPlayerFiveIV, mTPlayerFiveTV);
             } else {
-                Glide.with(mTPlayerFourIV.getContext()).clear(mTPlayerFourIV);
-                mTPlayerFourIV.setImageResource(R.drawable.splash_logo);
+                Glide.with(mTPlayerFiveIV.getContext()).clear(mTPlayerFiveIV);
+                mTPlayerFiveIV.setImageResource(R.drawable.splash_logo);
             }
             if (!TextUtils.isEmpty(mBattleList.getOpponentTeam().get(5).getImg()) && mBattleList.getOpponentTeam().get(5).getImg().startsWith("https")) {
                 setOpponentImage(mBattleOpponentDetails, 6, mTPlayerSixIV, mTPlayerSixTV);
             } else {
-                Glide.with(mTPlayerFourIV.getContext()).clear(mTPlayerFourIV);
-                mTPlayerFourIV.setImageResource(R.drawable.splash_logo);
+                Glide.with(mTPlayerSixIV.getContext()).clear(mTPlayerSixIV);
+                mTPlayerSixIV.setImageResource(R.drawable.splash_logo);
             }
 
         }

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:background="@color/colorTransparent">
+
+    <TextView
+        android:id="@+id/tv_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/padding_20"
+        android:text="Confirm Buy-in"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_24"
+        android:textStyle="bold" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_entry_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_heading"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10"
+        android:padding="@dimen/padding_8"
+        android:text="Entry Fee"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_16" />
+
+    <TextView
+        android:id="@+id/tv_entry_fee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_heading"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:padding="@dimen/padding_8"
+        android:text="Entry Fee"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_16" />
+
+    <TextView
+        android:id="@+id/tv_total_wallet_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_entry_label"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_5"
+        android:gravity="center"
+        android:padding="@dimen/padding_8"
+        android:text="Total Wallet Balance"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_16" />
+
+    <TextView
+        android:id="@+id/tv_total_wallet_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_entry_label"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:gravity="center"
+        android:padding="@dimen/padding_8"
+        android:text="Total Wallet Balance"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_16" />
+
+    <TextView
+        android:id="@+id/tv_deposit_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_total_wallet_label"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_5"
+        android:gravity="center"
+        android:padding="@dimen/padding_8"
+        android:text="Deposit + Winning"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_16" />
+
+    <TextView
+        android:id="@+id/tv_deposit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_total_wallet_label"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:gravity="center"
+        android:padding="@dimen/padding_8"
+        android:text="Deposit + Winning"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_16" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_marginBottom="@dimen/margin_10">
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_cancel"
+            android:layout_width="140dp"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="@dimen/margin_1"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_play"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Cancel"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_play"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_button_red"
+            android:text="@string/text_play_now"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/mcv_cancel"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>

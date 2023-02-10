@@ -1,26 +1,19 @@
 package com.khiladiadda.gamercash;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
-import com.khiladiadda.chat.model.ChatMessage;
 import com.khiladiadda.gamercash.interfaces.IGamerCashView;
 import com.khiladiadda.gamercash.interfaces.IVerifyingGamerCashUserPresenter;
 import com.khiladiadda.gamercash.ip.GamerCashUserPresenter;
 import com.khiladiadda.network.model.ApiError;
-import com.khiladiadda.network.model.response.gamer_cash.GamerCashResponse;
+import com.khiladiadda.network.model.response.GamerCashResponse;
 import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.utility.NetworkStatus;
-import com.moengage.core.analytics.MoEAnalyticsHelper;
-import com.moengage.core.model.AppStatus;
 
 import butterknife.BindView;
 

@@ -239,6 +239,7 @@
         </RelativeLayout>
 
         <include layout="@layout/view_line_gray" />
+
         <RelativeLayout
             android:id="@+id/rl_ff_max"
             android:layout_width="match_parent"
@@ -265,5 +266,93 @@
                 style="@style/ProfileCredentialButtonPlay" />
 
         </RelativeLayout>
+
+        <!--    Ludo Tournament    -->
+        <RelativeLayout
+            android:id="@+id/rl_ludo_tournament"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_ludo_tournament"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/ludotmt_tournament_mainlogo" />
+
+            <TextView
+                android:id="@+id/tv_ludo_tournament"
+                style="@style/ProfileHeadText"
+                android:text="Ludo Tournament"
+                android:layout_toStartOf="@+id/btn_ludo_tournament"
+                android:layout_toEndOf="@+id/iv_ludo_tournament"
+                android:padding="@dimen/padding_5" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_ludo_tournament"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+
+        <!--    Rummy    -->
+        <RelativeLayout
+            android:id="@+id/rl_rummy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_rummy"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/ic_rummy_img" />
+
+            <TextView
+                android:id="@+id/tv_rummy"
+                style="@style/ProfileHeadText"
+                android:text="Rummy"
+                android:layout_toStartOf="@+id/btn_rummy"
+                android:layout_toEndOf="@+id/iv_rummy"
+                android:padding="@dimen/padding_5" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_rummy"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+
+        <!--    Call Break    -->
+        <RelativeLayout
+            android:id="@+id/rl_callbreak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_callbreak"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/codepiece" />
+
+            <TextView
+                android:id="@+id/tv_callbreak"
+                style="@style/ProfileHeadText"
+                android:text="Court Pieces"
+                android:layout_toStartOf="@+id/btn_callbreak"
+                android:layout_toEndOf="@+id/iv_callbreak"
+                android:padding="@dimen/padding_5" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_callbreak"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

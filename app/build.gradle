@@ -148,6 +148,7 @@ dependencies {
     //truecaller
     implementation "com.truecaller.android.sdk:truecaller-sdk:2.7.0"
 
+    implementation 'phonepe.intentsdk.android.release:IntentSDK:1.6.8@aar'
 
 
 }
