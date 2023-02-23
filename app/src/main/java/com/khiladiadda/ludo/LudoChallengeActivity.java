@@ -1,5 +1,7 @@
 package com.khiladiadda.ludo;
 
+import static android.view.View.GONE;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -22,9 +24,11 @@ import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.appsflyer.AFInAppEventParameterName;
 import com.appsflyer.AppsFlyerLib;
@@ -47,11 +51,14 @@ import com.khiladiadda.ludo.interfaces.ILudoChallengePresenter;
 import com.khiladiadda.ludo.interfaces.ILudoChallengeView;
 import com.khiladiadda.ludo.result.LudoResultActivity;
 import com.khiladiadda.main.MainActivity;
+import com.khiladiadda.main.adapter.BannerPagerAdapter;
+import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.request.GameCredential;
 import com.khiladiadda.network.model.request.LudoContestRequest;
 import com.khiladiadda.network.model.request.OpponentLudoRequest;
+import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.LudoContest;
 import com.khiladiadda.network.model.response.LudoContestResponse;
@@ -100,8 +107,6 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
     TextView mRefreshTV;
     @BindView(R.id.tv_add_challenge)
     TextView mAddChallengeTV;
-    @BindView(R.id.iv_announcement)
-    ImageView mAnnouncementIV;
     @BindView(R.id.btn_classic)
     Button mClassicBTN;
     @BindView(R.id.btn_popular)
@@ -127,6 +132,11 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
     private Dialog mUpdateGameUsernameDialog;
     private int mMode = 1, mFilters = 0;
     private Coins mCoins;
+
+    @BindView(R.id.vp_advertisement)
+    ViewPager mBannerVP;
+    private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -295,6 +305,15 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
         mMyContestList.clear();
         mMyContestList.addAll(responseModel.getMyContests());
         mMyChallengeAdapter.notifyDataSetChanged();
+
+        List<BannerDetails> bannerData = responseModel.getBanner();
+        if (bannerData != null && bannerData.size() > 0) {
+            mBannerVP.setVisibility(View.VISIBLE);
+            setUpAdvertisementViewPager(bannerData);
+        } else {
+            mBannerVP.setVisibility(GONE);
+        }
+
         if (mMyContestList.size() >= 1) {
             mNoDataTV.setVisibility(View.GONE);
         } else {
@@ -313,14 +332,7 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
             double mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
             mWalletBalanceTV.setText("₹" + AppUtilityMethods.roundUpNumber(mTotalWalletBal));
         }
-        if (responseModel.getBanner().size() > 0) {
-            mAnnouncementIV.setVisibility(View.VISIBLE);
-            if (!TextUtils.isEmpty(responseModel.getBanner().get(0).getImg())) {
-                Glide.with(mAnnouncementIV.getContext()).load(responseModel.getBanner().get(0).getImg()).transform(new CenterCrop(), new RoundedCorners(20)).into(mAnnouncementIV);
-            } else {
-                mAnnouncementIV.setVisibility(View.GONE);
-            }
-        }
+
         if (responseModel.isIs_popular_enabled()) {
             mLLMode.setVisibility(View.VISIBLE);
         } else {
@@ -667,5 +679,29 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
         mFilters = filter;
         getLudoContest(false, false);
     };
+
+    private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
+        mAdvertisementsList.clear();
+        mAdvertisementsList.addAll(advertisementDetails);
+        List<Fragment> mFragmentList = new ArrayList<>();
+        for (BannerDetails advertisement : advertisementDetails) {
+            mFragmentList.add(BannerFragment.getInstance(advertisement));
+        }
+        BannerPagerAdapter adapter = new BannerPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
+        mBannerVP.setAdapter(adapter);
+        mBannerVP.setOffscreenPageLimit(3);
+        if (mHandler == null) {
+            mHandler = new Handler();
+            moveToNextAd(0);
+        }
+    }
+
+    private void moveToNextAd(int i) {
+        mBannerVP.setCurrentItem(i, true);
+        mHandler.postDelayed(() -> {
+            int currentItem = mBannerVP.getCurrentItem();
+            moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
+        }, 10000);
+    }
 
 }

@@ -84,6 +84,8 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
     ImageView mRummyIv;
     @BindView(R.id.iv_codepieces)
     ImageView mCallBreakIv;
+    @BindView(R.id.iv_quiz)
+    ImageView mQuizIv;
 
     public static Fragment getInstance() {
         return new GameFragment();
@@ -116,6 +118,7 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
         mLudoTournamentIv.setOnClickListener(this);
         mRummyIv.setOnClickListener(this);
         mCallBreakIv.setOnClickListener(this);
+        mQuizIv.setOnClickListener(this);
 
     }
 
@@ -142,6 +145,7 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
                         .addAttribute(AppConstant.ClickedDate, new Date());
                 MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
                 break;
+            case R.id.iv_quiz:
             case R.id.tv_quiz:
                 i = new Intent(getActivity(), AllQuizListActivity.class);
                 properties

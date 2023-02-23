@@ -1,24 +1,34 @@
 package com.khiladiadda.ludoUniverse;
 
+import static android.view.View.GONE;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Parcelable;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -31,8 +41,11 @@ import com.khiladiadda.interfaces.IOnFileDownloadedListener;
 import com.khiladiadda.ludoUniverse.interfaces.ILudoUniversePresenter;
 import com.khiladiadda.ludoUniverse.interfaces.ILudoUniverseView;
 import com.khiladiadda.main.MainActivity;
+import com.khiladiadda.main.adapter.BannerPagerAdapter;
+import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
+import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.LudoContestResponse;
 import com.khiladiadda.network.model.response.ModeResponse;
 import com.khiladiadda.utility.AppConstant;
@@ -44,6 +57,8 @@ import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -57,8 +72,6 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
     TextView mDownloadTV;
     @BindView(R.id.tv_help_video)
     TextView mHelpVideoTV;
-    @BindView(R.id.iv_announcement)
-    ImageView mAnnouncementIV;
     @BindView(R.id.btn_classic_mode)
     Button mClassicModeBTN;
     @BindView(R.id.btn_series_mode)
@@ -73,6 +86,8 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
     LinearLayout mRuleLL;
     @BindView(R.id.tv_ludo_enable)
     TextView mLudoEnableTV;
+    @BindView(R.id.tv_rules)
+    TextView rulesTv;
 
     private Dialog mVersionDialog;
     private String mVersion, mLink, mFilePath, mCurrentVersion;
@@ -80,6 +95,13 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
     private ILudoUniversePresenter mPresenter;
     private Intent launchIntent;
     private int mFrom = 1;
+    private List<BannerDetails> bannerData = new ArrayList<>();
+
+
+    @BindView(R.id.vp_advertisement)
+    ViewPager mBannerVP;
+    private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
+    private Handler mHandler;
 
     @Override
     protected int getContentView() {
@@ -88,7 +110,7 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
 
     @Override
     protected void initViews() {
-        mActivityNameTV.setText(R.string.text_ludo_adda);
+        mActivityNameTV.setText("Classic");
         mBackIV.setOnClickListener(this);
         mDownloadTV.setOnClickListener(this);
         mHelpVideoTV.setOnClickListener(this);
@@ -96,9 +118,12 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
         mSeriesModeBTN.setOnClickListener(this);
         mTimerModeBTN.setOnClickListener(this);
         mPlayTV.setOnClickListener(this);
+        doSelection(true, false, false);
+        rulesTv.setMovementMethod(new ScrollingMovementMethod());
+        rulesTv.setText(AppConstant.ADDA_CLASSIC_RULES);
         launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
-        mAppPreference.setBoolean("LudoDownload", false);
         if (launchIntent != null) getVersion();
+        else mAppPreference.setBoolean("LudoDownload", false);
     }
 
     @Override
@@ -126,27 +151,68 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
             case R.id.btn_classic_mode:
                 mFrom = 1;
                 mPlayTV.setText(R.string.play_classic);
+                doSelection(true, false, false);
+                mActivityNameTV.setText("Classic");
+                rulesTv.setText(AppConstant.ADDA_CLASSIC_RULES);
+                fetchBanner();
                 break;
             case R.id.btn_timer_mode:
                 mFrom = 2;
                 mPlayTV.setText(R.string.play_timer);
+                doSelection(false, true, false);
+                mActivityNameTV.setText("Timer");
+                rulesTv.setText(AppConstant.ADDA_TIMER_RULES);
+                fetchBanner();
                 break;
             case R.id.btn_series_mode:
                 mFrom = 3;
                 mPlayTV.setText(R.string.play_series);
+                doSelection(false, false, true);
+                mActivityNameTV.setText("Series");
+                rulesTv.setText(AppConstant.ADDA_SERIES_RULES);
+                fetchBanner();
                 break;
             case R.id.tv_play:
-                Intent a = new Intent(this, LudoUniverseActivity.class);
-                if (mFrom == 1) {
-                    a.putExtra(AppConstant.FROM, AppConstant.LEADERBOARD_LISTING_DAILY);
-                } else if (mFrom == 2) {
-                    a.putExtra(AppConstant.FROM, AppConstant.LEADERBOARD_LISTING_MONTHLY);
+                if (mAppPreference.getBoolean("LudoDownload", false)) {
+                    if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
+                        Intent a = new Intent(this, LudoUniverseActivity.class);
+                        if (mFrom == 1) {
+                            a.putExtra(AppConstant.FROM, AppConstant.LEADERBOARD_LISTING_DAILY);
+                        } else if (mFrom == 2) {
+                            a.putExtra(AppConstant.FROM, AppConstant.LEADERBOARD_LISTING_MONTHLY);
+                        } else {
+                            a.putExtra(AppConstant.FROM, AppConstant.LEADERBOARD_LISTING_WEEKLY);
+                        }
+                        a.putParcelableArrayListExtra("banner", (ArrayList<? extends Parcelable>) bannerData);
+                        startActivity(a);
+                    } else {
+                        mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
+                    }
                 } else {
-                    a.putExtra(AppConstant.FROM, AppConstant.LEADERBOARD_LISTING_WEEKLY);
+                    mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
                 }
-                startActivity(a);
                 break;
         }
+    }
+
+    private void doSelection(boolean classic, boolean timer, boolean series) {
+        mClassicModeBTN.setBackgroundResource(R.drawable.bg_btn_classic);
+        mTimerModeBTN.setBackgroundResource(R.drawable.bg_btn_timer);
+        mSeriesModeBTN.setBackgroundResource(R.drawable.bg_btn_series);
+        mClassicModeBTN.setTextColor(Color.parseColor("#ffffff"));
+        mTimerModeBTN.setTextColor(Color.parseColor("#ffffff"));
+        mSeriesModeBTN.setTextColor(Color.parseColor("#ffffff"));
+        if (classic) {
+            mClassicModeBTN.setBackgroundResource(R.drawable.ic_selectable);
+            mClassicModeBTN.setTextColor(Color.parseColor("#000000"));
+        } else if (timer) {
+            mTimerModeBTN.setBackgroundResource(R.drawable.ic_selectable);
+            mTimerModeBTN.setTextColor(Color.parseColor("#000000"));
+        } else if (series) {
+            mSeriesModeBTN.setBackgroundResource(R.drawable.ic_selectable);
+            mSeriesModeBTN.setTextColor(Color.parseColor("#000000"));
+        }
+
     }
 
     @Override
@@ -209,19 +275,16 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
             mPlayTV.setVisibility(View.GONE);
             mDownloadTV.setVisibility(View.GONE);
             mHelpVideoTV.setVisibility(View.GONE);
-            mAnnouncementIV.setVisibility(View.GONE);
         } else {
             mCurrentVersion = responseModel.getMetaInfo().getApk_version();
             mLink = responseModel.getMetaInfo().getLudoApkLink();
             apkCheck();
-            if (responseModel.isStatus()) {
-                if (responseModel.getResponse().getBanners().size() > 0)
-                    mAnnouncementIV.setVisibility(View.VISIBLE);
-                if (!TextUtils.isEmpty(responseModel.getResponse().getBanners().get(0).getImg())) {
-                    Glide.with(mAnnouncementIV.getContext()).load(responseModel.getResponse().getBanners().get(0).getImg()).transform(new CenterCrop(), new RoundedCorners(20)).into(mAnnouncementIV);
-                } else {
-                    mAnnouncementIV.setVisibility(View.GONE);
-                }
+            bannerData = responseModel.getResponse().getBanners();
+            if (bannerData != null && bannerData.size() > 0) {
+                mBannerVP.setVisibility(View.VISIBLE);
+                setUpAdvertisementViewPager(bannerData);
+            } else {
+                mBannerVP.setVisibility(GONE);
             }
         }
     }
@@ -334,28 +397,26 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
     @Override
     protected void onResume() {
         super.onResume();
-        if (new NetworkStatus(this).isInternetOn()) {
-            showProgress(getString(R.string.txt_progress_authentication));
-            mPresenter.getMode("1");
-        } else {
-            Snackbar.make(mPlayTV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
-        }
+        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
+        if (launchIntent != null) getVersion();
+        else mAppPreference.setBoolean("LudoDownload", false);
+        fetchBanner();
         if (mIsRequestingAppInstallPermission) {
             installApk(mFilePath);
         }
-        if (mAppPreference.getBoolean("LudoDownload", false)) {
-            try {
-                Intent launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
-                if (launchIntent != null) {
-                    finish();
-                    startActivity(new Intent(this, ModeActivity.class));
-                } else {
-                    mDownloadTV.setVisibility(View.VISIBLE);
-                }
-            } catch (Exception e) {
-                finish();
-                startActivity(new Intent(this, LudoUniverseActivity.class));
-            }
+    }
+
+    private void fetchBanner() {
+        if (new NetworkStatus(this).isInternetOn()) {
+            showProgress(getString(R.string.txt_progress_authentication));
+            if (mFrom == 2) {
+                mPresenter.getMode("23");
+            } else if (mFrom == 3) {
+                mPresenter.getMode("22");
+            } else
+                mPresenter.getMode("21");
+        } else {
+            Snackbar.make(mPlayTV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -378,5 +439,30 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
             MoEAnalyticsHelper.INSTANCE.trackEvent(this, "LudoADDA", properties);
         }
     }
+
+    private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
+        mAdvertisementsList.clear();
+        mAdvertisementsList.addAll(advertisementDetails);
+        List<Fragment> mFragmentList = new ArrayList<>();
+        for (BannerDetails advertisement : advertisementDetails) {
+            mFragmentList.add(BannerFragment.getInstance(advertisement));
+        }
+        BannerPagerAdapter adapter = new BannerPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
+        mBannerVP.setAdapter(adapter);
+        mBannerVP.setOffscreenPageLimit(3);
+        if (mHandler == null) {
+            mHandler = new Handler();
+            moveToNextAd(0);
+        }
+    }
+
+    private void moveToNextAd(int i) {
+        mBannerVP.setCurrentItem(i, true);
+        mHandler.postDelayed(() -> {
+            int currentItem = mBannerVP.getCurrentItem();
+            moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
+        }, 10000);
+    }
+
 
 }

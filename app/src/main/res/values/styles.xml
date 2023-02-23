@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -183,7 +183,7 @@
     <style name="LeagueCardAppearance" parent="CardView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="cardUseCompatPadding">true</item>
+<!--        <item name="cardUseCompatPadding">true</item>-->
         <item name="cardCornerRadius">@dimen/card_corner_radius_10</item>
         <item name="cardElevation">@dimen/card_elevation_5</item>
         <item name="android:layout_marginStart">@dimen/margin_5</item>
@@ -985,11 +985,34 @@
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/stat_tv_bg</item>
-        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColor">#9A9797</item>
         <item name="android:layout_margin">@dimen/margin_2</item>
         <item name="android:padding">@dimen/padding_10</item>
         <item name="android:textSize">@dimen/text_15</item>
         <item name="fontFamily">@font/montserrat</item>
+    </style>
+
+<!--    <style name="MyBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">-->
+<!--        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>-->
+<!--    </style>   -->
+
+    <style name="MyBottomSheetDialogTheme" parent="Widget.Design.BottomNavigationView">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_width">200dp</item>
+
+    </style>
+
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyles</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="r">false</item>
+    </style>
+
+    <style name="CustomBottomSheetStyles" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
 </resources>

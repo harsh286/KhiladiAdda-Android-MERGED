@@ -4,6 +4,7 @@ import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.response.LudoContestResponse;
 import com.khiladiadda.network.model.response.ModeResponse;
+import com.khiladiadda.network.model.response.RummyCheckGameResponse;
 import com.khiladiadda.network.model.response.RummyRefreshTokenMainResponse;
 import com.khiladiadda.network.model.response.RummyResponse;
 
@@ -16,5 +17,9 @@ public interface IRummyView {
     void onGetContestRefreshTokenSuccess(RummyRefreshTokenMainResponse responseModel);
 
     void onGetContestRefreshTokenFailure(ApiError error);
+
+    void onGetContestCheckGameSuccess(RummyCheckGameResponse responseModel);
+
+    void onGetContestCheckGameFailure(ApiError error);
 
 }

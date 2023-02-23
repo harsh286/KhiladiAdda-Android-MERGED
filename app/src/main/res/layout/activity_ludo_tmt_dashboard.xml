@@ -1,77 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/all_tournaments_bg">
+
+
+    <include
+        android:id="@+id/in_action_bar"
+        layout="@layout/ludotmt_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/all_tournaments_bg">
+        android:layout_height="@dimen/dimen_60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <include
-            android:id="@+id/in_action_bar"
-            layout="@layout/ludotmt_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_60dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+    <RelativeLayout
+        android:id="@+id/rl_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/in_action_bar">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_advertisement"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_margin="@dimen/text_12"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/in_action_bar" />
+            android:layout_height="120dp"
+            android:layout_alignParentTop="true" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tl_ludotmt"
+        <ImageView
+            android:id="@+id/iv_image"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="@dimen/text_12"
-            android:background="@color/ludotmt_purple"
-            app:layout_constraintTop_toBottomOf="@id/vp_advertisement"
-            app:tabIndicatorColor="@color/white"
-            app:tabIndicatorHeight="3dp"
-            app:tabTextAppearance="@style/TabLayoutTextStyle"
-            app:tabTextColor="@color/white" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_sub_my_tournament"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="@color/black"
-            android:clipToPadding="false"
-            android:paddingRight="4dp"
-            android:paddingBottom="@dimen/margin_1"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/tl_ludotmt"
-            app:tabIndicatorColor="@color/white"
-            app:tabIndicatorHeight="2dp"
-            app:tabMinWidth="50dp"
-            app:tabRippleColor="@null"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextAppearance="@style/CustomTextAppearanceTab"
-            app:tabTextColor="@color/tab_indicator_default_color" />
+            android:layout_height="165dp"
+            android:contentDescription="@string/text_pubg"
+            android:visibility="gone" />
+    </RelativeLayout>
 
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/vp_ludotmt"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tab_sub_my_tournament"
-            tools:layout_editor_absoluteX="12dp" />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tl_ludotmt"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="@dimen/text_12"
+        android:background="@color/ludotmt_purple"
+        app:layout_constraintTop_toBottomOf="@id/rl_image"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="3dp"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        app:tabTextColor="@color/white" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_sub_my_tournament"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/black"
+        android:clipToPadding="false"
+        android:paddingRight="4dp"
+        android:paddingBottom="@dimen/margin_1"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/tl_ludotmt"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="2dp"
+        app:tabMinWidth="50dp"
+        app:tabRippleColor="@null"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/CustomTextAppearanceTab"
+        app:tabTextColor="@color/tab_indicator_default_color" />
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_ludotmt"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_sub_my_tournament"
+        tools:layout_editor_absoluteX="12dp" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -81,7 +93,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tl_ludotmt">
-
 
 
         <androidx.appcompat.widget.AppCompatButton
@@ -128,8 +139,8 @@
             android:layout_height="2dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:visibility="gone"
             android:background="@color/white"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/btn_series"
             app:layout_constraintStart_toEndOf="@+id/btn_classic"
             app:layout_constraintTop_toBottomOf="@+id/btn_series" />
@@ -177,40 +188,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_mode"
         tools:listitem="@layout/items_of_alltournament_ludotmt" />
-        <!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
-        <TextView
-            android:id="@+id/tv_error"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/rowdies_regular"
-            android:gravity="center"
-            android:text="@string/no_games_exist_please_wait"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_16"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tl_ludotmt" />
+    <!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/rowdies_regular"
+        android:gravity="center"
+        android:text="@string/no_games_exist_please_wait"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_16"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tl_ludotmt" />
 
-        <!--    <TextView-->
-        <!--        android:id="@+id/tv_error_my_tournament"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:layout_centerInParent="true"-->
-        <!--        android:layout_marginTop="160dp"-->
-        <!--        android:fontFamily="@font/rowdies_regular"-->
-        <!--        android:gravity="center"-->
-        <!--        android:text="@string/You_haven_t_participated_in_any_tournament"-->
-        <!--        android:textColor="@color/white"-->
-        <!--        android:textSize="@dimen/text_16"-->
-        <!--        android:visibility="visible"-->
-        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--        app:layout_constraintEnd_toEndOf="parent"-->
-        <!--        app:layout_constraintStart_toStartOf="parent"-->
-        <!--        app:layout_constraintTop_toBottomOf="@id/tv_trending_txt"-->
-        <!--        app:layout_constraintTop_toTopOf="parent" />-->
-        <!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_error_my_tournament"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        android:layout_marginTop="160dp"-->
+    <!--        android:fontFamily="@font/rowdies_regular"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="@string/You_haven_t_participated_in_any_tournament"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="@dimen/text_16"-->
+    <!--        android:visibility="visible"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/tv_trending_txt"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+</androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -89,7 +89,7 @@ public class SeriesFragment extends BaseFragment implements IOnClickListener, IL
     private void callLiveTournamentApi() {
         if (new NetworkStatus(getContext()).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
-            mPresenter.getAllTournament(true, 1);
+            mPresenter.getAllTournament(true, 1, false,"",true);
         } else {
             Snackbar.make(liveTmtRv, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }

@@ -33,7 +33,7 @@
         android:layout_width="@dimen/margin_120"
         android:layout_height="@dimen/margin_30"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/margin_15"
+        android:layout_marginEnd="8dp"
         android:layout_toStartOf="@id/tv_help_video"
         android:background="@drawable/cb_download"
         android:elevation="@dimen/margin_5"
@@ -42,11 +42,42 @@
         android:orientation="horizontal"
         android:text="@string/text_download"
         android:textColor="@color/white"
-        android:visibility="visible" />
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/rl_wallet"
+        android:layout_width="@dimen/margin_120"
+        android:layout_height="@dimen/margin_30"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
+        android:layout_toStartOf="@id/tv_help_video"
+        android:background="@drawable/cb_download"
+        android:elevation="@dimen/margin_5"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10"
+            android:contentDescription="@string/s3"
+            android:src="@drawable/ic_wallet" />
+
+        <TextView
+            android:id="@+id/tv_total_wallet_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_5"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_16"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/tv_help_video"
-        android:layout_width="@dimen/margin_120"
+        android:layout_width="60dp"
         android:layout_height="@dimen/margin_30"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
@@ -56,6 +87,7 @@
         android:gravity="center"
         android:padding="@dimen/padding_5"
         android:text="@string/text_view_ludo_video"
+        android:textSize="@dimen/text_14"
         android:textColor="@color/white" />
 
 

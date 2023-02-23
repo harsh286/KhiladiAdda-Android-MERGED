@@ -295,6 +295,7 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
             } else
                 mYouWin = true;
         }
+        setCaptionOpponentClick();
 
         if (mResultList.get(0).getOpponentPoints() > mResultList.get(0).getCaptainPoints()) {
             if (mIsCaptain) {
@@ -304,7 +305,6 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
                 mNameTV.setText(AppConstant.TEXT_YOUR_COMBO);
                 mOppNameTV.setText(AppConstant.TEXT_OPPONENT_COMBO);
             }
-            setCaptionOpponentClick();
             mPointsWinningTV.setText("Total Points " + mResultList.get(0).getOpponentPoints());
             Glide.with(this).load(mBattleList.getOpponent().getDp()).placeholder(R.drawable.splash_logo).into(mWinningIV);
             if (!TextUtils.isEmpty(mBattleOpponentDetails.get(0).getImg()) && mBattleOpponentDetails.get(0).getImg().startsWith("https")) {
@@ -708,13 +708,13 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
 
     private void substituteData(boolean isCaptain, BattlesDeatilsHTH mBattleList) {
         List<CaptainTeamHTH> battleDetails;
-        if (isCaptain) {
+        if (mBattleList.getCaptainId().equalsIgnoreCase(mAppPreference.getProfileData().getId())) {
             battleDetails = mBattleList.getCaptainTeam();
         } else {
             battleDetails = mBattleList.getOpponentTeam();
         }
         try {
-            if (battleDetails.get(0).isSubstitute() || battleDetails.get(1).isSubstitute() || battleDetails.get(2).isSubstitute() || battleDetails.get(3).isSubstitute()) {
+            if (battleDetails.get(0).isSubstitute() || battleDetails.get(1).isSubstitute() || battleDetails.get(2).isSubstitute() || battleDetails.get(3).isSubstitute()|| battleDetails.get(4).isSubstitute()|| battleDetails.get(5).isSubstitute()) {
                 mSubstituteTV.setVisibility(View.VISIBLE);
             } else {
                 mSubstituteTV.setVisibility(View.GONE);

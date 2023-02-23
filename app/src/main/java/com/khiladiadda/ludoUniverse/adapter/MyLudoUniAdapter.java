@@ -72,6 +72,21 @@ public class MyLudoUniAdapter extends RecyclerView.Adapter<MyLudoUniAdapter.Ludo
             holder.mCancelTV.setText(R.string.txt_canceled);
             holder.mCancelTV.setBackgroundColor(Color.parseColor("#DA0000"));
             holder.mCancelTV.setEnabled(false);
+        } else if (ludoContestBean.getContestStatus() == 8) {
+            if (userId.equalsIgnoreCase(ludoContestBean.getCaptainId())) {
+                if (ludoContestBean.getContestStatus() == 1) {
+                    setOpponentData(ludoContestBean, holder);
+                } else {
+                    holder.mTitleTV.setText(String.format("You have challenged for\n%s Coins", ludoContestBean.getEntryFees()));
+                }
+            } else {
+                setCaptainData(ludoContestBean, holder);
+                holder.mTitleTV.setText(String.format("You accepted challenge for \n%s Coins", ludoContestBean.getEntryFees()));
+            }
+            holder.mCancelTV.setVisibility(View.VISIBLE);
+            holder.mCancelTV.setText("Draw");
+            holder.mCancelTV.setBackgroundColor(Color.parseColor("#A2A2A2"));
+            holder.mCancelTV.setEnabled(false);
         } else if (ludoContestBean.getContestStatus() == 2) {
             if (userId.equalsIgnoreCase(ludoContestBean.getCaptainId())) {
                 setOpponentData(ludoContestBean, holder);

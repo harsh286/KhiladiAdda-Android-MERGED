@@ -19,7 +19,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_10"
-                android:layout_marginTop="@dimen/margin_5"
                 android:text="Games"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_14" />
@@ -64,18 +63,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_5"
-                android:layout_marginTop="-4dp"
+                android:layout_marginTop="-8dp"
                 android:layout_marginEnd="@dimen/margin_5"
                 android:orientation="horizontal">
-
-                <!--                <ImageView-->
-                <!--                    android:id="@+id/iv_wordsearch"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="140dp"-->
-                <!--                    android:layout_weight="1"-->
-                <!--                    android:layout_marginStart="@dimen/margin_5"-->
-                <!--                    android:contentDescription="@string/menu_ludo"-->
-                <!--                    android:src="@drawable/dash_ws" />-->
 
                 <ImageView
                     android:id="@+id/iv_ludotournament"
@@ -103,34 +93,14 @@
                     android:src="@drawable/ic_rummy_img" />
 
 
-
-                <!--                <ImageView-->
-                <!--                    android:id="@+id/iv_droidd"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="140dp"-->
-                <!--                    android:layout_weight="1"-->
-                <!--                    android:layout_marginStart="@dimen/margin_5"-->
-                <!--                    android:contentDescription="@string/menu_ludo"-->
-                <!--                    android:src="@drawable/dash_droid" />-->
-
-
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_5"
                 android:layout_marginEnd="@dimen/margin_5"
-                android:layout_marginTop="-20dp"
+                android:layout_marginTop="-24dp"
                 android:orientation="horizontal">
-
-                <!--                <ImageView-->
-                <!--                    android:id="@+id/iv_wordsearch"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="140dp"-->
-                <!--                    android:layout_weight="1"-->
-                <!--                    android:layout_marginStart="@dimen/margin_5"-->
-                <!--                    android:contentDescription="@string/menu_ludo"-->
-                <!--                    android:src="@drawable/dash_ws" />-->
 
                 <ImageView
                     android:id="@+id/iv_droido"
@@ -159,23 +129,13 @@
                     android:src="@drawable/ic_quiz_time" />
 
 
-                <!--                <ImageView-->
-                <!--                    android:id="@+id/iv_droidd"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="140dp"-->
-                <!--                    android:layout_weight="1"-->
-                <!--                    android:layout_marginStart="@dimen/margin_5"-->
-                <!--                    android:contentDescription="@string/menu_ludo"-->
-                <!--                    android:src="@drawable/dash_droid" />-->
-
-
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-6dp"
                 android:layout_marginStart="@dimen/margin_10"
-                android:layout_marginTop="@dimen/margin_10"
                 android:text="Cricket"
                 android:textColor="@color/white" />
 
@@ -216,7 +176,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_10"
-                android:layout_marginTop="@dimen/margin_10"
                 android:text="@string/text_esports"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_14" />

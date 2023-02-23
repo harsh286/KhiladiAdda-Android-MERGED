@@ -130,6 +130,7 @@ public class LeaderboardPresenter implements ILeaderboardPresenter {
         mSubscription = mInteractor.getLeaderBoardRummy(mAllLeaderboardListerner, page, limit, type);
     }
 
+
     private IApiListener<LeaderboardMainResponse> mAllLeaderboardListerner = new IApiListener<LeaderboardMainResponse>() {
         @Override
         public void onSuccess(LeaderboardMainResponse response) {

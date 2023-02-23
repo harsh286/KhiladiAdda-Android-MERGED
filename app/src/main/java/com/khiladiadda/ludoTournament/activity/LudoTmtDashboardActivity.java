@@ -1,39 +1,75 @@
 package com.khiladiadda.ludoTournament.activity;
 
+import static android.view.View.GONE;
+
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.dialogs.AppDialog;
+import com.khiladiadda.dialogs.interfaces.IOnVesrionDownloadListener;
 import com.khiladiadda.gameleague.adapter.NewDroidoAdapterViewPager;
+import com.khiladiadda.interfaces.IOnFileDownloadedListener;
 import com.khiladiadda.ludoTournament.adapter.LudoTmtDashboardAdapter;
 import com.khiladiadda.ludoTournament.adapter.ModeTournamentViewPagerAdapter;
 import com.khiladiadda.ludoTournament.adapter.MyTournamentViewPagerAdapter;
 import com.khiladiadda.ludoTournament.ip.LudoTmtPresenter;
 import com.khiladiadda.ludoTournament.ip.ILudoTmtView;
 import com.khiladiadda.ludoTournament.listener.IOnClickListener;
+import com.khiladiadda.ludoUniverse.LudoUniverseActivity;
+import com.khiladiadda.ludoUniverse.ModeActivity;
+import com.khiladiadda.main.adapter.BannerPagerAdapter;
+import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.request.ludoTournament.LudoTournamentFetchRequest;
+import com.khiladiadda.network.model.response.BannerDetails;
+import com.khiladiadda.network.model.response.Coins;
+import com.khiladiadda.network.model.response.LudoContestResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtAllTournamentMainResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtAllTournamentResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtMyMatchMainResponse;
+import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
+import com.khiladiadda.utility.DownloadApk;
 import com.khiladiadda.utility.NetworkStatus;
+import com.khiladiadda.utility.providers.GenericFileProvider;
+import com.khiladiadda.wallet.WalletActivity;
+import com.moengage.core.Properties;
+import com.moengage.core.analytics.MoEAnalyticsHelper;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,7 +84,7 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     @BindView(R.id.vp_ludotmt)
     ViewPager ludotmtVP;
     @BindView(R.id.img_rules)
-    ImageView rulesImg;
+    TextView rulesImg;
     @BindView(R.id.iv_back_arroww)
     ImageView backArrowIv;
     @BindView(R.id.btn_classic)
@@ -65,12 +101,33 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     View seriesVv;
     @BindView(R.id.vv_timer)
     View timerVv;
+    @BindView(R.id.tv_download)
+    TextView mDownloadTV;
+    @BindView(R.id.rl_wallet)
+    LinearLayout mWalletLL;
+    @BindView(R.id.tv_total_wallet_balance)
+    TextView mWalletBalanceTV;
+    @BindView(R.id.tv_title_name)
+    TextView mTitleTv;
+
 
     private MyTournamentViewPagerAdapter mMyTournamentViewPagerAdapter;
     private ModeTournamentViewPagerAdapter mModeTournamentViewPagerAdapter;
     private LudoTmtPresenter mPresenter;
     private int gameMode = 1;
+    private Coins mCoins;
     private List<LudoTmtAllTournamentResponse> responses;
+    private Dialog mVersionDialog;
+    private String mVersion, mLink, mFilePath, mCurrentVersion;
+    private boolean mIsRequestingAppInstallPermission;
+    private Intent launchIntent;
+    private double mTotalWalletBal;
+
+    @BindView(R.id.vp_advertisement)
+    ViewPager mBannerVP;
+    private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
+    private Handler mHandler;
+
 
     @Override
     protected int getContentView() {
@@ -87,7 +144,9 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         setSubMyTmttabData();
 //        setModeTmttabData();
 //        setupModeTournamentViewPager();
+        mTitleTv.setText("Classic");
         setupMyTournamentViewPager();
+
 //        swipeRefreshLayout.setRefreshing(false);
 //        swipeRefreshLayout();
     }
@@ -99,6 +158,8 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         ClassicBtn.setOnClickListener(this);
         SeriesBtn.setOnClickListener(this);
         TimerBtn.setOnClickListener(this);
+        mDownloadTV.setOnClickListener(this);
+        mWalletLL.setOnClickListener(this);
     }
 
     @Override
@@ -111,21 +172,29 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         } else if (p0.getId() == R.id.btn_classic) {
             callAllTournamentApi(1);
             gameMode = 1;
+            mTitleTv.setText("Classic");
             classicVvl.setVisibility(View.VISIBLE);
             seriesVv.setVisibility(View.GONE);
             timerVv.setVisibility(View.GONE);
         } else if (p0.getId() == R.id.btn_series) {
-            callAllTournamentApi(2);
+            callAllTournamentApi(3);
             gameMode = 3;
+            mTitleTv.setText("Series");
             classicVvl.setVisibility(View.GONE);
             seriesVv.setVisibility(View.VISIBLE);
             timerVv.setVisibility(View.GONE);
         } else if (p0.getId() == R.id.btn_timer) {
-            callAllTournamentApi(3);
+            callAllTournamentApi(2);
             gameMode = 2;
+            mTitleTv.setText("Timer");
             classicVvl.setVisibility(View.GONE);
             seriesVv.setVisibility(View.GONE);
             timerVv.setVisibility(View.VISIBLE);
+        } else if (p0.getId() == R.id.tv_download) {
+            mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
+        } else if (p0.getId() == R.id.rl_wallet) {
+            Intent profile = new Intent(this, WalletActivity.class);
+            startActivity(profile);
         } else {
             finish();
         }
@@ -139,7 +208,15 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     private void callAllTournamentApi(int type) {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
-            mPresenter.getAllTournament(true, type);
+            String bannerType="";
+            if(gameMode == 1){
+                bannerType = "31";
+            } else if(gameMode == 2){
+                bannerType = "32";
+            }else if(gameMode == 3){
+                bannerType = "33";
+            }
+            mPresenter.getAllTournament(true, type, false, bannerType, true);
         } else {
             Snackbar.make(backArrowIv, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
@@ -271,10 +348,19 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
 
     @Override
     public void onItemClick(int pos) {
-        Intent intent = new Intent(this, LudoTmtTounamentActivity.class);
-        intent.putExtra("AllLudoTournaments", responses.get(pos));
-        intent.putExtra("gameMode", gameMode);
-        startActivity(intent);
+        if (mAppPreference.getBoolean("LudoDownload", false)) {
+            if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
+                Intent intent = new Intent(this, LudoTmtTounamentActivity.class);
+                intent.putExtra("AllLudoTournaments", responses.get(pos));
+                intent.putExtra("gameMode", gameMode);
+                startActivity(intent);
+            } else {
+                mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
+            }
+        } else {
+            mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
+        }
+
     }
 
     @Override
@@ -288,8 +374,20 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
 //        swipeRefreshLayout.setRefreshing(false);
         try {
             if (response.isStatus()) {
+                mCurrentVersion = response.getApkVersion();
+                mLink = response.getLudoApkLink();
+                apkCheck();
+                setData(response);
                 responses = response.getResponse();
                 allTournamentRv.setAdapter(new LudoTmtDashboardAdapter(this, this, response.getResponse()));
+
+                List<BannerDetails> bannerData = getIntent().getParcelableArrayListExtra("banner");
+                if (bannerData != null && bannerData.size() > 0) {
+                    mBannerVP.setVisibility(View.VISIBLE);
+                    setUpAdvertisementViewPager(bannerData);
+                } else {
+                    mBannerVP.setVisibility(GONE);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -302,11 +400,175 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
 //        swipeRefreshLayout.setRefreshing(false);
     }
 
+    private void setData(LudoTmtAllTournamentMainResponse responseModel) {
+        mAppPreference.setProfileData(responseModel.getProfile());
+        mCoins = mAppPreference.getProfileData().getCoins();
+        if (mCoins != null) {
+            mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
+            mWalletBalanceTV.setText("₹" + AppUtilityMethods.roundUpNumber(mTotalWalletBal));
+        }
+    }
+    //DOWNLOAD
+
+    private Dialog downloadOptionPopup(final Context activity, final IOnVesrionDownloadListener listener) {
+        final Dialog dialog = new Dialog(activity, R.style.MyDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.ludoadda_download_popup);
+        TextView tv = dialog.findViewById(R.id.textView9);
+        ProgressBar progressBar = dialog.findViewById(R.id.pb_apk_download);
+        AppCompatButton iv_playstore = dialog.findViewById(R.id.iv_download);
+        ImageView ivCross = dialog.findViewById(R.id.iv_cross);
+        ivCross.setOnClickListener(view -> {
+            dialog.dismiss();
+        });
+        iv_playstore.setOnClickListener(view -> {
+            if (listener != null) {
+                progressBar.setVisibility(View.VISIBLE);
+                listener.onDownloadVersion();
+                iv_playstore.setVisibility(View.GONE);
+                ivCross.setVisibility(View.GONE);
+            }
+        });
+        dialog.show();
+        return dialog;
+    }
+
+    private final IOnVesrionDownloadListener mOnVersionListener = new IOnVesrionDownloadListener() {
+        @Override
+        public void onDownloadVersion() {
+            if (mLink != null && !mLink.isEmpty()) {
+                new DownloadApk(mOnFileDownloadedListener).execute(mLink);
+            }
+        }
+    };
+
+    private final IOnFileDownloadedListener mOnFileDownloadedListener = new IOnFileDownloadedListener() {
+        @Override
+        public void onFileDownloaded(String filePath) {
+            AppCompatButton iv_playstore = mVersionDialog.findViewById(R.id.iv_download);
+            ProgressBar progressBar = mVersionDialog.findViewById(R.id.pb_apk_download);
+            TextView tv = mVersionDialog.findViewById(R.id.textView9);
+            tv.setText("Hey You have Successfully downloaded the Ludo Adda game, Now please click on install button to continue.");
+            progressBar.setVisibility(View.GONE);
+            iv_playstore.setVisibility(View.VISIBLE);
+            iv_playstore.setText("Install Now");
+            iv_playstore.setOnClickListener(view -> {
+                try {
+                    installApk(filePath);
+                    mVersionDialog.dismiss();
+                    mVersionDialog = null;
+                    mAppPreference.setBoolean("LudoDownload", true);
+                } catch (Exception e) {
+                    Toast.makeText(LudoTmtDashboardActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        @Override
+        public void onFileProgressUpdate(int progress, int fileLength) {
+            if (mVersionDialog != null) {
+                ProgressBar progressBar = mVersionDialog.findViewById(R.id.pb_apk_download);
+                AppCompatButton iv_playstore = mVersionDialog.findViewById(R.id.iv_download);
+                progressBar.setProgress(progress);
+            }
+        }
+    };
+
+    private void installApk(String filePath) {
+        if (Build.VERSION.SDK_INT >= 26 && !LudoTmtDashboardActivity.this.getPackageManager().canRequestPackageInstalls()) {
+            startActivity(new Intent(android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:com.khiladiadda")));
+            mIsRequestingAppInstallPermission = true;
+            mFilePath = filePath;
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri;
+        if (Build.VERSION.SDK_INT < 24) {
+            uri = Uri.fromFile(new File(filePath));
+        } else {
+            uri = FileProvider.getUriForFile(LudoTmtDashboardActivity.this, GenericFileProvider.AUTHORITY, new File(filePath));
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        }
+        intent.setDataAndType(uri, "application/vnd.android.package-archive");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        mFilePath = null;
+        mIsRequestingAppInstallPermission = false;
+    }
+
+    private void getVersion() {
+        try {
+            PackageManager pm = this.getPackageManager();
+            PackageInfo pInfo = pm.getPackageInfo(AppConstant.LudoAddaPackageName, 0);
+            mVersion = pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void apkCheck() {
+        if (launchIntent != null) {
+            if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
+                mDownloadTV.setVisibility(View.GONE);
+                mWalletLL.setVisibility(View.VISIBLE);
+                mAppPreference.setBoolean("LudoDownload", true);
+            } else {
+                mWalletLL.setVisibility(View.GONE);
+                mDownloadTV.setText("Update");
+            }
+        } else {
+            mDownloadTV.setVisibility(View.VISIBLE);
+        }
+        if (mLink != null) {
+            mAppPreference.setString("LudoVersion", mCurrentVersion);
+            mAppPreference.setString("mLudoLink", mLink);
+            Properties properties = new Properties();
+            properties.addAttribute("LudoADDAVersion", mCurrentVersion);
+            MoEAnalyticsHelper.INSTANCE.trackEvent(this, "LudoADDA", properties);
+        }
+    }
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        callAllTournamentApi(1);
+        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
+        if (launchIntent != null) getVersion();
+        else mAppPreference.setBoolean("LudoDownload", false);
 
+//        callAllTournamentApi(1);
+        switchFirstAdapter();
+        if (mIsRequestingAppInstallPermission) {
+            installApk(mFilePath);
+        }
     }
+
+    private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
+        mAdvertisementsList.clear();
+        mAdvertisementsList.addAll(advertisementDetails);
+        List<Fragment> mFragmentList = new ArrayList<>();
+        for (BannerDetails advertisement : advertisementDetails) {
+            mFragmentList.add(BannerFragment.getInstance(advertisement));
+        }
+        BannerPagerAdapter adapter = new BannerPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
+        mBannerVP.setAdapter(adapter);
+        mBannerVP.setOffscreenPageLimit(3);
+        if (mHandler == null) {
+            mHandler = new Handler();
+            moveToNextAd(0);
+        }
+    }
+
+    private void moveToNextAd(int i) {
+        mBannerVP.setCurrentItem(i, true);
+        mHandler.postDelayed(() -> {
+            int currentItem = mBannerVP.getCurrentItem();
+            moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
+        }, 10000);
+    }
+
 }

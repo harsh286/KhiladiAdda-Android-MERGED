@@ -90,48 +90,54 @@
                     android:layout_weight="1" />
 
             </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/margin_10"
-            android:baselineAligned="false">
-            <include
-                layout="@layout/ws_cx"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_5"
-                android:layout_marginEnd="@dimen/margin_10"
-                android:layout_weight="1" />
-            <include
-                layout="@layout/droid_cx"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/margin_10"
+                android:baselineAligned="false">
+
+                <include
+                    layout="@layout/ws_cx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_10"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:layout_weight="1" />
+
+                <include
+                    layout="@layout/droid_cx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_10"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_5"
-                android:layout_marginEnd="@dimen/margin_10"
-                android:layout_weight="1" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/margin_10"
-            android:baselineAligned="false">
-            <include
-                layout="@layout/ludotmt_stats"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_5"
-                android:layout_marginEnd="@dimen/margin_10"
-                android:layout_weight="1" />
-            <include
-                layout="@layout/callbreak_stat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_5"
-                android:layout_marginEnd="@dimen/margin_10"
-                android:layout_weight="1" />
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/margin_10"
+                android:baselineAligned="false">
+
+                <include
+                    layout="@layout/ludotmt_stats"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_10"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:layout_weight="1" />
+
+                <include
+                    layout="@layout/callbreak_stat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_10"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

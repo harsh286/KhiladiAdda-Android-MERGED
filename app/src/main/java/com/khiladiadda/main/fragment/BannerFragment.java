@@ -86,7 +86,7 @@ public class BannerFragment extends BaseFragment {
                 Intent pubG = new Intent(getActivity(), LeagueActivity.class);
                 pubG.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_TDM);
                 startActivity(pubG);
-            } else if (mAdvertisement.getTitle().equalsIgnoreCase("INVITE")) {
+            } else if (mAdvertisement.getTitle().equals("INVITE")) {
                 startActivity(new Intent(getActivity(), ReferHelpActivity.class));
             } else if (mAdvertisement.getTitle().equalsIgnoreCase("YOUTUBE")) {
                 AppUtilityMethods.openYoutube(getActivity());
@@ -134,7 +134,7 @@ public class BannerFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), NewLeaderboardActivity.class));
             } else if (mAdvertisement.getTitle().equalsIgnoreCase("Refer")) {
                 startActivity(new Intent(getActivity(), ReferActivity.class));
-            } else if (mAdvertisement.getTitle().equalsIgnoreCase("Invite")) {
+            } else if (mAdvertisement.getTitle().equals("Invite")) {
                 startActivity(new Intent(getActivity(), InviteActivity.class));
             } else if (mAdvertisement.getTitle().equalsIgnoreCase("Help")) {
                 startActivity(new Intent(getActivity(), HelpActivity.class));

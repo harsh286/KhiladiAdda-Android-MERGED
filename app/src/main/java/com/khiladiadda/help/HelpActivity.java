@@ -127,6 +127,7 @@ public class HelpActivity extends BaseActivity implements IHelpView {
         mNV.initialiseNudgeView(this);
         MoEInAppHelper.getInstance().showInApp(this);
     }
+
     @Override
     protected void initVariables() {
         mPresenter = new HelpPresenter(this);
@@ -184,9 +185,6 @@ public class HelpActivity extends BaseActivity implements IHelpView {
                 }
                 break;
             case R.id.iv_ludo_universe:
-            case R.id.iv_codepieces:
-            case R.id.iv_rummy:
-            case R.id.iv_ludo_tournament:
                 if (mSupportVia) {
                     mFrom = AppConstant.LUDOADDA_KOMMUNI_CATEGORY;
                     openHelpScreen();
@@ -280,8 +278,36 @@ public class HelpActivity extends BaseActivity implements IHelpView {
                 }
                 break;
 
-
-
+            case R.id.iv_ludo_tournament:
+                if (mSupportVia) {
+                    mFrom = AppConstant.LUDOTOUR_KOMMUNI_CATEGORY;
+                    openHelpScreen();
+                } else {
+                    i = new Intent(this, HelpDetailsActivity.class);
+                    i.putExtra(AppConstant.DATA, mAppPreference.getFaqCategoryData().getResponse().get(14));
+                    startActivity(i);
+                }
+                break;
+            case R.id.iv_codepieces:
+                if (mSupportVia) {
+                    mFrom = AppConstant.CALLBREAK_KOMMUNI_CATEGORY;
+                    openHelpScreen();
+                } else {
+                    i = new Intent(this, HelpDetailsActivity.class);
+                    i.putExtra(AppConstant.DATA, mAppPreference.getFaqCategoryData().getResponse().get(15));
+                    startActivity(i);
+                }
+                break;
+            case R.id.iv_rummy:
+                if (mSupportVia) {
+                    mFrom = AppConstant.RUMMY_KOMMUNI_CATEGORY;
+                    openHelpScreen();
+                } else {
+                    i = new Intent(this, HelpDetailsActivity.class);
+                    i.putExtra(AppConstant.DATA, mAppPreference.getFaqCategoryData().getResponse().get(16));
+                    startActivity(i);
+                }
+                break;
         }
     }
 

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/LeagueCardAppearance"
+    android:layout_marginTop="8dp"
     tools:ignore="MissingDefaultResource">
 
     <RelativeLayout
@@ -27,6 +29,7 @@
             android:layout_below="@+id/tv_points"
             android:layout_alignParentStart="true"
             android:padding="@dimen/padding_5"
+            android:textStyle="bold"
             android:layout_marginStart="@dimen/margin_5"
             android:fontFamily="@font/productsansregular"
             android:text="Points Value"
@@ -39,17 +42,54 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_entry_fee"
             android:layout_alignParentStart="true"
+            android:textColor="#B8B8B8"
+            android:textStyle="bold"
             android:padding="@dimen/padding_5"
+            android:paddingStart="@dimen/margin_8"
+            android:paddingEnd="@dimen/margin_8"
+            android:background="@drawable/rummy_players_rectangle"
             android:layout_marginStart="@dimen/margin_5"
             android:fontFamily="@font/productsansregular"
-            android:text="Points Value"
+            android:text="2P"
             android:textSize="@dimen/text_14" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_players_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
+            android:layout_below="@+id/tv_entry_fee"
+            android:layout_toEndOf="@+id/tv_players"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/rummy_players_rectangle"
+            android:fontFamily="@font/productsansregular"
+            android:padding="@dimen/padding_5"
+            android:paddingStart="@dimen/margin_8"
+            android:paddingEnd="@dimen/margin_8"
+            android:text="6P"
+            android:textColor="#B8B8B8"
+            android:textSize="@dimen/text_14"
+            android:textStyle="bold" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="18sp">
+
+            <ImageView
+                android:id="@+id/imageView15"
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/circular_green"
+                app:layout_constraintBottom_toTopOf="@+id/tv_online"
+                app:layout_constraintEnd_toStartOf="@+id/tv_live"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_live" />
 
             <TextView
                 android:id="@+id/tv_live"
@@ -57,8 +97,27 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Live"
+                android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_14" />
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_online"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView15"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView16"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_profile_new"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_online"
+                app:layout_constraintEnd_toStartOf="@+id/tv_online"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_online" />
 
             <TextView
                 android:id="@+id/tv_online"
@@ -66,9 +125,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="100"
+                android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_14" />
-        </LinearLayout>
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView16"
+                app:layout_constraintTop_toBottomOf="@+id/tv_live" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/tv_buying_prize"
@@ -81,13 +145,18 @@
 
         <TextView
             android:id="@+id/tv_wining_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="98dp"
+            android:layout_height="35dp"
             android:layout_below="@+id/tv_buying_prize"
             android:layout_alignParentEnd="true"
             android:background="@drawable/button_background_selected"
             android:padding="@dimen/padding_5"
-            android:text="Max Buying Prize"
+            android:paddingStart="@dimen/text_12"
+            android:paddingEnd="@dimen/text_12"
+            tools:text="₹ 5k"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_16"
+            android:gravity="center"
             android:textColor="@color/white" />
 
         <TextView
@@ -97,8 +166,11 @@
             android:layout_below="@+id/tv_wining_amount"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/padding_5"
-            android:text="Max Buying Prize"
+            android:drawablePadding="4dp"
+            android:drawableLeft="@drawable/ic_discount"
+            android:text="Use 5% Bonus"
             android:textColor="@color/card_red"
             android:textSize="@dimen/text_13" />
     </RelativeLayout>
+
 </androidx.cardview.widget.CardView>

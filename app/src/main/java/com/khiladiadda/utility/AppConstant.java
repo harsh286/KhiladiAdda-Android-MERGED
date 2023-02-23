@@ -15,9 +15,11 @@ public class AppConstant {
     //public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29t";
 
 //       public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29tLw==";
-//     public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8=";
+//     public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8="; //uat
 
     public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";//QA
+
+//    public static final String URL = "aHR0cHM6Ly9raGlsYWRpLnRyb29weC5pby8=";// https://khiladi.troopx.io/
 
 
     //     public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";
@@ -120,7 +122,31 @@ public class AppConstant {
     public static final String API_GET_RUMMY_REFRESH_TOKEN = "/user/rummy/fetchRefreshToken";
     public static final String API_GET_CALLBREAK_LIST = "/user/callbreak/fetchCards";
     public static final String API_GET_CALLBREAK_JOIN = "/user/callbreak/joinCard/{id}";
-
+    public static final String ADDA_CLASSIC_RULES = "1. All opponent's as well as your's tokens, will be at Home square by default and on rolling diceroll6, you will be able to take it out to play.\n" +
+            "2. The first player with all the tokens in the Victory Box, wins the match.\n" +
+            "3. Player cannot overlap with their tokens other than Safe Boxes (ie. Star Boxes and Colored Boxes).\n" +
+            "4. On placing your token on any Safe Box, the opponent cannot defeat your token.\n" +
+            "5. Only highlighted tokens are playble at your turn.\n" +
+            "6. Player cannot get consecutively 3 diceroll6s.\n" +
+            "7. After defeating any token, opponent's or your's, the token will travel back and get placed inside the Home sqaure and you can access it only on diceroll6.";
+ public static final String ADDA_TIMER_RULES = "1. All opponent's as well as your's tokens, will be placed at starting box at the start of the game.\n" +
+         "2. The scoring of the game will be according to the token travelled multiplied by 2. (This number can be changed on the admin)\n" +
+         "3. After successful completion of the timer, the game result will be declared and the player with having higher score, wins the match.\n" +
+         "4. In case, the score of both players are same, the game result will be declared as Draw.\n" +
+         "5. On defeating your opponent's token, the total score will be depleated by the distance that token has covered.\n" +
+         "6. After defeating any token, the token will tarvel back and get placed at the starting box.\n" +
+         "7. Only highlighted tokens are playble at your turn.\n" +
+         "8. Player cannot get consecutively 3 diceroll6s.\n" +
+         "9. Game timer  and individual score will be displayed on the game screen.\n" +
+         "10. Your scores will be displayed on the left side of the game screen.\n" +
+         "11. Game score will be updated on every successfull turn switches.";
+ public static final String ADDA_SERIES_RULES = "1. All opponent's as well as your's tokens, will be placed at starting box at the start of the game.\n" +
+         "2. Your upcoming 6 dicerolls will be displayed in the Dice Panel present in the center of the screen below the game board.\n" +
+         "3. You cannot see tour opponent's future dicerolls and vice-versa.\n" +
+         "4. The diceroll present in the right most corner of the panel will be blinking and it will be your latest upcoming diceroll on your turn.\n" +
+         "5. Player cannot get consecutively 3 diceroll6s.\n" +
+         "6. After defeating any token, the token will tarvel back and get placed at the starting box.\n" +
+         "7. Only highlighted tokens are playble at your turn.";
 
     public static String API_PAYU_UPI_CHECKSUM = "payumoney/generate/hash-checksum";
     public static final String API_PAYU_PAYMENT = "payumoney/verifychecksum";
@@ -161,6 +187,7 @@ public class AppConstant {
     public static final String API_LUDO_TOURNAMENT = "user/ludo/tournament/tournament/leaderboard";
     public static final String API_CALL_BREAK = "/user/callbreak/leaderboard";
     public static final String API_RUMMY = "/user/rummy/leaderboard";
+    public static final String API_RUMMY_CHECKGAMESTATUS = "/user/rummy/checkGameStatus";
 
     public static final String API_ADD_CASHFREE_BENEFICIARY = "cashfree/add/beneficiary";
     public static final String TEXT_KEY_TYPE = "type";
@@ -396,6 +423,9 @@ public class AppConstant {
     public static final String FIREBASE_CHAT_PWD = "TB2019KA";
     public static final String IS_FB_ENABLED = "IS_FB_ENABLED";
     public static final String IS_GMAIL_ENABLED = "IS_GMAIL_ENABLED";
+    public static final String IS_TRUECALLER_ENABLED = "IS_TRUECALLER_ENABLED";
+    public static final String IS_LOCATION_ENABLED = "IS_LOCATION_ENABLED";
+    public static final String IS_GAMERCASH_ENABLED = "IS_GAMERCASH_ENABLED";
     public static final String IS_PAYTMWALLET_ENABLED = "IS_PAYTMWALLET_ENABLED";
     public static final int WITHDRAW_VERIFICATION = 1;
     public static final String INSUFFICIENT_WALLET_RECHARGE = "Your wallet balance is insufficient. Please recharge your wallet to play and earn.";
@@ -476,6 +506,7 @@ public class AppConstant {
     public static final String BANK_TRANSFER = "BANKTRANSFER";
     public static final String AMAZON_PAY = "AMAZONPAY";
     public static final String FROM_HOW_JOINING = "HOWTOJOIN";
+    public static final String FROM_HOW_JOINING_PCESPORT = "HOWTOJOINPCESPORT";
     public static final String DATA_QUIZ = "DATA_QUIZ";
     public static final String QUIZ_DETAILS = "QUIZ_DETAILS";
     public static final String QUIZ_QUESTION = "QUIZ_QUESTION";
@@ -762,6 +793,7 @@ public class AppConstant {
             "•  All guns are allowed.\n\n";
 
     public static final String RULE_JOIN = "Q. How to Join Squad/Duo Match for BattleGround India/Free Fire with Team?\n" + "\n" + "You can Join the BattleGround India/FreeFire Duo and Squad Matches Easily. Here You have to follow the Below Steps accordingly:\n" + "\n" + "Step1: Open the BattleGround India/FreeFire under Games Section.\n" + "\n" + "Step2: Select the League that you want to Join and then Press 'View Button.\n" + "\n" + "Step3: Now Read all the Details and Press 'Create Team.\n" + "\n" + "Step4: Now write your BattleGround India Game Username and Your Team name that you want to Display(It can be any name)\n" + "\n" + "Step5: Press Pay Button. If you don't have enough coin to Join please Add Coin to your Wallet.\n" + "\n" + "Step6: Now Share the Team UniqueId to your Team Member Only, Using UniqueId Your Team member can Enter the Match without Payment. Payment is Only Done by One member of a Team called Leader.\n" + "\n" + "Step 7: Now Your Teammate has to open the same League from BattleGround India/FreeFire Game and Click Join Team.\n" + "\n" + "Step8: Now they have to write their BattleGround India Game Username and Team Unique ID that You have shared.\n" + "\n" + "Step 9: Kudos!!! Your team has Joined the League Successfully.\n" + "\n" + "Remember: Don't Share your Team Unique ID with Anyone otherwise they will enter Your Team for Free and fill their Empty Slot. Khiladi Addda is not Responsible for this.\n" + "\n" + "Q. टीम के साथ BattleGround India / फ्री फायर के लिए स्क्वाड / डुओ मैच में कैसे शामिल हों?\n" + "\n" + "आप BattleGround India / FreeFire Duo और Squad Matches में आसानी से शामिल हो सकते हैं। यहां आपको नीचे दिए गए चरणों का पालन करना होगा:\n" + "\n" + "Step1: गेम्स सेक्शन के तहत BattleGround India / FreeFire खोलें।\n" + "\n" + "Step2: उस लीग का चयन करें जिसे आप ज्वाइन करना चाहते हैं और फिर 'व्यू बटन' दबाएँ।\n" + "\n" + "Step3: अब सभी विवरण पढ़ें और 'टीम बनाएँ' दबाएँ।\n" + "\n" + "Step4: अब अपना BattleGround India Game Username और अपनी टीम का नाम लिखें जिसे आप दिखाना चाहते हैं (यह कोई भी नाम हो सकता है)\n" + "\n" + "स्टेप 5: पे बटन दबाएं। यदि आपके पास पर्याप्त सिक्का नहीं है तो कृपया अपने बटुए में सिक्का जोड़ें।\n" + "\n" + "Step6: अब टीम यूनिक आईडी को अपने टीम मेंबर को ही शेयर करें, यूनिक आईडी का उपयोग करके आपकी टीम का सदस्य बिना भुगतान के मैच में प्रवेश कर सकता है। भुगतान केवल लीडर नामक टीम के एक सदस्य द्वारा किया जाता है।\n" + "\n" + "चरण 7: अब आपके टीममेट को BattleGround India / FreeFire Game से एक ही लीग खोलना है और Join Team पर क्लिक करना है।\n" + "\n" + "Step8: अब उन्हें अपना BattleGround India Game Username और Team Unique ID लिखना है जो आपने शेयर किया है।\n" + "\n" + "चरण 9: यश !!! आपकी टीम लीग में सफलतापूर्वक शामिल हो गई है।\n" + "\n" + "याद रखें: अपनी टीम यूनिक आईडी को किसी के साथ साझा न करें अन्यथा वे आपकी टीम में मुफ्त में प्रवेश करेंगे और अपना खाली स्लॉट भरेंगे। ख़िलाड़ी अद्दा इसके लिए ज़िम्मेदार नहीं है।";
+    public static final String RULE_JOIN_PCESPORT = "Q. How to Join Squad/Duo Match for Valorant with Team?\n" + "\n" + "You can Join the Valorant Duo and Squad Matches Easily. Here You have to follow the Below Steps accordingly:\n" + "\n" + "Step1: Open the Valorant under Games Section.\n" + "\n" + "Step2: Select the League that you want to Join and then Press 'View Button.\n" + "\n" + "Step3: Now Read all the Details and Press 'Create Team.\n" + "\n" + "Step4: Now write your Valorant India Game Username and Your Team name that you want to Display(It can be any name)\n" + "\n" + "Step5: Press Pay Button. If you don't have enough coin to Join please Add Coin to your Wallet.\n" + "\n" + "Step6: Now Share the Team UniqueId to your Team Member Only, Using UniqueId Your Team member can Enter the Match without Payment. Payment is Only Done by One member of a Team called Leader.\n" + "\n" + "Step 7: Now Your Teammate has to open the same League from Valorant Game and Click Join Team.\n" + "\n" + "Step8: Now they have to write their Valorant India Game Username and Team Unique ID that You have shared.\n" + "\n" + "Step 9: Kudos!!! Your team has Joined the League Successfully.\n" + "\n" + "Remember: Don't Share your Team Unique ID with Anyone otherwise they will enter Your Team for Free and fill their Empty Slot. Khiladi Addda is not Responsible for this.\n" + "\n" + "Q. टीम के साथ Valorant India / फ्री फायर के लिए स्क्वाड / डुओ मैच में कैसे शामिल हों?\n" + "\n" + "आप Valorant India / FreeFire Duo और Squad Matches में आसानी से शामिल हो सकते हैं। यहां आपको नीचे दिए गए चरणों का पालन करना होगा:\n" + "\n" + "Step1: गेम्स सेक्शन के तहत Valorant India / FreeFire खोलें।\n" + "\n" + "Step2: उस लीग का चयन करें जिसे आप ज्वाइन करना चाहते हैं और फिर 'व्यू बटन' दबाएँ।\n" + "\n" + "Step3: अब सभी विवरण पढ़ें और 'टीम बनाएँ' दबाएँ।\n" + "\n" + "Step4: अब अपना Valorant India Game Username और अपनी टीम का नाम लिखें जिसे आप दिखाना चाहते हैं (यह कोई भी नाम हो सकता है)\n" + "\n" + "स्टेप 5: पे बटन दबाएं। यदि आपके पास पर्याप्त सिक्का नहीं है तो कृपया अपने बटुए में सिक्का जोड़ें।\n" + "\n" + "Step6: अब टीम यूनिक आईडी को अपने टीम मेंबर को ही शेयर करें, यूनिक आईडी का उपयोग करके आपकी टीम का सदस्य बिना भुगतान के मैच में प्रवेश कर सकता है। भुगतान केवल लीडर नामक टीम के एक सदस्य द्वारा किया जाता है।\n" + "\n" + "चरण 7: अब आपके टीममेट को Valorant India Game से एक ही लीग खोलना है और Join Team पर क्लिक करना है।\n" + "\n" + "Step8: अब उन्हें अपना Valorant India Game Username और Team Unique ID लिखना है जो आपने शेयर किया है।\n" + "\n" + "चरण 9: यश !!! आपकी टीम लीग में सफलतापूर्वक शामिल हो गई है।\n" + "\n" + "याद रखें: अपनी टीम यूनिक आईडी को किसी के साथ साझा न करें अन्यथा वे आपकी टीम में मुफ्त में प्रवेश करेंगे और अपना खाली स्लॉट भरेंगे। ख़िलाड़ी अद्दा इसके लिए ज़िम्मेदार नहीं है।";
 
     public static final String RULE_CLASHROYALE = "\nUse of any Hacks, Tricks and Glitch are not " + "allowed." + "\n\nPlayer can use any card in their decks." + "\n\nPlayer can change " + "their decks in between of battles." + "\n\nYour Clash Royale tag id must match in " + "results, otherwise no reward will be given." + "\n\nTournament will be password " + "protected." + "\n\nTournament id and Password will be given to you through " + "notification in App when the Tournament starts and remain for 1 hrs." + "\n\nIf you " + "don't join match on time then you will not be eligible for rewards." + "\n\nIf you " + "are enable to get in the Match due to glitch then contact at help support." + "\n\nFinal Decision and Result will be taken by Admin only." + "\n\nDo not share " + "Tournament Id and Password with anyone.";
 
@@ -857,6 +889,9 @@ public class AppConstant {
     public static final String IS_SCRATCH_LA = "IS_SCRATCH_LA";
     public static final String IS_SCRATCH_DROID_DO = "IS_SCRATCH_DROID_DO";
     public static final String IS_SCRATCH_WS = "IS_SCRATCH_WS";
+    public static final String IS_PCESPORT = "IS_PCESPORT";
+    public static final String IS_COURTPIECE = "IS_COURTPIECE";
+    public static final String IS_RUMMY = "IS_RUMMY";
     public static final String API_PAYU_HASH = "payumoney/hash/{hash}/{txnid}";
     public static final String API_PAYSHARP = "order/intent";
     public static final String API_PAYSHARP_STATUS = "paysharp/check-payment-processed";
@@ -956,6 +991,10 @@ public class AppConstant {
     public static final String LUDOTMT_OPP_ROOM_JOINED = "OPPONENT_JOINED_ROOM";
     public static final String WS_VERSION = "WS_VERSION";
     public static final String WS_LINK = "WS_LINK";
+
+   public static final String LUDOTOUR_KOMMUNI_CATEGORY = "LudoTournament";
+   public static final String CALLBREAK_KOMMUNI_CATEGORY = "CallBreak";
+   public static final String RUMMY_KOMMUNI_CATEGORY = "Rummy";
 
 
     //Neokred PG

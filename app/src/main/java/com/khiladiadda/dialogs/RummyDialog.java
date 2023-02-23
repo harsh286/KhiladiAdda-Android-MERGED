@@ -2,17 +2,21 @@ package com.khiladiadda.dialogs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.card.MaterialCardView;
 import com.khiladiadda.R;
 import com.khiladiadda.gameleague.GameWebActivity;
@@ -27,12 +31,14 @@ import java.io.UnsupportedEncodingException;
 public class RummyDialog extends BottomSheetDialog implements View.OnClickListener {
 
     private Button mPlayBTN;
-    private TextView mEntryFeeTV, mTotalBalanceTV, mDepWinTV;
+    private TextView mEntryFeeTV, mTotalBalanceTV, mDepWinTV, mTwoPlayer, mMorePlayer;
     private MaterialCardView mCancelBtn;
     private Context mContext;
+    private RelativeLayout mMainCl;
     private String mEntryFee, mTotalBal, mDepWinAmount, cardId, token, refreshToken;
 
-    public RummyDialog(@NonNull Context context, String entryFee, String totalBal, String depWinAmount, String cardId, String token, String refreshToken) {
+
+    public RummyDialog(@NonNull Context context, String entryFee, String totalBal, String depWinAmount, String cardId, String token, String refreshToken, int theme) {
         super(context);
         this.mContext = context;
         this.mEntryFee = entryFee;
@@ -43,10 +49,15 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
         this.refreshToken = refreshToken;
     }
 
+//    public RummyDialog(@NonNull Context context, int theme) {
+//        super(context, theme);
+//    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
+//        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.MyBottomSheetDialogTheme);
         initViews();
         initVariables();
     }
@@ -56,16 +67,22 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
     }
 
     protected void initViews() {
+//        mMainCl = findViewById(R.id.main);
         mPlayBTN = findViewById(R.id.btn_play);
         mEntryFeeTV = findViewById(R.id.tv_entry_fee);
         mTotalBalanceTV = findViewById(R.id.tv_total_wallet_balance);
         mDepWinTV = findViewById(R.id.tv_deposit);
         mCancelBtn = findViewById(R.id.mcv_cancel);
+        mTwoPlayer = findViewById(R.id.tv_two_players);
+        mMorePlayer = findViewById(R.id.tv_more_players);
     }
 
     private void initVariables() {
+//        mMainCl.setBackgroundColor(Color.parseColor("#ed213a"));
         mPlayBTN.setOnClickListener(this);
         mCancelBtn.setOnClickListener(this);
+        mTwoPlayer.setOnClickListener(this);
+        mMorePlayer.setOnClickListener(this);
         mEntryFeeTV.setText("₹" + mEntryFee);
         mTotalBalanceTV.setText("₹" + mTotalBal);
         mDepWinTV.setText("₹" + mDepWinAmount);
@@ -87,6 +104,18 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
                 mContext.startActivity(intLeaderboard);
                 dismiss();
                 break;
+            case R.id.tv_two_players:
+                mTwoPlayer.setTextColor(Color.parseColor("#ffffff"));
+                mTwoPlayer.setBackground(mContext.getDrawable(R.drawable.button_background_selected));
+                mMorePlayer.setTextColor(Color.parseColor("#000000"));
+                mMorePlayer.setBackground(mContext.getDrawable(R.drawable.button_background_notselected));
+                break;
+            case R.id.tv_more_players:
+                mTwoPlayer.setTextColor(Color.parseColor("#000000"));
+                mTwoPlayer.setBackground(mContext.getDrawable(R.drawable.button_background_notselected));
+                mMorePlayer.setTextColor(Color.parseColor("#ffffff"));
+                mMorePlayer.setBackground(mContext.getDrawable(R.drawable.button_background_selected));
+                break;
         }
     }
 
@@ -94,6 +123,7 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
         String req = "{ \"accessToken\": \"" + token + "\", \"refreshToken\": \"" + refreshToken + "\", \"stakeId\": \"" + cardId + "\", \"app_version\": \"" + AppSharedPreference.getInstance().getMasterData().getResponse().getVersion().getAppVersion() + "\", \"type\": 1 }";
         byte[] data = req.getBytes("UTF-8");
         return Base64.encodeToString(data, Base64.DEFAULT);
+
     }
 
 }

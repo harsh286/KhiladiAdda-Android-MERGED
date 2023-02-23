@@ -191,6 +191,14 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
 
     @Override
     protected void initViews() {
+        if (mAppPreference.getBoolean(AppConstant.IS_GAMERCASH_ENABLED, false)){
+            mGamerCashTV.setVisibility(View.VISIBLE);
+            mGamerCashVerifiedTV.setVisibility(View.VISIBLE);
+        }else {
+
+            mGamerCashTV.setVisibility(View.GONE);
+            mGamerCashVerifiedTV.setVisibility(View.GONE);
+        }
         Bundle intent = getIntent().getExtras();
         if (intent != null) {
             String redirect = intent.getString(AppConstant.PushFrom);
@@ -218,6 +226,7 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
         mPhonepeTV.setOnClickListener(this);
         mGamerCashTV.setOnClickListener(this);
         mGamerCashVerifiedTV.setOnClickListener(this);
+
     }
 
     @Override
@@ -893,10 +902,14 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
             if (response.getAlreadyLinked() || response.getLinked()) {
                 coins = response.getResponse().getCoins();
                 mGamerCashTV.setVisibility(View.GONE);
-                mGamerCashVerifiedTV.setVisibility(View.VISIBLE);
+                if (mAppPreference.getBoolean(AppConstant.IS_GAMERCASH_ENABLED, false)){
+                    mGamerCashVerifiedTV.setVisibility(View.VISIBLE);}
+
                 mGamerCashVerifiedTV.setText(getString(R.string.gamer_cash_coins) + coins + " GC");
             } else {
-                mGamerCashTV.setVisibility(View.VISIBLE);
+                if (mAppPreference.getBoolean(AppConstant.IS_GAMERCASH_ENABLED, false)) {
+                    mGamerCashTV.setVisibility(View.VISIBLE);
+                }
                 mGamerCashVerifiedTV.setVisibility(View.GONE);
                 mGamerCashTV.setText(getString(R.string.gamercash));
             }

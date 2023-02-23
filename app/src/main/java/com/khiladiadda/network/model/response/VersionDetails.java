@@ -28,6 +28,24 @@ public class VersionDetails {
     @SerializedName("gamercash_enabled") @Expose private boolean gamerCashEnabled;
     @SerializedName("ludoadda_apk_version") @Expose private String ludoAddaVersion;
     @SerializedName("ludo_apk_link") @Expose private String ludoApkLink;
+    @SerializedName("truecaller_enabled") @Expose private boolean truecallerEnabled;
+    @SerializedName("location_enabled") @Expose private boolean locationEnabled;
+
+    public boolean isLocationEnabled() {
+        return locationEnabled;
+    }
+
+    public void setLocationEnabled(boolean locationEnabled) {
+        this.locationEnabled = locationEnabled;
+    }
+
+    public boolean isTruecallerEnabled() {
+        return truecallerEnabled;
+    }
+
+    public void setTruecallerEnabled(boolean truecallerEnabled) {
+        this.truecallerEnabled = truecallerEnabled;
+    }
 
     public String getLudoAddaVersion() {
         return ludoAddaVersion;

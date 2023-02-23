@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
+import com.khiladiadda.dialogs.AppDialog;
 import com.khiladiadda.login.LoginActivity;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
@@ -128,7 +129,7 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
                     LocationCheckUtils.getInstance().requestNewLocationData();
                     mPresenter.validateData();
                 } else {
-                    LocationCheckUtils.getInstance().DialogWithCallBack(this, "KhiladiAdda need to access your location.");
+                    AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
                 }
                 break;
             case R.id.tv_terms:
@@ -272,7 +273,7 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
                 Toast.makeText(this, getString(R.string.txt_read_sms_permission), Toast.LENGTH_SHORT).show();
             }
         } else if (requestCode == AppConstant.RC_ASK_PERMISSIONS_GPS) {
-            LocationCheckUtils.getInstance().DialogWithCallBack(this, "KhiladiAdda need to access your location.");
+            AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }

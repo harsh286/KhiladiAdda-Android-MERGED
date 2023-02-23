@@ -177,6 +177,7 @@ public class ApiManager {
 //            sslContext = createCertificate(context.getResources().openRawResource(R.raw.uat_api_khiladiadda_com));
 //            sslContext = createCertificate(context.getResources().openRawResource(R.raw.prod_new));
             sslContext = createCertificate(context.getResources().openRawResource(R.raw.qa_api_khiladiadda_com));
+//            sslContext = createCertificate(context.getResources().openRawResource(R.raw.khiladi_troopx_io));
 
         } catch (CertificateException | IOException | KeyStoreException | KeyManagementException | NoSuchAlgorithmException e) {
             e.printStackTrace();

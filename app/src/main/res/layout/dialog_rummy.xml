@@ -1,148 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:background="@color/colorTransparent">
-
-    <TextView
-        android:id="@+id/tv_heading"
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="380dp"-->
+<!--    android:id="@+id/main"-->
+<!--    android:background="@color/colorTransparent"-->
+<!--    android:backgroundTint="@color/ic_round_top_background">-->
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/padding_20"
-        android:text="Confirm Buy-in"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_24"
-        android:textStyle="bold" />
+        android:layout_height="380dp"
+        android:background="@drawable/ic_round_top_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/padding_20"
+            android:text="Confirm Buy-in"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_24"
+            android:textStyle="bold" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/tv_entry_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_heading"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_10"
-        android:padding="@dimen/padding_8"
-        android:text="Entry Fee"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_16" />
-
-    <TextView
-        android:id="@+id/tv_entry_fee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_heading"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/margin_10"
-        android:layout_marginEnd="@dimen/margin_10"
-        android:padding="@dimen/padding_8"
-        android:text="Entry Fee"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_16" />
-
-    <TextView
-        android:id="@+id/tv_total_wallet_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_entry_label"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_5"
-        android:gravity="center"
-        android:padding="@dimen/padding_8"
-        android:text="Total Wallet Balance"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_16" />
-
-    <TextView
-        android:id="@+id/tv_total_wallet_balance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_entry_label"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/margin_5"
-        android:layout_marginEnd="@dimen/margin_10"
-        android:gravity="center"
-        android:padding="@dimen/padding_8"
-        android:text="Total Wallet Balance"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_16" />
-
-    <TextView
-        android:id="@+id/tv_deposit_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_total_wallet_label"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_5"
-        android:gravity="center"
-        android:padding="@dimen/padding_8"
-        android:text="Deposit + Winning"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_16" />
-
-    <TextView
-        android:id="@+id/tv_deposit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_total_wallet_label"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/margin_5"
-        android:layout_marginEnd="@dimen/margin_10"
-        android:gravity="center"
-        android:padding="@dimen/padding_8"
-        android:text="Deposit + Winning"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_16" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginEnd="@dimen/margin_10"
-        android:layout_marginBottom="@dimen/margin_10">
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/mcv_cancel"
-            android:layout_width="140dp"
-            app:strokeColor="@color/colorPrimary"
-            app:strokeWidth="@dimen/margin_1"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_play"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_players"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_heading">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Cancel"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
-        </com.google.android.material.card.MaterialCardView>
+                android:id="@+id/tv_two_players"
+                android:layout_width="0dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/button_background_selected"
+                android:gravity="center"
+                android:text="2Player"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_more_players"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_play"
-            android:layout_width="0dp"
+            <TextView
+                android:id="@+id/tv_more_players"
+                android:layout_width="0dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/button_background_notselected"
+                android:gravity="center"
+                android:text="3-6Player"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_two_players"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_entry_label"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_button_red"
-            android:text="@string/text_play_now"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/mcv_cancel"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_below="@+id/cl_players"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:padding="@dimen/padding_8"
+            android:text="Entry Fee"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16" />
+
+        <TextView
+            android:id="@+id/tv_entry_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cl_players"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:padding="@dimen/padding_8"
+            android:text="Entry Fee"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16" />
+
+        <TextView
+            android:id="@+id/tv_total_wallet_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_entry_label"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
+            android:text="Total Wallet Balance"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16" />
+
+        <TextView
+            android:id="@+id/tv_total_wallet_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_entry_label"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
+            android:text="Total Wallet Balance"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16" />
+
+        <TextView
+            android:id="@+id/tv_deposit_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_total_wallet_label"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
+            android:text="Deposit + Winning"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16" />
+
+        <TextView
+            android:id="@+id/tv_deposit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_total_wallet_label"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
+            android:text="Deposit + Winning"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16" />
+
+        <TextView
+            android:id="@+id/tv_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_deposit"
+            android:padding="@dimen/text_8"
+            android:text="You agree to Khiladiadda terms and conditions as you join the contest. By joining the contest you also confirm that you are not a resident of Andhra Pradesh, Assam, Odisha, Telangana, Nagaland, Sikkim." />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_marginBottom="@dimen/margin_10">
 
 
-</RelativeLayout>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_cancel"
+                android:layout_width="140dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_play"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="@dimen/margin_1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Cancel"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_play"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/shape_button_red"
+                android:text="@string/text_play_now"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/mcv_cancel"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </RelativeLayout>
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->

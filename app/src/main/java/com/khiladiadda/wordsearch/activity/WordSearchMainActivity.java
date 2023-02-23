@@ -1,5 +1,7 @@
 package com.khiladiadda.wordsearch.activity;
 
+import static android.view.View.GONE;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -29,7 +32,10 @@ import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.dialogs.interfaces.IOnVesrionDownloadListener;
 import com.khiladiadda.interfaces.IOnFileDownloadedListener;
+import com.khiladiadda.main.adapter.BannerPagerAdapter;
+import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.network.model.ApiError;
+import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.WordSearchTrendingMainResponse;
 import com.khiladiadda.network.model.response.WordSearchTrendingResponse;
 import com.khiladiadda.utility.AppConstant;
@@ -46,6 +52,8 @@ import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -86,6 +94,11 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
     private WordSearchTrendingResponse mTrendingMainResponse;
     private Intent launchIntent;
 
+    @BindView(R.id.vp_advertisement)
+    ViewPager mBannerVP;
+    private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
+    private Handler mHandler;
+
 
     @Override
     protected int getContentView() {
@@ -100,11 +113,6 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
         setupRecycler();
         launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.WordSearchPackageName);
         if (launchIntent != null) getVersion();
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager_banner_wordsearch);
-        WordSearchViewPagerAdapter wordSearchViewPagerAdapter = new WordSearchViewPagerAdapter(this);
-        viewPager.setAdapter(wordSearchViewPagerAdapter);
-        viewPager.setCurrentItem(wordSearchViewPagerAdapter.getCount() - 1);
     }
 
     private void setupRecycler() {
@@ -178,6 +186,15 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
         } else {
             mNoDataTv.setVisibility(View.GONE);
         }
+
+        List<BannerDetails> bannerData = responseModel.getBanner();
+        if (bannerData != null && bannerData.size() > 0) {
+            mBannerVP.setVisibility(View.VISIBLE);
+            setUpAdvertisementViewPager(bannerData);
+        } else {
+            mBannerVP.setVisibility(GONE);
+        }
+
         mLink = responseModel.getResponse().getWSLink();
         mCurrentVersion = responseModel.getResponse().getApk_version();
         mAppPreference.setString(AppConstant.WS_LINK, mLink);
@@ -347,6 +364,30 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
     }
+
+    private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
+        mAdvertisementsList.clear();
+        mAdvertisementsList.addAll(advertisementDetails);
+        List<Fragment> mFragmentList = new ArrayList<>();
+        for (BannerDetails advertisement : advertisementDetails) {
+            mFragmentList.add(BannerFragment.getInstance(advertisement));
+        }
+        BannerPagerAdapter adapter = new BannerPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
+        mBannerVP.setAdapter(adapter);
+        mBannerVP.setOffscreenPageLimit(3);
+        if (mHandler == null) {
+            mHandler = new Handler();
+            moveToNextAd(0);
+        }
+    }
+
+    private void moveToNextAd(int i) {
+        mBannerVP.setCurrentItem(i, true);
+        mHandler.postDelayed(() -> {
+            int currentItem = mBannerVP.getCurrentItem();
+            moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
+        }, 10000);
+    }
+
 }

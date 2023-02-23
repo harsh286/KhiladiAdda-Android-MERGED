@@ -1,5 +1,9 @@
 package com.khiladiadda.rummy;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +25,7 @@ import com.khiladiadda.dialogs.RummyDialog;
 import com.khiladiadda.interfaces.IOnItemClickListener;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.response.Coins;
+import com.khiladiadda.network.model.response.RummyCheckGameResponse;
 import com.khiladiadda.network.model.response.RummyDetails;
 import com.khiladiadda.network.model.response.RummyPayload;
 import com.khiladiadda.network.model.response.RummyRefreshTokenMainResponse;
@@ -60,11 +65,14 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     LinearLayout mModeOptionLL;
     @BindView(R.id.iv_announcement)
     ImageView mAnnouncementIV;
+    @BindView(R.id.tv_how_to_play)
+    TextView mHowToPlayTv;
+
     private RummyAdapter mAdapter;
     private List<RummyDetails> mList;
     private IRummyPresenter mPresenter;
     private String mType, mRefreshToken = "";
-    private int mMode = 1;
+    private int mMode = 1, pos= 0;
 
     @Override
     protected int getContentView() {
@@ -81,13 +89,14 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         mOneTV.setOnClickListener(this);
         mTwoTV.setOnClickListener(this);
         mThreeTV.setOnClickListener(this);
+        mHowToPlayTv.setOnClickListener(this);
     }
 
     @Override
     protected void initVariables() {
         mPresenter = new RummyPresenter(this);
         mList = new ArrayList<>();
-        mAdapter = new RummyAdapter(this, mList);
+        mAdapter = new RummyAdapter(this, mList, mMode);
         mRummyRV.setLayoutManager(new LinearLayoutManager(this));
         mRummyRV.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
@@ -144,6 +153,15 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
                 } else
                     setMode(34);
                 break;
+            case R.id.tv_how_to_play:
+//                try {
+//                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + "www.youtube.com/playlist?list=PLIvWNKDITNJA-lKa_RUj6L1mJvfy8McSG"));
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    startActivity(intent);
+//                } catch (ActivityNotFoundException e) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=onb7Nd1uSso")));
+//                }
+                break;
         }
     }
 
@@ -152,8 +170,15 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         mPoolTV.setSelected(false);
         mDealTV.setSelected(false);
         mOneTV.setTextColor(getResources().getColor(R.color.white));
+        mOneTV.setTextAppearance(this, R.style.RummyModeButton);
+        mOneTV.setSelected(false);
         mTwoTV.setTextColor(getResources().getColor(R.color.white));
+        mTwoTV.setTextAppearance(this, R.style.RummyModeButton);
+        mTwoTV.setSelected(false);
         mThreeTV.setTextColor(getResources().getColor(R.color.white));
+        mThreeTV.setTextAppearance(this, R.style.RummyModeButton);
+        mThreeTV.setSelected(false);
+
         switch (mode) {
             case 14:
                 mType = "pt_S13";
@@ -216,18 +241,21 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     }
 
     private void setOne() {
+        mOneTV.setSelected(true);
         mOneTV.setTextColor(getResources().getColor(R.color.black));
         getData();
         getRefreshToken();
     }
 
     private void setTwo() {
+        mTwoTV.setSelected(true);
         mTwoTV.setTextColor(getResources().getColor(R.color.black));
         getData();
         getRefreshToken();
     }
 
     private void setThree() {
+        mThreeTV.setSelected(true);
         mThreeTV.setTextColor(getResources().getColor(R.color.black));
         getData();
         getRefreshToken();
@@ -236,16 +264,25 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     private void setDeal() {
         mDealTV.setSelected(true);
         mDealTV.setTextColor(getResources().getColor(R.color.battle_red));
+        mPointsTV.setTextColor(Color.parseColor("#9A9797"));
+        mPoolTV.setTextColor(Color.parseColor("#9A9797"));
+
     }
 
     private void setPool() {
         mPoolTV.setSelected(true);
         mPoolTV.setTextColor(getResources().getColor(R.color.battle_red));
+        mPointsTV.setTextColor(Color.parseColor("#9A9797"));
+        mDealTV.setTextColor(Color.parseColor("#9A9797"));
+
     }
 
     private void setPoints() {
         mPointsTV.setSelected(true);
         mPointsTV.setTextColor(getResources().getColor(R.color.battle_red));
+        mPoolTV.setTextColor(Color.parseColor("#9A9797"));
+        mDealTV.setTextColor(Color.parseColor("#9A9797"));
+
     }
 
     private void getData() {
@@ -272,6 +309,7 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         if (responseModel.isStatus()) {
             mList.clear();
             mList.addAll(responseModel.getResponse());
+//            mAdapter = new RummyAdapter(this, mList, mMode);
             mAdapter.notifyDataSetChanged();
             if (responseModel.getBanner().size() > 0)
                 mAnnouncementIV.setVisibility(View.VISIBLE);
@@ -303,18 +341,39 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     }
 
     @Override
-    public void onItemClick(View view, int position, int tag) {
-        openBottomDialog(position);
+    public void onGetContestCheckGameSuccess(RummyCheckGameResponse responseModel) {
+        if (responseModel.isStatus()){
+            openBottomDialog(pos,1);
+        }else {
+            openBottomDialog(pos,0);
+        }
     }
 
-    private void openBottomDialog(int position) {
+    @Override
+    public void onGetContestCheckGameFailure(ApiError error) {
+
+    }
+
+    @Override
+    public void onItemClick(View view, int position, int tag) {
+        pos = position;
+        mPresenter.getCheckGameStatus();
+    }
+
+    private void openBottomDialog(int position, int status) {
         Coins mCoins = mAppPreference.getProfileData().getCoins();
         double mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
         double mDepWinAmount = mCoins.getDeposit() + mCoins.getWinning();
 
-        RummyDialog addExpenseDialog = new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.valueOf(mTotalWalletBal), String.valueOf(mDepWinAmount), mList.get(position).getCardId(), AppSharedPreference.getInstance().getSessionToken(), mRefreshToken);
-        addExpenseDialog.setCancelable(false);
+        RummyDialog addExpenseDialog;
+        if (status == 1) {
+            addExpenseDialog = new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), "active", AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme);
+        }else {
+            addExpenseDialog = new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), mList.get(position).getCardId(), AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme);
+        }
+        addExpenseDialog.setCancelable(true);
         addExpenseDialog.setCanceledOnTouchOutside(false);
         addExpenseDialog.show();
+
     }
 }

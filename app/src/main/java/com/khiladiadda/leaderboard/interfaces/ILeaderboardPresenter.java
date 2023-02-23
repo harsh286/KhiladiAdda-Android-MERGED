@@ -41,5 +41,4 @@ public interface ILeaderboardPresenter extends IBasePresenter {
 
     void getRummy(String type, int page, int limit);
 
-
 }

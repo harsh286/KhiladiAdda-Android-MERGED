@@ -37,6 +37,9 @@ public class LudoTmtMyMatchResponse implements Parcelable {
     @SerializedName("tStatus")
     @Expose
     private int tStatus;
+    @SerializedName("tType")
+    @Expose
+    private Integer tType;
 
     public String getId() {
         return id;
@@ -118,6 +121,14 @@ public class LudoTmtMyMatchResponse implements Parcelable {
         this.tStatus = tStatus;
     }
 
+    public Integer gettType() {
+        return tType;
+    }
+
+    public void settType(Integer tType) {
+        this.tType = tType;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -135,6 +146,7 @@ public class LudoTmtMyMatchResponse implements Parcelable {
         dest.writeValue(this.prize);
         dest.writeString(this.startDate);
         dest.writeInt(this.tStatus);
+        dest.writeValue(this.tType);
     }
 
     public void readFromParcel(Parcel source) {
@@ -148,6 +160,7 @@ public class LudoTmtMyMatchResponse implements Parcelable {
         this.prize = (Integer) source.readValue(Integer.class.getClassLoader());
         this.startDate = source.readString();
         this.tStatus = source.readInt();
+        this.tType = (Integer) source.readValue(Integer.class.getClassLoader());
     }
 
     public LudoTmtMyMatchResponse() {
@@ -164,6 +177,7 @@ public class LudoTmtMyMatchResponse implements Parcelable {
         this.prize = (Integer) in.readValue(Integer.class.getClassLoader());
         this.startDate = in.readString();
         this.tStatus = in.readInt();
+        this.tType = (Integer) in.readValue(Integer.class.getClassLoader());
     }
 
     public static final Creator<LudoTmtMyMatchResponse> CREATOR = new Creator<LudoTmtMyMatchResponse>() {

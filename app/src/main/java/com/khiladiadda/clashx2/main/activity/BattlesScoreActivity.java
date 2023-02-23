@@ -309,7 +309,6 @@ public class BattlesScoreActivity extends BaseActivity implements IHTHBattleView
     private void playerdata() {
         List<CaptainTeamHTH> mBattleCaptainDetails = mBattleList.getCaptainTeam();
         List<CaptainTeamHTH> mBattleOpponentDetails = mBattleList.getOpponentTeam();
-        setCaptionOpponentClick();
         if (mBattleList.getCaptainId().equalsIgnoreCase(mAppPreference.getProfileData().getId())) {
             mIsCaptain = true;
             if (mResultList.get(0).getCaptainPoints() >= mResultList.get(0).getOpponentPoints()) {
@@ -322,6 +321,8 @@ public class BattlesScoreActivity extends BaseActivity implements IHTHBattleView
             }else
                 mYouWin = true;
         }
+        setCaptionOpponentClick();
+
         if (mResultList.get(0).getOpponentPoints() > mResultList.get(0).getCaptainPoints()) {
             if (mIsCaptain) {
                 mNameTV.setText(AppConstant.TEXT_OPPONENT_COMBO);

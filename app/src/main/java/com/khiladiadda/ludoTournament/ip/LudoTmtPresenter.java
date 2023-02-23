@@ -9,6 +9,7 @@ import com.khiladiadda.network.model.response.ludoTournament.LudoTmtJoinMainResp
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtMyMatchMainResponse;
 import com.khiladiadda.network.model.response.ludoTournament.LudoTmtRoundsDetailsMainResponse;
 
+import retrofit2.http.Query;
 import rx.Subscription;
 
 public class LudoTmtPresenter implements ILudoTmtPresenter {
@@ -29,8 +30,8 @@ public class LudoTmtPresenter implements ILudoTmtPresenter {
     }
 
     @Override
-    public void getAllTournament(boolean startDate, int type) {
-        mSubscription = mInteractor.getLudoTmtAllTournament(ludoTmtAllTournamentMainResponseIApiListener, startDate, type);
+    public void getAllTournament(boolean startDate, int type, boolean banners, String banner_type, boolean profile) {
+        mSubscription = mInteractor.getLudoTmtAllTournament(ludoTmtAllTournamentMainResponseIApiListener, startDate, type, banners, banner_type, profile );
     }
 
     private IApiListener<LudoTmtAllTournamentMainResponse> ludoTmtAllTournamentMainResponseIApiListener = new IApiListener<LudoTmtAllTournamentMainResponse>() {

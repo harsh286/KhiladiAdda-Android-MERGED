@@ -53,24 +53,35 @@
             android:src="@drawable/fflb" />
 
         <ImageView
-            android:id="@+id/iv_bgmi"
+            android:id="@+id/iv_ff_max"
             android:layout_width="@dimen/margin_80"
             android:layout_height="@dimen/margin_80"
-            android:layout_marginStart="@dimen/margin_5"
             android:layout_marginEnd="@dimen/margin_5"
-            android:contentDescription="@string/menu_ludo"
+            android:contentDescription="@string/text_free_fire"
             android:padding="@dimen/margin_3"
-            android:src="@drawable/bgmilb" />
+            android:src="@drawable/ffmaxlb" />
+
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_bgmi"-->
+<!--            android:layout_width="@dimen/margin_80"-->
+<!--            android:layout_height="@dimen/margin_80"-->
+<!--            android:layout_marginStart="@dimen/margin_5"-->
+<!--            android:layout_marginEnd="@dimen/margin_5"-->
+<!--            android:contentDescription="@string/menu_ludo"-->
+<!--            android:padding="@dimen/margin_3"-->
+<!--            android:src="@drawable/bgmilb" />-->
+
+
 
         <ImageView
-            android:id="@+id/iv_tdm"
+            android:id="@+id/iv_clsq"
             android:layout_width="@dimen/margin_80"
             android:layout_height="@dimen/margin_80"
             android:layout_marginStart="@dimen/margin_5"
             android:layout_marginEnd="@dimen/margin_5"
             android:contentDescription="@string/text_call_duty"
             android:padding="@dimen/margin_3"
-            android:src="@drawable/tdmlb" />
+            android:src="@drawable/clssqlb" />
 
     </LinearLayout>
 
@@ -83,14 +94,6 @@
         android:layout_marginTop="@dimen/margin_10"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/iv_ff_max"
-            android:layout_width="@dimen/margin_80"
-            android:layout_height="@dimen/margin_80"
-            android:layout_marginEnd="@dimen/margin_5"
-            android:contentDescription="@string/text_free_fire"
-            android:padding="@dimen/margin_3"
-            android:src="@drawable/ffmaxlb" />
 
         <ImageView
             android:id="@+id/iv_ludo_universe"
@@ -113,6 +116,16 @@
             android:padding="@dimen/margin_3"
             android:src="@drawable/ludolb" />
 
+        <ImageView
+            android:id="@+id/iv_ludo_tournament"
+            android:layout_width="@dimen/margin_80"
+            android:layout_height="@dimen/margin_80"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:contentDescription="@string/text_call_duty"
+            android:padding="@dimen/margin_3"
+            android:src="@drawable/ludotmt_leaderboard" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -126,33 +139,37 @@
         android:padding="@dimen/margin_3">
 
         <ImageView
-            android:id="@+id/fanbattle"
-            android:layout_width="@dimen/margin_80"
-            android:layout_height="@dimen/margin_80"
-            android:layout_marginEnd="@dimen/margin_5"
-            android:contentDescription="@string/text_free_fire"
-            android:padding="@dimen/margin_3"
-            android:src="@drawable/fanbattlelb" />
-
-        <ImageView
-            android:id="@+id/iv_hth"
+            android:id="@+id/iv_courtpiece"
             android:layout_width="@dimen/margin_80"
             android:layout_height="@dimen/margin_80"
             android:layout_marginStart="@dimen/margin_5"
             android:layout_marginEnd="@dimen/margin_5"
             android:contentDescription="@string/menu_ludo"
             android:padding="@dimen/margin_3"
-            android:src="@drawable/hthlb" />
+            android:src="@drawable/courtpiece_leaderboard" />
+
+
 
         <ImageView
-            android:id="@+id/iv_clsq"
+            android:id="@+id/iv_rummy"
             android:layout_width="@dimen/margin_80"
             android:layout_height="@dimen/margin_80"
             android:layout_marginStart="@dimen/margin_5"
             android:layout_marginEnd="@dimen/margin_5"
             android:contentDescription="@string/text_call_duty"
             android:padding="@dimen/margin_3"
-            android:src="@drawable/clssqlb" />
+            android:src="@drawable/rummy_leaderboard" />
+
+        <ImageView
+            android:id="@+id/iv_wordsearch"
+            android:layout_width="@dimen/margin_80"
+            android:layout_height="@dimen/margin_80"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:contentDescription="@string/menu_ludo"
+            android:padding="@dimen/margin_3"
+            android:src="@drawable/lead_ws" />
+
 
     </LinearLayout>
 
@@ -178,24 +195,23 @@
             android:src="@drawable/lead_droido" />
 
         <ImageView
-            android:id="@+id/iv_wordsearch"
+            android:id="@+id/fanbattle"
             android:layout_width="@dimen/margin_80"
             android:layout_height="@dimen/margin_80"
-            android:layout_marginStart="@dimen/margin_5"
             android:layout_marginEnd="@dimen/margin_5"
-            android:contentDescription="@string/menu_ludo"
+            android:contentDescription="@string/text_free_fire"
             android:padding="@dimen/margin_3"
-            android:src="@drawable/lead_ws" />
+            android:src="@drawable/fanbattlelb" />
 
         <ImageView
-            android:id="@+id/iv_quiz"
+            android:id="@+id/iv_hth"
             android:layout_width="@dimen/margin_80"
             android:layout_height="@dimen/margin_80"
             android:layout_marginStart="@dimen/margin_5"
             android:layout_marginEnd="@dimen/margin_5"
             android:contentDescription="@string/menu_ludo"
             android:padding="@dimen/margin_3"
-            android:src="@drawable/quizlb" />
+            android:src="@drawable/hthlb" />
 
     </LinearLayout>
 
@@ -208,6 +224,17 @@
         android:layout_marginBottom="@dimen/margin_10"
         android:orientation="horizontal"
         android:padding="@dimen/margin_3">
+
+
+        <ImageView
+            android:id="@+id/iv_quiz"
+            android:layout_width="@dimen/margin_80"
+            android:layout_height="@dimen/margin_80"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:contentDescription="@string/menu_ludo"
+            android:padding="@dimen/margin_3"
+            android:src="@drawable/quizlb" />
 
         <ImageView
             android:id="@+id/iv_pubg_gobal"
@@ -229,15 +256,7 @@
             android:padding="@dimen/margin_3"
             android:src="@drawable/pcesport_leaderboard" />
 
-        <ImageView
-            android:id="@+id/iv_ludo_tournament"
-            android:layout_width="@dimen/margin_80"
-            android:layout_height="@dimen/margin_80"
-            android:layout_marginStart="@dimen/margin_5"
-            android:layout_marginEnd="@dimen/margin_5"
-            android:contentDescription="@string/text_call_duty"
-            android:padding="@dimen/margin_3"
-            android:src="@drawable/ludotmt_leaderboard" />
+
 
     </LinearLayout>
     <LinearLayout
@@ -249,25 +268,36 @@
         android:orientation="horizontal"
         android:padding="@dimen/margin_3">
 
-        <ImageView
-            android:id="@+id/iv_courtpiece"
-            android:layout_width="@dimen/margin_80"
-            android:layout_height="@dimen/margin_80"
-            android:layout_marginStart="@dimen/margin_5"
-            android:layout_marginEnd="@dimen/margin_5"
-            android:contentDescription="@string/menu_ludo"
-            android:padding="@dimen/margin_3"
-            android:src="@drawable/courtpiece_leaderboard" />
 
         <ImageView
-            android:id="@+id/iv_rummy"
+            android:id="@+id/iv_bgmi"
             android:layout_width="@dimen/margin_80"
             android:layout_height="@dimen/margin_80"
             android:layout_marginStart="@dimen/margin_5"
             android:layout_marginEnd="@dimen/margin_5"
             android:contentDescription="@string/text_call_duty"
             android:padding="@dimen/margin_3"
-            android:src="@drawable/rummy_leaderboard" />
+            android:src="@drawable/bgmilb" />
+        <ImageView
+            android:id="@+id/iv_tdm"
+            android:layout_width="@dimen/margin_80"
+            android:layout_height="@dimen/margin_80"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:contentDescription="@string/text_call_duty"
+            android:padding="@dimen/margin_3"
+            android:src="@drawable/tdmlb" />
+
+        <ImageView
+            android:id="@+id/iv_comingsoon"
+            android:layout_width="@dimen/margin_80"
+            android:layout_height="@dimen/margin_80"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:contentDescription="@string/text_call_duty"
+            android:padding="@dimen/margin_3"
+            android:src="@drawable/esport_leaderboard" />
+
 
     </LinearLayout>
 

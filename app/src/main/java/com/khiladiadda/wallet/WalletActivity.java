@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
+import com.khiladiadda.dialogs.AppDialog;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.main.MainActivity;
 import com.khiladiadda.network.model.ApiError;
@@ -160,21 +161,27 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
                 break;
             case R.id.btn_add_coins:
 //                i = new Intent(this, AddWalletOldActivity.class);
-                if (LocationCheckUtils.getInstance().hasLocationPermission()) {
-                    LocationCheckUtils.getInstance().requestNewLocationData();
-                    if (isAllowed) {
-                        i = new Intent(this, AddWalletActivity.class);
-                        walletActivityResultLauncher.launch(i);
-                    } else
-                        Snackbar.make(mAddCoinsBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
+                if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
+                    if (LocationCheckUtils.getInstance().hasLocationPermission()) {
+                        LocationCheckUtils.getInstance().requestNewLocationData();
+                        if (isAllowed) {
+                            i = new Intent(this, AddWalletActivity.class);
+                            walletActivityResultLauncher.launch(i);
+                        } else
+                            Snackbar.make(mAddCoinsBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
 
-                } else {
-                    LocationCheckUtils.getInstance().statusCheck();
+                    } else {
+                            AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
+                    }
+                }else {
+                    i = new Intent(this, AddWalletActivity.class);
+                    walletActivityResultLauncher.launch(i);
                 }
                 break;
 
             case R.id.btn_withdraw:
-                if (LocationCheckUtils.getInstance().hasLocationPermission()) {
+                if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
+                    if (LocationCheckUtils.getInstance().hasLocationPermission()) {
                     LocationCheckUtils.getInstance().requestNewLocationData();
                     if (isAllowed) {
                         i = new Intent(this, NewWithdrawActivity.class);
@@ -184,7 +191,12 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
                         Snackbar.make(mAddCoinsBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
 
                 } else {
-                    LocationCheckUtils.getInstance().statusCheck();
+                            AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
+                }}
+                else {
+                    i = new Intent(this, NewWithdrawActivity.class);
+                    mAppPreference.setBoolean(AppConstant.IS_PAYTMWALLET_ENABLED, mPaytm);
+                    walletActivityResultLauncher.launch(i);
                 }
                 break;
             case R.id.tv_payment_history:

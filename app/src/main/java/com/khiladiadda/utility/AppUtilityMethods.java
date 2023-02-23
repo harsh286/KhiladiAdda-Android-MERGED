@@ -1454,7 +1454,33 @@ public class AppUtilityMethods {
     }
 
     //LUDO Tournament
-    public static void showTooltip(Activity activity, ImageView mTV, String textMsg) {
+    public static void showTooltip(Activity activity, TextView mTV, String textMsg) {
+        View ludoToolTip = LayoutInflater.from(activity).inflate(R.layout.rules_info_tooltip, null);
+        PopupWindow mWindow = new PopupWindow(ludoToolTip, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        if (Build.VERSION.SDK_INT >= 21) {
+            mWindow.setElevation(5.0f);
+        }
+        mWindow.setOutsideTouchable(true);
+        mWindow.setFocusable(true);
+        mWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        TextView tvEnglish = ludoToolTip.findViewById(R.id.tv_english);
+        TextView tvhindi = ludoToolTip.findViewById(R.id.tv_hindi);
+        tvEnglish.setOnClickListener(view -> {
+            Intent intent = new Intent(activity, LudoTmtRulesActivity.class);
+            intent.putExtra("lang", "english");
+            activity.startActivity(intent);
+            mWindow.dismiss();
+        });
+        tvhindi.setOnClickListener(view -> {
+            Intent intent = new Intent(activity, LudoTmtRulesActivity.class);
+            intent.putExtra("lang", "hindi");
+            activity.startActivity(intent);
+            mWindow.dismiss();
+        });
+        mWindow.showAsDropDown(mTV, (int) -(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, activity.getResources().getDisplayMetrics())), 0, Gravity.END);
+    }
+    //LUDO Tournament
+    public static void showTooltipFromImage(Activity activity, ImageView mTV, String textMsg) {
         View ludoToolTip = LayoutInflater.from(activity).inflate(R.layout.rules_info_tooltip, null);
         PopupWindow mWindow = new PopupWindow(ludoToolTip, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         if (Build.VERSION.SDK_INT >= 21) {

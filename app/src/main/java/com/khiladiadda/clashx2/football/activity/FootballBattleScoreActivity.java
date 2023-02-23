@@ -598,7 +598,6 @@ public class FootballBattleScoreActivity extends BaseActivity implements IHTHBat
                 Glide.with(mTPlayerFourIV.getContext()).clear(mTPlayerFourIV);
                 mTPlayerFourIV.setImageResource(R.drawable.splash_logo);
             }
-
         }
     }
 
@@ -614,7 +613,7 @@ public class FootballBattleScoreActivity extends BaseActivity implements IHTHBat
 
     private void substituteData(boolean isCaptain, BattlesDeatilsHTH mBattleList) {
         List<CaptainTeamHTH> battleDetails;
-        if (isCaptain) {
+        if (mBattleList.getCaptainId().equalsIgnoreCase(mAppPreference.getProfileData().getId())) {
             battleDetails = mBattleList.getCaptainTeam();
         } else {
             battleDetails = mBattleList.getOpponentTeam();

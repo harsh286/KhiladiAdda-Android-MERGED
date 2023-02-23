@@ -1,5 +1,7 @@
 package com.khiladiadda.callbreak;
 
+import static android.view.View.GONE;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -7,18 +9,22 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -38,7 +44,10 @@ import com.khiladiadda.interfaces.IOnFileDownloadedListener;
 import com.khiladiadda.interfaces.IOnItemClickListener;
 import com.khiladiadda.ludoUniverse.LudoUniverseActivity;
 import com.khiladiadda.ludoUniverse.ModeActivity;
+import com.khiladiadda.main.adapter.BannerPagerAdapter;
+import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.network.model.ApiError;
+import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.CallBreakDetails;
 import com.khiladiadda.network.model.response.CallBreakJoinMainResponse;
 import com.khiladiadda.network.model.response.CallBreakResponse;
@@ -46,9 +55,11 @@ import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.PrizePoolBreakthrough;
 import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.DownloadApk;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.utility.providers.GenericFileProvider;
+import com.khiladiadda.wallet.WalletActivity;
 import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
 
@@ -68,8 +79,10 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     RecyclerView mCallBreakRV;
     @BindView(R.id.tv_download)
     TextView mDownloadTV;
-    @BindView(R.id.iv_announcement)
-    ImageView mAnnouncementIV;
+    @BindView(R.id.rl_wallet)
+    LinearLayout mWalletLL;
+    @BindView(R.id.tv_total_wallet_balance)
+    TextView mWalletBalanceTV;
     private CallBreakAdapter mAdapter;
     private List<CallBreakDetails> mList;
     private ICallBreakPresenter mPresenter;
@@ -78,6 +91,17 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     private String mVersion, mLink, mFilePath, mCurrentVersion;
     private boolean mIsRequestingAppInstallPermission;
     private int position = 0;
+    private Intent launchIntent;
+    private Coins mCoins;
+    private double mWinAmount, Amount, mTotalWalletBal;
+    private CallBreakDialog callBreakDialog;
+
+
+    @BindView(R.id.vp_advertisement)
+    ViewPager mBannerVP;
+    private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
+    private Handler mHandler;
+
 
     @Override
     protected int getContentView() {
@@ -86,9 +110,10 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
 
     @Override
     protected void initViews() {
-        mActivityNameTV.setText("Call Break");
+        mActivityNameTV.setText("CourtPiece Pro");
         mBackIV.setOnClickListener(this);
         mDownloadTV.setOnClickListener(this);
+        callBreakDialog = new CallBreakDialog(this);
     }
 
     @Override
@@ -99,6 +124,7 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
         mCallBreakRV.setLayoutManager(new LinearLayoutManager(this));
         mCallBreakRV.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
+        mWalletLL.setOnClickListener(this);
         getData();
     }
 
@@ -108,12 +134,20 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
             onBackPressed();
         } else if (view.getId() == R.id.tv_download) {
             mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
+        } else if (view.getId() == R.id.rl_wallet) {
+            Intent profile = new Intent(this, WalletActivity.class);
+            startActivity(profile);
         }
     }
 
     private void getData() {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
+            mCoins = mAppPreference.getProfileData().getCoins();
+            if (mCoins != null) {
+                mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
+                mWalletBalanceTV.setText("₹" + AppUtilityMethods.roundUpNumber(mTotalWalletBal));
+            }
             mPresenter.getCallBreak();
         } else {
             Snackbar.make(mActivityNameTV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
@@ -132,19 +166,20 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     @Override
     public void onGetContestSuccess(CallBreakResponse responseModel) {
         hideProgress();
+//        apkCheck();
         if (responseModel.isStatus()) {
             mainResponse = responseModel;
             mList.addAll(responseModel.getResponse());
             mAdapter.notifyDataSetChanged();
             mCurrentVersion = responseModel.getApkVersion();
             mLink = responseModel.getCallbreakApkLink();
-//            apkCheck();
-            if (responseModel.getBanner().size() > 0)
-                mAnnouncementIV.setVisibility(View.VISIBLE);
-            if (!TextUtils.isEmpty(responseModel.getBanner().get(0).getImg())) {
-                Glide.with(mAnnouncementIV.getContext()).load(responseModel.getBanner().get(0).getImg()).transform(new CenterCrop(), new RoundedCorners(20)).into(mAnnouncementIV);
+            apkCheck();
+            List<BannerDetails> bannerData = responseModel.getBanner();
+            if (bannerData != null && bannerData.size() > 0) {
+                mBannerVP.setVisibility(View.VISIBLE);
+                setUpAdvertisementViewPager(bannerData);
             } else {
-                mAnnouncementIV.setVisibility(View.GONE);
+                mBannerVP.setVisibility(GONE);
             }
         }
     }
@@ -177,6 +212,7 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.ludoadda_download_popup);
         TextView tv = dialog.findViewById(R.id.textView9);
+        tv.setText("It seem like you haven't downloaded our CourtPiece Pro game to play contests, So please click on download button to download the game.");
         ProgressBar progressBar = dialog.findViewById(R.id.pb_apk_download);
         AppCompatButton iv_playstore = dialog.findViewById(R.id.iv_download);
         ImageView ivCross = dialog.findViewById(R.id.iv_cross);
@@ -263,7 +299,7 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     private void getVersion() {
         try {
             PackageManager pm = this.getPackageManager();
-            PackageInfo pInfo = pm.getPackageInfo(AppConstant.LudoAddaPackageName, 0);
+            PackageInfo pInfo = pm.getPackageInfo(AppConstant.CallBreakPackageName, 0);
             mVersion = pInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -271,57 +307,61 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     }
 
     private void apkCheck() {
-        if (mLink != null) {
-            mAppPreference.setString("CBVersion", mCurrentVersion);
-            mAppPreference.setString("mCBLink", mLink);
-            Properties properties = new Properties();
-            properties.addAttribute("CallBreakVersion", mCurrentVersion);
-            MoEAnalyticsHelper.INSTANCE.trackEvent(this, "CallBreak", properties);
-        }
-        if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
-            mDownloadTV.setVisibility(View.GONE);
-            mAppPreference.setBoolean("CallBreakDownload", true);
+        if (launchIntent != null) {
+            if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
+                mDownloadTV.setVisibility(View.GONE);
+                mWalletLL.setVisibility(View.VISIBLE);
+                mAppPreference.setBoolean("CallBreakDownload", true);
+            } else {
+                mDownloadTV.setText("Update");
+            }
         } else {
             mDownloadTV.setVisibility(View.VISIBLE);
-            mDownloadTV.setText("Update");
+        }
+        if (mLink != null) {
+            mAppPreference.setString("CBVersion", mCurrentVersion);
+            mAppPreference.setString("CBLink", mLink);
+            Properties properties = new Properties();
+            properties.addAttribute("CBVersion", mCurrentVersion);
+            MoEAnalyticsHelper.INSTANCE.trackEvent(this, "CallBreak", properties);
         }
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
+        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.CallBreakPackageName);
+        if (launchIntent != null) getVersion();
+        else mAppPreference.setBoolean("CallBreakDownload", false);
         if (mIsRequestingAppInstallPermission) {
             installApk(mFilePath);
         }
-        if (mAppPreference.getBoolean("CallBreakDownload", false)) {
-            try {
-                Intent launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
-                if (launchIntent != null) {
-                    finish();
-                    startActivity(new Intent(this, ModeActivity.class));
-                } else {
-                    mDownloadTV.setVisibility(View.VISIBLE);
-                }
-            } catch (Exception e) {
-                finish();
-                startActivity(new Intent(this, LudoUniverseActivity.class));
-            }
-        }
+        apkCheck();
     }
 
     @Override
     public void onItemClick(View view, int position, int tag) {
-        openBottomDialog(position);
+        if (mAppPreference.getBoolean("CallBreakDownload", false)) {
+            if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
+                openBottomDialog(position);
+            } else {
+                mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
+            }
+        } else {
+            mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
+        }
     }
 
     private void openBottomDialog(int position) {
         Coins mCoins = mAppPreference.getProfileData().getCoins();
         double mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
         double mDepWinAmount = mCoins.getDeposit() + mCoins.getWinning();
-        CallBreakDialog addExpenseDialog = new CallBreakDialog(this, String.valueOf(mList.get(position).getEntryFees()), String.valueOf(mTotalWalletBal), String.valueOf(mDepWinAmount), mList.get(position).getPrizePoolBreakup(), mList.get(position), this, position);
-        addExpenseDialog.setCancelable(false);
-        addExpenseDialog.setCanceledOnTouchOutside(false);
-        addExpenseDialog.show();
+//        CallBreakDialog addExpenseDialog = new CallBreakDialog(this, String.valueOf(mList.get(position).getEntryFees()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), mList.get(position).getPrizePoolBreakup(), mList.get(position), this, position);
+        callBreakDialog = new CallBreakDialog(this, String.valueOf(mList.get(position).getEntryFees()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), mList.get(position).getPrizePoolBreakup(), mList.get(position), this, position);
+        callBreakDialog.setCancelable(true);
+        callBreakDialog.setCanceledOnTouchOutside(false);
+        callBreakDialog.show();
     }
 
     private void launchUnityWithData(String cId, double Amount, double mWinAmount, String mRandomName, String mRandomDp, List<PrizePoolBreakthrough> prizePoolBreakUp) {
@@ -336,14 +376,14 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
         if (launchGameIntent != null) {
             if (mAppPreference.getProfileData().getId() != null || !mAppPreference.getProfileData().getId().isEmpty()) {
                 launchGameIntent.putExtra("userToken", mAppPreference.getSessionToken().toString());
-                launchGameIntent.putExtra("contestId", cId);
+//                launchGameIntent.putExtra("contestId", cId);
                 launchGameIntent.putExtra("playerId", mAppPreference.getProfileData().getId());
                 launchGameIntent.putExtra("amount", mAmount);
 //            launchGameIntent.putExtra("winAmount", mWAmount);
-                launchGameIntent.putExtra("randomName", mRandomName);
-                launchGameIntent.putExtra("randomPhoto", mRandomDp);
+//                launchGameIntent.putExtra("randomName", mRandomName);
+//                launchGameIntent.putExtra("randomPhoto", mRandomDp);
                 launchGameIntent.putExtra("prizePoolBreakUp", String.valueOf(myCustomArray));
-            }else {
+            } else {
                 Toast.makeText(this, "Something went wrong!! Please restart your app", Toast.LENGTH_LONG).show();
             }
 
@@ -359,10 +399,40 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
 //        isSuccessfulGameOpen = true;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        callBreakDialog.cancel();
+    }
 
     @Override
     public void onConfirmClick(int pos) {
         position = pos;
         getJoinData(pos);
     }
+
+    private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
+        mAdvertisementsList.clear();
+        mAdvertisementsList.addAll(advertisementDetails);
+        List<Fragment> mFragmentList = new ArrayList<>();
+        for (BannerDetails advertisement : advertisementDetails) {
+            mFragmentList.add(BannerFragment.getInstance(advertisement));
+        }
+        BannerPagerAdapter adapter = new BannerPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
+        mBannerVP.setAdapter(adapter);
+        mBannerVP.setOffscreenPageLimit(3);
+        if (mHandler == null) {
+            mHandler = new Handler();
+            moveToNextAd(0);
+        }
+    }
+
+    private void moveToNextAd(int i) {
+        mBannerVP.setCurrentItem(i, true);
+        mHandler.postDelayed(() -> {
+            int currentItem = mBannerVP.getCurrentItem();
+            moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
+        }, 10000);
+    }
+
 }

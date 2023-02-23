@@ -1,5 +1,7 @@
 package com.khiladiadda.gameleague;
 
+import static android.view.View.GONE;
+
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -30,7 +33,10 @@ import com.khiladiadda.gameleague.interfaces.IOnGamesClickListener;
 import com.khiladiadda.gameleague.interfaces.ITrendingTournamentPresenter;
 import com.khiladiadda.gameleague.interfaces.ITrendingTournamentView;
 import com.khiladiadda.gameleague.ip.TrendingTournamentPresenter;
+import com.khiladiadda.main.adapter.BannerPagerAdapter;
+import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.network.model.ApiError;
+import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.droid_doresponse.MyTournamentResponse;
 import com.khiladiadda.network.model.response.droid_doresponse.ResponseData;
 import com.khiladiadda.network.model.response.droid_doresponse.ResponseDataMyTournament;
@@ -47,8 +53,7 @@ import java.util.Map;
 import butterknife.BindView;
 
 public class NewDroidoActivity extends BaseActivity implements ITrendingTournamentView, IOnGamesClickListener, IDialogFilter {
-    @BindView(R.id.vp_advertisement)
-    ViewPager mBannerVP;
+
     @BindView(R.id.iv_back_arroww)
     ImageView mIvBack;
     @BindView(R.id.tab_layout_droido)
@@ -77,6 +82,11 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
     private List<ResponseData> gameAllTournamentList = new ArrayList<>();
     private List<ResponseDataMyTournament> gameMyTournamentList = new ArrayList<>();
     private int size = 0;
+
+    @BindView(R.id.vp_advertisement)
+    ViewPager mBannerVP;
+    private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
+    private Handler mHandler;
 
     @Override
     protected int getContentView() {
@@ -250,12 +260,20 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
             gameAllTournamentList.clear();
             gameAllTournamentList.addAll(response.getResponse());
             mAllTournamentGameAdapter.notifyDataSetChanged();
+            List<BannerDetails> bannerData = response.getBanner();
+            if (bannerData != null && bannerData.size() > 0) {
+                mBannerVP.setVisibility(View.VISIBLE);
+                setUpAdvertisementViewPager(bannerData);
+            } else {
+                mBannerVP.setVisibility(GONE);
+            }
         } else {
             gameAllTournamentList.clear();
             mAllTournamentGameAdapter.notifyDataSetChanged();
             tvError.setVisibility(View.VISIBLE);
             hideProgress();
         }
+
     }
 
     @Override
@@ -272,9 +290,6 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
             gameMyTournamentList.clear();
             gameMyTournamentList.addAll(response.getTournamentList());
             myTournamentGameAdapter.notifyDataSetChanged();
-        } else {
-            tvError.setVisibility(View.VISIBLE);
-            hideProgress();
         }
     }
 
@@ -341,6 +356,30 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
     @Override
     public void getFiltersTournamentFailed(ApiError error) {
         hideProgress();
+    }
+
+    private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
+        mAdvertisementsList.clear();
+        mAdvertisementsList.addAll(advertisementDetails);
+        List<Fragment> mFragmentList = new ArrayList<>();
+        for (BannerDetails advertisement : advertisementDetails) {
+            mFragmentList.add(BannerFragment.getInstance(advertisement));
+        }
+        BannerPagerAdapter adapter = new BannerPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
+        mBannerVP.setAdapter(adapter);
+        mBannerVP.setOffscreenPageLimit(3);
+        if (mHandler == null) {
+            mHandler = new Handler();
+            moveToNextAd(0);
+        }
+    }
+
+    private void moveToNextAd(int i) {
+        mBannerVP.setCurrentItem(i, true);
+        mHandler.postDelayed(() -> {
+            int currentItem = mBannerVP.getCurrentItem();
+            moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
+        }, 10000);
     }
 
 }

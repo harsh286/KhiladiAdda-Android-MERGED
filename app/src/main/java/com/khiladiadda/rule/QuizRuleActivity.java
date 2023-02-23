@@ -62,6 +62,9 @@ public class QuizRuleActivity extends BaseActivity {
         if (getIntent().getStringExtra(AppConstant.FROM).equalsIgnoreCase(AppConstant.FROM_HOW_JOINING)) {
             mRuleTV.setText(AppConstant.RULE_JOIN);
             mVideoViewBTN.setVisibility(View.VISIBLE);
+        }if (getIntent().getStringExtra(AppConstant.FROM).equalsIgnoreCase(AppConstant.FROM_HOW_JOINING_PCESPORT)) {
+            mRuleTV.setText(AppConstant.RULE_JOIN_PCESPORT);
+            mVideoViewBTN.setVisibility(View.VISIBLE);
         }
         if (getIntent().getStringExtra(AppConstant.FROM).equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_ID)) {
             mRuleTV.setText(AppConstant.TEXT_JOIN_PUBGNS);

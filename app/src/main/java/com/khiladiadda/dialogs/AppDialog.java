@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -996,5 +997,26 @@ public class AppDialog {
         return dialog;
     }
 
+    public static Dialog DialogWithLocationCallBack(Activity activity, String message) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.show_error_popup);
+        TextView mMessageTV = dialog.findViewById(R.id.tv_error_message);
+        mMessageTV.setText(message);
+        Button mOkayTV = dialog.findViewById(R.id.btn_done);
+        mOkayTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                activity.startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.fromParts("package", activity.getPackageName(), null)));
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        return dialog;
+    }
 
 }

@@ -31,9 +31,9 @@ public class FBErrorDialog extends Dialog implements View.OnClickListener {
     @BindView(R.id.btn_ok) Button mOkBTN;
     @BindView(R.id.tv_new_user) TextView mNewUserTV;
     @BindView(R.id.tv_return_user) TextView mReturnUserTV;
-    private boolean mFrom;
+    private int mFrom;
 
-    public FBErrorDialog(@NonNull Context context, boolean fromFb, IOnSocialLoginErrorListener onSocialLoginErrorListener) {
+    public FBErrorDialog(@NonNull Context context, int fromFb, IOnSocialLoginErrorListener onSocialLoginErrorListener) {
         super(context);
         this.mFrom = fromFb;
         this.mOnSocialLoginErrorListener = onSocialLoginErrorListener;
@@ -71,8 +71,11 @@ public class FBErrorDialog extends Dialog implements View.OnClickListener {
         mNewUserTV.setTypeface(null, Typeface.BOLD);
         mReturnUserTV.setTypeface(null, Typeface.BOLD);
 
-        if(!mFrom){
+        if(mFrom == 1){
             mHintTV.setText(R.string.text_gmail_login_error);
+            mGoogleBTN.setText(R.string.text_fb);
+        }else if (mFrom == 2){
+            mHintTV.setText(R.string.text_truecaller_login_error);
             mGoogleBTN.setText(R.string.text_fb);
         }
     }

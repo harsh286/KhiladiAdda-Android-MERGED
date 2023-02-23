@@ -43,6 +43,10 @@ public class CallBreakDialog extends BottomSheetDialog implements View.OnClickLi
     private CallBreakDetails mCallBreakDetails;
     private IOnConfirmClickListener mIOnConfirmClickListeener;
 
+    public CallBreakDialog(@NonNull Context context) {
+        super(context);
+    }
+
     public CallBreakDialog(@NonNull Context context, String entryFee, String totalBal, String depWinAmount, List<PrizePoolBreakthrough> prizePoolBreakthroughList, CallBreakDetails mCallBreakDetails
             , IOnConfirmClickListener mIOnConfirmClickListeener, int pos) {
         super(context);
@@ -103,37 +107,6 @@ public class CallBreakDialog extends BottomSheetDialog implements View.OnClickLi
                 break;
         }
     }
-
-    private void launchUnityWithData(String cId, double Amount, double mWinAmount, String mRandomName, String mRandomDp, List<PrizePoolBreakthrough> prizePoolBreakUp) {
-        String mAmount = String.valueOf(Amount);
-        String mWAmount = String.valueOf(mWinAmount);
-        AppSharedPreference.initialize(mContext);
-        JsonArray myCustomArray = new GsonBuilder().create().toJsonTree(prizePoolBreakUp).getAsJsonArray();
-        AppSharedPreference mAppPreference = AppSharedPreference.getInstance();
-
-        Intent launchGameIntent =
-                mContext.getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.CallBreakPackageName);
-        if (launchGameIntent != null) {
-            launchGameIntent.putExtra("userToken", mAppPreference.getSessionToken().toString());
-            launchGameIntent.putExtra("contestId", cId);
-//            launchGameIntent.putExtra("playerId", mAppPreference.getProfileData().getId());
-            launchGameIntent.putExtra("amount", mAmount);
-//            launchGameIntent.putExtra("winAmount", mWAmount);
-            launchGameIntent.putExtra("randomName", mRandomName);
-            launchGameIntent.putExtra("randomPhoto", mRandomDp);
-            launchGameIntent.putExtra("prizePoolBreakUp", String.valueOf(myCustomArray));
-
-
-//            launchGameIntent.putExtra("prizePoolBreakUp", new JSONArray(prizePoolBreakUp));
-//            launchGameIntent.putParcelableArrayListExtra("prizePoolBreakUp", (ArrayList<? extends Parcelable>) prizePoolBreakUp);
-//            Snackbar.make(mWalletBalanceTV, +mFrom, Snackbar.LENGTH_LONG).show();
-            mContext.startActivity(launchGameIntent);
-        } else {
-            Toast.makeText(mContext, "Apk is not installed yet", Toast.LENGTH_SHORT).show();
-        }
-//        isSuccessfulGameOpen = true;
-    }
-
     public interface IOnConfirmClickListener {
         public void onConfirmClick(int pos);
     }

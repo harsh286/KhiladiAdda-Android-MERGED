@@ -1,5 +1,7 @@
 package com.khiladiadda.quiz.all;
 
+import static android.view.View.GONE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,9 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
@@ -22,11 +26,14 @@ import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.interfaces.IOnItemClickListener;
 import com.khiladiadda.main.MainActivity;
+import com.khiladiadda.main.adapter.BannerPagerAdapter;
 import com.khiladiadda.main.category.CategoryPresenter;
 import com.khiladiadda.main.category.adapter.QuizTrendingRVAdapter;
 import com.khiladiadda.main.category.interfaces.ICategoryPresenter;
 import com.khiladiadda.main.category.interfaces.ICategoryView;
+import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.network.model.ApiError;
+import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.QuizListDetails;
 import com.khiladiadda.network.model.response.TrendinQuizResponse;
@@ -85,6 +92,11 @@ public class AllQuizListActivity extends BaseActivity implements ICategoryView, 
     private QuizTrendingRVAdapter mTrendingAdapter;
     private List<QuizListDetails> mTrendingList = null;
     private BottomSheetBehavior mBottomSheetBehavior;
+
+    @BindView(R.id.vp_advertisement)
+    ViewPager mBannerVP;
+    private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
+    private Handler mHandler;
 
     @Override
     protected int getContentView() {
@@ -217,6 +229,13 @@ public class AllQuizListActivity extends BaseActivity implements ICategoryView, 
             mTrendingList.addAll(responseModel.getResponse());
             mTrendingAdapter.notifyDataSetChanged();
         }
+        List<BannerDetails> bannerData = responseModel.getBanner();
+        if (bannerData != null && bannerData.size() > 0) {
+            mBannerVP.setVisibility(View.VISIBLE);
+            setUpAdvertisementViewPager(bannerData);
+        } else {
+            mBannerVP.setVisibility(GONE);
+        }
         setData();
     }
 
@@ -326,4 +345,30 @@ public class AllQuizListActivity extends BaseActivity implements ICategoryView, 
             finish();
         }
     }
+
+    private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
+        mAdvertisementsList.clear();
+        mAdvertisementsList.addAll(advertisementDetails);
+        List<Fragment> mFragmentList = new ArrayList<>();
+        for (BannerDetails advertisement : advertisementDetails) {
+            mFragmentList.add(BannerFragment.getInstance(advertisement));
+        }
+        BannerPagerAdapter adapter = new BannerPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
+        mBannerVP.setAdapter(adapter);
+        mBannerVP.setOffscreenPageLimit(3);
+        if (mHandler == null) {
+            mHandler = new Handler();
+            moveToNextAd(0);
+        }
+    }
+
+    private void moveToNextAd(int i) {
+        mBannerVP.setCurrentItem(i, true);
+        mHandler.postDelayed(() -> {
+            int currentItem = mBannerVP.getCurrentItem();
+            moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
+        }, 10000);
+    }
+
+
 }

@@ -19,9 +19,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_3"
+        android:layout_margin="@dimen/margin_3"
         android:layout_weight="1"
         android:gravity="center"
-        android:hint="@string/text_zero_double"
+        android:textStyle="bold"
+        android:hint="Contests\n00"
         android:textColor="@color/light_gray"
         android:textSize="@dimen/text_13" />
 
@@ -36,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:hint="@string/text_zero_double"
+            android:hint="Win\n00"
             android:textColor="@color/light_gray"
             android:textSize="@dimen/text_13" />
 
@@ -46,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:hint="@string/text_zero_double"
+            android:hint="Losses\n00"
             android:textColor="@color/light_gray"
             android:textSize="@dimen/text_13" />
     </LinearLayout>

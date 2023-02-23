@@ -116,6 +116,8 @@ public class KabbadiDashBoardFragment extends BaseFragment implements IOnItemGam
                 gamesDataArrayList.addAll(responseModel.getResponse());
                 gamesDashBoardAdapter.notifyDataSetChanged();
             }else {
+                gamesDataArrayList.clear();
+                gamesDashBoardAdapter.notifyDataSetChanged();
                 mNoDataTv.setVisibility(View.VISIBLE);
             }
         }

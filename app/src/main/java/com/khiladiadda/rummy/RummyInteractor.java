@@ -9,6 +9,7 @@ import com.khiladiadda.network.model.request.LudoContestRequest;
 import com.khiladiadda.network.model.request.OpponentLudoRequest;
 import com.khiladiadda.network.model.response.LudoContestResponse;
 import com.khiladiadda.network.model.response.ModeResponse;
+import com.khiladiadda.network.model.response.RummyCheckGameResponse;
 import com.khiladiadda.network.model.response.RummyRefreshTokenMainResponse;
 import com.khiladiadda.network.model.response.RummyResponse;
 
@@ -26,6 +27,12 @@ public class RummyInteractor {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
         return manager.createObservable(service.getRummyRefershToken()).subscribe(new SubscriberCallback<>(listener));
+    }
+
+    Subscription getCheckGameStatus(IApiListener<RummyCheckGameResponse> listener) {
+        ApiManager manager = ApiManager.getInstance();
+        ApiService service = manager.createService();
+        return manager.createObservable(service.getRummyCheckGameStatus()).subscribe(new SubscriberCallback<>(listener));
     }
 
 }

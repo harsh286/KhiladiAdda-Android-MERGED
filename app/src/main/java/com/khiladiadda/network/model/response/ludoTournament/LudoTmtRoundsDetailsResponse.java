@@ -22,9 +22,20 @@ public class LudoTmtRoundsDetailsResponse {
     @SerializedName("roomStatus")
     @Expose
     private Integer roomStatus;
+    @SerializedName("roomCode")
+    @Expose
+    private String roomCode;
     @SerializedName("level")
     @Expose
     private Integer level;
+
+    public String getRoomCode() {
+        return roomCode;
+    }
+
+    public void setRoomCode(String roomCode) {
+        this.roomCode = roomCode;
+    }
 
     public String getId() {
         return id;

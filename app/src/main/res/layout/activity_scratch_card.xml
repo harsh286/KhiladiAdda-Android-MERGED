@@ -58,8 +58,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_categories"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_8"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <ImageView
                 android:id="@+id/rl_ludo"
@@ -67,19 +70,17 @@
                 android:layout_height="110dp"
                 android:layout_marginEnd="@dimen/text_8"
                 android:src="@drawable/ludoking_scratch" />
-
             <ImageView
-                android:id="@+id/rl_fanbattle"
+                android:id="@+id/iv_courtpiece"
                 android:layout_width="120dp"
                 android:layout_height="110dp"
                 android:layout_marginEnd="@dimen/text_8"
-                android:src="@drawable/fanbattle_scratch" />
-
+                android:src="@drawable/courtpiece_scratch" />
             <ImageView
-                android:id="@+id/rl_lu"
+                android:id="@+id/iv_rummy"
                 android:layout_width="120dp"
                 android:layout_height="110dp"
-                android:src="@drawable/ludoadda_scratch" />
+                android:src="@drawable/rummy_scratch" />
 
         </LinearLayout>
 
@@ -92,24 +93,24 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/iv_courtpiece"
+                android:id="@+id/rl_leagues"
                 android:layout_width="120dp"
                 android:layout_height="110dp"
                 android:layout_marginEnd="@dimen/text_8"
-                android:src="@drawable/courtpiece_scratch" />
+                android:src="@drawable/leagues_scratch" />
 
             <ImageView
-                android:id="@+id/iv_rummy"
+                android:id="@+id/rl_hth"
                 android:layout_width="120dp"
                 android:layout_height="110dp"
                 android:layout_marginEnd="@dimen/text_8"
-                android:src="@drawable/rummy_scratch" />
+                android:src="@drawable/clashx_scratch" />
 
             <ImageView
-                android:id="@+id/rl_wordsearch"
+                android:id="@+id/rl_fanbattle"
                 android:layout_width="120dp"
                 android:layout_height="110dp"
-                android:src="@drawable/wordsearch_scratch" />
+                android:src="@drawable/fanbattle_scratch" />
 
         </LinearLayout>
 
@@ -124,6 +125,13 @@
 
 
             <ImageView
+                android:id="@+id/rl_wordsearch"
+                android:layout_width="120dp"
+                android:layout_height="110dp"
+                android:layout_marginEnd="@dimen/text_8"
+                android:src="@drawable/wordsearch_scratch" />
+
+            <ImageView
                 android:id="@+id/rl_droid"
                 android:layout_width="120dp"
                 android:layout_height="110dp"
@@ -134,14 +142,8 @@
                 android:id="@+id/rl_quiz"
                 android:layout_width="120dp"
                 android:layout_height="110dp"
-                android:layout_marginEnd="@dimen/text_8"
                 android:src="@drawable/quizzes_scratch" />
 
-            <ImageView
-                android:id="@+id/rl_hth"
-                android:layout_width="120dp"
-                android:layout_height="110dp"
-                android:src="@drawable/clashx_scratch" />
 
         </LinearLayout>
 
@@ -150,23 +152,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_third"
+            android:layout_marginTop="@dimen/margin_8"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/rl_leagues"
-                android:layout_width="120dp"
-                android:layout_height="110dp"
-                android:layout_marginEnd="@dimen/text_8"
-                android:src="@drawable/leagues_scratch" />
-
-            <ImageView
-                android:id="@+id/iv_pcesports"
-                android:layout_width="120dp"
-                android:layout_height="110dp"
-                android:layout_marginEnd="@dimen/text_8"
-                android:src="@drawable/pcesports_scratch" />
+                android:id="@+id/rl_lu"
+                android:layout_width="wrap_content"
+                android:layout_height="117dp"
+                android:src="@drawable/ludoadda_scratch" />
 
         </LinearLayout>
 
@@ -178,6 +173,18 @@
             android:layout_marginStart="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_5"
             android:text="@string/scratch_cards"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_view_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_forth"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/text_16"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
+            android:text="@string/Viewall"
             android:textColor="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView

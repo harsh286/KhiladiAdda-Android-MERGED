@@ -3,6 +3,7 @@ package com.khiladiadda.ludoUniverse;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -49,6 +50,8 @@ import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.DownloadApk;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.utility.providers.GenericFileProvider;
+import com.moengage.core.Properties;
+import com.moengage.core.analytics.MoEAnalyticsHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -108,8 +111,6 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
         mBackIV.setOnClickListener(this);
         mNotificationIV.setOnClickListener(this);
         mAppPreference.setBoolean("MyLudoDownload", false);
-        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
-        if (launchIntent != null) getVersion();
         mCurrentVersion = mAppPreference.getString("LudoVersion", mCurrentVersion);
         mLink = mAppPreference.getString("mLudoLink", mLink);
     }
@@ -250,7 +251,15 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
 
     @Override
     public void onItemClick(View view, int position, int tag) {
-        checkChallengeStatus(position);
+        if (mAppPreference.getBoolean("LudoDownload", false)) {
+            if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
+                checkChallengeStatus(position);
+            } else {
+                mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
+            }
+        } else {
+            mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
+        }
     }
 
     private void checkChallengeStatus(int position) {
@@ -274,17 +283,30 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
         String mAmount = String.valueOf(Amount);
         String mWAmount = String.valueOf(mWinAmount);
         if (launchIntent != null) {
-            launchIntent.putExtra("userToken", mAppPreference.getSessionToken());
-            launchIntent.putExtra("contestId", cId);
-            launchIntent.putExtra("ka_version", AppUtilityMethods.getVersion());
-            launchIntent.putExtra("playerId", mAppPreference.getProfileData().getId());
-            launchIntent.putExtra("amount", mAmount);
-            launchIntent.putExtra("contestCode", mContestCode);
-            launchIntent.putExtra("winAmount", mWAmount);
-            launchIntent.putExtra("randomName", mRandomName);
-            launchIntent.putExtra("randomPhoto", mRandomDp);
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setComponent(new ComponentName(AppConstant.LudoAddaPackageName, "com.unity3d.player.UnityPlayerActivity"));
+//            launchIntent.putExtra("userToken", mAppPreference.getSessionToken());
+//            launchIntent.putExtra("contestId", cId);
+//            launchIntent.putExtra("ka_version", AppUtilityMethods.getVersion());
+//            launchIntent.putExtra("playerId", mAppPreference.getProfileData().getId());
+//            launchIntent.putExtra("amount", mAmount);
+//            launchIntent.putExtra("contestCode", mContestCode);
+//            launchIntent.putExtra("winAmount", mWAmount);
+//            launchIntent.putExtra("randomName", mRandomName);
+//            launchIntent.putExtra("randomPhoto", mRandomDp);
+
+            intent.putExtra("userToken", mAppPreference.getSessionToken());
+            intent.putExtra("contestId", cId);
+            intent.putExtra("ka_version", AppUtilityMethods.getVersion());
+            intent.putExtra("playerId", mAppPreference.getProfileData().getId());
+            intent.putExtra("amount", mAmount);
+            intent.putExtra("contestCode", mContestCode);
+            intent.putExtra("winAmount", mWAmount);
+            intent.putExtra("randomName", mRandomName);
+            intent.putExtra("randomPhoto", mRandomDp);
             isSuccessfulGameOpen = true;
-            startActivity(launchIntent);
+            startActivity(intent);
+//            finishAffinity();
         }
     }
 
@@ -353,6 +375,10 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
     @Override
     protected void onResume() {
         super.onResume();
+        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
+        if (launchIntent != null) getVersion();
+        else mAppPreference.setBoolean("LudoDownload", false);
+        apkCheck();
         getData();
 
 //        if (AppUtilityMethods.isDeviceRooted()) {
@@ -364,29 +390,8 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
 //               // showDialogMsg("", 2);
 //            }
 //        }
-
         if (mIsRequestingAppInstallPermission) {
             installApk(mFilePath);
-        }
-
-        if (mAppPreference.getBoolean("MyLudoDownload", false)) {
-            try {
-                Intent launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
-                if (launchIntent != null) {
-                    if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
-                        finish();
-                        startActivity(new Intent(this, LudoUniverseActivity.class));
-                    } else {
-                        finish();
-                        startActivity(new Intent(this, LudoUniverseActivity.class));
-                    }
-                }
-            } catch (Exception e) {
-                finish();
-                startActivity(new Intent(this, LudoUniverseActivity.class));
-
-
-            }
         }
 
     }
@@ -436,6 +441,15 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
 
         }
     };
+
+    private void apkCheck() {
+        if (launchIntent != null) {
+            if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
+                mAppPreference.setBoolean("LudoDownload", true);
+            }
+        }
+    }
+
 
     private void installApk(String filePath) {
         if (Build.VERSION.SDK_INT >= 26 && !MyLudoUniverseActivity.this.getPackageManager().canRequestPackageInstalls()) {

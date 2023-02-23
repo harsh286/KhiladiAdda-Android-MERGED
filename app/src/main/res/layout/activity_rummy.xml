@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".rummy.RummyActivity">
 
-    <include layout="@layout/actionbar_transparent" />
+    <include layout="@layout/actionbar_rummy" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,17 +18,20 @@
         <TextView
             android:id="@+id/tv_points"
             style="@style/RummyModeSelect"
-            android:text="@string/text_points_underline" />
+            android:text="@string/text_points_underline"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tv_pool"
             style="@style/RummyModeSelect"
-            android:text="Pool" />
+            android:text="Pool"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tv_deal"
             style="@style/RummyModeSelect"
-            android:text="Deal" />
+            android:text="Deal"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -102,13 +105,23 @@
             android:textSize="@dimen/text_12" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tv_how_to_play"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:gravity="right|center"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
             android:text="How To Play"
             android:textColor="@color/white"
             android:textSize="@dimen/text_12" />
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_play" />
 
     </RelativeLayout>
 

@@ -288,7 +288,7 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
                 if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_NEWSTATE_ID, ""))) {
                     join.putExtra(AppConstant.FROM, AppConstant.PUBG_NEWSTATE_ID);
                 } else {
-                    join.putExtra(AppConstant.FROM, AppConstant.FROM_HOW_JOINING);
+                    join.putExtra(AppConstant.FROM, AppConstant.FROM_HOW_JOINING_PCESPORT);
                 }
                 startActivity(join);
                 break;

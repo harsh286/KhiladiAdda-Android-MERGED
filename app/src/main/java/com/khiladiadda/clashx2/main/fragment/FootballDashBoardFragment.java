@@ -117,6 +117,8 @@ public class FootballDashBoardFragment extends BaseFragment implements IOnItemGa
                 gamesDataArrayList.addAll(responseModel.getResponse());
                 gamesDashBoardAdapter.notifyDataSetChanged();
             }else {
+                gamesDataArrayList.clear();
+                gamesDashBoardAdapter.notifyDataSetChanged();
                 mNoDataTv.setVisibility(View.VISIBLE);
             }
         }

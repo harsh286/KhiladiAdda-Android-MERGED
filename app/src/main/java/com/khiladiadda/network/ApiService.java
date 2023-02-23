@@ -19,6 +19,7 @@ import com.khiladiadda.network.model.response.ModeResponse;
 import com.khiladiadda.network.model.response.NeokredResponse;
 import com.khiladiadda.network.model.response.PhonePePaymentResponse;
 import com.khiladiadda.network.model.response.PhonepeCheckPaymentResponse;
+import com.khiladiadda.network.model.response.RummyCheckGameResponse;
 import com.khiladiadda.network.model.response.RummyRefreshTokenMainResponse;
 import com.khiladiadda.network.model.response.RummyResponse;
 import com.khiladiadda.network.model.response.deposite.DepositLimitMainResponse;
@@ -877,6 +878,7 @@ public interface ApiService {
 
 
 
+
     //Neokred
     @POST(AppConstant.API_NEOKRED_PG)
     Observable<NeokredResponse> checkNeokredPG(@Body EaseBuzzSaveRequest request);
@@ -924,7 +926,7 @@ public interface ApiService {
      * LUDO TOURNAMNET
      **/
     @GET(AppConstant.API_LUDO_ALL_TOURNAMENT)
-    Observable<LudoTmtAllTournamentMainResponse> onGetLudoTmtAllTournament(@Query("startDate") boolean startDate, @Query("type") int type);
+    Observable<LudoTmtAllTournamentMainResponse> onGetLudoTmtAllTournament(@Query("startDate") boolean startDate, @Query("type") int type, @Query("banners") boolean banners, @Query("banner_type") String banner_type, @Query("profile") boolean profile);
 
     @GET(AppConstant.API_LUDO_JOIN_TOURNAMENT)
     Observable<LudoTmtJoinMainResponse> onJoinLudoTournament(@Path("id") String tournament_id);
@@ -964,6 +966,9 @@ public interface ApiService {
 
     @GET(AppConstant.API_GET_RUMMY_REFRESH_TOKEN)
     Observable<RummyRefreshTokenMainResponse> getRummyRefershToken();
+
+    @GET(AppConstant.API_RUMMY_CHECKGAMESTATUS)
+    Observable<RummyCheckGameResponse> getRummyCheckGameStatus();
 
     //Call Break Get List
     @GET(AppConstant.API_GET_CALLBREAK_LIST)

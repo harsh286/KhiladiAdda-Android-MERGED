@@ -672,7 +672,7 @@ public class KabaddiSelectedPlayerActivity extends BaseActivity implements IHTHB
 
     private void substituteData(boolean isCaptain, List<BattlesDeatilsHTH> mMyBattleList) {
         List<CaptainTeamHTH> battleDetails;
-        if (isCaptain) {
+        if (mMyBattleList.get(0).getCaptainId().equalsIgnoreCase(mAppPreference.getProfileData().getId())) {
             battleDetails = mMyBattleList.get(0).getCaptainTeam();
         } else {
             battleDetails = mMyBattleList.get(0).getOpponentTeam();
@@ -693,6 +693,16 @@ public class KabaddiSelectedPlayerActivity extends BaseActivity implements IHTHB
             mSomePlayersTV.setVisibility(View.VISIBLE);
             mMainRL.setBackgroundResource(R.drawable.ic_playernotplaying);
         } else if (battleDetails.get(3).isSubstitute()) {
+            mEditBTN.setVisibility(View.GONE);
+            mChangeLL.setVisibility(View.VISIBLE);
+            mSomePlayersTV.setVisibility(View.VISIBLE);
+            mMainRL.setBackgroundResource(R.drawable.ic_playernotplaying);
+        }else if (battleDetails.get(4).isSubstitute()) {
+            mEditBTN.setVisibility(View.GONE);
+            mChangeLL.setVisibility(View.VISIBLE);
+            mSomePlayersTV.setVisibility(View.VISIBLE);
+            mMainRL.setBackgroundResource(R.drawable.ic_playernotplaying);
+        }else if (battleDetails.get(5).isSubstitute()) {
             mEditBTN.setVisibility(View.GONE);
             mChangeLL.setVisibility(View.VISIBLE);
             mSomePlayersTV.setVisibility(View.VISIBLE);

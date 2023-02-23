@@ -70,14 +70,16 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
     TextView mNoDataTV;
     @BindView(R.id.tv_categories)
     TextView mGamecountTV;
-    @BindView(R.id.iv_pcesports)
-    ImageView mPcEsports;
+//    @BindView(R.id.iv_pcesports)
+//    ImageView mPcEsports;
     @BindView(R.id.iv_courtpiece)
     ImageView mCourtPiece;
     @BindView(R.id.iv_rummy)
     ImageView mRummyIv;
     @BindView(R.id.nudge)
     NudgeView mNV;
+    @BindView(R.id.tv_view_all)
+    TextView mViewAllTv;
 
     private IScratchPresenter mPresenter;
     private ScratchCardAdapter mAdapter;
@@ -115,7 +117,7 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
         mLURL.setOnClickListener(this);
         mDroidRl.setOnClickListener(this);
         mWSRl.setOnClickListener(this);
-        mPcEsports.setOnClickListener(this);
+//        mPcEsports.setOnClickListener(this);
         mCourtPiece.setOnClickListener(this);
         mRummyIv.setOnClickListener(this);
         mScratchList = new ArrayList<>();
@@ -159,14 +161,17 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
             case R.id.rl_wordsearch:
                 getCategory(AppConstant.WORD_SEARCH_TYPE);
                 break;
-            case R.id.iv_pcesports:
-                getCategory(AppConstant.PC_ESPORTS_TYPE);
-                break;
+//            case R.id.iv_pcesports:
+//                getCategory(AppConstant.PC_ESPORTS_TYPE);
+//                break;
             case R.id.iv_courtpiece:
                 getCategory(AppConstant.COURTPIECE_TYPE);
                 break;
             case R.id.iv_rummy:
                 getCategory(AppConstant.RUMMY_TYPE);
+                break;
+            case R.id.tv_view_all:
+//                getCategory(AppConstant.RUMMY_TYPE);
                 break;
         }
     }
@@ -180,6 +185,9 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
         mLURL.setBackground(null);
         mWSRl.setBackground(null);
         mDroidRl.setBackground(null);
+//        mPcEsports.setBackground(null);
+        mCourtPiece.setBackground(null);
+        mRummyIv.setBackground(null);
         if (mFromCategory.equalsIgnoreCase(AppConstant.LUDO)) {
             mLudoCardRL.setBackground(getResources().getDrawable(R.drawable.card_selected));
             mCardType = 1;
@@ -204,6 +212,15 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
         } else if (mFromCategory.equalsIgnoreCase(AppConstant.WORD_SEARCH_TYPE)) {
             mWSRl.setBackground(getResources().getDrawable(R.drawable.card_selected));
             mCardType = 7;
+        } else if (mFromCategory.equalsIgnoreCase(AppConstant.PC_ESPORTS_TYPE)) {
+//            mPcEsports.setBackground(getResources().getDrawable(R.drawable.card_selected));
+            mCardType = 9;
+        } else if (mFromCategory.equalsIgnoreCase(AppConstant.COURTPIECE_TYPE)) {
+            mCourtPiece.setBackground(getResources().getDrawable(R.drawable.card_selected));
+            mCardType = 10;
+        } else if (mFromCategory.equalsIgnoreCase(AppConstant.RUMMY_TYPE)) {
+            mRummyIv.setBackground(getResources().getDrawable(R.drawable.card_selected));
+            mCardType = 11;
         }
         getData();
     }
@@ -309,6 +326,32 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
                 case 8:
                     if (!mAppPreference.getBoolean(AppConstant.IS_SCRATCH_DROID_DO, false)) {
                         mAppPreference.setBoolean(AppConstant.IS_SCRATCH_DROID_DO, true);
+                        AppUtilityMethods.showMsg(this, responseModel.getMessage(), true);
+                    } else {
+//                        AppUtilityMethods.showMsg(this, msg, true);
+                        Snackbar.make(mBackIV, msg, Snackbar.LENGTH_SHORT).show();
+                    }
+                    break;
+                case 9:
+                    if (!mAppPreference.getBoolean(AppConstant.IS_PCESPORT, false)) {
+                        mAppPreference.setBoolean(AppConstant.IS_PCESPORT, true);
+                        AppUtilityMethods.showMsg(this, responseModel.getMessage(), true);
+                    } else {
+//                        AppUtilityMethods.showMsg(this, msg, true);
+                        Snackbar.make(mBackIV, msg, Snackbar.LENGTH_SHORT).show();
+                    }
+                    break;
+                case 10:
+                    if (!mAppPreference.getBoolean(AppConstant.IS_COURTPIECE, false)) {
+                        mAppPreference.setBoolean(AppConstant.IS_COURTPIECE, true);
+                        AppUtilityMethods.showMsg(this, responseModel.getMessage(), true);
+                    } else {
+//                        AppUtilityMethods.showMsg(this, msg, true);
+                        Snackbar.make(mBackIV, msg, Snackbar.LENGTH_SHORT).show();
+                    }
+                case 11:
+                    if (!mAppPreference.getBoolean(AppConstant.IS_RUMMY, false)) {
+                        mAppPreference.setBoolean(AppConstant.IS_RUMMY, true);
                         AppUtilityMethods.showMsg(this, responseModel.getMessage(), true);
                     } else {
 //                        AppUtilityMethods.showMsg(this, msg, true);

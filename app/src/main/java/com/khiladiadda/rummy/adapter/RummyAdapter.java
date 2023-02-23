@@ -13,6 +13,8 @@ import com.khiladiadda.R;
 import com.khiladiadda.interfaces.IOnItemClickListener;
 import com.khiladiadda.network.model.response.RummyDetails;
 import com.khiladiadda.network.model.response.RummyPayload;
+import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 
 import java.util.List;
 
@@ -24,10 +26,12 @@ public class RummyAdapter extends RecyclerView.Adapter<RummyAdapter.LudoContestH
     private Context mContext;
     private List<RummyDetails> mLudoChallengeList;
     private IOnItemClickListener mOnItemClickListener;
+    private int mMode;
 
-    public RummyAdapter(Context context, List<RummyDetails> ludoChallengeList) {
+    public RummyAdapter(Context context, List<RummyDetails> ludoChallengeList, int mMode) {
         this.mContext = context;
         this.mLudoChallengeList = ludoChallengeList;
+        this.mMode = mMode;
     }
 
     public void setOnItemClickListener(IOnItemClickListener mOnItemClickListener) {
@@ -44,8 +48,18 @@ public class RummyAdapter extends RecyclerView.Adapter<RummyAdapter.LudoContestH
     @Override
     public void onBindViewHolder(LudoContestHolder holder, int position) {
         RummyDetails ludoContestBean = mLudoChallengeList.get(position);
-        holder.mEntryFeeTV.setText(ludoContestBean.getEntryFee() + " Coins");
-        holder.mWinningAmountTV.setText("Winning: " + ludoContestBean.getMaxWin() + " Coins");
+        if (mMode == 1){
+            holder.mPointsTv.setText("Points Value");
+            holder.mEntryFeeTV.setText("₹"+ludoContestBean.getEntryFee());
+        }else if (mMode == 2){
+            holder.mPointsTv.setText("Game Mode");
+            holder.mEntryFeeTV.setText(""+ludoContestBean.getEntryFee()+" Pool");
+        }else if (mMode == 3){
+            holder.mPointsTv.setText("Game Mode");
+            holder.mEntryFeeTV.setText(""+ludoContestBean.getEntryFee()+" Deal");
+        }
+        holder.mEntryFeeTV.setText("₹"+ludoContestBean.getEntryFee());
+        holder.mWinningAmountTV.setText("₹ "+ AppUtilityMethods.roundUpNumber(ludoContestBean.getMaxWin()));
     }
 
     @Override
@@ -65,6 +79,8 @@ public class RummyAdapter extends RecyclerView.Adapter<RummyAdapter.LudoContestH
         TextView mWinningAmountTV;
         @BindView(R.id.tv_bonus)
         TextView mBonusTV;
+        @BindView(R.id.tv_points)
+        TextView mPointsTv;
         private IOnItemClickListener mOnItemClickListener;
 
         public LudoContestHolder(View view, IOnItemClickListener onItemClickListener) {

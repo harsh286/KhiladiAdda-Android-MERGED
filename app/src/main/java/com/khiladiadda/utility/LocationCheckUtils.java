@@ -80,7 +80,7 @@ public class LocationCheckUtils {
             // check if location is enabled
             if (isLocationEnabled()) {
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    DialogWithCallBack(activity, "KhiladiAdda need to access your location.");
+//                    DialogWithCallBack(activity, "KhiladiAdda need to access your location.");
                     return;
                 }
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
@@ -156,15 +156,16 @@ public class LocationCheckUtils {
 
 
     public void statusCheck() {
+
         try {
             final LocationManager manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 //            if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 buildAlertMessageNoGps();
             }
-//            else {
-//                getLastLocation();
-//            }
+            else {
+                getLastLocation();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -220,7 +221,8 @@ public class LocationCheckUtils {
                         }
                     }
                 } else {
-                    DialogNotAllowed(activity, "You are not allowed to play skill-based real money gaming in your country.");
+//                    DialogNotAllowed(activity, "You are not allowed to play skill-based real money gaming in your state.").show();
+//                    Toast.makeText(context, "kkkkk", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -234,28 +236,6 @@ public class LocationCheckUtils {
         public void iOnAddressSuccess();
 
         public void iOnAddressFailure();
-    }
-
-    public Dialog DialogWithCallBack(Activity activity, String message) {
-        final Dialog dialog = new Dialog(activity);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.show_error_popup);
-        TextView mMessageTV = dialog.findViewById(R.id.tv_error_message);
-        mMessageTV.setText(message);
-        Button mOkayTV = dialog.findViewById(R.id.btn_done);
-        mOkayTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                activity.startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                        Uri.fromParts("package", activity.getPackageName(), null)));
-            }
-        });
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-        return dialog;
     }
 
     public Dialog DialogNotAllowed(Activity activity, String message) {
@@ -274,7 +254,6 @@ public class LocationCheckUtils {
         });
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
         return dialog;
     }
 

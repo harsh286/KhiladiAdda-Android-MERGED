@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/LeagueCardAppearance"
+    android:layout_marginTop="@dimen/margin_8"
     tools:ignore="MissingDefaultResource">
 
     <RelativeLayout

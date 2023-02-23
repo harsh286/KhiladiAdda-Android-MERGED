@@ -18,6 +18,9 @@ import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.gameleague.GamesFinalResultActivity;
 import com.khiladiadda.utility.AppConstant;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import butterknife.BindView;
 
 public class RummyGameWebActivity extends BaseActivity {
@@ -98,8 +101,13 @@ public class RummyGameWebActivity extends BaseActivity {
 
     class JsObject {
         @JavascriptInterface
-        public void receiveMessage(String data) {
-            Log.i("JsObject", "new postMessage data=$data");
+        public void receiveMessage(String data) throws JSONException {
+            Log.i("JsObject", "new postMessage data= "+data);
+            JSONObject root = new JSONObject(data);
+            if(root.getString("redirectionType").equals("exit")){
+                finish();
+            }
+
         }
     }
 }

@@ -18,4 +18,16 @@ public class TrendinQuizResponse extends BaseResponse {
     public void setResponse(List<QuizListDetails> response) {
         this.response = response;
     }
+
+    @SerializedName("banners")
+    @Expose
+    private List<BannerDetails> banner = null;
+
+    public List<BannerDetails> getBanner() {
+        return banner;
+    }
+
+    public void setBanner(List<BannerDetails> banner) {
+        this.banner = banner;
+    }
 }

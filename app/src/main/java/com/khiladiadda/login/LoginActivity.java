@@ -15,6 +15,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.SystemClock;
@@ -147,10 +148,12 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
         SpannableString signupString = new SpannableString(mSignUpTV.getText().toString());
         signupString.setSpan(new UnderlineSpan(), 0, mSignUpTV.length(), 0);
         mSignUpTV.setText(signupString);
-        if (!LocationCheckUtils.getInstance().hasLocationPermission()) {
-            LocationCheckUtils.getInstance().statusCheck();
-        } else {
-            LocationCheckUtils.getInstance().requestNewLocationData();
+        if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
+            if (!LocationCheckUtils.getInstance().hasLocationPermission()) {
+                LocationCheckUtils.getInstance().statusCheck();
+            } else {
+                LocationCheckUtils.getInstance().requestNewLocationData();
+            }
         }
 
 
@@ -176,15 +179,20 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
                 finish();
                 break;
             case R.id.btn_login:
-                if (LocationCheckUtils.getInstance().hasLocationPermission()) {
-                    LocationCheckUtils.getInstance().requestNewLocationData();
-                    if (isAllowed)
-                        mPresenter.validateData();
-                    else
-                        Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
+                if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
+                    if (LocationCheckUtils.getInstance().hasLocationPermission()) {
+                        LocationCheckUtils.getInstance().requestNewLocationData();
+                        if (isAllowed)
+                            mPresenter.validateData();
+                        else
+                            Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
 
+                    } else {
+                        AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
+                    }
                 } else {
-                    LocationCheckUtils.getInstance().statusCheck();
+                    mPresenter.validateData();
+
                 }
                 break;
             case R.id.iv_fb:
@@ -193,7 +201,7 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
                         if (mAppPreference.getBoolean(AppConstant.IS_FB_ENABLED, false)) {
                             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
                         } else {
-                            new FBErrorDialog(this, true, onSocialLoginErrorListener);
+                            new FBErrorDialog(this, 0, onSocialLoginErrorListener);
                         }
                     } else
                         Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
@@ -208,7 +216,7 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
                         if (mAppPreference.getBoolean(AppConstant.IS_GMAIL_ENABLED, false)) {
                             googleSignIn();
                         } else {
-                            new FBErrorDialog(this, false, onSocialLoginErrorListener);
+                            new FBErrorDialog(this, 1, onSocialLoginErrorListener);
                         }
                     } else
                         Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
@@ -229,12 +237,17 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
 
                 break;
             case R.id.iv_truecaller:
-                showProgress("");
+//                showProgress("");
                 if (isAllowed) {
-                    if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
-                        return;
-                    }
-                    mLastClickTime = SystemClock.elapsedRealtime();
+                    if (mAppPreference.getBoolean(AppConstant.IS_TRUECALLER_ENABLED, false)) {
+                        if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+                            return;
+                        }
+                        mLastClickTime = SystemClock.elapsedRealtime();
+                        setupTruecaller();
+                    } else
+                        new FBErrorDialog(this, 2, onSocialLoginErrorListener);
+
                 } else
                     Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
 
@@ -475,12 +488,30 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
                 } else
                     break;
             case RC_ASK_PERMISSIONS_GPS:
-                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-//                    LocationCheckUtils.getInstance().buildAlertMessageNoGps();
-                    LocationCheckUtils.getInstance().DialogWithCallBack(this, "KhiladiAdda need to access your location.");
-                } else {
-                    LocationCheckUtils.getInstance().requestNewLocationData();
-                }
+                for (int i = 0, len = permissions.length; i < len; i++) {
+                    String permission = permissions[i];
+                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                        // user rejected the permission
+                        boolean showRationale = false;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            showRationale = shouldShowRequestPermissionRationale(permission);
+                        }
+                        if (!showRationale) {
+                            // user also CHECKED "never ask again"
+                            // you can either enable some fall back,
+                            // disable features of your app
+                            // or open another dialog explaining
+                            // again the permission and directing to
+                            // the app setting
+//                            AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
+                        } else if (Manifest.permission.ACCESS_FINE_LOCATION.equals(permission)) {
+//                        showRationale(permission, R.string.permission_denied_contacts);
+                            // user did NOT check "never ask again"
+                            // this is a good place to explain the user
+                            // why you need the permission and ask if he wants
+                            // to accept it (the rationale)
+                        }
+                    }}
 
                 break;
             default:
@@ -533,8 +564,10 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
 
         TruecallerSDK.init(trueScope);
         if (TruecallerSDK.getInstance().isUsable()) {
+            hideProgress();
             TruecallerSDK.getInstance().getUserProfile(this);
         } else {
+            hideProgress();
             Snackbar.make(mLoginBTN, "TrueCaller is not installed in your device.", Snackbar.LENGTH_SHORT).show();
             //truecaller is not installed
         }
@@ -641,4 +674,5 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
         isAllowed = false;
 //        LocationCheckUtils.getInstance().DialogNotAllowed(this, "You are not allowed to play skill-based real money gaming in your state.");
     }
+
 }

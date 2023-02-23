@@ -152,7 +152,7 @@ public class StatActivity extends BaseActivity implements IOnRedeemVoucherListen
         SpannableString gameLost = new SpannableString("Losses\n" + game.getLost());
         gameLost.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)), 6, gameLost.length(), 0);
         gameLost.setSpan(new StyleSpan(Typeface.BOLD), 6, gameLost.length(), 0);
-        gameLost.setSpan(new RelativeSizeSpan(1.2f), 6, gameLost.length(), 0);
+//        gameLost.setSpan(new RelativeSizeSpan(1.2f), 6, gameLost.length(), 0);
         gameTV.setText(gameLost);
     }
 
@@ -160,7 +160,7 @@ public class StatActivity extends BaseActivity implements IOnRedeemVoucherListen
         SpannableString ludoWin = new SpannableString("Wins\n" + game.getWon());
         ludoWin.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), R.color.color_green)), 4, ludoWin.length(), 0);
         ludoWin.setSpan(new StyleSpan(Typeface.BOLD), 4, ludoWin.length(), 0);
-        ludoWin.setSpan(new RelativeSizeSpan(1.2f), 4, ludoWin.length(), 0);
+//        ludoWin.setSpan(new RelativeSizeSpan(1.2f), 4, ludoWin.length(), 0);
         gameTV.setText(ludoWin);
     }
 
@@ -168,7 +168,7 @@ public class StatActivity extends BaseActivity implements IOnRedeemVoucherListen
         SpannableString ludpContest = new SpannableString("Contests\n" + (game.getWon() + game.getLost()));
         ludpContest.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), R.color.blue_dark)), 8, ludpContest.length(), 0);
         ludpContest.setSpan(new StyleSpan(Typeface.BOLD), 8, ludpContest.length(), 0);
-        ludpContest.setSpan(new RelativeSizeSpan(1.2f), 8, ludpContest.length(), 0);
+//        ludpContest.setSpan(new RelativeSizeSpan(1.2f), 8, ludpContest.length(), 0);
         gameTV.setText(ludpContest);
     }
 

@@ -143,6 +143,9 @@ public class SplashActivity extends BaseActivity implements ISplashView {
             mAppPreference.setString(AppConstant.VERSION, response.getVersion().getAppVersion());
             mAppPreference.setBoolean(AppConstant.IS_FB_ENABLED, response.getVersion().isFB());
             mAppPreference.setBoolean(AppConstant.IS_GMAIL_ENABLED, response.getVersion().isGmail());
+            mAppPreference.setBoolean(AppConstant.IS_TRUECALLER_ENABLED, response.getVersion().isTruecallerEnabled());
+            mAppPreference.setBoolean(AppConstant.IS_LOCATION_ENABLED, response.getVersion().isLocationEnabled());
+            mAppPreference.setBoolean(AppConstant.IS_GAMERCASH_ENABLED, response.getVersion().isGamerCashEnabled());
             mAppPreference.setSupportNumber(response.getVersion().getSupport_number());
         }
     }

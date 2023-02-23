@@ -939,7 +939,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                     if (LocationCheckUtils.getInstance().hasLocationPermission()) {
                         mPresenter.onIPayTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp, LocationCheckUtils.getInstance().getmLatitute(), LocationCheckUtils.getInstance().getmLongitude());
                     } else {
-                        LocationCheckUtils.getInstance().DialogWithCallBack(activity, "KhiladiAdda need to access your location.");
+                        AppDialog.DialogWithLocationCallBack(activity, "KhiladiAdda need to access your location.");
                     }
                 }
             } else if (mPayoutGateway == 2) {  //razorpay - bank_account
@@ -961,7 +961,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                     if (LocationCheckUtils.getInstance().hasLocationPermission()) {
                         mPresenter.onIPayTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp, LocationCheckUtils.getInstance().getmLatitute(), LocationCheckUtils.getInstance().getmLongitude());
                     } else {
-                        LocationCheckUtils.getInstance().DialogWithCallBack(activity, "KhiladiAdda need to access your location.");
+                        AppDialog.DialogWithLocationCallBack(activity, "KhiladiAdda need to access your location.");
                     }
                 }
             } else if (mPayoutGateway == 7) { /* ===Race-Condition after OTP Verify=== */
