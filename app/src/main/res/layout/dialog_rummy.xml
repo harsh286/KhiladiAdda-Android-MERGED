@@ -24,7 +24,7 @@
             android:gravity="center"
             android:padding="@dimen/padding_20"
             android:text="Confirm Buy-in"
-            android:textColor="@color/black"
+            android:textColor="#3E3B3C"
             android:textSize="@dimen/text_24"
             android:textStyle="bold" />
 
@@ -42,7 +42,7 @@
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/button_background_selected"
                 android:gravity="center"
-                android:text="2Player"
+                android:text="2 Player"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +58,7 @@
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/button_background_notselected"
                 android:gravity="center"
-                android:text="3-6Player"
+                android:text="3-6 Player"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"

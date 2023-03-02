@@ -27,6 +27,8 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.google.android.material.card.MaterialCardView;
 import com.khiladiadda.R;
+import com.khiladiadda.clashx2.main.activity.MyFanLeagueActivityHTH;
+import com.khiladiadda.clashx2.main.activity.SelectedPlayers;
 import com.khiladiadda.dialogs.interfaces.IOnAddCallDutyCredentialListener;
 import com.khiladiadda.dialogs.interfaces.IOnAddChallengeListener;
 import com.khiladiadda.dialogs.interfaces.IOnAddGameCredentialListener;
@@ -997,6 +999,22 @@ public class AppDialog {
         return dialog;
     }
 
+    public static Dialog showDisclaimerDialog(Activity activity, String msg) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.setContentView(R.layout.dialog_alert_dialog);
+        Button btnOkay = dialog.findViewById(R.id.btn_okay_dialog);
+        TextView msgTv = dialog.findViewById(R.id.tv_amt);
+        msgTv.setText(msg);
+        btnOkay.setOnClickListener(v -> {
+            dialog.dismiss();
+
+        });
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        return dialog;
+    }
+
     public static Dialog DialogWithLocationCallBack(Activity activity, String message) {
         final Dialog dialog = new Dialog(activity);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -1019,4 +1037,52 @@ public class AppDialog {
         return dialog;
     }
 
+    public static void showRummyRechargeMsg(final Activity activity, String msg) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.rummy_recharge_dialog);
+        TextView tv_msg = dialog.findViewById(R.id.tv_msg);
+        tv_msg.setText(msg);
+        Button mOkBTN = dialog.findViewById(R.id.btn_ok);
+        mOkBTN.setOnClickListener(arg0 -> {
+            dialog.dismiss();
+            activity.startActivity(new Intent(activity, AddWalletActivity.class));
+            activity.finish();
+        });
+        Button mNoBTN = dialog.findViewById(R.id.btn_no);
+        mNoBTN.setText(R.string.cancel);
+        mNoBTN.setOnClickListener(arg0 -> dialog.dismiss());
+        dialog.show();
+    }
+
+    //    Restart Dialog
+    public static void showRestartDialog(final Activity activity, String msg) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable());
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.layout_restart_dialog);
+        dialog.show();
+    }
+
+    //Match Live Dialog
+    public void showLiveDialog(Context context,String msg, boolean live) {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.error_dialog);
+        TextView text = dialog.findViewById(R.id.tv_text);
+        ImageView image = dialog.findViewById(R.id.iv_tick);
+        TextView heading = dialog.findViewById(R.id.tv_heading);
+        text.setText(msg);
+        TextView okBTN = dialog.findViewById(R.id.btn_ok);
+        okBTN.setOnClickListener(arg0 -> {
+                dialog.dismiss();
+        });
+        dialog.show();
+    }
 }

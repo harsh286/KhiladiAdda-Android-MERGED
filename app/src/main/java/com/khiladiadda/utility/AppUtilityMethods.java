@@ -98,7 +98,30 @@ public class AppUtilityMethods {
         TextView tv_msg = dialog.findViewById(R.id.tv_msg);
         tv_msg.setText(msg);
         Button okBTN = dialog.findViewById(R.id.btn_ok);
-        okBTN.setOnClickListener(arg0 -> dialog.dismiss());
+        okBTN.setOnClickListener(arg0 -> {
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
+    public static void showMsgWithCancel(final Context context, Activity activity, String msg, boolean isCancel) {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCanceledOnTouchOutside(isCancel);
+        dialog.setCancelable(isCancel);
+        dialog.setContentView(R.layout.popup);
+        TextView tv_msg = dialog.findViewById(R.id.tv_msg);
+        tv_msg.setText(msg);
+        Button okBTN = dialog.findViewById(R.id.btn_ok);
+        okBTN.setOnClickListener(arg0 -> {
+            if (!isCancel) {
+                dialog.dismiss();
+            } else {
+                activity.finish();
+                dialog.dismiss();
+            }
+        });
         dialog.show();
     }
 
@@ -222,6 +245,7 @@ public class AppUtilityMethods {
             return date1;
         }
     }
+
     public static String getConvertDateTimeMatch(String date) {
         String date1 = "";
         try {
@@ -1323,24 +1347,26 @@ public class AppUtilityMethods {
 
             long remaining = 0;
             if (dates.getTime() != 0) {
-                remaining = Math.abs(dates.getTime() - System.currentTimeMillis());
+                remaining = dates.getTime() - System.currentTimeMillis();
             }
 
             //Set time in milliseconds
-            int days = (int) ((remaining / (1000 * 60 * 60 * 24)));
-            long seconds = ((remaining / 1000) % 60);
-            long minutes = ((remaining / (1000 * 60)) % 60);
-            long hours = ((remaining / (1000 * 60 * 60)) % 24);
-
-            if (days <= 1) {
-                totalDates = String.format("Ends in: %02d:%02d:%02d", hours, minutes, seconds);
-            } else if (remaining != 0) {
-                totalDates = "Ends in: " + days + " Days Left";
-            }
-            if (days == 0 && remaining == 0) {
-                totalDates = "Ended";
-            }
-            return totalDates;
+            if (remaining > 0) {
+                int days = (int) ((remaining / (1000 * 60 * 60 * 24)));
+                long seconds = ((remaining / 1000) % 60);
+                long minutes = ((remaining / (1000 * 60)) % 60);
+                long hours = ((remaining / (1000 * 60 * 60)) % 24);
+                if (days <= 1) {
+                    totalDates = String.format("Ends in: %02d:%02d:%02d", hours, minutes, seconds);
+                } else if (remaining != 0) {
+                    totalDates = "Ends in: " + days + " Days Left";
+                }
+                if (days == 0 && remaining == 0) {
+                    totalDates = "Ended";
+                }
+                return totalDates;
+            }else
+                return "Ends in: 00:00:00";
         } catch (ParseException e) {
             Log.e("TAG", "e: " + e.getLocalizedMessage());
         }
@@ -1418,6 +1444,7 @@ public class AppUtilityMethods {
         }
         return "";
     }
+
     public static long getTimeLeftWithMilliSec(String codeDateTime) {
         try {
             //current date - code date
@@ -1479,6 +1506,7 @@ public class AppUtilityMethods {
         });
         mWindow.showAsDropDown(mTV, (int) -(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, activity.getResources().getDisplayMetrics())), 0, Gravity.END);
     }
+
     //LUDO Tournament
     public static void showTooltipFromImage(Activity activity, ImageView mTV, String textMsg) {
         View ludoToolTip = LayoutInflater.from(activity).inflate(R.layout.rules_info_tooltip, null);

@@ -50,12 +50,10 @@ android {
     dexOptions { javaMaxHeapSize "4g" }
 }
 
-
 repositories {
     mavenCentral()
     //easebuzz
     flatDir { dirs 'libs' }
-
 }
 
 dependencies {
@@ -89,7 +87,6 @@ dependencies {
         transitive = true
     }
     implementation 'com.mikhaellopez:circularimageview:3.0.2'
-//    implementation 'com.facebook.android:facebook-login:15.0.1'
     implementation 'com.facebook.android:facebook-login:8.2.0'
     implementation 'io.github.inflationx:calligraphy3:3.1.1'
     implementation 'io.github.inflationx:viewpump:2.0.3'
@@ -105,14 +102,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:18.2.13'
     //Firebase chat -To use an authentication provider- for enabling account on firebase- like google,fb,email_pwd
     implementation 'com.google.firebase:firebase-auth:21.0.8'
-    implementation('com.paytm:pgplussdk:1.4.4') {
-        transitive = true;
-    }
     //EventBus
     implementation 'org.greenrobot:eventbus:3.2.0'
-    //cashfree new integration steps
-    implementation 'com.cashfree.pg:android-support-sdk:1.4.2.2'
-    implementation 'com.cashfree.pg:android-sdk:1.5.1'
     //Dependencies used by all payment modes
     implementation 'com.android.volley:volley:1.2.1'
     //doUPIPayment
@@ -122,35 +113,32 @@ dependencies {
     implementation "com.android.installreferrer:installreferrer:2.2"
     //kommunicate
     implementation 'io.kommunicate.sdk:kommunicateui:2.4.6'
-
     implementation "com.airbnb.android:lottie:3.4.0"
     implementation 'in.codeshuffle.scratchcardlayout:ScratchCardLayout:1.0.8'
     //GifImageView
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.24'
     implementation "com.ncorti:slidetoact:0.9.0"
     implementation 'com.romainpiel.shimmer:library:1.4.0@aar'
-
-
     //easebuzz
     implementation(name: 'peb-lib-android-x', ext: 'aar')
     implementation 'com.squareup.okhttp:okhttp:2.7.4'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
     implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
-
     //moengage
     implementation 'com.moengage:moe-android-sdk:12.2.02'
     implementation 'androidx.lifecycle:lifecycle-process:2.5.1'
     implementation 'com.moengage:inapp:6.2.0'
     implementation 'androidx.core:core:1.8.0'
     implementation 'com.moengage:rich-notification:3.1.1'
-
     //truecaller
     implementation "com.truecaller.android.sdk:truecaller-sdk:2.7.0"
-
+    //Phonepe
     implementation 'phonepe.intentsdk.android.release:IntentSDK:1.6.8@aar'
-
-
+    //cashfree new sdk
+    implementation 'com.cashfree.pg:api:2.0.4'
+    //paytm new sdk
+    implementation 'com.paytm.appinvokesdk:appinvokesdk:1.6.13'
 }
 
 apply plugin: 'com.google.gms.google-services'

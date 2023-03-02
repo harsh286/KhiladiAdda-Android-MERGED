@@ -37,10 +37,10 @@ public class HTHInteractor {
         return manager.createObservable(service.getMatchStatus(matchId)).subscribe(new SubscriberCallback<>(listener));
     }
 
-    public Subscription getCxBanner(IApiListener<CxBannerMainResponse> listener) {
+    public Subscription getCxBanner(IApiListener<CxBannerMainResponse> listener, String type) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
-        return manager.createObservable(service.getCxBanner()).subscribe(new SubscriberCallback<>(listener));
+        return manager.createObservable(service.getCxBanner(type)).subscribe(new SubscriberCallback<>(listener));
     }
 
 }

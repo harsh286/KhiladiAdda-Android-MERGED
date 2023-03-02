@@ -58,10 +58,10 @@ public class GameWebActivity extends BaseActivity {
         webViewGame.getSettings().setJavaScriptEnabled(true);
         webViewGame.getSettings().setDomStorageEnabled(true);
         webViewGame.getSettings().setBuiltInZoomControls(false);
-//        String gameurl_new = "https://prod.freakx.in/khiladi-adda/droid-o/v4/index.html";
-//        webViewGame.loadUrl(gameurl_new + "?" + "userid" + "=" + iD + "&" + "tournamentid" + "=" + tournamentid + "&" + "refno" + "=" + refNo+"&stage=+prod&env=prod&partnerName=khiladiAdda&gameName=droid-o-online&adChannelId=khiladiaddauat");
+        String gameurl_new = "https://prod.freakx.in/khiladi-adda/droid-o/v4/index.html";
+        webViewGame.loadUrl(gameurl_new + "?" + "userid" + "=" + iD + "&" + "tournamentid" + "=" + tournamentid + "&" + "refno" + "=" + refNo+"&stage=prod&env=prod&partnerName=khiladiAdda&gameName=droid-o-online&adChannelId=khiladiaddauat");
 
-        webViewGame.loadUrl(gameurl + "?" + "userid" + "=" + iD + "&" + "tournamentid" + "=" + tournamentid + "&" + "refno" + "=" + refNo);
+//        webViewGame.loadUrl(gameurl + "?" + "userid" + "=" + iD + "&" + "tournamentid" + "=" + tournamentid + "&" + "refno" + "=" + refNo);
     }
 
     @Override

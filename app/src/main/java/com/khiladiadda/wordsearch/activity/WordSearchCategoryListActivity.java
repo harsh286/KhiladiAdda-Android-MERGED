@@ -55,8 +55,6 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
     TextView mTrendingTv;
     @BindView(R.id.tv_categories)
     TextView mCategoriesTv;
-
-
     private String mFrom;
     private IWordSearchCategoryPresenter mCategoryPresenter;
     private IWordSearchMyQuizzesPresenter mMyQuizzesPresenter;
@@ -64,9 +62,6 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
     private List<WordSearchMyQuizzesResponse> mMyQuizzesMainResponseList;
     private String mQuizId, mColorName = "D25656";
     private String mCategoryName;
-    private int mQuizStatus;
-    private int mCurrentPage = 0;
-
 
     @Override
     protected int getContentView() {
@@ -79,13 +74,9 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
         mQuizId = getIntent().getStringExtra(AppConstant.WORD_SEARCH_QUIZ_ID);
         mCategoryName = getIntent().getStringExtra(AppConstant.WORD_SEARCH_CATEGORY_NAME);
         mColorName = getIntent().getStringExtra(AppConstant.WORD_SEARCH_COLOR_NAME);
-
         mCategoryPresenter = new WordSearchCategoriesPresenter(this, mQuizId);
         mMyQuizzesPresenter = new WordSearchMyQuizzesPresenter(this);
-
-
         setupRecycler();
-
         // mNameTv.setText(R.string.text_my_tournaments);
         changeColor();
         setupUi();
@@ -95,9 +86,8 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
         if (mColorName != null) {
             mToolBarCl.setBackgroundColor(Color.parseColor("#" + mColorName));
             mNameTv.setText(R.string.text_my_tournaments);
-
         } else {
-            mNameTv.setText("All "+mCategoryName+" Tournaments");
+            mNameTv.setText("All " + mCategoryName + " Tournaments");
         }
     }
 
@@ -107,7 +97,6 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
         mQuizzesMcv.setOnClickListener(this);
         mTrendingTv.setOnClickListener(this);
         mCategoriesTv.setOnClickListener(this);
-
     }
 
     @Override
@@ -131,7 +120,6 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
 //        }
     }
 
-
     private void getData() {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress("");
@@ -139,7 +127,6 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
                 mMyQuizzesPresenter.getMyQuizzes();
             } else {
                 mCategoryPresenter.getCategoriesQuiz();
-
             }
         } else {
             Toast.makeText(this, "" + R.string.error_internet, Toast.LENGTH_LONG).show();
@@ -157,7 +144,7 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
             mNoDataOtherTv.setVisibility(View.GONE);
             mCategoriesQuizzesResponseList = responseModel.getResponse();
             mQuizzesRv.setAdapter(new WordSearchQuizAdapter(this, mCategoriesQuizzesResponseList, mCategoryName));
-        }else {
+        } else {
             mNoDataOtherTv.setVisibility(View.VISIBLE);
         }
     }
@@ -183,7 +170,6 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
             intent.putExtra(AppConstant.WORD_SEARCH_TYPE, 0);
             intent.putExtra(AppConstant.WORD_SEARCH_CATEGORY_QUIZZES, mCategoriesQuizzesResponseList.get(pos));
             startActivity(intent);
-
         }
     }
 
@@ -191,13 +177,11 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
         Intent intent;
         if (mMyQuizzesMainResponseList.get(position).getQuiz().get(0).getQuizStatus() == 0) {
             intent = new Intent(this, WordSearchLeaderBoardActivity.class);
-//                Intent intent = new Intent(WordSearchDetailsActivity.this, FinalLeaderBoardActivity.class);
             intent.putExtra(AppConstant.FROM, true);
         } else {
             intent = new Intent(this, FinalLeaderBoardActivity.class);
         }
         intent.putExtra(AppConstant.WORD_SEARCH_QUIZ_ID, id);
-
         startActivity(intent);
     }
 

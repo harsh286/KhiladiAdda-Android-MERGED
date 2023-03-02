@@ -3,23 +3,15 @@ package com.khiladiadda.login;
 import static com.khiladiadda.utility.AppConstant.RC_ASK_PERMISSIONS_GPS;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
 import android.os.SystemClock;
-import android.provider.Settings;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -32,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.facebook.CallbackManager;
@@ -44,11 +35,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -66,14 +52,12 @@ import com.khiladiadda.network.model.request.GmailRegisterRequest;
 import com.khiladiadda.network.model.response.MasterResponse;
 import com.khiladiadda.network.model.response.SocialResponse;
 import com.khiladiadda.otp.OtpActivity;
-import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.registration.RegistrationActivity;
 import com.khiladiadda.socialverify.SocialVerifyActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.LocationCheckUtils;
 import com.khiladiadda.utility.NetworkStatus;
-import com.khiladiadda.utility.PermissionUtils;
 import com.truecaller.android.sdk.ITrueCallback;
 import com.truecaller.android.sdk.TrueError;
 import com.truecaller.android.sdk.TrueProfile;
@@ -81,8 +65,6 @@ import com.truecaller.android.sdk.TruecallerSDK;
 import com.truecaller.android.sdk.TruecallerSdkScope;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -104,18 +86,14 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
     TextView mLoginViaTV;
     @BindView(R.id.iv_truecaller)
     TextView mTruecaller;
-    private CallbackManager mCallbackManager;
     private static int RC_SIGN_IN = 101;
+    private CallbackManager mCallbackManager;
     private LoginPresenter mPresenter;
     private GmailRegisterRequest mGmailRequest;
-    private String mFBToken;
-    //For TrueCaller
     private TrueCallerPresenter mPresenterTrueCaller;
-    private String mUserName;
-    private String mMobileNumber, mEmail;
+    private String mFBToken, mUserName, mMobileNumber, mEmail;
     private boolean isAllowed = true;
     private long mLastClickTime = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,7 +118,6 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
         mGoogleIV.setOnClickListener(this);
         mNeedSupportLL.setOnClickListener(this);
         mTruecaller.setOnClickListener(this);
-
         LocationCheckUtils.initialize(this, this, this);
         SpannableString loginviaString = new SpannableString(mLoginViaTV.getText().toString());
         loginviaString.setSpan(new UnderlineSpan(), 0, 12, 0);
@@ -155,8 +132,6 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
                 LocationCheckUtils.getInstance().requestNewLocationData();
             }
         }
-
-
     }
 
     @Override
@@ -166,7 +141,6 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
         if (mAppPreference.getIsVersionUpdated()) {
             showVersionDialog();
         }
-
     }
 
     @Override
@@ -234,10 +208,8 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
                     finish();
                 } else
                     Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
-
                 break;
             case R.id.iv_truecaller:
-//                showProgress("");
                 if (isAllowed) {
                     if (mAppPreference.getBoolean(AppConstant.IS_TRUECALLER_ENABLED, false)) {
                         if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
@@ -247,10 +219,8 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
                         setupTruecaller();
                     } else
                         new FBErrorDialog(this, 2, onSocialLoginErrorListener);
-
                 } else
                     Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
-
                 break;
         }
     }
@@ -511,7 +481,8 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
                             // why you need the permission and ask if he wants
                             // to accept it (the rationale)
                         }
-                    }}
+                    }
+                }
 
                 break;
             default:
@@ -622,7 +593,11 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
 //                startActivity(new Intent(this, RegistrationActivity.class));
                     intent.putExtra("name", mUserName);
                     intent.putExtra("mobile_number", mMobileNumber);
-                    intent.putExtra("email", mEmail);
+                    if (mEmail != null && !mEmail.equals("null"))
+                        intent.putExtra("email", mEmail);
+                    else
+                        intent.putExtra("email", "");
+
                     startActivity(intent);
                     finish();
                 } else {

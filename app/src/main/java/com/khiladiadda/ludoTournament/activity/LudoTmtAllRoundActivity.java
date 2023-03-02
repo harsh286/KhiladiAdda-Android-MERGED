@@ -121,4 +121,9 @@ public class LudoTmtAllRoundActivity extends BaseActivity implements ILudoTmtPas
     public void onInProgressClick() {
 
     }
+
+    @Override
+    public void onRefresh() {
+
+    }
 }

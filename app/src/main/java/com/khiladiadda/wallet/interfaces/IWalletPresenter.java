@@ -66,5 +66,6 @@ public interface IWalletPresenter extends IBasePresenter {
     void getPaymentCheckData(PhonepeCheckPaymentRequest phonepeRequest);
 
     void getGamerCashUserData();
+    void getCashfreeStatus(String orderId);
 
 }

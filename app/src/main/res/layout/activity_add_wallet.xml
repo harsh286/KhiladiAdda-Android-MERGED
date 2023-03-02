@@ -347,7 +347,7 @@
                     android:paddingEnd="@dimen/padding_15"
                     android:text="@string/gamercash"
                     android:textSize="@dimen/text_15"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:drawableStartCompat="@drawable/gccc" />
 
                 <TextView

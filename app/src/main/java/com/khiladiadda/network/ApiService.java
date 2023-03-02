@@ -20,6 +20,7 @@ import com.khiladiadda.network.model.response.NeokredResponse;
 import com.khiladiadda.network.model.response.PhonePePaymentResponse;
 import com.khiladiadda.network.model.response.PhonepeCheckPaymentResponse;
 import com.khiladiadda.network.model.response.RummyCheckGameResponse;
+import com.khiladiadda.network.model.response.RummyHistoryMainResponse;
 import com.khiladiadda.network.model.response.RummyRefreshTokenMainResponse;
 import com.khiladiadda.network.model.response.RummyResponse;
 import com.khiladiadda.network.model.response.deposite.DepositLimitMainResponse;
@@ -904,10 +905,6 @@ public interface ApiService {
     @GET(AppConstant.API_WORD_SEARCH_CATEGORIES)
     Observable<WordSearchCategoryMainResponse> getWordSearchCategories();
 
-    @GET(AppConstant.API_CX_BANNER)
-    Observable<CxBannerMainResponse> getCxBanner();
-
-
     //RACE-CONDITION payout
     @POST(AppConstant.API_RACE_CONDITION)
     Observable<PayoutResponse> onRaceFreeTransfer(@Body RaceConditionPayoutRequest raceConditionPayoutRequest);
@@ -970,6 +967,9 @@ public interface ApiService {
     @GET(AppConstant.API_RUMMY_CHECKGAMESTATUS)
     Observable<RummyCheckGameResponse> getRummyCheckGameStatus();
 
+    @GET(AppConstant.API_RUMMY_HISTORY)
+    Observable<RummyHistoryMainResponse> getRummyHistory();
+
     //Call Break Get List
     @GET(AppConstant.API_GET_CALLBREAK_LIST)
     Observable<CallBreakResponse> getCallBreak();
@@ -982,5 +982,12 @@ public interface ApiService {
 
     @POST(AppConstant.API_CHECK_PAYMENT_SUCCESS)
     Observable<PhonepeCheckPaymentResponse> getCheckPaymentSuccess(@Body() PhonepeCheckPaymentRequest phonepeCheckPaymentRequest);
+
+    //Cashfree Status
+    @GET(AppConstant.API_CASHFREE_STATUS)
+    Observable<BaseResponse> getCashfreeStatus();
+
+    @GET(AppConstant.API_CX_BANNER)
+    Observable<CxBannerMainResponse> getCxBanner(@Query("type") String type);
 
 }

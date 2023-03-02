@@ -108,7 +108,6 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
         mNameET.setText(mUsername);
         mMobileET.setText(mMobileno);
         mEmailET.setText(mEmail);
-        mEmailET.setEnabled(false);
         if (!LocationCheckUtils.getInstance().hasLocationPermission()) {
             LocationCheckUtils.getInstance().statusCheck();
         } else {
@@ -119,6 +118,13 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
     @Override
     protected void initVariables() {
         mPresenter = new RegistrationPresenter(this);
+        if (mAppPreference.getBoolean(AppConstant.IS_GMAIL_ENABLED, false)) {
+            mEmailView.setVisibility(View.VISIBLE);
+            mEmailET.setEnabled(false);
+        }else{
+            mEmailView.setVisibility(View.GONE);
+            mEmailET.setEnabled(true);
+        }
     }
 
     @Override

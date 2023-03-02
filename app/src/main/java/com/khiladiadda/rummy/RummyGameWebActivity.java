@@ -13,9 +13,12 @@ import android.webkit.WebView;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.google.gson.Gson;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
+import com.khiladiadda.dialogs.AppDialog;
 import com.khiladiadda.gameleague.GamesFinalResultActivity;
+import com.khiladiadda.network.model.response.RummyGameModel;
 import com.khiladiadda.utility.AppConstant;
 
 import org.json.JSONException;
@@ -27,6 +30,7 @@ public class RummyGameWebActivity extends BaseActivity {
     @BindView(R.id.web_view)
     WebView webViewGame;
     private String info;
+    private String gameurl;
 
     @Override
     protected int getContentView() {
@@ -65,7 +69,8 @@ public class RummyGameWebActivity extends BaseActivity {
         webViewGame.getSettings().setJavaScriptEnabled(true);
         webViewGame.getSettings().setDomStorageEnabled(true);
         webViewGame.getSettings().setBuiltInZoomControls(false);
-        String gameurl = "https://playmagicrummy.com/build/webbuild/khiladiAdda/debug/web-mobile/index.html?info=" + info;
+//        gameurl = "https://playmagicrummy.com/build/webbuild/khiladiAdda/debug/web-mobile/index.html?info=" + info;
+        gameurl = "https://playmagicrummy.com/build/webbuild/khiladiAdda/debug/web-mobile/index.html?info=" + info + ",pb=ka";
         webViewGame.loadUrl(gameurl);
     }
 
@@ -102,12 +107,20 @@ public class RummyGameWebActivity extends BaseActivity {
     class JsObject {
         @JavascriptInterface
         public void receiveMessage(String data) throws JSONException {
-            Log.i("JsObject", "new postMessage data= "+data);
-            JSONObject root = new JSONObject(data);
-            if(root.getString("redirectionType").equals("exit")){
+            Log.i("JsObject", "new postMessage data= " + data);
+            RummyGameModel filteredData = new Gson().fromJson(data, RummyGameModel.class);
+            if (filteredData.getRedirectionType().equals("exit") && filteredData.getRedirectionParams().getRedirectionUrl() != null &&
+                    filteredData.getRedirectionParams().getRedirectionUrl().equals("addMoney")) {
+                AppDialog.showRummyRechargeMsg(RummyGameWebActivity.this, "Recharge Now");
+                Log.e("TAG", "receiveMessage: " );
+            }else if (filteredData.getRedirectionType().equals("RELOAD")) {
+                webViewGame.getSettings().setBuiltInZoomControls(false);
+                webViewGame.loadUrl(gameurl);
+                finish();
+            } else if (filteredData.getRedirectionType().equals("exit") || filteredData.getRedirectionType().equals("EXIT")) {
                 finish();
             }
-
         }
     }
+
 }

@@ -575,7 +575,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view9">
 
-
                 <TextView
                     android:id="@+id/tv_rounds_"
                     android:layout_width="wrap_content"
@@ -710,13 +709,13 @@
                             android:layout_width="0dp"
                             android:layout_height="36dp"
                             android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
+                            android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
                             android:visibility="invisible"
                             app:cardBackgroundColor="#8976FF"
                             app:cardCornerRadius="8dp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/btn_opp_won"
                             app:layout_constraintStart_toStartOf="parent">
 
                             <TextView
@@ -733,7 +732,7 @@
                             android:layout_width="0dp"
                             android:layout_height="36dp"
                             android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
+                            android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
                             android:visibility="invisible"
                             app:cardBackgroundColor="#00000000"
@@ -741,7 +740,7 @@
                             app:cardElevation="0dp"
                             app:cardPreventCornerOverlap="false"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/btn_opp_won"
                             app:layout_constraintStart_toStartOf="parent">
 
                             <TextView
@@ -762,13 +761,13 @@
                             android:layout_width="0dp"
                             android:layout_height="36dp"
                             android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
+                            android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
                             android:visibility="invisible"
                             app:cardBackgroundColor="#4CAF50"
                             app:cardCornerRadius="8dp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/btn_opp_won"
                             app:layout_constraintStart_toStartOf="parent">
 
                             <TextView
@@ -787,13 +786,13 @@
                             android:layout_width="0dp"
                             android:layout_height="36dp"
                             android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
+                            android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
                             android:visibility="visible"
                             app:cardBackgroundColor="#8976FF"
                             app:cardCornerRadius="8dp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/btn_opp_won"
                             app:layout_constraintStart_toStartOf="parent">
 
                             <TextView
@@ -811,7 +810,7 @@
                             android:layout_width="0dp"
                             android:layout_height="36dp"
                             android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
+                            android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
                             android:visibility="invisible"
                             app:cardBackgroundColor="#00000000"
@@ -819,7 +818,7 @@
                             app:cardElevation="0dp"
                             app:cardPreventCornerOverlap="false"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/btn_refresh"
                             app:layout_constraintStart_toStartOf="parent">
 
                             <TextView
@@ -834,6 +833,30 @@
                                 android:textColor="@color/white"
                                 android:textFontWeight="700" />
                         </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btn_refresh"
+                            android:layout_width="40dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="8dp"
+                            android:visibility="visible"
+                            app:cardBackgroundColor="#b3ffffff"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp"
+                            app:cardPreventCornerOverlap="false"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent">
+
+                            <ImageView
+                                android:id="@+id/iv_refresh"
+                                android:layout_width="26dp"
+                                android:layout_height="22dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_refresh_new"
+                                />
+                        </com.google.android.material.card.MaterialCardView>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout

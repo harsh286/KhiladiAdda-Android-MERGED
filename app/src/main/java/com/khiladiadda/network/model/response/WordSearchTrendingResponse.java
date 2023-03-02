@@ -19,6 +19,19 @@ public class WordSearchTrendingResponse implements Parcelable {
     private String WSLink;
     @SerializedName("apk_version")
     private String apk_version;
+
+    @SerializedName("banners")
+    @Expose
+    private List<BannerDetails> banner = null;
+
+    public List<BannerDetails> getBanner() {
+        return banner;
+    }
+
+    public void setBanner(List<BannerDetails> banner) {
+        this.banner = banner;
+    }
+
     public List<WordSearchTrendingQuizResponse> getTrendingQuiz() {
         return trendingQuiz;
     }

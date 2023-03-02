@@ -35,7 +35,11 @@
 
         </RelativeLayout>
 
-        <include layout="@layout/view_line_gray" />
+<!--        <include layout="@layout/view_line_gray" />-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_red_white" />
 
         <RelativeLayout
             android:id="@+id/rl_pubg_lite"
@@ -65,8 +69,10 @@
 
         </RelativeLayout>
 
-        <include layout="@layout/view_line_gray" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_red_white" />
         <RelativeLayout
             android:id="@+id/rl_freefire"
             android:layout_width="match_parent"
@@ -96,8 +102,10 @@
 
         </RelativeLayout>
 
-        <include layout="@layout/view_line_gray" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_red_white" />
         <RelativeLayout
             android:id="@+id/rl_ludo"
             android:layout_width="match_parent"
@@ -125,8 +133,10 @@
 
         </RelativeLayout>
 
-        <include layout="@layout/view_line_gray" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_red_white" />
         <RelativeLayout
             android:id="@+id/rl_clashroyale"
             android:layout_width="match_parent"
@@ -180,8 +190,10 @@
 
         </RelativeLayout>
 
-        <include layout="@layout/view_line_gray" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_red_white" />
         <RelativeLayout
             android:id="@+id/rl_pubg_global"
             android:layout_width="match_parent"
@@ -209,8 +221,10 @@
 
         </RelativeLayout>
 
-        <include layout="@layout/view_line_gray" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_red_white" />
         <RelativeLayout
             android:id="@+id/rl_esports_per"
             android:layout_width="match_parent"
@@ -238,8 +252,10 @@
 
         </RelativeLayout>
 
-        <include layout="@layout/view_line_gray" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_red_white" />
         <RelativeLayout
             android:id="@+id/rl_ff_max"
             android:layout_width="match_parent"

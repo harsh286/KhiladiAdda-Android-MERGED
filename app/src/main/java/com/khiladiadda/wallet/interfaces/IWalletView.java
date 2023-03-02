@@ -132,4 +132,8 @@ public interface IWalletView {
 
     void onGetGamerCashFailure(ApiError errorMsg);
 
+    void onCashfreeStatusSuccess(BaseResponse response);
+
+    void onCashfreeStatusFailure(ApiError errorMsg);
+
 }

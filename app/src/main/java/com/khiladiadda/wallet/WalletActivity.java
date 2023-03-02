@@ -546,6 +546,16 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
     }
 
     @Override
+    public void onCashfreeStatusSuccess(BaseResponse response) {
+
+    }
+
+    @Override
+    public void onCashfreeStatusFailure(ApiError errorMsg) {
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.destroy();

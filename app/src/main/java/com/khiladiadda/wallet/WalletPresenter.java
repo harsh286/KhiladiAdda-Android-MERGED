@@ -543,5 +543,21 @@ public class WalletPresenter implements IWalletPresenter {
         }
     };
 
+    @Override
+    public void getCashfreeStatus(String orderId) {
+        mSubscription = mInteractor.getCashfreeStatus(mCashfreeStatusListener);
+    }
+
+    private IApiListener<BaseResponse> mCashfreeStatusListener = new IApiListener<BaseResponse>() {
+        @Override
+        public void onSuccess(BaseResponse response) {
+            mView.onCashfreeStatusSuccess(response);
+        }
+
+        @Override
+        public void onError(ApiError error) {
+            mView.onCashfreeStatusFailure(error);
+        }
+    };
 
 }

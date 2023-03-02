@@ -3,6 +3,7 @@ package com.khiladiadda.network.model.response.ludoTournament;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.khiladiadda.network.model.BaseResponse;
+import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.LudoMetaInfo;
 import com.khiladiadda.network.model.response.ProfileDetails;
 
@@ -27,6 +28,9 @@ public class LudoTmtAllTournamentMainResponse extends BaseResponse {
     @SerializedName("timerKA")
     @Expose
     private Integer timerKA;
+    @SerializedName("banners")
+    @Expose
+    private List<BannerDetails> banner = null;
 
     public List<LudoTmtAllTournamentResponse> getResponse() {
         return response;
@@ -74,5 +78,13 @@ public class LudoTmtAllTournamentMainResponse extends BaseResponse {
 
     public void setTimerKA(Integer timerKA) {
         this.timerKA = timerKA;
+    }
+
+    public List<BannerDetails> getBanner() {
+        return banner;
+    }
+
+    public void setBanner(List<BannerDetails> banner) {
+        this.banner = banner;
     }
 }

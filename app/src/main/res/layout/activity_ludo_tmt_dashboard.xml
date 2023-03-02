@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/all_tournaments_bg">
-
 
     <include
         android:id="@+id/in_action_bar"
@@ -23,6 +21,9 @@
         android:id="@+id/rl_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,12 +43,10 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tl_ludotmt"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:layout_marginTop="@dimen/text_12"
         android:background="@color/ludotmt_purple"
         app:layout_constraintTop_toBottomOf="@id/rl_image"
         app:tabIndicatorColor="@color/white"
@@ -73,7 +72,6 @@
         app:tabTextAppearance="@style/CustomTextAppearanceTab"
         app:tabTextColor="@color/tab_indicator_default_color" />
 
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_ludotmt"
         android:layout_width="match_parent"
@@ -85,7 +83,6 @@
         app:layout_constraintTop_toBottomOf="@+id/tab_sub_my_tournament"
         tools:layout_editor_absoluteX="12dp" />
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_mode"
         android:layout_width="match_parent"
@@ -93,7 +90,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tl_ludotmt">
-
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_classic"
@@ -144,7 +140,6 @@
             app:layout_constraintEnd_toEndOf="@+id/btn_series"
             app:layout_constraintStart_toEndOf="@+id/btn_classic"
             app:layout_constraintTop_toBottomOf="@+id/btn_series" />
-
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_timer"

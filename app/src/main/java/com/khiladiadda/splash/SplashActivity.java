@@ -40,7 +40,6 @@ public class SplashActivity extends BaseActivity implements ISplashView {
     private ISplashPresenter mPresenter;
     Handler handler = new Handler();
 
-
     @Override
     protected int getContentView() {
         return R.layout.activity_splash;
@@ -58,7 +57,6 @@ public class SplashActivity extends BaseActivity implements ISplashView {
             if (b!=null){
                 mAppPreference.setBoolean("WSRedirect",true);
             }
-
         }
     }
 

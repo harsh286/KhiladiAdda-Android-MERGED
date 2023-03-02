@@ -47,7 +47,6 @@ import io.github.inflationx.viewpump.ViewPump;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-
 public class KhiladiAddaApp extends Application {
 
     private static KhiladiAddaApp sInstance;
@@ -73,9 +72,6 @@ public class KhiladiAddaApp extends Application {
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().name(Realm.DEFAULT_REALM_NAME).schemaVersion(0).deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(realmConfiguration);
         Realm.getInstance(realmConfiguration).close();
-
-
-
         /*Mo Engage */
         MoEngage moEngage = new MoEngage.Builder(this, AppConstant.MOENGAGEAPPSKEY)
                 .setDataCenter(DataCenter.DATA_CENTER_3)
@@ -89,12 +85,7 @@ public class KhiladiAddaApp extends Application {
         if (mAppPreference.getProfileData() != null && mAppPreference.getProfileData().getId() != null) {
             MoEAnalyticsHelper.INSTANCE.setUniqueId(this, mAppPreference.getProfileData().getId());
         }
-
         trackInstall();
-
-
-
-
         /*Apps Flyer * */
         AppsFlyerConversionListener conversionListener = new AppsFlyerConversionListener() {
             @Override
@@ -102,9 +93,6 @@ public class KhiladiAddaApp extends Application {
                 for (String attrName : conversionDataMap.keySet())
                     Log.d(LOG_TAG, "Conversion attribute: " + attrName + " = " + conversionDataMap.get(attrName));
                 String status = Objects.requireNonNull(conversionDataMap.get("af_status")).toString();
-                if (status.equals("Organic")) {
-                } else {
-                }
             }
 
             @Override
@@ -150,9 +138,7 @@ public class KhiladiAddaApp extends Application {
                     // Log.d(LOG_TAG, "Deeplink value returned null");
                     mAppPreference.setIsDeepLinking(false);
                     return;
-                } else {
-                    //  Log.d(LOG_TAG, "The DeepLink will route to: " + fruitName);
-                }
+                }  //  Log.d(LOG_TAG, "The DeepLink will route to: " + fruitName);
             } catch (Exception e) {
                 mAppPreference.setIsDeepLinking(false);
                 return;
@@ -333,9 +319,9 @@ public class KhiladiAddaApp extends Application {
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
+
     private void trackInstall() {
-        if (mAppPreference.getIsMoEngage()) {
-        } else {
+        if (!mAppPreference.getIsMoEngage()) {
             MoEAnalyticsHelper.INSTANCE.setAppStatus(this, AppStatus.INSTALL);
             mAppPreference.setIsMoEngage(true);
         }

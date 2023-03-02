@@ -14,6 +14,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -32,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
+import com.khiladiadda.dialogs.AppDialog;
 import com.khiladiadda.dialogs.interfaces.IOnVesrionDownloadListener;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.interfaces.IOnFileDownloadedListener;
@@ -45,6 +47,7 @@ import com.khiladiadda.network.model.request.OpponentLudoRequest;
 import com.khiladiadda.network.model.response.LudoContest;
 import com.khiladiadda.network.model.response.LudoContestResponse;
 import com.khiladiadda.network.model.response.ModeResponse;
+import com.khiladiadda.splash.SplashActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.DownloadApk;
@@ -89,7 +92,8 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
     private Dialog mVersionDialog;
     private String mCurrentVersion;
     private String mLink;
-    private int mFrom;
+    private int mFrom, mFromUnity = 0;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -304,7 +308,9 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
             intent.putExtra("winAmount", mWAmount);
             intent.putExtra("randomName", mRandomName);
             intent.putExtra("randomPhoto", mRandomDp);
+            intent.putExtra("contestMode", String.valueOf(mFrom));
             isSuccessfulGameOpen = true;
+            mFromUnity = 1;
             startActivity(intent);
 //            finishAffinity();
         }
@@ -375,11 +381,12 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
     @Override
     protected void onResume() {
         super.onResume();
-        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
-        if (launchIntent != null) getVersion();
-        else mAppPreference.setBoolean("LudoDownload", false);
-        apkCheck();
-        getData();
+        if (mFromUnity == 0) {
+            launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
+            if (launchIntent != null) getVersion();
+            else mAppPreference.setBoolean("LudoDownload", false);
+            apkCheck();
+            getData();
 
 //        if (AppUtilityMethods.isDeviceRooted()) {
 //            AppUtilityMethods.showMsgCancel(this, "This is a rooted device and we do not allow users to play on rooted device as it might not be a good experience. Please play safely", false);
@@ -390,9 +397,26 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
 //               // showDialogMsg("", 2);
 //            }
 //        }
-        if (mIsRequestingAppInstallPermission) {
-            installApk(mFilePath);
+            if (mIsRequestingAppInstallPermission) {
+                installApk(mFilePath);
+            }
+        } else {
+            showRestartDialog(this, "We are restarting");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intentClear = new Intent(MyLudoUniverseActivity.this, SplashActivity.class);
+                    intentClear.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    dialog.dismiss();
+                    startActivity(intentClear);
+                    finish();
+                }
+            }, 3000);
+
         }
+
 
     }
 
@@ -511,5 +535,12 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
         dialog.show();
         return dialog;
     }
-
+    public void showRestartDialog(final Activity activity, String msg) {
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable());
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.layout_restart_dialog);
+        dialog.show();
+    }
 }

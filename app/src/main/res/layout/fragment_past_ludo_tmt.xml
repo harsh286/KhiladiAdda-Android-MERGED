@@ -10,6 +10,7 @@
             android:id="@+id/rv_past_tournament"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            tools:listitem="@layout/items_of_alltournament_ludotmt"
             android:layout_marginTop="@dimen/margin_5"/>
 
     <TextView

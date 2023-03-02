@@ -870,6 +870,16 @@
         <item name="android:textSize">@dimen/text_13</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
+    <style name="DialogButtonWordSearch">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/roundbutton_red</item>
+        <item name="android:layout_marginStart">@dimen/margin_20</item>
+        <item name="android:layout_marginEnd">@dimen/margin_20</item>
+        <item name="android:textSize">@dimen/text_13</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
 
     <style name="DialogButtonLudo">
         <item name="android:layout_width">match_parent</item>
@@ -969,7 +979,7 @@
     <style name="RummyModeButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/margin_1</item>
+        <item name="android:layout_marginStart">@dimen/margin_3</item>
         <item name="android:background">@drawable/roundbutton_red</item>
         <item name="android:layout_marginEnd">@dimen/margin_3</item>
         <item name="android:layout_weight">1</item>
@@ -1013,6 +1023,16 @@
 
     <style name="CustomBottomSheetStyles" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="DialogButtonRummy">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/ic_rummy_btn</item>
+        <item name="android:textSize">@dimen/text_13</item>
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
 </resources>

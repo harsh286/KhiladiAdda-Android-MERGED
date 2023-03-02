@@ -19,15 +19,5 @@ public class WordSearchTrendingMainResponse extends BaseResponse {
         this.response = response;
     }
 
-    @SerializedName("banners")
-    @Expose
-    private List<BannerDetails> banner = null;
 
-    public List<BannerDetails> getBanner() {
-        return banner;
-    }
-
-    public void setBanner(List<BannerDetails> banner) {
-        this.banner = banner;
-    }
 }

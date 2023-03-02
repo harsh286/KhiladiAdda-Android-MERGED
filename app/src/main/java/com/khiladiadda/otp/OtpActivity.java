@@ -113,7 +113,7 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
         if (mFrom == AppConstant.FROM_LOGIN) {
             mRegisterBTN.setText(R.string.text_verify_login);
         }
-        PermissionUtils.hasSMSReadPermission(this);
+//        PermissionUtils.hasSMSReadPermission(this);
     }
 
     @Override
@@ -141,14 +141,12 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
                     } else {
                         AppUtilityMethods.showStoragePermisisionMsg(this, "", false);
                     }
-
                 } else {
                     if (PermissionUtils.hasStoragePermission(this)) {
                         mPresenter.validateData();
                     }else {
                         AppUtilityMethods.showStoragePermisisionMsg(this, "", false);
                     }
-
                 }
                 break;
             case R.id.tv_resend:
@@ -293,9 +291,7 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
 
     @Override
     public void onBackPressed() {
-        if (back) {
-
-        } else {
+        if (!back) {
             Intent i = new Intent(this, RegistrationActivity.class);
             if (mFrom == AppConstant.FROM_LOGIN) {
                 i = new Intent(this, LoginActivity.class);
@@ -304,7 +300,6 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
             finish();
             super.onBackPressed();
         }
-
     }
 
     @Override

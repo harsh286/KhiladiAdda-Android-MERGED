@@ -49,6 +49,20 @@
         tools:node="merge"
         tools:replace="android:allowBackup, android:theme,android:icon">
         <activity
+            android:name=".rummy.RummyLogsWebViewActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".rummy.RummyHistoryActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".rummy.RummyGameWebActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

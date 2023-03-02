@@ -85,7 +85,7 @@ public class MyLudoUniAdapter extends RecyclerView.Adapter<MyLudoUniAdapter.Ludo
             }
             holder.mCancelTV.setVisibility(View.VISIBLE);
             holder.mCancelTV.setText("Draw");
-            holder.mCancelTV.setBackgroundColor(Color.parseColor("#A2A2A2"));
+            holder.mCancelTV.setBackgroundColor(Color.parseColor("#FFB52E"));
             holder.mCancelTV.setEnabled(false);
         } else if (ludoContestBean.getContestStatus() == 2) {
             if (userId.equalsIgnoreCase(ludoContestBean.getCaptainId())) {

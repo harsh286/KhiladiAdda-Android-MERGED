@@ -84,7 +84,6 @@ public class CustomPushMessageListener extends PushMessageListener {
             setRedirectionActivity(activity, AppConstant.FROM_APPFLYER_FORMYLEGUESFF);
         } else {
             super.onNotificationClick(activity, payload);
-
         }
     }
 

@@ -97,19 +97,26 @@ public class PushMessageListener implements NonMoEngagePushListener {
                     Intent intent = new Intent(AppConstant.GAME_DROIDO_CLASS_PACKAGE);
                     intent.putExtra(AppConstant.FROM, AppConstant.DROIDO);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                }else if (mType == 62) { //LUDO TOURNAMENT - When Participants Full (FIRST ROUND)
-                    Intent intent = new Intent(AppConstant.LUDO_TOURNAMENT_PACKAGE);
-                    intent.putExtra(AppConstant.FROM, "62");
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                }else if (mType == 63) { //LUDO TOURNAMENT - When Opponent Joined
-                    Intent intent = new Intent(AppConstant.LUDO_TOURNAMENT_PACKAGE);
-                    intent.putExtra(AppConstant.FROM, AppConstant.LUDOTMT_OPP_JOINED);
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                }else if (mType == 64) { //LUDO TOURNAMENT - When Opponent Joined on my Room
+                }
+                //Ludo Tournament
+                else if (mType == 71) { //LUDO TOURNAMENT - When Opponent Joined on my Room
                     Intent intent = new Intent(AppConstant.LUDO_TOURNAMENT_PACKAGE);
                     intent.putExtra(AppConstant.FROM, AppConstant.LUDOTMT_OPP_ROOM_JOINED);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                }else if (mType == 72) { //LUDO TOURNAMENT - When match goes live
+                    Intent intent = new Intent(AppConstant.LUDO_TOURNAMENT_PACKAGE);
+                    intent.putExtra(AppConstant.FROM, AppConstant.LUDOTMT_MATCH_LIVE);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                }else if (mType == 73) { //LUDO TOURNAMENT - When Opponent gone lobby
+                    Intent intent = new Intent(AppConstant.LUDO_TOURNAMENT_PACKAGE);
+                    intent.putExtra(AppConstant.FROM, AppConstant.LUDOTMT_OPP_ROOM_JOINED);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                }else if (mType == 74) { //LUDO TOURNAMENT - When Lobby Full
+                    Intent intent = new Intent(AppConstant.LUDO_TOURNAMENT_PACKAGE);
+                    intent.putExtra(AppConstant.FROM, AppConstant.LUDOTMT_LOBBY_FULL);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                 }
+
                 sendNotification(mTitle, mMessage);
             } catch (Exception e) {
                 e.printStackTrace();

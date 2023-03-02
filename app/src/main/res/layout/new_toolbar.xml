@@ -27,6 +27,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcv_title"
         android:layout_width="150dp"
         android:layout_height="30dp"
         app:cardBackgroundColor="@color/droido_toolbar_back_button_bg"

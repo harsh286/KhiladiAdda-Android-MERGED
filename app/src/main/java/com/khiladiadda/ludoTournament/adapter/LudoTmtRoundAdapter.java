@@ -217,6 +217,8 @@ public class LudoTmtRoundAdapter extends RecyclerView.Adapter<LudoTmtRoundAdapte
         ConstraintLayout OutOfTmtCl;
         @BindView(R.id.btn_tournament_cancelled)
         MaterialCardView mTournamentCancelled;
+        @BindView(R.id.btn_refresh)
+        MaterialCardView mRefreshBtn;
 
 
         IOnClickListener iOnClickListener;
@@ -227,6 +229,7 @@ public class LudoTmtRoundAdapter extends RecyclerView.Adapter<LudoTmtRoundAdapte
             iOnClickListener = mIOnClickListener;
             playNowBtn.setOnClickListener(this);
             statusBtn.setOnClickListener(this);
+            mRefreshBtn.setOnClickListener(this);
         }
 
         @Override
@@ -235,6 +238,8 @@ public class LudoTmtRoundAdapter extends RecyclerView.Adapter<LudoTmtRoundAdapte
                 iOnClickListener.onItemClick(getAbsoluteAdapterPosition());
             } else if (view.getId() == R.id.btn_status) {
                 iOnClickListener.onInProgressClick();
+            }else if (view.getId() == R.id.btn_refresh) {
+                iOnClickListener.onRefresh();
             }
         }
     }

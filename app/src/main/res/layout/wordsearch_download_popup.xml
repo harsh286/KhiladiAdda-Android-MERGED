@@ -2,15 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="300dp"
-    android:layout_height="300dp"
     android:layout_gravity="center"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:layout_height="300dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout6"
         android:layout_width="0dp"
         android:layout_height="61dp"
-        android:background="#FF1717"
+        android:background="@color/redhth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,7 +21,7 @@
             android:fontFamily="@font/productsansregular"
             android:text="Install"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_20"
+            android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,49 +41,46 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/productsansregular"
-        android:gravity="center"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:lineSpacingExtra="5dp"
-        android:text="It seem like you haven't downloaded our Wordsearch game to play tournaments,  So please click on download button to download the game."
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
-
     <ProgressBar
         android:id="@+id/pb_apk_download"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_30"
         android:layout_marginStart="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_20"
         android:layout_marginEnd="@dimen/margin_20"
+        android:layout_marginBottom="@dimen/margin_15"
         android:max="100"
         android:progress="0"
-        android:progressDrawable="@drawable/word_search_custom_progress_bar"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView9" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:progressDrawable="@drawable/word_search_custom_progress_bar"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="29dp"
+        android:fontFamily="@font/productsansregular"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:text="It seem like you haven't downloaded our WordSearch game to play contests, So please click on download button to download the game."
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/iv_playstore"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
+        android:id="@+id/iv_download"
+        android:text="Download Now"
+        android:layout_marginBottom="@dimen/margin_30"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/shape_button_red"
-        android:text="@string/text_download"
-        android:textColor="@color/white"
+        style="@style/DialogButtonWordSearch"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -94,12 +94,18 @@ public class LiveLudoTmtFragment extends BaseFragment implements IOnClickListene
     public void onItemClick(int pos) {
         Intent intent = new Intent(getContext(), LudoTmtTounamentActivity.class);
         intent.putExtra("MyLudoTournaments", ludoTmtMyMatchResponses.get(pos));
+        intent.putExtra("isMatchLive", true);
         startActivity(intent);
     }
 
     @Override
     public void onInProgressClick() {
         AppDialog.showAlertDialog(getActivity(), "Match is in-progress");
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 
     private void callLiveTournamentApi() {

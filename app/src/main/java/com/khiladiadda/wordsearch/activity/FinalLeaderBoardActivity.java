@@ -69,8 +69,6 @@ public class FinalLeaderBoardActivity extends BaseActivity implements IWordSearc
     TextView mSecondWordCountTV;
     @BindView(R.id.tv_third_word_count)
     TextView mThirdWordCountTV;
-
-
     private String mQuizId;
     private FinalLeaderBoardAdapter adapter;
     private List<WordSearchLiveLeaderBoardlbResponse> leaderBoardList = new ArrayList<>();
@@ -79,7 +77,6 @@ public class FinalLeaderBoardActivity extends BaseActivity implements IWordSearc
     @Override
     protected int getContentView() {
         return R.layout.activity_final_leader_board;
-
     }
 
     @Override
@@ -187,7 +184,6 @@ public class FinalLeaderBoardActivity extends BaseActivity implements IWordSearc
 //        }
         }
     }
-
 
     @Override
     public void onWordSearchLiveLeaderboardFailure(ApiError error) {

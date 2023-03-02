@@ -16,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -191,6 +192,8 @@ public class KabaddiSelectedPlayerActivity extends BaseActivity implements IHTHB
     private double mDepositWinWallet;
     private double mTotalWalletBal;
     private int mCheck;
+    private long mLastClickTime = 0;
+
 
     @Override
     protected int getContentView() {
@@ -243,6 +246,10 @@ public class KabaddiSelectedPlayerActivity extends BaseActivity implements IHTHB
             case R.id.btn_edit:
             case R.id.ll_change:
                 if (new NetworkStatus(this).isInternetOn()) {
+                    if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+                        return;
+                    }
+                    mLastClickTime = SystemClock.elapsedRealtime();
                     mEditBTN.setClickable(false);
                     mPresenter.getHTHMatchList(mMatchDetail.getId(), 0);
                     mCheck = 1;

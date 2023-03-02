@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
@@ -38,6 +39,8 @@ public class GamesFinalResultActivity extends BaseActivity implements ILeaderBoa
     TextView tvCurrentScore;
     @BindView(R.id.tv_games_timetaken)
     TextView tvTimeTaken;
+    @BindView(R.id.mcv_title)
+    MaterialCardView mTitleMcv;
     private ILeaderBoardDroidoPresenter mPresenter;
 
     @Override
@@ -49,6 +52,7 @@ public class GamesFinalResultActivity extends BaseActivity implements ILeaderBoa
     protected void initViews() {
         mPresenter = new LeaderBoardPresenter(this);
         String tournamentId = getIntent().getStringExtra("tournamentid");
+        mTitleMcv.setVisibility(View.GONE);
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress("");
             mPresenter.getLeaderBoardData(tournamentId);
@@ -120,7 +124,7 @@ public class GamesFinalResultActivity extends BaseActivity implements ILeaderBoa
 
         }
         final Handler handler = new Handler();
-        handler.postDelayed(() -> goToLeaderBoard(leaderboard, myRankDroidoLeaderboard), 1500);
+        handler.postDelayed(() -> goToLeaderBoard(leaderboard, myRankDroidoLeaderboard), 2000);
     }
 
     private String setTimeWithSecond(int timeTaken) {

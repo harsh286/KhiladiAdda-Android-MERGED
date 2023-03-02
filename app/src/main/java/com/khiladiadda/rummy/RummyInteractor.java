@@ -10,6 +10,7 @@ import com.khiladiadda.network.model.request.OpponentLudoRequest;
 import com.khiladiadda.network.model.response.LudoContestResponse;
 import com.khiladiadda.network.model.response.ModeResponse;
 import com.khiladiadda.network.model.response.RummyCheckGameResponse;
+import com.khiladiadda.network.model.response.RummyHistoryMainResponse;
 import com.khiladiadda.network.model.response.RummyRefreshTokenMainResponse;
 import com.khiladiadda.network.model.response.RummyResponse;
 
@@ -20,7 +21,7 @@ public class RummyInteractor {
     Subscription getRummyList(IApiListener<RummyResponse> listener, String arenaType) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
-        return manager.createObservable(service.getRummyList(arenaType, "21")).subscribe(new SubscriberCallback<>(listener));
+        return manager.createObservable(service.getRummyList(arenaType, "20")).subscribe(new SubscriberCallback<>(listener));
     }
 
     Subscription getRummyRefreshToken(IApiListener<RummyRefreshTokenMainResponse> listener) {
@@ -33,6 +34,12 @@ public class RummyInteractor {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
         return manager.createObservable(service.getRummyCheckGameStatus()).subscribe(new SubscriberCallback<>(listener));
+    }
+
+    Subscription getRummyHistory(IApiListener<RummyHistoryMainResponse> listener) {
+        ApiManager manager = ApiManager.getInstance();
+        ApiService service = manager.createService();
+        return manager.createObservable(service.getRummyHistory()).subscribe(new SubscriberCallback<>(listener));
     }
 
 }

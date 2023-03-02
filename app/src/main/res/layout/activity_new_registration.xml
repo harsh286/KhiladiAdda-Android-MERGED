@@ -36,6 +36,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/dimen_18sp"
             android:textStyle="bold" />
+
         <RelativeLayout
             android:id="@+id/rl_name"
             android:layout_width="match_parent"
@@ -45,8 +46,7 @@
             android:layout_marginStart="@dimen/margin_20"
             android:layout_marginTop="@dimen/margin_10"
             android:layout_marginEnd="@dimen/margin_20"
-            android:background="@drawable/whitlebackground"
-            >
+            android:background="@drawable/whitlebackground">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_name"
@@ -74,8 +74,7 @@
             android:layout_marginStart="@dimen/margin_20"
             android:layout_marginTop="@dimen/margin_10"
             android:layout_marginEnd="@dimen/margin_20"
-            android:background="@drawable/whitlebackground"
-            >
+            android:background="@drawable/whitlebackground">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_mobile"
@@ -104,8 +103,7 @@
             android:layout_marginStart="@dimen/margin_20"
             android:layout_marginTop="@dimen/margin_10"
             android:layout_marginEnd="@dimen/margin_20"
-            android:background="@drawable/whitlebackground"
-            >
+            android:background="@drawable/whitlebackground">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_email"
@@ -115,6 +113,7 @@
                 android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="@dimen/margin_10"
                 android:hint="Email"
+                android:visibility="visible"
                 android:inputType="text"
                 android:padding="@dimen/margin_10"
                 android:textColor="@color/white"
@@ -124,6 +123,7 @@
 
         <View
             android:id="@+id/v_email"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin_50"
             android:layout_below="@id/rl_phone"
@@ -131,7 +131,7 @@
             android:layout_marginStart="@dimen/margin_20"
             android:layout_marginTop="@dimen/margin_10"
             android:layout_marginEnd="@dimen/margin_20"
-            android:background="@color/colorTransparent"/>
+            android:background="@color/colorTransparent" />
 
         <!--        <com.google.android.material.card.MaterialCardView-->
         <!--            android:layout_width="match_parent"-->
@@ -164,16 +164,16 @@
                 android:id="@+id/et_reference_code"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_50"
+                android:background="@null"
                 android:drawableStart="@drawable/ic_share"
                 android:drawablePadding="@dimen/margin_10"
                 android:hint="@string/hint_invite_code_optional"
                 android:maxLength="15"
                 android:maxLines="1"
                 android:padding="@dimen/margin_10"
-                android:textCursorDrawable="@drawable/color_cursor"
-                android:background="@null"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/white"
+                android:textCursorDrawable="@drawable/color_cursor" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -204,6 +204,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_10" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/rl_under_age"
             android:layout_width="match_parent"

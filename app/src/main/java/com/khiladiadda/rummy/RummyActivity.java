@@ -1,9 +1,13 @@
 package com.khiladiadda.rummy;
 
+import static android.view.View.GONE;
+
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,8 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -23,7 +29,10 @@ import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.dialogs.CallBreakDialog;
 import com.khiladiadda.dialogs.RummyDialog;
 import com.khiladiadda.interfaces.IOnItemClickListener;
+import com.khiladiadda.main.adapter.BannerPagerAdapter;
+import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.network.model.ApiError;
+import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.RummyCheckGameResponse;
 import com.khiladiadda.network.model.response.RummyDetails;
@@ -34,6 +43,7 @@ import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.rummy.adapter.RummyAdapter;
 import com.khiladiadda.rummy.interfaces.IRummyPresenter;
 import com.khiladiadda.rummy.interfaces.IRummyView;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 
 import java.util.ArrayList;
@@ -63,16 +73,23 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     RecyclerView mRummyRV;
     @BindView(R.id.ll_mode_option)
     LinearLayout mModeOptionLL;
-    @BindView(R.id.iv_announcement)
-    ImageView mAnnouncementIV;
     @BindView(R.id.tv_how_to_play)
     TextView mHowToPlayTv;
+    @BindView(R.id.iv_history)
+    ImageView mHistoryTv;
 
     private RummyAdapter mAdapter;
     private List<RummyDetails> mList;
     private IRummyPresenter mPresenter;
     private String mType, mRefreshToken = "";
-    private int mMode = 1, pos= 0;
+    private int mMode = 1, pos = 0;
+    private long mLastClickTime = 0;
+
+
+    @BindView(R.id.vp_advertisement)
+    ViewPager mBannerVP;
+    private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
+    private Handler mHandler;
 
     @Override
     protected int getContentView() {
@@ -90,6 +107,7 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         mTwoTV.setOnClickListener(this);
         mThreeTV.setOnClickListener(this);
         mHowToPlayTv.setOnClickListener(this);
+        mHistoryTv.setOnClickListener(this);
     }
 
     @Override
@@ -162,6 +180,9 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=onb7Nd1uSso")));
 //                }
                 break;
+
+            case R.id.iv_history:
+                startActivity(new Intent(this, RummyHistoryActivity.class));
         }
     }
 
@@ -310,14 +331,17 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
             mList.clear();
             mList.addAll(responseModel.getResponse());
 //            mAdapter = new RummyAdapter(this, mList, mMode);
+            mAdapter.changeType(mMode);
             mAdapter.notifyDataSetChanged();
-            if (responseModel.getBanner().size() > 0)
-                mAnnouncementIV.setVisibility(View.VISIBLE);
-            if (!TextUtils.isEmpty(responseModel.getBanner().get(0).getImg())) {
-                Glide.with(mAnnouncementIV.getContext()).load(responseModel.getBanner().get(0).getImg()).transform(new CenterCrop(), new RoundedCorners(20)).into(mAnnouncementIV);
+            List<BannerDetails> bannerData = responseModel.getBanner();
+            if (bannerData != null && bannerData.size() > 0) {
+                mBannerVP.setVisibility(View.VISIBLE);
+                setUpAdvertisementViewPager(bannerData);
             } else {
-                mAnnouncementIV.setVisibility(View.GONE);
+                mBannerVP.setVisibility(GONE);
             }
+        } else {
+            AppUtilityMethods.showMsg(this, responseModel.getMessage(), false);
         }
     }
 
@@ -342,10 +366,19 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
 
     @Override
     public void onGetContestCheckGameSuccess(RummyCheckGameResponse responseModel) {
-        if (responseModel.isStatus()){
-            openBottomDialog(pos,1);
-        }else {
-            openBottomDialog(pos,0);
+        if (responseModel.isStatus()) {
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+                return;
+            }
+            mLastClickTime = SystemClock.elapsedRealtime();
+
+            openBottomDialog(pos, 1);
+        } else {
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+                return;
+            }
+            mLastClickTime = SystemClock.elapsedRealtime();
+            openBottomDialog(pos, 0);
         }
     }
 
@@ -367,13 +400,37 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
 
         RummyDialog addExpenseDialog;
         if (status == 1) {
-            addExpenseDialog = new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), "active", AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme);
-        }else {
-            addExpenseDialog = new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), mList.get(position).getCardId(), AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme);
+            addExpenseDialog = new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), "active", AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme, mList.get(position).getNumPlayers());
+        } else {
+            addExpenseDialog = new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), mList.get(position).getCardId(), AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme, mList.get(position).getNumPlayers());
         }
         addExpenseDialog.setCancelable(true);
         addExpenseDialog.setCanceledOnTouchOutside(false);
         addExpenseDialog.show();
-
     }
+
+    private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
+        mAdvertisementsList.clear();
+        mAdvertisementsList.addAll(advertisementDetails);
+        List<Fragment> mFragmentList = new ArrayList<>();
+        for (BannerDetails advertisement : advertisementDetails) {
+            mFragmentList.add(BannerFragment.getInstance(advertisement));
+        }
+        BannerPagerAdapter adapter = new BannerPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
+        mBannerVP.setAdapter(adapter);
+        mBannerVP.setOffscreenPageLimit(3);
+        if (mHandler == null) {
+            mHandler = new Handler();
+            moveToNextAd(0);
+        }
+    }
+
+    private void moveToNextAd(int i) {
+        mBannerVP.setCurrentItem(i, true);
+        mHandler.postDelayed(() -> {
+            int currentItem = mBannerVP.getCurrentItem();
+            moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
+        }, 10000);
+    }
+
 }

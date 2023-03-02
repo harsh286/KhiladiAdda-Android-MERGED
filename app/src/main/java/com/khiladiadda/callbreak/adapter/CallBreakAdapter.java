@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,10 +50,14 @@ public class CallBreakAdapter extends RecyclerView.Adapter<CallBreakAdapter.Ludo
         holder.mWinningAmountTV.setText(String.valueOf(ludoContestBean.getWinningAmount()));
         if (ludoContestBean.getLiveEnabled()) {
             holder.mLiveTV.setVisibility(View.VISIBLE);
+            holder.mLiveIv.setVisibility(View.VISIBLE);
             holder.mOnlineTV.setVisibility(View.VISIBLE);
+            holder.mIvPlayers.setVisibility(View.VISIBLE);
         } else {
             holder.mLiveTV.setVisibility(View.GONE);
+            holder.mLiveIv.setVisibility(View.GONE);
             holder.mOnlineTV.setVisibility(View.GONE);
+            holder.mIvPlayers.setVisibility(View.GONE);
         }
         holder.mOnlineTV.setText(String.valueOf(ludoContestBean.getParticipants()));
     }
@@ -80,6 +85,10 @@ public class CallBreakAdapter extends RecyclerView.Adapter<CallBreakAdapter.Ludo
         Button mWinningAmountTV;
         @BindView(R.id.tv_live)
         TextView mLiveTV;
+        @BindView(R.id.iv_live)
+        ImageView mLiveIv;
+        @BindView(R.id.iv_players)
+        ImageView mIvPlayers;
         private IOnItemClickListener mOnItemClickListener;
 
         public LudoContestHolder(View view, IOnItemClickListener onItemClickListener) {

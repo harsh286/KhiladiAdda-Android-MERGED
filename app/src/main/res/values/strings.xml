@@ -847,7 +847,7 @@
     <string name="head_to_head">Head to Head</string>
     <string name="low_to_high">Low to high</string>
     <string name="high_to_low">High to Low</string>
-    <string name="participant">Participant</string>
+    <string name="participant">Participants</string>
     <string name="rules">Rules</string>
     <string name="play">Play</string>
     <string name="view">View</string>
@@ -937,4 +937,6 @@
     <string name="text_disable_ludoadda">Hi Khiladi, \n There is some issue in LudoAdda. Please connect on support</string>
     <string name="phonepe_upi">PhonePe</string>
     <string name="text_beneficiary_name_required">Your account beneficiary name is required.</string>
+    <string name="text_court_piece_pro">CourtPiece Pro</string>
+    <string name="courtpiece_history"><u>History</u></string>
 </resources>

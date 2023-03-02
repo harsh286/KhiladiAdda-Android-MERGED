@@ -48,17 +48,27 @@
         android:layout_marginTop="@dimen/margin_40"
         app:layout_constraintTop_toBottomOf="@+id/relative_toolabar">
 
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager_banner"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_100"
-            android:layout_marginStart="@dimen/dimen_12dp"
-            android:layout_marginEnd="@dimen/dimen_12dp"
-            android:orientation="horizontal"
+        <RelativeLayout
+            android:id="@+id/rl_image"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/vp_advertisement"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_alignParentTop="true" />
+
+            <ImageView
+                android:id="@+id/iv_image"
+                android:layout_width="match_parent"
+                android:layout_height="165dp"
+                android:contentDescription="@string/text_pubg"
+                android:visibility="gone" />
+        </RelativeLayout>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout_dashboard"
@@ -69,7 +79,7 @@
             android:clipToPadding="false"
             android:paddingRight="4dp"
             android:paddingBottom="@dimen/margin_1"
-            app:layout_constraintTop_toBottomOf="@id/viewpager_banner"
+            app:layout_constraintTop_toBottomOf="@id/rl_image"
             app:tabIndicatorColor="@color/white"
             app:tabIndicatorHeight="2dp"
             app:tabMinWidth="50dp"

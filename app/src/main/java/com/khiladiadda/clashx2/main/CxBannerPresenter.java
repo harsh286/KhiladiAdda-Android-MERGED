@@ -20,8 +20,8 @@ public class CxBannerPresenter implements ICxBannerPresenter {
     }
 
     @Override
-    public void getBannerResponse() {
-        mSubscription = mInteractor.getCxBanner(mGetBannerApiListener);
+    public void getBannerResponse(String type) {
+        mSubscription = mInteractor.getCxBanner(mGetBannerApiListener, type);
     }
 
     private IApiListener<CxBannerMainResponse> mGetBannerApiListener = new IApiListener<CxBannerMainResponse>() {

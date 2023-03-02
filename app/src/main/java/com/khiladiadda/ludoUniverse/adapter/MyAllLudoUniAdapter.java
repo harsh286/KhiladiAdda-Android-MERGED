@@ -95,6 +95,12 @@ public class MyAllLudoUniAdapter extends RecyclerView.Adapter<MyAllLudoUniAdapte
             }
             holder.mCancelTV.setVisibility(View.VISIBLE);
             holder.mCancelTV.setEnabled(false);
+        } else if (ludoContestBean.getContestStatus() == 8) {
+            setOpponentData(ludoContestBean, holder);
+            holder.mCancelTV.setText("Draw");
+            holder.mCancelTV.setBackgroundColor(Color.parseColor("#FFB52E"));
+            holder.mCancelTV.setVisibility(View.VISIBLE);
+            holder.mCancelTV.setEnabled(false);
         } else if (userId.equalsIgnoreCase(ludoContestBean.getCaptainId())) {
             if (ludoContestBean.getContestStatus() == 1) {
                 setOpponentData(ludoContestBean, holder);

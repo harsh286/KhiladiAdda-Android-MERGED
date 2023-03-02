@@ -89,6 +89,11 @@ public class PastLudoTmtFragment extends BaseFragment implements IOnClickListene
         AppDialog.showAlertDialog(getActivity(), "Match is in-progress");
     }
 
+    @Override
+    public void onRefresh() {
+
+    }
+
 
     private void callPastTournamentApi() {
         if (new NetworkStatus(getContext()).isInternetOn()) {

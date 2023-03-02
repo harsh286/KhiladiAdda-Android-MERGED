@@ -4,6 +4,7 @@ import com.khiladiadda.network.IApiListener;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.response.RummyCheckGameResponse;
+import com.khiladiadda.network.model.response.RummyHistoryMainResponse;
 import com.khiladiadda.network.model.response.RummyRefreshTokenMainResponse;
 import com.khiladiadda.network.model.response.RummyResponse;
 import com.khiladiadda.rummy.interfaces.IRummyPresenter;
@@ -57,7 +58,6 @@ public class RummyPresenter implements IRummyPresenter {
     };
 
 
-
     @Override
     public void getCheckGameStatus() {
         mSubscription = mInteractor.getCheckGameStatus(mGetLudoCheckApiListener);
@@ -74,6 +74,7 @@ public class RummyPresenter implements IRummyPresenter {
             mView.onGetContestCheckGameFailure(error);
         }
     };
+
 
     @Override
     public void destroy() {

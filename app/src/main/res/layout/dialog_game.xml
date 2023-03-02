@@ -71,8 +71,6 @@
 <!--            android:padding="@dimen/margin_3"-->
 <!--            android:src="@drawable/bgmilb" />-->
 
-
-
         <ImageView
             android:id="@+id/iv_clsq"
             android:layout_width="@dimen/margin_80"
@@ -94,7 +92,6 @@
         android:layout_marginTop="@dimen/margin_10"
         android:orientation="horizontal">
 
-
         <ImageView
             android:id="@+id/iv_ludo_universe"
             android:layout_width="@dimen/margin_80"
@@ -104,7 +101,6 @@
             android:contentDescription="@string/text_call_duty"
             android:padding="@dimen/margin_3"
             android:src="@drawable/lead_ludoadda" />
-
 
         <ImageView
             android:id="@+id/iv_ludo"
@@ -148,8 +144,6 @@
             android:padding="@dimen/margin_3"
             android:src="@drawable/courtpiece_leaderboard" />
 
-
-
         <ImageView
             android:id="@+id/iv_rummy"
             android:layout_width="@dimen/margin_80"
@@ -170,9 +164,7 @@
             android:padding="@dimen/margin_3"
             android:src="@drawable/lead_ws" />
 
-
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/ll_bottom"
@@ -225,7 +217,6 @@
         android:orientation="horizontal"
         android:padding="@dimen/margin_3">
 
-
         <ImageView
             android:id="@+id/iv_quiz"
             android:layout_width="@dimen/margin_80"
@@ -256,9 +247,8 @@
             android:padding="@dimen/margin_3"
             android:src="@drawable/pcesport_leaderboard" />
 
-
-
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -267,7 +257,6 @@
         android:layout_marginBottom="@dimen/margin_10"
         android:orientation="horizontal"
         android:padding="@dimen/margin_3">
-
 
         <ImageView
             android:id="@+id/iv_bgmi"
@@ -297,7 +286,6 @@
             android:contentDescription="@string/text_call_duty"
             android:padding="@dimen/margin_3"
             android:src="@drawable/esport_leaderboard" />
-
 
     </LinearLayout>
 

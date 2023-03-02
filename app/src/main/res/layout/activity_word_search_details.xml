@@ -40,7 +40,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_play"
             style="@style/ButtonBottomLast"
-            android:drawableTop="@drawable/ic_play"
+            android:drawableTop="@drawable/ic_play_"
             android:text="@string/text_play" />
     </LinearLayout>
 

@@ -81,7 +81,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/droid_dash" />
+                        android:src="@drawable/profile" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
@@ -115,7 +115,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/droid_dash" />
+                        android:src="@drawable/profile" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView

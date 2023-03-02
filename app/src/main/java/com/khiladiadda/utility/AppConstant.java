@@ -104,10 +104,12 @@ public class AppConstant {
     public static final String API_PAYU_CHECKSUM = "payumoney/getchecksum";
     public static final String LUDO_CREATE = "LUDO_CREATE";
     public static final String LUDO_ACCEPT = "LUDO_ACCEPT";
+
+    public static final String CALL_BREAK_JOIN = "CALL_BREAK_JOIN";
     public static final int FROM_FAVOURITE = 777;
     public static final String MATCH_LIVE = "MATCH_LIVE";
     public static final int FROM_NEOKRED = 8;
-//    public static final int FROM_GAMECASE = 9;
+    //    public static final int FROM_GAMECASE = 9;
     public static final String MATCH_TYPE = "MATCH_TYPE";
     public static final String API_CX_BANNER = "user/fantasy/fetch-banners";
 
@@ -129,24 +131,27 @@ public class AppConstant {
             "5. Only highlighted tokens are playble at your turn.\n" +
             "6. Player cannot get consecutively 3 diceroll6s.\n" +
             "7. After defeating any token, opponent's or your's, the token will travel back and get placed inside the Home sqaure and you can access it only on diceroll6.";
- public static final String ADDA_TIMER_RULES = "1. All opponent's as well as your's tokens, will be placed at starting box at the start of the game.\n" +
-         "2. The scoring of the game will be according to the token travelled multiplied by 2. (This number can be changed on the admin)\n" +
-         "3. After successful completion of the timer, the game result will be declared and the player with having higher score, wins the match.\n" +
-         "4. In case, the score of both players are same, the game result will be declared as Draw.\n" +
-         "5. On defeating your opponent's token, the total score will be depleated by the distance that token has covered.\n" +
-         "6. After defeating any token, the token will tarvel back and get placed at the starting box.\n" +
-         "7. Only highlighted tokens are playble at your turn.\n" +
-         "8. Player cannot get consecutively 3 diceroll6s.\n" +
-         "9. Game timer  and individual score will be displayed on the game screen.\n" +
-         "10. Your scores will be displayed on the left side of the game screen.\n" +
-         "11. Game score will be updated on every successfull turn switches.";
- public static final String ADDA_SERIES_RULES = "1. All opponent's as well as your's tokens, will be placed at starting box at the start of the game.\n" +
-         "2. Your upcoming 6 dicerolls will be displayed in the Dice Panel present in the center of the screen below the game board.\n" +
-         "3. You cannot see tour opponent's future dicerolls and vice-versa.\n" +
-         "4. The diceroll present in the right most corner of the panel will be blinking and it will be your latest upcoming diceroll on your turn.\n" +
-         "5. Player cannot get consecutively 3 diceroll6s.\n" +
-         "6. After defeating any token, the token will tarvel back and get placed at the starting box.\n" +
-         "7. Only highlighted tokens are playble at your turn.";
+    public static final String ADDA_TIMER_RULES = "1. All opponent's as well as your's tokens, will be placed at starting box at the start of the game.\n" +
+            "2. The scoring of the game will be according to the token travelled multiplied by 2. (This number can be changed on the admin)\n" +
+            "3. After successful completion of the timer, the game result will be declared and the player with having higher score, wins the match.\n" +
+            "4. In case, the score of both players are same, the game result will be declared as Draw.\n" +
+            "5. On defeating your opponent's token, the total score will be depleated by the distance that token has covered.\n" +
+            "6. After defeating any token, the token will tarvel back and get placed at the starting box.\n" +
+            "7. Only highlighted tokens are playble at your turn.\n" +
+            "8. Player cannot get consecutively 3 diceroll6s.\n" +
+            "9. Game timer  and individual score will be displayed on the game screen.\n" +
+            "10. Your scores will be displayed on the left side of the game screen.\n" +
+            "11. Game score will be updated on every successfull turn switches.";
+    public static final String ADDA_SERIES_RULES = "1. All opponent's as well as your's tokens, will be placed at starting box at the start of the game.\n" +
+            "2. Your upcoming 6 dicerolls will be displayed in the Dice Panel present in the center of the screen below the game board.\n" +
+            "3. You cannot see tour opponent's future dicerolls and vice-versa.\n" +
+            "4. The diceroll present in the right most corner of the panel will be blinking and it will be your latest upcoming diceroll on your turn.\n" +
+            "5. Player cannot get consecutively 3 diceroll6s.\n" +
+            "6. After defeating any token, the token will tarvel back and get placed at the starting box.\n" +
+            "7. Only highlighted tokens are playble at your turn.";
+    public static final String WORD_SEARCH = "Word Search";
+    public static final String RUMMY = "Rummy";
+    public static final String LUDO_TOURNAMENT = "LUDO TOURNAMENT";
 
     public static String API_PAYU_UPI_CHECKSUM = "payumoney/generate/hash-checksum";
     public static final String API_PAYU_PAYMENT = "payumoney/verifychecksum";
@@ -188,6 +193,7 @@ public class AppConstant {
     public static final String API_CALL_BREAK = "/user/callbreak/leaderboard";
     public static final String API_RUMMY = "/user/rummy/leaderboard";
     public static final String API_RUMMY_CHECKGAMESTATUS = "/user/rummy/checkGameStatus";
+    public static final String API_RUMMY_HISTORY = "/user/rummy/history";
 
     public static final String API_ADD_CASHFREE_BENEFICIARY = "cashfree/add/beneficiary";
     public static final String TEXT_KEY_TYPE = "type";
@@ -276,7 +282,6 @@ public class AppConstant {
 
     /**
      * LUDO TOURNAMENT
-     *
      **/
     public static final String API_LUDO_ALL_TOURNAMENT = "user/ludo/tournament/fetch";
     public static final String API_LUDO_JOIN_TOURNAMENT = "user/ludo/tournament/join-tournament/{id}";
@@ -621,8 +626,6 @@ public class AppConstant {
     public static final String LUDO_TOURNAMENT_ID = "LUDO_TOURNAMENT_ID";
 
     public static final String RUMMY_ID = "LUDO_TOURNAMENT_ID";
-
-
 
 
     public static final int TYPE_LUDO = 1;
@@ -989,12 +992,15 @@ public class AppConstant {
     public static final String LUDO_TOURNAMENT_PACKAGE = "com.khiladiadda.ludoTournament.activity";
     public static final String LUDOTMT_OPP_JOINED = "OPPONENT_JOINED";
     public static final String LUDOTMT_OPP_ROOM_JOINED = "OPPONENT_JOINED_ROOM";
+    public static final String LUDOTMT_MATCH_LIVE = "LUDOTMT_MATCH_LIVE";
+    public static final String LUDOTMT_GO_LOBBY = "LUDOTMT_GO_LOBBY";
+    public static final String LUDOTMT_LOBBY_FULL = "LUDOTMT_LOBBY_FULL";
     public static final String WS_VERSION = "WS_VERSION";
     public static final String WS_LINK = "WS_LINK";
 
-   public static final String LUDOTOUR_KOMMUNI_CATEGORY = "LudoTournament";
-   public static final String CALLBREAK_KOMMUNI_CATEGORY = "CallBreak";
-   public static final String RUMMY_KOMMUNI_CATEGORY = "Rummy";
+    public static final String LUDOTOUR_KOMMUNI_CATEGORY = "LudoTournament";
+    public static final String CALLBREAK_KOMMUNI_CATEGORY = "CallBreak";
+    public static final String RUMMY_KOMMUNI_CATEGORY = "Rummy";
 
 
     //Neokred PG
@@ -1038,5 +1044,12 @@ public class AppConstant {
     public static final int FROM_GPAY_UPI = 501;
     public static final int FROM_PAYTM_UPI = 502;
     public static final int FROM_PHONEPAY_UPI = 503;
+
+    //Cashfree Status
+    public static final String API_CASHFREE_STATUS = "/cashfree/getOrder";
+
+    public static String LT_CLASSIC = "Classic";
+    public static String LT_SERIES = "Series";
+    public static String LT_TIMER = "Timer";
 
 }

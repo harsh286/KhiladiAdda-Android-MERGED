@@ -1,7 +1,5 @@
 package com.khiladiadda.gameleague;
 
-import static android.view.View.GONE;
-
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -9,16 +7,14 @@ import android.os.Looper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.appsflyer.AFInAppEventParameterName;
-import com.appsflyer.AppsFlyerLib;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -40,15 +36,12 @@ import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.droid_doresponse.MyTournamentResponse;
 import com.khiladiadda.network.model.response.droid_doresponse.ResponseData;
 import com.khiladiadda.network.model.response.droid_doresponse.ResponseDataMyTournament;
-import com.khiladiadda.network.model.response.droid_doresponse.TournamentTrendingList;
 import com.khiladiadda.network.model.response.droid_doresponse.TrendingTournamentResponse;
-import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 
@@ -82,9 +75,10 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
     private List<ResponseData> gameAllTournamentList = new ArrayList<>();
     private List<ResponseDataMyTournament> gameMyTournamentList = new ArrayList<>();
     private int size = 0;
-
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
+    @BindView(R.id.rl_image)
+    RelativeLayout mImageRL;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
 
@@ -252,28 +246,31 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
     @Override
     public void onGameTrendingTournamentSuccess(TrendingTournamentResponse response) {
         new Handler(Looper.getMainLooper()).postDelayed(() -> hideProgress(), 500);
-        if (!response.getResponse().isEmpty()) {
-            size = response.getResponse().size();
-            filterNumbersTV.setVisibility(View.VISIBLE);
-            filterNumbersTV.setText(String.valueOf("(" + size + ")"));
-            tvError.setVisibility(View.GONE);
-            gameAllTournamentList.clear();
-            gameAllTournamentList.addAll(response.getResponse());
-            mAllTournamentGameAdapter.notifyDataSetChanged();
+        if (response.isStatus()) {
             List<BannerDetails> bannerData = response.getBanner();
             if (bannerData != null && bannerData.size() > 0) {
-                mBannerVP.setVisibility(View.VISIBLE);
+                mImageRL.setVisibility(View.VISIBLE);
                 setUpAdvertisementViewPager(bannerData);
             } else {
-                mBannerVP.setVisibility(GONE);
+                mImageRL.setVisibility(View.GONE);
             }
-        } else {
-            gameAllTournamentList.clear();
-            mAllTournamentGameAdapter.notifyDataSetChanged();
-            tvError.setVisibility(View.VISIBLE);
-            hideProgress();
+            if (!response.getResponse().isEmpty()) {
+                size = response.getResponse().size();
+                filterNumbersTV.setVisibility(View.VISIBLE);
+                filterNumbersTV.setText(String.valueOf("(" + size + ")"));
+                tvError.setVisibility(View.GONE);
+                gameAllTournamentList.clear();
+                gameAllTournamentList.addAll(response.getResponse());
+                mAllTournamentGameAdapter.notifyDataSetChanged();
+            } else {
+                gameAllTournamentList.clear();
+                mAllTournamentGameAdapter.notifyDataSetChanged();
+                tvError.setVisibility(View.VISIBLE);
+                hideProgress();
+            }
+        } else{
+            AppUtilityMethods.showMsg(this, response.getMessage(), false);
         }
-
     }
 
     @Override
@@ -295,10 +292,8 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
 
     @Override
     public void onMyTournamentFailure(ApiError error) {
-//        Toast.makeText(this, "" + error, Toast.LENGTH_SHORT).show();
         hideProgress();
     }
-
 
     @Override
     public void onItemClick(int position) {

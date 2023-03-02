@@ -141,7 +141,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
     private int Attempt;
     private List<PrizePoolBreakthrough> mPrizePoolBreakthroughList;
 
-
     @Override
     protected int getContentView() {
         return R.layout.activity_word_search_details;
@@ -173,7 +172,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
             mIsPlayed = mTrendingQuizResponse.getAttemptedQuiz() == 0 ? false : true;
             isParticipantsFull = Objects.equals(mTrendingQuizResponse.getPlayedparticipants(), mTrendingQuizResponse.getTotalparticipants());
             participants = "" + mTrendingQuizResponse.getPlayedparticipants() + "/" + mTrendingQuizResponse.getTotalparticipants();
-
 //            mTotalParticipantsTv.setText(mTrendingQuizResponse.getPlayedparticipants() + " / " + mTrendingQuizResponse.getTotalparticipants());
             mParticipants = getPlayedPercentage(mTrendingQuizResponse.getPlayedparticipants(), mTrendingQuizResponse.getTotalparticipants());
             showHideViewMoreButton(mTrendingQuizResponse.getPrizePoolBreakthrough().size());
@@ -249,8 +247,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
 
         }
         mGridTv.setText(mGrid);
-
-
         mStartPresenter = new WordSearchStartPresenter(this, mQuizId);
         Glide.with(this).load(mImageUrl).placeholder(R.drawable.wordsearch_placeholder_large).into(mQuizImage);
 //        mAttemptTv.setText("" + mAttempt + " Attempts Left");
@@ -270,13 +266,11 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
             isPlayedOnce = false;
             mParticipantsCl.setText("Participants");
         }
-
         if (mQuizStatus != 0) {
             mPlayzCl.setVisibility(View.GONE);
         } else {
             mPlayzCl.setVisibility(View.VISIBLE);
         }
-
         getWalletData();
         setupRecycler();
     }
@@ -439,7 +433,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
             Attempt = 3;
         }
         String attempt = String.valueOf(Attempt);
-
         if (launchIntent != null) {
             mCurrentVersion = mAppPreference.getString(AppConstant.WS_VERSION, null);
             if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
@@ -456,7 +449,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
         } else {
             mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
         }
-
     }
 
 
@@ -527,17 +519,15 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
                 Map<String, Object> eventParameters2 = new HashMap<>();
                 eventParameters2.put(AFInAppEventParameterName.REVENUE, mEntryFee); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
                 eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-                eventParameters2.put(AppConstant.GAME, "Word Search");
+                eventParameters2.put(AppConstant.GAME, AppConstant.WORD_SEARCH);
                 eventParameters2.put(AppConstant.EntryFee, mEntryFee);
                 AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
                 //Mo Engage
                 Properties mProperties = new Properties();
-                mProperties.addAttribute(AppConstant.GAMETYPE, "Word Search");
+                mProperties.addAttribute(AppConstant.GAMETYPE, AppConstant.WORD_SEARCH);
                 mProperties.addAttribute("EnrtyFee", mEntryFee);
                 mProperties.addAttribute("Category Name", mCategoryName);
-                MoEAnalyticsHelper.INSTANCE.trackEvent(this, "Word Search", mProperties);
-
-
+                MoEAnalyticsHelper.INSTANCE.trackEvent(this, AppConstant.WORD_SEARCH, mProperties);
             }
         });
         dialog.show();
@@ -568,7 +558,7 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
         dialog.setContentView(R.layout.wordsearch_download_popup);
         TextView tv = dialog.findViewById(R.id.textView9);
         ProgressBar progressBar = dialog.findViewById(R.id.pb_apk_download);
-        AppCompatButton iv_playstore = dialog.findViewById(R.id.iv_playstore);
+        AppCompatButton iv_playstore = dialog.findViewById(R.id.iv_download);
         ImageView ivCross = dialog.findViewById(R.id.iv_cross);
         ivCross.setOnClickListener(view -> {
             dialog.dismiss();
@@ -580,8 +570,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
                 iv_playstore.setVisibility(View.GONE);
                 ivCross.setVisibility(View.GONE);
             }
-
-
         });
         dialog.show();
         return dialog;
@@ -598,7 +586,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
         mIsPlayed = true;
         if (responseModel.isStatus()) {
             --mAttempt;
-//            mAttemptTv.setText("" + mAttempt + " Attempts Left");
             if (mAttempt == 3) {
                 isPlayedOnce = false;
                 mParticipantsCl.setText("Participants");
@@ -616,24 +603,23 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
     @Override
     public void onWordSearchStartFailure(ApiError error) {
         hideProgress();
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.WordSearchPackageName);
+        if (launchIntent != null) getVersion();
+        else mAppPreference.setBoolean("WSDownload", false);
         if (mAppPreference.getBoolean("WSDownload", false)) {
             try {
                 Intent launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.WordSearchPackageName);
                 if (launchIntent != null) {
-                    if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
-
-                    } else {
+                    if (!mVersion.equalsIgnoreCase(mCurrentVersion)) {
                         finish();
                         Intent intent = new Intent(this, WordSearchMainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
-
                     }
                 }
             } catch (Exception e) {
@@ -641,8 +627,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
                 Intent intent = new Intent(this, WordSearchMainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-
-
             }
         }
         if (isSuccessfulGameOpen) {
@@ -658,13 +642,12 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
                 new DownloadApk(mOnFileDownloadedListener).execute(mLink);
             }
         }
-
     };
 
     private final IOnFileDownloadedListener mOnFileDownloadedListener = new IOnFileDownloadedListener() {
         @Override
         public void onFileDownloaded(String filePath) {
-            AppCompatButton iv_playstore = mVersionDialog.findViewById(R.id.iv_playstore);
+            AppCompatButton iv_playstore = mVersionDialog.findViewById(R.id.iv_download);
             ProgressBar progressBar = mVersionDialog.findViewById(R.id.pb_apk_download);
             TextView tv = mVersionDialog.findViewById(R.id.textView9);
             tv.setText("Hey You have Successfully downloaded the wordsearch game, Now please click on install button to continue.");
@@ -681,7 +664,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
                     Toast.makeText(WordSearchDetailsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
-
         }
 
         @Override
@@ -689,8 +671,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
             if (mVersionDialog != null) {
                 ProgressBar progressBar = mVersionDialog.findViewById(R.id.pb_apk_download);
                 progressBar.setProgress(progress);
-
-
             }
         }
     };
@@ -728,6 +708,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
     }
+
 }

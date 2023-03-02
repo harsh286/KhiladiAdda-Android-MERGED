@@ -25,12 +25,16 @@ allprojects {
         jcenter()
         mavenCentral()
         maven {
-//            url  "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-snapshots"
-            url  "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android"
+            url "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android"
         }
-        maven { url 'https://maven.cashfree.com/release' }
         maven { url 'https://kommunicate.jfrog.io/artifactory/kommunicate-android-sdk' }
         maven { url "https://google.bintray.com/flexbox-layout" }
+        //Cashfree New SDK
+        maven { url 'https://maven.cashfree.com/release'
+            content { includeGroup "com.cashfree.pg" }
+        }
+        //Paytm new sdk
+        maven { url "https://artifactory.paytm.in/libs-release-local" }
     }
 }
 

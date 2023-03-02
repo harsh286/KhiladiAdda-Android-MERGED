@@ -176,28 +176,22 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
     TextView mFFMaxTV;
     @BindView(R.id.btn_ff_max)
     AppCompatButton mFFMaxBTN;
-
     @BindView(R.id.rl_ludo_tournament)
     RelativeLayout mLudoTournamentRl;
     @BindView(R.id.tv_ludo_tournament)
     TextView mLudoTournamentTv;
     @BindView(R.id.btn_ludo_tournament)
     AppCompatButton mLudoTournamentBtn;
-
     @BindView(R.id.rl_rummy)
     RelativeLayout mRummyRl;
     @BindView(R.id.tv_rummy)
     TextView mRummyTv;
     @BindView(R.id.btn_rummy)
     AppCompatButton mRummyBtn;
-
     @BindView(R.id.btn_callbreak)
     AppCompatButton mCallBreakBtn;
-
-
     @BindView(R.id.nudge)
     NudgeView mNV;
-
     private IProfilePresenter mPresenter;
     private String mNewEmail;
     private String mGmailId;

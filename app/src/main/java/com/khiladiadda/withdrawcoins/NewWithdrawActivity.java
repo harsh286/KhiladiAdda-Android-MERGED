@@ -966,7 +966,9 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                 }
             } else if (mPayoutGateway == 7) { /* ===Race-Condition after OTP Verify=== */
                 mPresenter.onRaceConditionTransferFinal(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
-            } else {
+            } else if (mPayoutGateway == 8){
+                mPresenter.onIPayTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp, LocationCheckUtils.getInstance().getmLatitute(), LocationCheckUtils.getInstance().getmLongitude());
+            }else {
                 mPresenter.onPaySharpTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
             }
         }

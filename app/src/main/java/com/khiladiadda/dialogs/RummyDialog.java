@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.appsflyer.AFInAppEventParameterName;
+import com.appsflyer.AppsFlyerLib;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.card.MaterialCardView;
@@ -25,8 +27,12 @@ import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.rummy.RummyGameWebActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
+import com.moengage.core.Properties;
+import com.moengage.core.analytics.MoEAnalyticsHelper;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RummyDialog extends BottomSheetDialog implements View.OnClickListener {
 
@@ -34,11 +40,10 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
     private TextView mEntryFeeTV, mTotalBalanceTV, mDepWinTV, mTwoPlayer, mMorePlayer;
     private MaterialCardView mCancelBtn;
     private Context mContext;
-    private RelativeLayout mMainCl;
     private String mEntryFee, mTotalBal, mDepWinAmount, cardId, token, refreshToken;
+    private int numPlayer;
 
-
-    public RummyDialog(@NonNull Context context, String entryFee, String totalBal, String depWinAmount, String cardId, String token, String refreshToken, int theme) {
+    public RummyDialog(@NonNull Context context, String entryFee, String totalBal, String depWinAmount, String cardId, String token, String refreshToken, int theme, int numPlayer) {
         super(context);
         this.mContext = context;
         this.mEntryFee = entryFee;
@@ -47,17 +52,13 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
         this.cardId = cardId;
         this.token = token;
         this.refreshToken = refreshToken;
+        this.numPlayer = numPlayer;
     }
-
-//    public RummyDialog(@NonNull Context context, int theme) {
-//        super(context, theme);
-//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
-//        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.MyBottomSheetDialogTheme);
         initViews();
         initVariables();
     }
@@ -67,7 +68,6 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
     }
 
     protected void initViews() {
-//        mMainCl = findViewById(R.id.main);
         mPlayBTN = findViewById(R.id.btn_play);
         mEntryFeeTV = findViewById(R.id.tv_entry_fee);
         mTotalBalanceTV = findViewById(R.id.tv_total_wallet_balance);
@@ -75,14 +75,24 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
         mCancelBtn = findViewById(R.id.mcv_cancel);
         mTwoPlayer = findViewById(R.id.tv_two_players);
         mMorePlayer = findViewById(R.id.tv_more_players);
+        if (numPlayer == 2){
+            mTwoPlayer.setTextColor(Color.parseColor("#ffffff"));
+            mTwoPlayer.setBackground(mContext.getDrawable(R.drawable.button_background_selected));
+            mMorePlayer.setTextColor(Color.parseColor("#000000"));
+            mMorePlayer.setBackground(mContext.getDrawable(R.drawable.button_background_notselected));
+        }else {
+            mTwoPlayer.setTextColor(Color.parseColor("#000000"));
+            mTwoPlayer.setBackground(mContext.getDrawable(R.drawable.button_background_notselected));
+            mMorePlayer.setTextColor(Color.parseColor("#ffffff"));
+            mMorePlayer.setBackground(mContext.getDrawable(R.drawable.button_background_selected));
+        }
     }
 
     private void initVariables() {
-//        mMainCl.setBackgroundColor(Color.parseColor("#ed213a"));
         mPlayBTN.setOnClickListener(this);
         mCancelBtn.setOnClickListener(this);
-        mTwoPlayer.setOnClickListener(this);
-        mMorePlayer.setOnClickListener(this);
+//        mTwoPlayer.setOnClickListener(this);
+//        mMorePlayer.setOnClickListener(this);
         mEntryFeeTV.setText("₹" + mEntryFee);
         mTotalBalanceTV.setText("₹" + mTotalBal);
         mDepWinTV.setText("₹" + mDepWinAmount);
@@ -101,6 +111,16 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
+                Map<String, Object> eventParameters2 = new HashMap<>();
+                eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
+                eventParameters2.put(AppConstant.GAME, AppConstant.RUMMY);
+                eventParameters2.put(AppConstant.EntryFee, mEntryFee);
+                AppsFlyerLib.getInstance().logEvent(mContext, AppConstant.INVEST, eventParameters2);
+                //Mo Engage
+                Properties mProperties = new Properties();
+                mProperties.addAttribute(AppConstant.GAMETYPE, AppConstant.RUMMY);
+                mProperties.addAttribute("EnrtyFee", mEntryFee);
+                MoEAnalyticsHelper.INSTANCE.trackEvent(mContext, AppConstant.RUMMY, mProperties);
                 mContext.startActivity(intLeaderboard);
                 dismiss();
                 break;
@@ -120,10 +140,9 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
     }
 
     private String convertToBase64() throws UnsupportedEncodingException {
-        String req = "{ \"accessToken\": \"" + token + "\", \"refreshToken\": \"" + refreshToken + "\", \"stakeId\": \"" + cardId + "\", \"app_version\": \"" + AppSharedPreference.getInstance().getMasterData().getResponse().getVersion().getAppVersion() + "\", \"type\": 1 }";
+        String req = "{ \"accessToken\": \"" + token + "\", \"refreshToken\": \"" + refreshToken + "\", \"stakeId\": \"" + cardId + "\", \"app_version\": \"" + AppSharedPreference.getInstance().getMasterData().getResponse().getVersion().getAppVersion() + "\", \"type\": 1}";
         byte[] data = req.getBytes("UTF-8");
         return Base64.encodeToString(data, Base64.DEFAULT);
-
     }
 
 }

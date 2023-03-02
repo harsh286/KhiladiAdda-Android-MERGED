@@ -233,7 +233,6 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-
             <TextView
                 android:id="@+id/tv_participants"
                 android:layout_width="wrap_content"
@@ -474,7 +473,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

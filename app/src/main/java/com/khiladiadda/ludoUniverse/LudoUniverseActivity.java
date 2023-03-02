@@ -135,7 +135,7 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
     private ILudoUniversePresenter mPresenter;
     private List<LudoContest> mLudoContestList, mMyContestList;
     private Dialog mAddChallengeDialog;
-    private int mContestType, mFilters = 0, mFrom;
+    private int mContestType, mFilters = 0, mFrom, mFromUnity = 0;
     private Coins mCoins;
     private Intent launchIntent;
     private boolean mGetData, mSyncProfile = true, isSuccessfulGameOpen, mIsRequestingAppInstallPermission;
@@ -687,6 +687,8 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
             intent.putExtra("randomName", mRandomName);
             intent.putExtra("randomPhoto", mRandomDp);
             intent.putExtra("contestMode", String.valueOf(mFrom));
+            mFromUnity = 1;
+
 //            Snackbar.make(mWalletBalanceTV, +mFrom, Snackbar.LENGTH_LONG).show();
             startActivity(intent);
             isSuccessfulGameOpen = true;
@@ -707,21 +709,7 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         if (mIsRequestingAppInstallPermission) {
             installApk(mFilePath);
         }
-//        if (mDownloadClick && mAppPreference.getBoolean("LudoDownload", false)) {
-//            try {
-//                launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
-//                if (launchIntent != null) {
-//                    finish();
-//                    startActivity(new Intent(this, LudoUniverseActivity.class));
-//                } else {
-//                    mWalletLL.setVisibility(View.GONE);
-//                    mDownloadLL.setVisibility(View.VISIBLE);
-//                }
-//            } catch (Exception e) {
-//                finish();
-//                startActivity(new Intent(this, LudoUniverseActivity.class));
-//            }
-//        }
+
     }
 
 //    private void dialog() {
@@ -741,6 +729,7 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
             }
         }
     }
+
     private Dialog downloadOptionPopup(final Context activity, final IOnVesrionDownloadListener listener) {
         final Dialog dialog = new Dialog(activity, R.style.MyDialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

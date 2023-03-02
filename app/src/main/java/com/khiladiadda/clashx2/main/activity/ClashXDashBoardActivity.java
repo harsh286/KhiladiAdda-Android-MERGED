@@ -40,8 +40,7 @@ import java.util.List;
 import butterknife.BindView;
 
 public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerView, View.OnClickListener {
-    @BindView(R.id.viewpager_banner)
-    ViewPager mBannerPager;
+
     @BindView(R.id.viewPager_dashboard_games)
     ViewPager viewPager;
     @BindView(R.id.tab_layout_dashboard)
@@ -59,6 +58,8 @@ public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerVi
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
 
+    @BindView(R.id.vp_advertisement)
+    ViewPager mBannerVP;
 
     @Override
     protected int getContentView() {
@@ -67,44 +68,10 @@ public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerVi
 
     @Override
     protected void initViews() {
-        mPresenter = new CxBannerPresenter(this);
         mBackIV.setOnClickListener(this);
         mMyMatcher.setOnClickListener(this);
         mTVHelp.setOnClickListener(this);
         ivNotificatioCx2.setOnClickListener(this);
-        getData();
-    }
-
-    private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
-        mAdvertisementsList.clear();
-        mAdvertisementsList.addAll(advertisementDetails);
-        List<Fragment> mFragmentList = new ArrayList<>();
-        for (BannerDetails advertisement : advertisementDetails) {
-            mFragmentList.add(BannerFragment.getInstance(advertisement));
-        }
-        BannerPagerAdapter adapter = new BannerPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
-        mBannerPager.setAdapter(adapter);
-        mBannerPager.setOffscreenPageLimit(3);
-        if (mHandler == null) {
-            mHandler = new Handler();
-            moveToNextAd(0);
-        }
-    }
-
-    private void moveToNextAd(int i) {
-        mBannerPager.setCurrentItem(i, true);
-        mHandler.postDelayed(() -> {
-            int currentItem = mBannerPager.getCurrentItem();
-            moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
-        }, 10000);
-    }
-
-    private void getData() {
-        if (new NetworkStatus(this).isInternetOn()) {
-            mPresenter.getBannerResponse();
-        } else {
-            Snackbar.make(mBackIV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
-        }
     }
 
     @Override
@@ -123,6 +90,7 @@ public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerVi
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                changeBanner(tab.getPosition());
             }
 
             @Override
@@ -135,6 +103,9 @@ public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerVi
 
             }
         });
+
+        mPresenter = new CxBannerPresenter(this);
+        getData("41 42 43");
     }
 
 
@@ -163,10 +134,11 @@ public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerVi
     @Override
     public void onCxBannerComplete(CxBannerMainResponse responseModel) {
         if (responseModel.isStatus()) {
-            if (responseModel.getResponse().size() > 0) {
+            if (responseModel.getResponse() != null && responseModel.getResponse().size() > 0) {
+                mBannerVP.setVisibility(View.VISIBLE);
                 setUpAdvertisementViewPager(responseModel.getResponse());
             } else {
-                mBannerPager.setVisibility(GONE);
+                mBannerVP.setVisibility(GONE);
             }
         }
     }
@@ -176,5 +148,53 @@ public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerVi
 
     }
 
+    private void getData(String type) {
+        if (new NetworkStatus(this).isInternetOn()) {
+            mPresenter.getBannerResponse(type);
+        } else {
+            Snackbar.make(mBackIV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+        }
+    }
 
+    private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
+        mAdvertisementsList.clear();
+        mAdvertisementsList.addAll(advertisementDetails);
+        List<Fragment> mFragmentList = new ArrayList<>();
+        for (BannerDetails advertisement : advertisementDetails) {
+            mFragmentList.add(BannerFragment.getInstance(advertisement));
+        }
+        BannerPagerAdapter adapter = new BannerPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
+        mBannerVP.setAdapter(adapter);
+        mBannerVP.setOffscreenPageLimit(3);
+        if (mHandler == null) {
+            mHandler = new Handler();
+            moveToNextAd(0);
+        }
+    }
+
+    private void moveToNextAd(int i) {
+        mBannerVP.setCurrentItem(i, true);
+        mHandler.postDelayed(() -> {
+            int currentItem = mBannerVP.getCurrentItem();
+            moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
+        }, 10000);
+    }
+
+    private void changeBanner(int type) {
+        if (type == 0) {            //All
+            getData("41 42 43");
+        } else if (type == 1) {     //Cricket
+            getData("41");
+        } else if (type == 2) {     //Football
+            getData("42");
+        } else if (type == 3) {     //Kabaddi
+            getData("43");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewPager.setCurrentItem(0);
+    }
 }

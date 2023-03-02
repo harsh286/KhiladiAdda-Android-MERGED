@@ -57,20 +57,27 @@
         <TextView
             android:id="@+id/tv_three"
             style="@style/RummyModeButton"
-            android:text="Pool201" />
+            android:text="Pool 201" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/iv_announcement"
+    <RelativeLayout
+        android:id="@+id/rl_image"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_5"
-        android:layout_marginEnd="@dimen/margin_10"
-        android:layout_marginBottom="@dimen/margin_5"
-        android:contentDescription="@string/contest_name"
-        android:scaleType="fitXY"
-        android:visibility="gone" />
+        android:layout_height="wrap_content">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_advertisement"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_alignParentTop="true" />
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="165dp"
+            android:contentDescription="@string/text_pubg"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -79,10 +86,10 @@
 
         <ImageView
             android:id="@+id/iv_table"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
             android:layout_marginTop="@dimen/margin_3"
-            android:src="@drawable/rummy_battle" />
+            android:src="@drawable/ic_rummy_logo" />
 
         <TextView
             android:id="@+id/tv_table"
@@ -114,11 +121,11 @@
             android:layout_marginEnd="16dp"
             android:text="How To Play"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_12" />
+            android:textSize="@dimen/text_14" />
 
         <ImageView
-            android:layout_width="14dp"
-            android:layout_height="14dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_play" />

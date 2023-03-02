@@ -488,7 +488,7 @@ public class KabaddiCreateTeamActivity extends BaseActivity implements ICreateBa
                             oppent = oppent + 1;
                         }
                     }
-                    if (oppent == 4) {
+                    if (oppent == 6) {
                         playerIdList.clear();
                         showMsgErrorSmallDialog(getString(R.string.error_battle), false, 10);
                         oppent = 0;
@@ -507,7 +507,7 @@ public class KabaddiCreateTeamActivity extends BaseActivity implements ICreateBa
                             oppent = oppent + 1;
                         }
                     }
-                    if (oppent == 4) {
+                    if (oppent == 6) {
                         playerIdList.clear();
                         showMsgErrorSmallDialog(getString(R.string.error_battle), false, 10);
                         oppent = 0;

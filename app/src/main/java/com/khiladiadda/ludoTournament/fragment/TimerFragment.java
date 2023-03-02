@@ -86,6 +86,11 @@ public class TimerFragment extends BaseFragment implements IOnClickListener, ILu
         AppDialog.showAlertDialog(getActivity(), "Match is in-progress");
     }
 
+    @Override
+    public void onRefresh() {
+
+    }
+
     private void callLiveTournamentApi() {
         if (new NetworkStatus(getContext()).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));

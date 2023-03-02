@@ -58,8 +58,19 @@ public class RummyAdapter extends RecyclerView.Adapter<RummyAdapter.LudoContestH
             holder.mPointsTv.setText("Game Mode");
             holder.mEntryFeeTV.setText(""+ludoContestBean.getEntryFee()+" Deal");
         }
-        holder.mEntryFeeTV.setText("₹"+ludoContestBean.getEntryFee());
+        if (ludoContestBean.getNumPlayers() == 2){
+            holder.mPlayerTV.setVisibility(View.VISIBLE);
+            holder.mPlayersMoreTv.setVisibility(View.GONE);
+        }else{
+            holder.mPlayerTV.setVisibility(View.GONE);
+            holder.mPlayersMoreTv.setVisibility(View.VISIBLE);
+        }
+//        holder.mEntryFeeTV.setText("₹"+ludoContestBean.getEntryFee());
         holder.mWinningAmountTV.setText("₹ "+ AppUtilityMethods.roundUpNumber(ludoContestBean.getMaxWin()));
+    }
+
+    public void changeType(int mode){
+        mMode = mode;
     }
 
     @Override
@@ -73,6 +84,8 @@ public class RummyAdapter extends RecyclerView.Adapter<RummyAdapter.LudoContestH
         TextView mEntryFeeTV;
         @BindView(R.id.tv_players)
         TextView mPlayerTV;
+        @BindView(R.id.tv_players_more)
+        TextView mPlayersMoreTv;
         @BindView(R.id.tv_online)
         TextView mOnlineTV;
         @BindView(R.id.tv_wining_amount)

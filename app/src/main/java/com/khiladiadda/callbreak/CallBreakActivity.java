@@ -3,6 +3,7 @@ package com.khiladiadda.callbreak;
 import static android.view.View.GONE;
 
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -10,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -26,9 +26,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.appsflyer.AFInAppEventParameterName;
+import com.appsflyer.AppsFlyerLib;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -42,8 +41,6 @@ import com.khiladiadda.dialogs.CallBreakDialog;
 import com.khiladiadda.dialogs.interfaces.IOnVesrionDownloadListener;
 import com.khiladiadda.interfaces.IOnFileDownloadedListener;
 import com.khiladiadda.interfaces.IOnItemClickListener;
-import com.khiladiadda.ludoUniverse.LudoUniverseActivity;
-import com.khiladiadda.ludoUniverse.ModeActivity;
 import com.khiladiadda.main.adapter.BannerPagerAdapter;
 import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.network.model.ApiError;
@@ -54,6 +51,7 @@ import com.khiladiadda.network.model.response.CallBreakResponse;
 import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.PrizePoolBreakthrough;
 import com.khiladiadda.preference.AppSharedPreference;
+import com.khiladiadda.splash.SplashActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.DownloadApk;
@@ -65,7 +63,10 @@ import com.moengage.core.analytics.MoEAnalyticsHelper;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -91,17 +92,16 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     private String mVersion, mLink, mFilePath, mCurrentVersion;
     private boolean mIsRequestingAppInstallPermission;
     private int position = 0;
+    private int mFromUnity = 0;
     private Intent launchIntent;
     private Coins mCoins;
-    private double mWinAmount, Amount, mTotalWalletBal;
+    private double mTotalWalletBal;
     private CallBreakDialog callBreakDialog;
-
-
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
-
+    private String mEntryFee;
 
     @Override
     protected int getContentView() {
@@ -110,7 +110,7 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
 
     @Override
     protected void initViews() {
-        mActivityNameTV.setText("CourtPiece Pro");
+        mActivityNameTV.setText(R.string.text_court_piece_pro);
         mBackIV.setOnClickListener(this);
         mDownloadTV.setOnClickListener(this);
         callBreakDialog = new CallBreakDialog(this);
@@ -166,14 +166,12 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     @Override
     public void onGetContestSuccess(CallBreakResponse responseModel) {
         hideProgress();
-//        apkCheck();
         if (responseModel.isStatus()) {
             mainResponse = responseModel;
             mList.addAll(responseModel.getResponse());
             mAdapter.notifyDataSetChanged();
             mCurrentVersion = responseModel.getApkVersion();
             mLink = responseModel.getCallbreakApkLink();
-            apkCheck();
             List<BannerDetails> bannerData = responseModel.getBanner();
             if (bannerData != null && bannerData.size() > 0) {
                 mBannerVP.setVisibility(View.VISIBLE);
@@ -181,6 +179,9 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
             } else {
                 mBannerVP.setVisibility(GONE);
             }
+            apkCheck();
+        } else {
+            AppUtilityMethods.showMsg(this, responseModel.getMessage(), false);
         }
     }
 
@@ -193,6 +194,17 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     public void onGetContestJoinSuccess(CallBreakJoinMainResponse responseModel) {
         hideProgress();
         if (responseModel.isStatus()) {
+            Map<String, Object> eventParameters2 = new HashMap<>();
+            eventParameters2.put(AFInAppEventParameterName.REVENUE, responseModel.getResponse().getWinningAmount()); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
+            eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
+            eventParameters2.put(AppConstant.GAME, AppConstant.WORD_SEARCH);
+            eventParameters2.put(AppConstant.EntryFee, mEntryFee);
+            AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.CALL_BREAK_JOIN, eventParameters2);
+            //Mo Engage
+            Properties mProperties = new Properties();
+            mProperties.addAttribute(AppConstant.GAMETYPE, AppConstant.CALL_BREAK_JOIN);
+            mProperties.addAttribute("EnrtyFee", mEntryFee);
+            MoEAnalyticsHelper.INSTANCE.trackEvent(this, AppConstant.CALL_BREAK_JOIN, mProperties);
             launchUnityWithData(mainResponse.getResponse().get(position).getId(), mainResponse.getResponse().get(position).getEntryFees(), mainResponse.getResponse().get(position).getWinningAmount(), responseModel.getResponse().getRandomName(), responseModel.getResponse().getRandomDp(), mainResponse.getResponse().get(position).prizePoolBreakup);
         } else {
             Toast.makeText(this, responseModel.getMessage(), Toast.LENGTH_SHORT).show();
@@ -202,7 +214,6 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     @Override
     public void onGetContestJoinFailure(ApiError error) {
         hideProgress();
-
     }
 
     private Dialog downloadOptionPopup(final Context activity, final IOnVesrionDownloadListener listener) {
@@ -331,13 +342,28 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     @Override
     protected void onResume() {
         super.onResume();
-        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.CallBreakPackageName);
-        if (launchIntent != null) getVersion();
-        else mAppPreference.setBoolean("CallBreakDownload", false);
-        if (mIsRequestingAppInstallPermission) {
-            installApk(mFilePath);
+        if (mFromUnity == 0) {
+            launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.CallBreakPackageName);
+            if (launchIntent != null) getVersion();
+            else mAppPreference.setBoolean("CallBreakDownload", false);
+            if (mIsRequestingAppInstallPermission) {
+                installApk(mFilePath);
+            }
+            apkCheck();
+        }else {
+            AppDialog.showRestartDialog(this, "We are restarting");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intentClear = new Intent(CallBreakActivity.this, SplashActivity.class);
+                    intentClear.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intentClear);
+                    finish();
+                }
+            }, 3000);
         }
-        apkCheck();
     }
 
     @Override
@@ -357,8 +383,8 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
         Coins mCoins = mAppPreference.getProfileData().getCoins();
         double mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
         double mDepWinAmount = mCoins.getDeposit() + mCoins.getWinning();
-//        CallBreakDialog addExpenseDialog = new CallBreakDialog(this, String.valueOf(mList.get(position).getEntryFees()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), mList.get(position).getPrizePoolBreakup(), mList.get(position), this, position);
-        callBreakDialog = new CallBreakDialog(this, String.valueOf(mList.get(position).getEntryFees()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), mList.get(position).getPrizePoolBreakup(), mList.get(position), this, position);
+        mEntryFee = String.valueOf(mList.get(position).getEntryFees());
+        callBreakDialog = new CallBreakDialog(this, mEntryFee, String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), mList.get(position).getPrizePoolBreakup(), mList.get(position), this, position);
         callBreakDialog.setCancelable(true);
         callBreakDialog.setCanceledOnTouchOutside(false);
         callBreakDialog.show();
@@ -366,37 +392,34 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
 
     private void launchUnityWithData(String cId, double Amount, double mWinAmount, String mRandomName, String mRandomDp, List<PrizePoolBreakthrough> prizePoolBreakUp) {
         String mAmount = String.valueOf(Amount);
-        String mWAmount = String.valueOf(mWinAmount);
         AppSharedPreference.initialize(this);
         JsonArray myCustomArray = new GsonBuilder().create().toJsonTree(prizePoolBreakUp).getAsJsonArray();
         AppSharedPreference mAppPreference = AppSharedPreference.getInstance();
-
         Intent launchGameIntent =
                 getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.CallBreakPackageName);
         if (launchGameIntent != null) {
             if (mAppPreference.getProfileData().getId() != null || !mAppPreference.getProfileData().getId().isEmpty()) {
-                launchGameIntent.putExtra("userToken", mAppPreference.getSessionToken().toString());
-//                launchGameIntent.putExtra("contestId", cId);
-                launchGameIntent.putExtra("playerId", mAppPreference.getProfileData().getId());
-                launchGameIntent.putExtra("amount", mAmount);
-//            launchGameIntent.putExtra("winAmount", mWAmount);
-//                launchGameIntent.putExtra("randomName", mRandomName);
-//                launchGameIntent.putExtra("randomPhoto", mRandomDp);
-                launchGameIntent.putExtra("prizePoolBreakUp", String.valueOf(myCustomArray));
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.setComponent(new ComponentName(AppConstant.CallBreakPackageName, "com.unity3d.player.UnityPlayerActivity"));
+
+//                launchGameIntent.putExtra("userToken", mAppPreference.getSessionToken().toString());
+//                launchGameIntent.putExtra("playerId", mAppPreference.getProfileData().getId());
+//                launchGameIntent.putExtra("amount", mAmount);
+//                launchGameIntent.putExtra("prizePoolBreakUp", String.valueOf(myCustomArray));
+
+
+                intent.putExtra("userToken", mAppPreference.getSessionToken().toString());
+                intent.putExtra("playerId", mAppPreference.getProfileData().getId());
+                intent.putExtra("amount", mAmount);
+                intent.putExtra("prizePoolBreakUp", String.valueOf(myCustomArray));
+                mFromUnity = 1;
+                startActivity(intent);
             } else {
                 Toast.makeText(this, "Something went wrong!! Please restart your app", Toast.LENGTH_LONG).show();
             }
-
-
-//            launchGameIntent.putExtra("prizePoolBreakUp", new JSONArray(prizePoolBreakUp));
-//            launchGameIntent.putParcelableArrayListExtra("prizePoolBreakUp", (ArrayList<? extends Parcelable>) prizePoolBreakUp);
-//            Snackbar.make(mWalletBalanceTV, +mFrom, Snackbar.LENGTH_LONG).show();
-            startActivity(launchGameIntent);
-            finishAffinity();
         } else {
             Toast.makeText(this, "Apk is not installed yet", Toast.LENGTH_SHORT).show();
         }
-//        isSuccessfulGameOpen = true;
     }
 
     @Override

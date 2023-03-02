@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:padding="@dimen/padding_5"
-            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginStart="7dp"
             android:fontFamily="@font/productsansregular"
             android:text="Points Value"
             android:textSize="@dimen/text_10" />
@@ -30,6 +30,7 @@
             android:layout_alignParentStart="true"
             android:padding="@dimen/padding_5"
             android:textStyle="bold"
+            android:gravity="left"
             android:layout_marginStart="@dimen/margin_5"
             android:fontFamily="@font/productsansregular"
             android:text="Points Value"
@@ -41,17 +42,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_entry_fee"
-            android:layout_alignParentStart="true"
-            android:textColor="#B8B8B8"
-            android:textStyle="bold"
+            android:background="@drawable/rummy_players_rectangle"
+            android:fontFamily="@font/productsansregular"
             android:padding="@dimen/padding_5"
             android:paddingStart="@dimen/margin_8"
             android:paddingEnd="@dimen/margin_8"
-            android:background="@drawable/rummy_players_rectangle"
-            android:layout_marginStart="@dimen/margin_5"
-            android:fontFamily="@font/productsansregular"
             android:text="2P"
-            android:textSize="@dimen/text_14" />
+            android:layout_marginStart="@dimen/margin_8"
+            android:textColor="#B8B8B8"
+            android:textSize="@dimen/text_14"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_players_more"
@@ -65,7 +65,7 @@
             android:padding="@dimen/padding_5"
             android:paddingStart="@dimen/margin_8"
             android:paddingEnd="@dimen/margin_8"
-            android:text="6P"
+            android:text="3-6P"
             android:textColor="#B8B8B8"
             android:textSize="@dimen/text_14"
             android:textStyle="bold" />
@@ -136,8 +136,11 @@
 
         <TextView
             android:id="@+id/tv_buying_prize"
-            android:layout_width="wrap_content"
+            android:layout_width="98dp"
             android:padding="@dimen/padding_5"
+            android:layout_marginEnd="4dp"
+            android:textStyle="bold"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:text="Max Buying Prize"
@@ -150,14 +153,15 @@
             android:layout_below="@+id/tv_buying_prize"
             android:layout_alignParentEnd="true"
             android:background="@drawable/button_background_selected"
+            android:gravity="center"
             android:padding="@dimen/padding_5"
+            android:layout_marginEnd="4dp"
             android:paddingStart="@dimen/text_12"
             android:paddingEnd="@dimen/text_12"
-            tools:text="₹ 5k"
-            android:textStyle="bold"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_16"
-            android:gravity="center"
-            android:textColor="@color/white" />
+            android:textStyle="bold"
+            tools:text="₹ 5k" />
 
         <TextView
             android:id="@+id/tv_bonus"
@@ -166,11 +170,12 @@
             android:layout_below="@+id/tv_wining_amount"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/padding_5"
+            android:gravity="center"
             android:drawablePadding="4dp"
             android:drawableLeft="@drawable/ic_discount"
             android:text="Use 5% Bonus"
             android:textColor="@color/card_red"
-            android:textSize="@dimen/text_13" />
+            android:textSize="13sp" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

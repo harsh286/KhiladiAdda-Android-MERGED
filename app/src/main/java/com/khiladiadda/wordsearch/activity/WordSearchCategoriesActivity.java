@@ -33,15 +33,12 @@ public class WordSearchCategoriesActivity extends BaseActivity implements IWordS
     TextView mTournamentsTv;
     @BindView(R.id.iv_back)
     ImageView mBackIv;
-
     private IWordSearchCategoriesPresenter mPresenter;
     private WordSearchCategoryMainResponse mainResponse;
-
 
     @Override
     protected int getContentView() {
         return R.layout.activity_word_search_categories;
-
     }
 
     @Override
@@ -101,12 +98,11 @@ public class WordSearchCategoriesActivity extends BaseActivity implements IWordS
 
     @Override
     public void onItemClick(int pos) {
-//        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, WordSearchCategoryListActivity.class);
         intent.putExtra(AppConstant.FROM, "");
         intent.putExtra(AppConstant.WORD_SEARCH_CATEGORY_NAME, mainResponse.getResponse().get(pos).getName());
-//        intent.putExtra(AppConstant.WORD_SEARCH_COLOR_NAME, mTrendingMainResponse.getCategoryQuiz().get(pos).getColour());
         intent.putExtra(AppConstant.WORD_SEARCH_QUIZ_ID, mainResponse.getResponse().get(pos).getId());
         startActivity(intent);
     }
+
 }

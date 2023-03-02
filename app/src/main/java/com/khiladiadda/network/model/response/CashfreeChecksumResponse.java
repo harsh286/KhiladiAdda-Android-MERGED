@@ -6,8 +6,12 @@ import com.khiladiadda.network.model.BaseResponse;
 
 public class CashfreeChecksumResponse extends BaseResponse {
 
-    @SerializedName("response") @Expose private String checksum;
-    @SerializedName("details") @Expose private CashfreeChecksumDetails details;
+    @SerializedName("response")
+    @Expose
+    private String checksum;
+    @SerializedName("details")
+    @Expose
+    private String orderId;
 
     public String getChecksum() {
         return checksum;
@@ -17,12 +21,12 @@ public class CashfreeChecksumResponse extends BaseResponse {
         this.checksum = checksum;
     }
 
-    public CashfreeChecksumDetails getDetails() {
-        return details;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setDetails(CashfreeChecksumDetails details) {
-        this.details = details;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
 }

@@ -6,19 +6,25 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
@@ -27,6 +33,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -109,8 +116,6 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     TextView mWalletBalanceTV;
     @BindView(R.id.tv_title_name)
     TextView mTitleTv;
-
-
     private MyTournamentViewPagerAdapter mMyTournamentViewPagerAdapter;
     private ModeTournamentViewPagerAdapter mModeTournamentViewPagerAdapter;
     private LudoTmtPresenter mPresenter;
@@ -122,16 +127,23 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     private boolean mIsRequestingAppInstallPermission;
     private Intent launchIntent;
     private double mTotalWalletBal;
-
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
+    @BindView(R.id.rl_image)
+    RelativeLayout mImageRL;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
-
 
     @Override
     protected int getContentView() {
         return R.layout.activity_ludo_tmt_dashboard;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLudoTmtNotificationMatchLiveReceiver, new IntentFilter(AppConstant.LUDO_TOURNAMENT_PACKAGE));
+
     }
 
     @Override
@@ -140,7 +152,6 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         setupRV();
         tabData();
         setupTablayout();
-        viewPagerData();
         setSubMyTmttabData();
 //        setModeTmttabData();
 //        setupModeTournamentViewPager();
@@ -150,6 +161,7 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
 //        swipeRefreshLayout.setRefreshing(false);
 //        swipeRefreshLayout();
     }
+
 
     @Override
     protected void initVariables() {
@@ -170,26 +182,26 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         } else if (p0.getId() == R.id.img_rules) {
             finish();
         } else if (p0.getId() == R.id.btn_classic) {
-            callAllTournamentApi(1);
             gameMode = 1;
             mTitleTv.setText("Classic");
             classicVvl.setVisibility(View.VISIBLE);
             seriesVv.setVisibility(View.GONE);
             timerVv.setVisibility(View.GONE);
+            callAllTournamentApi(1);
         } else if (p0.getId() == R.id.btn_series) {
-            callAllTournamentApi(3);
             gameMode = 3;
             mTitleTv.setText("Series");
             classicVvl.setVisibility(View.GONE);
             seriesVv.setVisibility(View.VISIBLE);
             timerVv.setVisibility(View.GONE);
+            callAllTournamentApi(3);
         } else if (p0.getId() == R.id.btn_timer) {
-            callAllTournamentApi(2);
             gameMode = 2;
             mTitleTv.setText("Timer");
             classicVvl.setVisibility(View.GONE);
             seriesVv.setVisibility(View.GONE);
             timerVv.setVisibility(View.VISIBLE);
+            callAllTournamentApi(2);
         } else if (p0.getId() == R.id.tv_download) {
             mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
         } else if (p0.getId() == R.id.rl_wallet) {
@@ -208,15 +220,15 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     private void callAllTournamentApi(int type) {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
-            String bannerType="";
-            if(gameMode == 1){
+            String bannerType = "";
+            if (gameMode == 1) {
                 bannerType = "31";
-            } else if(gameMode == 2){
-                bannerType = "32";
-            }else if(gameMode == 3){
+            } else if (gameMode == 2) {
                 bannerType = "33";
+            } else if (gameMode == 3) {
+                bannerType = "32";
             }
-            mPresenter.getAllTournament(true, type, false, bannerType, true);
+            mPresenter.getAllTournament(true, type, true, bannerType, true);
         } else {
             Snackbar.make(backArrowIv, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
@@ -246,7 +258,6 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         thirdTab.setText(R.string.text__upcoming);
         subMyTmtTl.addTab(thirdTab);
     }
-
 
     private void setupTablayout() {
         ludoTmtTL.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -295,7 +306,6 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     }
 
     private void switchFirstAdapter() {
-//        getTrendingTournamentList();
         allTournamentRv.setVisibility(View.VISIBLE);
         modeCl.setVisibility(View.VISIBLE);
         subMyTmtTl.setVisibility(View.GONE);
@@ -304,15 +314,13 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         seriesVv.setVisibility(View.GONE);
         timerVv.setVisibility(View.GONE);
         callAllTournamentApi(1);
-//        allTournamentRv.setVisibility(View.GONE);
-//        callAllTournamentApi();
     }
 
     private void switchSecondAdapter() {
-//        getMyTournament();
         modeCl.setVisibility(View.GONE);
         allTournamentRv.setVisibility(View.GONE);
         subMyTmtTl.setVisibility(View.VISIBLE);
+        subMyTmtTl.selectTab(subMyTmtTl.getTabAt(0));
         ludotmtVP.setVisibility(View.VISIBLE);
     }
 
@@ -339,13 +347,6 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         });
     }
 
-    private void viewPagerData() {
-        ViewPager viewPager = findViewById(R.id.vp_advertisement);
-        NewDroidoAdapterViewPager newDroidoAdapterViewPager = new NewDroidoAdapterViewPager(this);
-        viewPager.setAdapter(newDroidoAdapterViewPager);
-        viewPager.setCurrentItem(newDroidoAdapterViewPager.getCount() - 1);
-    }
-
     @Override
     public void onItemClick(int pos) {
         if (mAppPreference.getBoolean("LudoDownload", false)) {
@@ -360,7 +361,6 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         } else {
             mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
         }
-
     }
 
     @Override
@@ -369,25 +369,29 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     }
 
     @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
     public void onGetAllTournamentComplete(LudoTmtAllTournamentMainResponse response) {
         hideProgress();
-//        swipeRefreshLayout.setRefreshing(false);
         try {
             if (response.isStatus()) {
                 mCurrentVersion = response.getApkVersion();
                 mLink = response.getLudoApkLink();
-                apkCheck();
                 setData(response);
                 responses = response.getResponse();
                 allTournamentRv.setAdapter(new LudoTmtDashboardAdapter(this, this, response.getResponse()));
-
-                List<BannerDetails> bannerData = getIntent().getParcelableArrayListExtra("banner");
+                List<BannerDetails> bannerData = response.getBanner();
                 if (bannerData != null && bannerData.size() > 0) {
-                    mBannerVP.setVisibility(View.VISIBLE);
+                    mImageRL.setVisibility(View.VISIBLE);
                     setUpAdvertisementViewPager(bannerData);
                 } else {
-                    mBannerVP.setVisibility(GONE);
+                    mImageRL.setVisibility(GONE);
                 }
+            } else {
+                AppUtilityMethods.showMsg(this, response.getMessage(), false);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -397,19 +401,18 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     @Override
     public void onGetAllTournamentFailure(ApiError errorMsg) {
         hideProgress();
-//        swipeRefreshLayout.setRefreshing(false);
     }
 
     private void setData(LudoTmtAllTournamentMainResponse responseModel) {
         mAppPreference.setProfileData(responseModel.getProfile());
         mCoins = mAppPreference.getProfileData().getCoins();
+        apkCheck();
         if (mCoins != null) {
             mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
             mWalletBalanceTV.setText("₹" + AppUtilityMethods.roundUpNumber(mTotalWalletBal));
         }
     }
     //DOWNLOAD
-
     private Dialog downloadOptionPopup(final Context activity, final IOnVesrionDownloadListener listener) {
         final Dialog dialog = new Dialog(activity, R.style.MyDialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -434,6 +437,8 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         dialog.show();
         return dialog;
     }
+
+
 
     private final IOnVesrionDownloadListener mOnVersionListener = new IOnVesrionDownloadListener() {
         @Override
@@ -505,6 +510,7 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
             PackageManager pm = this.getPackageManager();
             PackageInfo pInfo = pm.getPackageInfo(AppConstant.LudoAddaPackageName, 0);
             mVersion = pInfo.versionName;
+            mAppPreference.setBoolean("LudoDownload", true);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -515,7 +521,7 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
             if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
                 mDownloadTV.setVisibility(View.GONE);
                 mWalletLL.setVisibility(View.VISIBLE);
-                mAppPreference.setBoolean("LudoDownload", true);
+//                mAppPreference.setBoolean("LudoDownload", true);
             } else {
                 mWalletLL.setVisibility(View.GONE);
                 mDownloadTV.setText("Update");
@@ -532,19 +538,21 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         }
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
         launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
         if (launchIntent != null) getVersion();
         else mAppPreference.setBoolean("LudoDownload", false);
-
-//        callAllTournamentApi(1);
         switchFirstAdapter();
+        ludoTmtTL.selectTab(ludoTmtTL.getTabAt(0));
+        subMyTmtTl.selectTab(subMyTmtTl.getTabAt(0));
+        ludotmtVP.setCurrentItem(0);
         if (mIsRequestingAppInstallPermission) {
             installApk(mFilePath);
         }
+//        apkCheck();
+
     }
 
     private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
@@ -569,6 +577,38 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
             int currentItem = mBannerVP.getCurrentItem();
             moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
         }, 10000);
+    }
+
+    //Notification
+    private final BroadcastReceiver mLudoTmtNotificationMatchLiveReceiver = new BroadcastReceiver() { //72
+        @Override
+        public void onReceive(Context context, Intent intent) { // 72
+            String mFrom = intent.getStringExtra(AppConstant.FROM);
+            if (mFrom.equalsIgnoreCase(AppConstant.LUDOTMT_MATCH_LIVE)) {
+                showLiveDialog(context, "Tournament is Live Now");
+            }
+        }
+    };
+
+    //Match Live Dialog
+    public void showLiveDialog(Context context,String msg) {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.error_dialog);
+        TextView text = dialog.findViewById(R.id.tv_text);
+        ImageView image = dialog.findViewById(R.id.iv_tick);
+        TextView heading = dialog.findViewById(R.id.tv_heading);
+        text.setText(msg);
+        TextView okBTN = dialog.findViewById(R.id.btn_ok);
+        okBTN.setOnClickListener(arg0 -> {
+            ludoTmtTL.selectTab(ludoTmtTL.getTabAt(1));
+            subMyTmtTl.selectTab(subMyTmtTl.getTabAt(0));
+            dialog.dismiss();
+        });
+        dialog.show();
     }
 
 }

@@ -70,7 +70,7 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
     TextView mNoDataTV;
     @BindView(R.id.tv_categories)
     TextView mGamecountTV;
-//    @BindView(R.id.iv_pcesports)
+    //    @BindView(R.id.iv_pcesports)
 //    ImageView mPcEsports;
     @BindView(R.id.iv_courtpiece)
     ImageView mCourtPiece;
@@ -78,8 +78,6 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
     ImageView mRummyIv;
     @BindView(R.id.nudge)
     NudgeView mNV;
-    @BindView(R.id.tv_view_all)
-    TextView mViewAllTv;
 
     private IScratchPresenter mPresenter;
     private ScratchCardAdapter mAdapter;
@@ -117,7 +115,6 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
         mLURL.setOnClickListener(this);
         mDroidRl.setOnClickListener(this);
         mWSRl.setOnClickListener(this);
-//        mPcEsports.setOnClickListener(this);
         mCourtPiece.setOnClickListener(this);
         mRummyIv.setOnClickListener(this);
         mScratchList = new ArrayList<>();
@@ -161,17 +158,11 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
             case R.id.rl_wordsearch:
                 getCategory(AppConstant.WORD_SEARCH_TYPE);
                 break;
-//            case R.id.iv_pcesports:
-//                getCategory(AppConstant.PC_ESPORTS_TYPE);
-//                break;
             case R.id.iv_courtpiece:
                 getCategory(AppConstant.COURTPIECE_TYPE);
                 break;
             case R.id.iv_rummy:
                 getCategory(AppConstant.RUMMY_TYPE);
-                break;
-            case R.id.tv_view_all:
-//                getCategory(AppConstant.RUMMY_TYPE);
                 break;
         }
     }

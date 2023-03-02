@@ -114,4 +114,5 @@
     //Rummy
     <color name="rummy_red">#CA2236</color>
     <color name="rummy_tab_red">#670C10</color>
+    <color name="red_popup">#E22447</color>
 </resources>

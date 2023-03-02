@@ -233,7 +233,7 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
                 ludoResultActivityResultLauncher.launch(i);
                 break;
             case R.id.tv_refresh:
-                getLudoContest(false, mSyncProfile);
+                getLudoContest(true, mSyncProfile);
                 break;
             case R.id.tv_buddy_list:
                 Intent buddy = new Intent();
@@ -394,13 +394,9 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
             AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
             Properties properties = new Properties();
             properties
-                    // tracking integer
                     .addAttribute("game", "LudoKing")
-                    // tracking string
                     .addAttribute("gametype", mMode)
-                    // tracking Date
                     .addAttribute("gamecreatedDate", new Date())
-                    // tracking double
                     .addAttribute("amount", mAmount);
             MoEAnalyticsHelper.INSTANCE.trackEvent(this, "GameAccepted", properties);
             showMsg(this, getString(R.string.text_ludo_accepted), false, AppConstant.FROM_UPDATE, 0);
@@ -573,7 +569,7 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
             if (from == AppConstant.FROM_LUDO_RESULT) {
                 openResult(position);
             } else if (from != 100) {
-                getLudoContest(false, mSyncProfile = true);
+                getLudoContest(true, mSyncProfile = true);
             }
         });
         dialog.show();
@@ -582,7 +578,7 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
     private BroadcastReceiver mLudoNotificationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            getLudoContest(false, mSyncProfile = true);
+            getLudoContest(true, mSyncProfile = true);
         }
     };
 
@@ -671,13 +667,13 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (mAppPreference.getBoolean(AppConstant.IS_DATA_CHANGE, false)) {
-                    getLudoContest(false, mSyncProfile = true);
+                    getLudoContest(true, mSyncProfile = true);
                 }
             });
 
     private final IOnFilterChallengeListener onFilterChallengeListener = filter -> {
         mFilters = filter;
-        getLudoContest(false, false);
+        getLudoContest(true, false);
     };
 
     private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {

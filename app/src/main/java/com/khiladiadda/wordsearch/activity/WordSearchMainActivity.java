@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,12 +94,12 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
     private IWordSearchMainPresenter mPresenter;
     private WordSearchTrendingResponse mTrendingMainResponse;
     private Intent launchIntent;
-
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
+    @BindView(R.id.rl_image)
+    RelativeLayout mImageRL;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
-
 
     @Override
     protected int getContentView() {
@@ -111,8 +112,8 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
         mAllQuizzesTv.setText("My Tournaments");
         mAppPreference.setBoolean("WSDownload", false);
         setupRecycler();
-        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.WordSearchPackageName);
-        if (launchIntent != null) getVersion();
+//        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.WordSearchPackageName);
+//        if (launchIntent != null) getVersion();
     }
 
     private void setupRecycler() {
@@ -120,11 +121,9 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
         //For Trending
         mTrendingQuiz.setLayoutManager(new LinearLayoutManager(this));
         mTrendingQuiz.setVisibility(View.VISIBLE);
-
         //For Category
 //        mMainQuizesRv.setLayoutManager(new LinearLayoutManager(this));
     }
-
 
     @Override
     protected void initVariables() {
@@ -136,7 +135,6 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
         mCategoriesTv.setOnClickListener(this);
         getData();
     }
-
 
     private void getData() {
         if (new NetworkStatus(this).isInternetOn()) {
@@ -186,15 +184,13 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
         } else {
             mNoDataTv.setVisibility(View.GONE);
         }
-
-        List<BannerDetails> bannerData = responseModel.getBanner();
+        List<BannerDetails> bannerData = responseModel.getResponse().getBanner();
         if (bannerData != null && bannerData.size() > 0) {
-            mBannerVP.setVisibility(View.VISIBLE);
+            mImageRL.setVisibility(View.VISIBLE);
             setUpAdvertisementViewPager(bannerData);
         } else {
-            mBannerVP.setVisibility(GONE);
+            mImageRL.setVisibility(GONE);
         }
-
         mLink = responseModel.getResponse().getWSLink();
         mCurrentVersion = responseModel.getResponse().getApk_version();
         mAppPreference.setString(AppConstant.WS_LINK, mLink);
@@ -240,6 +236,9 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
     @Override
     protected void onResume() {
         super.onResume();
+        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.WordSearchPackageName);
+        if (launchIntent != null) getVersion();
+        else mAppPreference.setBoolean("WSDownload", false);
         if (mAppPreference.getBoolean("WSDownload", false)) {
             try {
                 Intent launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.WordSearchPackageName);
@@ -258,6 +257,8 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
                 startActivity(new Intent(this, WordSearchMainActivity.class));
 
             }
+        }else {
+            mDownloadMVC.setVisibility(View.VISIBLE);
         }
     }
 
@@ -269,7 +270,7 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
         dialog.setContentView(R.layout.wordsearch_download_popup);
         TextView tv = dialog.findViewById(R.id.textView9);
         ProgressBar progressBar = dialog.findViewById(R.id.pb_apk_download);
-        AppCompatButton iv_playstore = dialog.findViewById(R.id.iv_playstore);
+        AppCompatButton iv_playstore = dialog.findViewById(R.id.iv_download);
         ImageView ivCross = dialog.findViewById(R.id.iv_cross);
         ivCross.setOnClickListener(view -> {
             dialog.dismiss();
@@ -299,7 +300,7 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
     private final IOnFileDownloadedListener mOnFileDownloadedListener = new IOnFileDownloadedListener() {
         @Override
         public void onFileDownloaded(String filePath) {
-            AppCompatButton iv_playstore = mVersionDialog.findViewById(R.id.iv_playstore);
+            AppCompatButton iv_playstore = mVersionDialog.findViewById(R.id.iv_download);
             ProgressBar progressBar = mVersionDialog.findViewById(R.id.pb_apk_download);
             TextView tv = mVersionDialog.findViewById(R.id.textView9);
             tv.setText("Hey You have Successfully downloaded the wordsearch game, Now please click on install button to continue.");

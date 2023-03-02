@@ -153,13 +153,13 @@
                     android:layout_width="0dp"
                     android:layout_height="36dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
                     android:visibility="invisible"
                     app:cardBackgroundColor="#8976FF"
                     app:cardCornerRadius="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_won"
                     app:layout_constraintStart_toStartOf="parent">
 
                     <TextView
@@ -176,7 +176,7 @@
                     android:layout_width="0dp"
                     android:layout_height="36dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
                     android:visibility="invisible"
                     app:cardBackgroundColor="#00000000"
@@ -184,7 +184,7 @@
                     app:cardElevation="0dp"
                     app:cardPreventCornerOverlap="false"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_won"
                     app:layout_constraintStart_toStartOf="parent">
 
                     <TextView
@@ -277,6 +277,7 @@
                         android:textColor="@color/white"
                         android:textFontWeight="700" />
                 </com.google.android.material.card.MaterialCardView>
+
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/btn_tournament_cancelled"
                     android:layout_width="0dp"
@@ -284,7 +285,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     app:cardBackgroundColor="@color/card_red"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="0dp"
@@ -305,6 +306,28 @@
                         android:textColor="@color/white"
                         android:textFontWeight="700" />
                 </com.google.android.material.card.MaterialCardView>
+
+<!--                <com.google.android.material.card.MaterialCardView-->
+<!--                    android:id="@+id/btn_refresh"-->
+<!--                    android:layout_width="36dp"-->
+<!--                    android:layout_height="36dp"-->
+<!--                    android:layout_marginEnd="16dp"-->
+<!--                    android:layout_marginBottom="8dp"-->
+<!--                    android:visibility="visible"-->
+<!--                    app:cardBackgroundColor="#b3ffffff"-->
+<!--                    app:cardCornerRadius="8dp"-->
+<!--                    app:cardElevation="0dp"-->
+<!--                    app:cardPreventCornerOverlap="false"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="26dp"-->
+<!--                        android:layout_height="26dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:src="@drawable/ic_refresh_new"-->
+<!--                        />-->
+<!--                </com.google.android.material.card.MaterialCardView>-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
