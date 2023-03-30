@@ -27,7 +27,6 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-
     <LinearLayout
         android:id="@+id/ll_my_challenge"
         android:layout_width="match_parent"
@@ -66,6 +65,7 @@
         android:id="@+id/rl_my_challenge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_3"
         android:layout_below="@+id/ll_my_challenge">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -138,8 +138,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
             android:layout_weight="1"
-            android:text="@string/text_classic"
-            android:visibility="visible" />
+            android:text="@string/text_classic" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_popular"
@@ -147,8 +146,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
             android:layout_weight="1"
-            android:text="@string/text_popular"
-            android:visibility="visible" />
+            android:text="@string/text_popular" />
 
     </LinearLayout>
 

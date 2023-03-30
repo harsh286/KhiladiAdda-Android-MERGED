@@ -19,7 +19,7 @@ public class ProfileDetails {
     @SerializedName("n_gKite") @Expose private NGKITE nGKite;
     @SerializedName("n_ludoTournament") @Expose private NLudoTournament nLudoTournament;
     @SerializedName("n_rummy") @Expose private NRummy nRummy;
-    @SerializedName("n_callBreak") @Expose private NCallBreak nCallBreak;
+    @SerializedName("n_callbreak") @Expose private NCallBreak nCallBreak;
     @SerializedName("username") @Expose private String username;
     @SerializedName("dp") @Expose private String dp;
     @SerializedName("pan") @Expose private String pan;

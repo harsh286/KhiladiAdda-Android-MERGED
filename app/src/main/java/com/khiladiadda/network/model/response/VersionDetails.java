@@ -30,6 +30,15 @@ public class VersionDetails {
     @SerializedName("ludo_apk_link") @Expose private String ludoApkLink;
     @SerializedName("truecaller_enabled") @Expose private boolean truecallerEnabled;
     @SerializedName("location_enabled") @Expose private boolean locationEnabled;
+    @SerializedName("rummy_link") @Expose private String rummyLink;
+
+    public String getRummyLink() {
+        return rummyLink;
+    }
+
+    public void setRummyLink(String rummyLink) {
+        this.rummyLink = rummyLink;
+    }
 
     public boolean isLocationEnabled() {
         return locationEnabled;

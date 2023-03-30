@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/action_bar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -32,29 +33,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/iv_history"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_toStartOf="@+id/tv_history"
         android:background="@drawable/roundbutton_red"
         android:backgroundTint="#E5444B"
-        android:elevation="@dimen/margin_5"
-        android:gravity="center_vertical"
-        android:text="@string/text_payment_history"
-        android:layout_marginEnd="@dimen/margin_10"
         android:drawableEnd="@drawable/ic_outline_history"
         android:drawablePadding="@dimen/padding_2"
+        android:elevation="@dimen/margin_5"
+        android:gravity="center_vertical"
         android:padding="@dimen/padding_3"
-        android:visibility="gone"
+        android:text="@string/text_payment_history"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_11" />
+        android:textSize="@dimen/text_11"
+        android:visibility="gone" />
 
-    <ImageView
-        android:id="@+id/iv_history"
+    <TextView
+        android:id="@+id/tv_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:background="@drawable/ic_outline_history"
-        android:contentDescription="@string/text_no" />
+        android:gravity="center_vertical"
+        android:contentDescription="@string/text_no"
+        android:drawablePadding="@dimen/padding_5"
+        android:text="@string/history"
+        android:textColor="@color/white"
+        app:drawableEndCompat="@drawable/ic_outline_history" />
 
 </RelativeLayout>
 

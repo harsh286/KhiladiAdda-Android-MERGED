@@ -29,10 +29,12 @@ public class MyChallengeAdapter extends RecyclerView.Adapter<MyChallengeAdapter.
     private List<LudoContest> mLudoChallengeList;
     private IOnItemClickListener mOnItemClickListener;
     private MyChallengeAdapter.IOnItemChildClickListener mOnItemChildClickListener;
+    private boolean getRoomAutoGenerate;
 
-    public MyChallengeAdapter(Context context, List<LudoContest> ludoChallengeList) {
+    public MyChallengeAdapter(Context context, List<LudoContest> ludoChallengeList, boolean getRoomAutoGenerate) {
         this.mContext = context;
         this.mLudoChallengeList = ludoChallengeList;
+        this.getRoomAutoGenerate = getRoomAutoGenerate;
     }
 
     public void setOnItemClickListener(IOnItemClickListener mOnItemClickListener) {
@@ -158,7 +160,13 @@ public class MyChallengeAdapter extends RecyclerView.Adapter<MyChallengeAdapter.
                 holder.mCancelTV.setVisibility(View.VISIBLE);
                 holder.mCancelTV.setText(R.string.text_cancel);
                 holder.mPlayTV.setVisibility(View.VISIBLE);
-                holder.mPlayTV.setText(R.string.text_update_room_code);
+                if (!getRoomAutoGenerate) {
+                    holder.mCancelTV.setVisibility(View.VISIBLE);
+                    holder.mPlayTV.setText(R.string.text_update_room_code);
+                }else {
+                    holder.mCancelTV.setVisibility(View.GONE);
+                    holder.mPlayTV.setText("Show room code");
+                }
                 holder.mReviewTV.setVisibility(View.GONE);
             } else {
                 holder.mTitleTV.setText(String.format("You have challenged for\n%s Coins", ludoContestBean.getEntryFees()));

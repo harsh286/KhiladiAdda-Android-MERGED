@@ -19,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_margin="@dimen/margin_3"
         android:hint="Contests\n00"
         android:textColor="@color/light_gray"
         android:textSize="@dimen/text_13" />
@@ -35,7 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:hint="Win\n00"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/padding_3"
+            android:text="Win\n00"
             android:textColor="@color/light_gray"
             android:textSize="@dimen/text_13" />
 
@@ -43,9 +44,11 @@
             android:id="@+id/tv_snake_loses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
-            android:hint="Losses\n00"
+            android:padding="@dimen/padding_3"
+            android:text="Losses\n00"
             android:textColor="@color/light_gray"
             android:textSize="@dimen/text_13" />
     </LinearLayout>

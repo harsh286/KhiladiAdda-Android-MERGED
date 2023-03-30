@@ -7,4 +7,7 @@ public interface ICallBreakPresenter extends IBasePresenter {
     void getCallBreak();
     void getCallBreakJoin(String id);
 
+    void getCallBreakHistory();
+    void getCallBreakHistoryRank(String id);
+
 }

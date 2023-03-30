@@ -1,6 +1,7 @@
 package com.khiladiadda.registration;
 
 import android.text.TextUtils;
+import android.util.Patterns;
 
 import com.khiladiadda.network.IApiListener;
 import com.khiladiadda.network.model.ApiError;
@@ -46,6 +47,9 @@ public class RegistrationPresenter implements IRegistrationPresenter {
         }
         if (TextUtils.isEmpty(email)) {
             mView.onValidationFailure("Please select email id");
+            return;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mView.onValidationFailure("Email is not valid");
             return;
         }
         if (!AppUtilityMethods.isMobileValidator(mobileNumber)) {

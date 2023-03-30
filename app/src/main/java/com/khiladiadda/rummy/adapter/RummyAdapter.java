@@ -16,6 +16,7 @@ import com.khiladiadda.network.model.response.RummyPayload;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,29 +48,33 @@ public class RummyAdapter extends RecyclerView.Adapter<RummyAdapter.LudoContestH
 
     @Override
     public void onBindViewHolder(LudoContestHolder holder, int position) {
+        final DecimalFormat decfor = new DecimalFormat("0.00");
         RummyDetails ludoContestBean = mLudoChallengeList.get(position);
-        if (mMode == 1){
+        if (mMode == 1) {
             holder.mPointsTv.setText("Points Value");
-            holder.mEntryFeeTV.setText("₹"+ludoContestBean.getEntryFee());
-        }else if (mMode == 2){
-            holder.mPointsTv.setText("Game Mode");
-            holder.mEntryFeeTV.setText(""+ludoContestBean.getEntryFee()+" Pool");
-        }else if (mMode == 3){
-            holder.mPointsTv.setText("Game Mode");
-            holder.mEntryFeeTV.setText(""+ludoContestBean.getEntryFee()+" Deal");
+            holder.mEntryFeeTV.setText("₹" + decfor.format((Float.parseFloat(ludoContestBean.getEntryFee().toString()) / 80) / 100));
+        } else if (mMode == 2) {
+            holder.mPointsTv.setText("Entry Fee");
+            holder.mEntryFeeTV.setText("₹" + decfor.format((Float.parseFloat(ludoContestBean.getEntryFee().toString())) / 100));
+//            holder.mEntryFeeTV.setText("" + ludoContestBean.getEntryFee() + " Pool");
+        } else if (mMode == 3) {
+            holder.mPointsTv.setText("Entry Fee");
+            holder.mEntryFeeTV.setText("₹" + decfor.format((Float.parseFloat(ludoContestBean.getEntryFee().toString())) / 100));
         }
-        if (ludoContestBean.getNumPlayers() == 2){
+        if (ludoContestBean.getNumPlayers() == 2) {
             holder.mPlayerTV.setVisibility(View.VISIBLE);
             holder.mPlayersMoreTv.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.mPlayerTV.setVisibility(View.GONE);
             holder.mPlayersMoreTv.setVisibility(View.VISIBLE);
         }
+        holder.mOnlineTV.setText("" + ludoContestBean.getOnline());
 //        holder.mEntryFeeTV.setText("₹"+ludoContestBean.getEntryFee());
-        holder.mWinningAmountTV.setText("₹ "+ AppUtilityMethods.roundUpNumber(ludoContestBean.getMaxWin()));
+        holder.mWinningAmountTV.setText("₹ " + AppUtilityMethods.roundUpNumber(ludoContestBean.getMaxWin()));
+        holder.mWinningAmountTV.setText("₹ " + decfor.format(Float.parseFloat(ludoContestBean.getMaxWin().toString()) / 100));
     }
 
-    public void changeType(int mode){
+    public void changeType(int mode) {
         mMode = mode;
     }
 

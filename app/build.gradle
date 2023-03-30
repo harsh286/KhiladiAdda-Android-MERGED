@@ -48,6 +48,10 @@ android {
                 exclude 'AndroidManifest.xml'
             }
     dexOptions { javaMaxHeapSize "4g" }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
 }
 
 repositories {

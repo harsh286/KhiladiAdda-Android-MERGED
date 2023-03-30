@@ -116,10 +116,13 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
         mPaymentHistoryTV.setOnClickListener(this);
         mPaymentHistoryTV.setVisibility(View.VISIBLE);
         LocationCheckUtils.initialize(this, this, this);
-        if (!LocationCheckUtils.getInstance().hasLocationPermission()) {
-            LocationCheckUtils.getInstance().statusCheck();
-        } else {
-            LocationCheckUtils.getInstance().requestNewLocationData();
+        if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
+
+            if (!LocationCheckUtils.getInstance().hasLocationPermission()) {
+                LocationCheckUtils.getInstance().statusCheck();
+            } else {
+                LocationCheckUtils.getInstance().requestNewLocationData();
+            }
         }
     }
 
@@ -171,9 +174,9 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
                             Snackbar.make(mAddCoinsBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
 
                     } else {
-                            AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
+                        AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
                     }
-                }else {
+                } else {
                     i = new Intent(this, AddWalletActivity.class);
                     walletActivityResultLauncher.launch(i);
                 }
@@ -182,18 +185,18 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
             case R.id.btn_withdraw:
                 if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
                     if (LocationCheckUtils.getInstance().hasLocationPermission()) {
-                    LocationCheckUtils.getInstance().requestNewLocationData();
-                    if (isAllowed) {
-                        i = new Intent(this, NewWithdrawActivity.class);
-                        mAppPreference.setBoolean(AppConstant.IS_PAYTMWALLET_ENABLED, mPaytm);
-                        walletActivityResultLauncher.launch(i);
-                    } else
-                        Snackbar.make(mAddCoinsBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
+                        LocationCheckUtils.getInstance().requestNewLocationData();
+                        if (isAllowed) {
+                            i = new Intent(this, NewWithdrawActivity.class);
+                            mAppPreference.setBoolean(AppConstant.IS_PAYTMWALLET_ENABLED, mPaytm);
+                            walletActivityResultLauncher.launch(i);
+                        } else
+                            Snackbar.make(mAddCoinsBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
 
+                    } else {
+                        AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
+                    }
                 } else {
-                            AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
-                }}
-                else {
                     i = new Intent(this, NewWithdrawActivity.class);
                     mAppPreference.setBoolean(AppConstant.IS_PAYTMWALLET_ENABLED, mPaytm);
                     walletActivityResultLauncher.launch(i);
@@ -580,7 +583,6 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
     ActivityResultLauncher<Intent> walletActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         getData();
     });
-
 
     @Override
     public void iOnAddressSuccess() {

@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/ludouniverrsebg">
 
-    <include
-        layout="@layout/actionbar_ludo_adda_mode" />
+    <include layout="@layout/actionbar_ludo_adda_mode" />
 
     <RelativeLayout
         android:id="@+id/rl_image"
-        android:layout_below="@+id/action_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_advertisement"
@@ -55,12 +55,12 @@
             android:id="@+id/btn_classic_mode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginEnd="@dimen/margin_8"
+            android:layout_weight="1"
             android:background="@drawable/bg_btn_classic"
             android:drawableStart="@drawable/ic_classic"
-            android:paddingStart="@dimen/padding_5"
             android:gravity="center"
+            android:paddingStart="@dimen/padding_5"
             android:text="Classic"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -75,8 +75,8 @@
             android:layout_weight="1"
             android:background="@drawable/bg_btn_series"
             android:drawableStart="@drawable/ic_baseline_menu_book_24"
-            android:paddingStart="@dimen/padding_5"
             android:gravity="center"
+            android:paddingStart="@dimen/padding_5"
             android:text="Series"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -91,8 +91,8 @@
             android:background="@drawable/bg_btn_timer"
             android:drawableStart="@drawable/ic_hourglass"
             android:drawableTint="@color/timer_outline"
-            android:paddingStart="@dimen/padding_5"
             android:gravity="center"
+            android:paddingStart="@dimen/padding_5"
             android:text="Timer"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -103,15 +103,17 @@
         android:id="@+id/ll_rules"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/ll_mode"
         android:layout_above="@+id/tv_play"
+        android:layout_below="@+id/ll_mode"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginEnd="@dimen/margin_10"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/vv_tutorial"
             android:layout_width="match_parent"
             android:layout_height="130dp"
-            android:layout_margin="@dimen/margin_15"
             android:background="@drawable/ludo_adda_help">
 
             <ImageView
@@ -131,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Help Video"
+                android:text="Click here to watch how to play !"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/imageView9"
@@ -142,31 +144,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@color/blue_dark"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:layout_weight="1"
                 android:padding="@dimen/padding_10"
-                android:textStyle="bold"
                 android:text="@string/rules"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_16" />
+                android:textSize="@dimen/text_13"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_rules"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="-8dp"
+                android:gravity="left"
+                android:padding="@dimen/padding_10"
+                android:scrollbars="vertical"
+                tools:text="hdfhbhjds fhjd fjidfjk  fjfbjkbbf dsk fjksfjks jk sj fifjkjkfdskkdsj fjkdfjkdsbfjkdsjkf dsjkfjkds fjks fjk fkds f dsjk fjk fjk dsjkf djksfjkdjkfdsjfjksfjkdsbhfbdshjbhjdsbfhusdbfhj hjhjbyfdhjsb jbds fds hjhjds bhfdshj fhjd fhdsbhjbf hjdb fhjdshjfdshj fhjds hj dshj fhjds hjb hjdsb hj jdsbhjfbhjb dshj bhj hjb hj bshj hjb hj hj hj hj shjb hjsb j bshjb hjs bhjdsbhjbjhbhjdbshdbshjbhjbbshbsdhjbhjsdbsbhjsdbcsdhjbhjsbshdj dshsdbbewyuyusydsyudb dsih idsyiewyheyidcyisdbcucyi sdcdsi isd hi ish fiyc is ic sdi cids c sd cids hc dsi ids ciscbsdbcsdhibcsd iisd ids ids c sd dsi isd bs c sdid cisd c sdhc sdi cisd ci sdi cisd csd ic dsi cbds cbdsi cisd c dsc dsi cisd csd cds  csd csd cs  csdcds ds c sd cs csd s ds c s cdssdbcs cidsbcsdbcdshbcsdbcsd csdcsid cdsi bsd c sdi cis cisd cis c sd csdi cs cds c ds cds c scds cdis c dsc ds  isdsbdsbcbcsdbc ds bcds cds  cds b dbsbdsbhjsbb bbhsdbhhb sdh bsdbhjbdshbhidsbsb hbdsb bdsjs ds s ds  sd ds ds d sd sd dsdsss dbsdisd b dsi bdis ids ds b hb dsi bbdsbdsbsdbsvsjv sdyfvgsdfbds fdsyy y sfsyfdysggydsyyfgdsyg dys gfyds gf ydsydsg fds fydsgydsfysyfgdsyfdsygfdysgfgdysgfdys dds gydsfdsj dffb dshisb hjds fj bd fsb fks f bd fsdbf  f f d djs f d fjk fbs fbdsf bds fkds f sd fksd f fjkds  fdsk fjkd sf dskj fjkd f dsjfbdksbfsbfs dfdsk fds fd bsf dks fkhds f dsh fd sf s fds f ds fdsfdsf ds f dsu fds fdsj jk dsjk fidsfdshfdsf dk fds fds fdsbfjhdsbfhjdsbfhd fs df dsh fhds f dhb fh dsfdhs bfd sfdsk fjdks fjdks fkds fh"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_13" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_rules"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="left"
-            android:layout_marginTop="-8dp"
-            android:scrollbars = "vertical"
-            android:padding="@dimen/padding_10"
-            android:text="hdfhbhjds fhjd fjidfjk  fjfbjkbbf dsk fjksfjks jk sj fifjkjkfdskkdsj fjkdfjkdsbfjkdsjkf dsjkfjkds fjks fjk fkds f dsjk fjk fjk dsjkf djksfjkdjkfdsjfjksfjkdsbhfbdshjbhjdsbfhusdbfhj hjhjbyfdhjsb jbds fds hjhjds bhfdshj fhjd fhdsbhjbf hjdb fhjdshjfdshj fhjds hj dshj fhjds hjb hjdsb hj jdsbhjfbhjb dshj bhj hjb hj bshj hjb hj hj hj hj shjb hjsb j bshjb hjs bhjdsbhjbjhbhjdbshdbshjbhjbbshbsdhjbhjsdbsbhjsdbcsdhjbhjsbshdj dshsdbbewyuyusydsyudb dsih idsyiewyheyidcyisdbcucyi sdcdsi isd hi ish fiyc is ic sdi cids c sd cids hc dsi ids ciscbsdbcsdhibcsd iisd ids ids c sd dsi isd bs c sdid cisd c sdhc sdi cisd ci sdi cisd csd ic dsi cbds cbdsi cisd c dsc dsi cisd csd cds  csd csd cs  csdcds ds c sd cs csd s ds c s cdssdbcs cidsbcsdbcdshbcsdbcsd csdcsid cdsi bsd c sdi cis cisd cis c sd csdi cs cds c ds cds c scds cdis c dsc ds  isdsbdsbcbcsdbc ds bcds cds  cds b dbsbdsbhjsbb bbhsdbhhb sdh bsdbhjbdshbhidsbsb hbdsb bdsjs ds s ds  sd ds ds d sd sd dsdsss dbsdisd b dsi bdis ids ds b hb dsi bbdsbdsbsdbsvsjv sdyfvgsdfbds fdsyy y sfsyfdysggydsyyfgdsyg dys gfyds gf ydsydsg fds fydsgydsfysyfgdsyfdsygfdysgfgdysgfdys dds gydsfdsj dffb dshisb hjds fj bd fsb fks f bd fsdbf  f f d djs f d fjk fbs fbdsf bds fkds f sd fksd f fjkds  fdsk fjkd sf dskj fjkd f dsjfbdksbfsbfs dfdsk fds fd bsf dks fkhds f dsh fd sf s fds f ds fdsfdsf ds f dsu fds fdsj jk dsjk fidsfdshfdsf dk fds fds fdsbfjhdsbfhjdsbfhd fs df dsh fhds f dhb fh dsfdhs bfd sfdsk fjdks fjdks fkds fh"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_13" />
-
     </LinearLayout>
 
     <TextView
@@ -182,7 +185,6 @@
         android:textSize="@dimen/text_16" />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/tv_ludo_enable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -191,6 +193,7 @@
         android:padding="@dimen/padding_15"
         android:text="@string/text_disable_ludoadda"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_14" />
+        android:textSize="@dimen/text_14"
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -15,7 +15,7 @@ public class ScratchCardResponse extends BaseResponse {
     private Double totalAmountEarned;
     @SerializedName("n_game_remaining")
     @Expose
-    private Integer nGameRemaining;
+    private int nGameRemaining;
 
     public List<ScratchCardResponseDettails> getResponse() {
         return response;
@@ -33,11 +33,11 @@ public class ScratchCardResponse extends BaseResponse {
         this.totalAmountEarned = totalAmountEarned;
     }
 
-    public Integer getnGameRemaining() {
+    public int getnGameRemaining() {
         return nGameRemaining;
     }
 
-    public void setnGameRemaining(Integer nGameRemaining) {
+    public void setnGameRemaining(int nGameRemaining) {
         this.nGameRemaining = nGameRemaining;
     }
 }

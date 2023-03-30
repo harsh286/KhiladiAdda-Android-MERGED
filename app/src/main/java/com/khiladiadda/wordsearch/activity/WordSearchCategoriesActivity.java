@@ -85,7 +85,7 @@ public class WordSearchCategoriesActivity extends BaseActivity implements IWordS
     @Override
     public void onWordSearchComplete(WordSearchCategoryMainResponse responseModel) {
         hideProgress();
-        if (responseModel.isStatus() == true) {
+        if (responseModel.isStatus()) {
             mainResponse = responseModel;
             mCategoriesRv.setAdapter(new WordSearchCategoriesAdapter(this, responseModel.getResponse(), this));
         } else Toast.makeText(this, "" + responseModel.getMessage(), Toast.LENGTH_SHORT).show();

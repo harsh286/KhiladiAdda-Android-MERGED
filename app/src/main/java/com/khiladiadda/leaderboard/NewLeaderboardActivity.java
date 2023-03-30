@@ -59,6 +59,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.moengage.inapp.MoEInAppHelper;
 import com.moengage.widgets.NudgeView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -158,6 +159,7 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
     private LudoAddaLeaderBoardRVAdapter mLudoAddaAdapter;
     private AllLeaderboardNewAdapter mAllLeaderboardNewAdapter;
     private long mLastClickTime = 0;
+    private Dialog dialog;
 
     @Override
     protected int getContentView() {
@@ -188,13 +190,10 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
 
         String[] superHero =
                 {"All", "Daily", "Weekly", "Monthly"};
-
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.spinner_list, superHero);
-
         arrayAdapter.setDropDownViewResource(R.layout.spinner_list);
         mSpinner.setAdapter(arrayAdapter);
         mSpinner.setOnItemSelectedListener(this);
-
 
         mLeagueList = new ArrayList<>();
         mAdapter = new AllLeaderBoardRVAdapter(mLeagueList, AppConstant.LEADERBOARD_FROM_LEADERBOARD);
@@ -264,6 +263,7 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
                     isShow = false;
                     mTitleToolbarTV.setVisibility(View.GONE);
                     mToolbarBackIV.setVisibility(View.GONE);
+                    mBackIV.setVisibility(View.VISIBLE);
                     mGoldWinnerIV.setVisibility(View.VISIBLE);
                     mGoldCrownIV.setVisibility(View.VISIBLE);
                     mGoldWinerNameTV.setVisibility(View.VISIBLE);
@@ -366,15 +366,14 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
                 mPresenter.getDroidDo(mCurrentPage, AppConstant.PAGE_SIZE, AppConstant.TYPE_WEEKLY);
             }
 
-
             //Ludo Tournament
             else if (mListingType == AppConstant.LEADERBOARD_LISTING_ALL && mType == AppConstant.LEADERBOARD_TYPE_LUDO_TOURNAMENT) {
                 mPresenter.getLudoTournament("", mCurrentPage, AppConstant.PAGE_SIZE);
-            } else if (mListingType == AppConstant.LEADERBOARD_LISTING_MONTHLY && mType == AppConstant.LEADERBOARD_TYPE_DROID_DO) {
+            } else if (mListingType == AppConstant.LEADERBOARD_LISTING_MONTHLY && mType == AppConstant.LEADERBOARD_TYPE_LUDO_TOURNAMENT) {
                 mPresenter.getLudoTournament(AppConstant.LEADERBOARD_HTH_LISTING_MONTHLY, mCurrentPage, AppConstant.PAGE_SIZE);
-            } else if (mListingType == AppConstant.LEADERBOARD_LISTING_DAILY && mType == AppConstant.LEADERBOARD_TYPE_DROID_DO) {
+            } else if (mListingType == AppConstant.LEADERBOARD_LISTING_DAILY && mType == AppConstant.LEADERBOARD_TYPE_LUDO_TOURNAMENT) {
                 mPresenter.getLudoTournament(AppConstant.TYPE_DAILY, mCurrentPage, AppConstant.PAGE_SIZE);
-            } else if (mListingType == AppConstant.LEADERBOARD_LISTING_WEEKLY && mType == AppConstant.LEADERBOARD_TYPE_DROID_DO) {
+            } else if (mListingType == AppConstant.LEADERBOARD_LISTING_WEEKLY && mType == AppConstant.LEADERBOARD_TYPE_LUDO_TOURNAMENT) {
                 mPresenter.getLudoTournament(AppConstant.TYPE_WEEKLY, mCurrentPage, AppConstant.PAGE_SIZE);
             }
 
@@ -389,7 +388,7 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
                 mPresenter.getCourtPiece(AppConstant.TYPE_WEEKLY, mCurrentPage, AppConstant.PAGE_SIZE);
             }
 
-            //Court Piece
+            //Rummy
             else if (mListingType == AppConstant.LEADERBOARD_LISTING_ALL && mType == AppConstant.LEADERBOARD_TYPE_RUMMY) {
                 mPresenter.getRummy("", mCurrentPage, AppConstant.PAGE_SIZE);
             } else if (mListingType == AppConstant.LEADERBOARD_LISTING_MONTHLY && mType == AppConstant.LEADERBOARD_TYPE_RUMMY) {
@@ -724,9 +723,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         if (size >= 3) {
             mGoldWinerNameTV.setText("1." + overallLeadBoardLists.get(0).getName());
             if ((overallLeadBoardLists.get(0).getnCof().getWon()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + overallLeadBoardLists.get(0).getTotal() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(0).getTotal()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(overallLeadBoardLists.get(0).getDp())) {
                 Glide.with(this).load(overallLeadBoardLists.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -736,9 +735,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mSilverWinerNameTV.setText("2." + overallLeadBoardLists.get(1).getName());
             if ((overallLeadBoardLists.get(1).getnCof().getWon()) != 0.00) {
-                mSilverWinerCoinsTV.setText("Won: " + overallLeadBoardLists.get(1).getTotal() + " Coins");
+                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(1).getTotal()));
             } else {
-                mSilverWinerCoinsTV.setText("Won: 0 Coins");
+                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(overallLeadBoardLists.get(1).getDp())) {
                 Glide.with(this).load(overallLeadBoardLists.get(1).getDp()).thumbnail(Glide.with(this).load(overallLeadBoardLists.get(1).getDp())).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mSliverWinerIV);
@@ -748,9 +747,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mBrownWinnerNameTV.setText("3." + overallLeadBoardLists.get(2).getName());
             if ((overallLeadBoardLists.get(2).getnCof().getWon()) != 0.00) {
-                mBrownWinnerCoinsTV.setText("Won: " + overallLeadBoardLists.get(2).getTotal() + " Coins");
+                mBrownWinnerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(2).getTotal()));
             } else {
-                mBrownWinnerCoinsTV.setText("Won: 0 Coins");
+                mBrownWinnerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(overallLeadBoardLists.get(2).getDp())) {
                 Glide.with(this).load(overallLeadBoardLists.get(2).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mBronzeWinnerIV);
@@ -762,9 +761,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         } else if (size == 2) {
             mGoldWinerNameTV.setText("1." + overallLeadBoardLists.get(0).getName());
             if ((overallLeadBoardLists.get(0).getnCof().getWon()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + overallLeadBoardLists.get(0).getTotal() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(0).getTotal()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(overallLeadBoardLists.get(0).getDp())) {
                 Glide.with(this).load(overallLeadBoardLists.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -774,9 +773,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mSilverWinerNameTV.setText("2." + overallLeadBoardLists.get(1).getName());
             if ((overallLeadBoardLists.get(1).getnCof().getWon()) != 0.00) {
-                mSilverWinerCoinsTV.setText("Won: " + overallLeadBoardLists.get(1).getTotal() + " Coins");
+                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(1).getTotal()));
             } else {
-                mSilverWinerCoinsTV.setText("Won: 0 Coins");
+                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(overallLeadBoardLists.get(1).getDp())) {
                 Glide.with(this).load(overallLeadBoardLists.get(1).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mSliverWinerIV);
@@ -788,9 +787,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         } else if (size == 1) {
             mGoldWinerNameTV.setText("1." + overallLeadBoardLists.get(0).getName());
             if ((overallLeadBoardLists.get(0).getnCof().getWon()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + overallLeadBoardLists.get(0).getTotal() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(0).getTotal()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(overallLeadBoardLists.get(0).getDp())) {
                 Glide.with(this).load(overallLeadBoardLists.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -978,9 +977,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         if (mItemCount >= 3) {
             mGoldWinerNameTV.setText("1." + ludoAddaLeaderboardList.get(0).getName());
             if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotal()))) {
-                mGoldCoinsTV.setText("Won: " + ludoAddaLeaderboardList.get(0).getTotal() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(0).getTotal()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(0).getDp())) {
                 Glide.with(this).load(ludoAddaLeaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -990,9 +989,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mSilverWinerNameTV.setText("2." + ludoAddaLeaderboardList.get(1).getName());
             if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(1).getTotal()))) {
-                mSilverWinerCoinsTV.setText("Won: " + ludoAddaLeaderboardList.get(1).getTotal() + " Coins");
+                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(1).getTotal()));
             } else {
-                mSilverWinerCoinsTV.setText("Won: 0 Coins");
+                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(1).getDp())) {
                 Glide.with(this).load(ludoAddaLeaderboardList.get(1).getDp()).thumbnail(Glide.with(this).load(ludoAddaLeaderboardList.get(1).getDp())).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mSliverWinerIV);
@@ -1002,9 +1001,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mBrownWinnerNameTV.setText("3." + ludoAddaLeaderboardList.get(2).getName());
             if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotal()))) {
-                mBrownWinnerCoinsTV.setText("Won: " + ludoAddaLeaderboardList.get(2).getTotal() + " Coins");
+                mBrownWinnerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(2).getTotal()));
             } else {
-                mBrownWinnerCoinsTV.setText("Won: 0 Coins");
+                mBrownWinnerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(2).getDp())) {
                 Glide.with(this).load(ludoAddaLeaderboardList.get(2).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mBronzeWinnerIV);
@@ -1016,9 +1015,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         } else if (mItemCount == 2) {
             mGoldWinerNameTV.setText("1." + ludoAddaLeaderboardList.get(0).getName());
             if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotal()))) {
-                mGoldCoinsTV.setText("Won: " + ludoAddaLeaderboardList.get(0).getTotal() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(0).getTotal()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(0).getDp())) {
                 Glide.with(this).load(ludoAddaLeaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -1028,9 +1027,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mSilverWinerNameTV.setText("2." + ludoAddaLeaderboardList.get(1).getName());
             if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(1).getTotal()))) {
-                mSilverWinerCoinsTV.setText("Won: " + ludoAddaLeaderboardList.get(1).getTotal() + " Coins");
+                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(1).getTotal()));
             } else {
-                mSilverWinerCoinsTV.setText("Won: 0 Coins");
+                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(1).getDp())) {
                 Glide.with(this).load(ludoAddaLeaderboardList.get(1).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mSliverWinerIV);
@@ -1042,9 +1041,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         } else if (mItemCount == 1) {
             mGoldWinerNameTV.setText("1." + ludoAddaLeaderboardList.get(0).getName());
             if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotal()))) {
-                mGoldCoinsTV.setText("Won: " + ludoAddaLeaderboardList.get(0).getTotal() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(0).getTotal()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(0).getDp())) {
                 Glide.with(this).load(ludoAddaLeaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -1064,9 +1063,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         if (mItemCount >= 3) {
             mGoldWinerNameTV.setText("1." + ludoAddaLeaderboardList.get(0).getFullDetails().getName());
             if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotalAmount()))) {
-                mGoldCoinsTV.setText("Won: " + ludoAddaLeaderboardList.get(0).getTotalAmount() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(0).getTotalAmount()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(0).getFullDetails().getDp())) {
                 Glide.with(this).load(ludoAddaLeaderboardList.get(0).getFullDetails().getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -1076,9 +1075,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mSilverWinerNameTV.setText("2." + ludoAddaLeaderboardList.get(1).getFullDetails().getName());
             if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(1).getTotalAmount()))) {
-                mSilverWinerCoinsTV.setText("Won: " + ludoAddaLeaderboardList.get(1).getTotalAmount() + " Coins");
+                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(1).getTotalAmount()));
             } else {
-                mSilverWinerCoinsTV.setText("Won: 0 Coins");
+                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(1).getFullDetails().getDp())) {
                 Glide.with(this).load(ludoAddaLeaderboardList.get(1).getFullDetails().getDp()).thumbnail(Glide.with(this).load(ludoAddaLeaderboardList.get(1).getFullDetails().getDp())).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mSliverWinerIV);
@@ -1088,9 +1087,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mBrownWinnerNameTV.setText("3." + ludoAddaLeaderboardList.get(2).getFullDetails().getName());
             if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotalAmount()))) {
-                mBrownWinnerCoinsTV.setText("Won: " + ludoAddaLeaderboardList.get(2).getTotalAmount() + " Coins");
+                mBrownWinnerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(2).getTotalAmount()));
             } else {
-                mBrownWinnerCoinsTV.setText("Won: 0 Coins");
+                mBrownWinnerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(2).getFullDetails().getDp())) {
                 Glide.with(this).load(ludoAddaLeaderboardList.get(2).getFullDetails().getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mBronzeWinnerIV);
@@ -1102,9 +1101,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         } else if (mItemCount == 2) {
             mGoldWinerNameTV.setText("1." + ludoAddaLeaderboardList.get(0).getFullDetails().getName());
             if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotalAmount()))) {
-                mGoldCoinsTV.setText("Won: " + ludoAddaLeaderboardList.get(0).getTotalAmount() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(0).getTotalAmount()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(0).getFullDetails().getDp())) {
                 Glide.with(this).load(ludoAddaLeaderboardList.get(0).getFullDetails().getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -1114,9 +1113,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mSilverWinerNameTV.setText("2." + ludoAddaLeaderboardList.get(1).getFullDetails().getName());
             if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(1).getTotalAmount()))) {
-                mSilverWinerCoinsTV.setText("Won: " + ludoAddaLeaderboardList.get(1).getTotalAmount() + " Coins");
+                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(1).getTotalAmount()));
             } else {
-                mSilverWinerCoinsTV.setText("Won: 0 Coins");
+                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(1).getFullDetails().getDp())) {
                 Glide.with(this).load(ludoAddaLeaderboardList.get(1).getFullDetails().getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mSliverWinerIV);
@@ -1128,9 +1127,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         } else if (mItemCount == 1) {
             mGoldWinerNameTV.setText("1." + ludoAddaLeaderboardList.get(0).getFullDetails().getName());
             if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotalAmount()))) {
-                mGoldCoinsTV.setText("Won: " + ludoAddaLeaderboardList.get(0).getTotalAmount() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(0).getTotalAmount()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(0).getFullDetails().getDp())) {
                 Glide.with(this).load(ludoAddaLeaderboardList.get(0).getFullDetails().getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -1266,9 +1265,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         if (size >= 3) {
             mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
             if (!TextUtils.isEmpty(String.valueOf(leaderboardList.get(0).getTotal()))) {
-                mGoldCoinsTV.setText("Won: " + leaderboardList.get(0).getTotal() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(0).getTotal()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(leaderboardList.get(0).getDp())) {
                 Glide.with(this).load(leaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -1278,9 +1277,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mSilverWinerNameTV.setText("2." + leaderboardList.get(1).getName());
             if (!TextUtils.isEmpty(String.valueOf(leaderboardList.get(1).getTotal()))) {
-                mSilverWinerCoinsTV.setText("Won: " + leaderboardList.get(1).getTotal() + " Coins");
+                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(1).getTotal()));
             } else {
-                mSilverWinerCoinsTV.setText("Won: 0 Coins");
+                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(leaderboardList.get(1).getDp())) {
                 Glide.with(this).load(leaderboardList.get(1).getDp()).thumbnail(Glide.with(this).load(leaderboardList.get(1).getDp())).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mSliverWinerIV);
@@ -1290,9 +1289,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mBrownWinnerNameTV.setText("3." + leaderboardList.get(2).getName());
             if (!TextUtils.isEmpty(String.valueOf(leaderboardList.get(0).getTotal()))) {
-                mBrownWinnerCoinsTV.setText("Won: " + leaderboardList.get(2).getTotal() + " Coins");
+                mBrownWinnerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(2).getTotal()));
             } else {
-                mBrownWinnerCoinsTV.setText("Won: 0 Coins");
+                mBrownWinnerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(leaderboardList.get(2).getDp())) {
                 Glide.with(this).load(leaderboardList.get(2).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mBronzeWinnerIV);
@@ -1304,9 +1303,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         } else if (size == 2) {
             mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
             if (!TextUtils.isEmpty(String.valueOf(leaderboardList.get(0).getTotal()))) {
-                mGoldCoinsTV.setText("Won: " + leaderboardList.get(0).getTotal() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(0).getTotal()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(leaderboardList.get(0).getDp())) {
                 Glide.with(this).load(leaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -1316,9 +1315,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mSilverWinerNameTV.setText("2." + leaderboardList.get(1).getName());
             if (!TextUtils.isEmpty(String.valueOf(leaderboardList.get(1).getTotal()))) {
-                mSilverWinerCoinsTV.setText("Won: " + leaderboardList.get(1).getTotal() + " Coins");
+                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(1).getTotal()));
             } else {
-                mSilverWinerCoinsTV.setText("Won: 0 Coins");
+                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(leaderboardList.get(1).getDp())) {
                 Glide.with(this).load(leaderboardList.get(1).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mSliverWinerIV);
@@ -1330,9 +1329,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         } else if (size == 1) {
             mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
             if (!TextUtils.isEmpty(String.valueOf(leaderboardList.get(0).getTotal()))) {
-                mGoldCoinsTV.setText("Won: " + leaderboardList.get(0).getTotal() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(0).getTotal()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(leaderboardList.get(0).getDp())) {
                 Glide.with(this).load(leaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -1352,9 +1351,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         if (size >= 3) {
             mGoldWinerNameTV.setText("1." + overallLeadBoardLists.get(0).getName());
             if ((overallLeadBoardLists.get(0).getWinningAmount()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + overallLeadBoardLists.get(0).getWinningAmount() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(0).getWinningAmount()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(overallLeadBoardLists.get(0).getDp())) {
                 Glide.with(this).load(overallLeadBoardLists.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -1364,9 +1363,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mSilverWinerNameTV.setText("2." + overallLeadBoardLists.get(1).getName());
             if ((overallLeadBoardLists.get(1).getWinningAmount()) != 0.00) {
-                mSilverWinerCoinsTV.setText("Won: " + overallLeadBoardLists.get(1).getWinningAmount() + " Coins");
+                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(1).getWinningAmount()));
             } else {
-                mSilverWinerCoinsTV.setText("Won: 0 Coins");
+                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(overallLeadBoardLists.get(1).getDp())) {
                 Glide.with(this).load(overallLeadBoardLists.get(1).getDp()).thumbnail(Glide.with(this).load(overallLeadBoardLists.get(1).getDp())).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mSliverWinerIV);
@@ -1376,9 +1375,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mBrownWinnerNameTV.setText("3." + overallLeadBoardLists.get(2).getName());
             if ((overallLeadBoardLists.get(2).getWinningAmount()) != 0.00) {
-                mBrownWinnerCoinsTV.setText("Won: " + overallLeadBoardLists.get(2).getWinningAmount() + " Coins");
+                mBrownWinnerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(2).getWinningAmount()));
             } else {
-                mBrownWinnerCoinsTV.setText("Won: 0 Coins");
+                mBrownWinnerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(overallLeadBoardLists.get(2).getDp())) {
                 Glide.with(this).load(overallLeadBoardLists.get(2).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mBronzeWinnerIV);
@@ -1390,9 +1389,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         } else if (size == 2) {
             mGoldWinerNameTV.setText("1." + overallLeadBoardLists.get(0).getName());
             if ((overallLeadBoardLists.get(0).getWinningAmount()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + overallLeadBoardLists.get(0).getWinningAmount() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(0).getWinningAmount()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(overallLeadBoardLists.get(0).getDp())) {
                 Glide.with(this).load(overallLeadBoardLists.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -1402,9 +1401,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mSilverWinerNameTV.setText("2." + overallLeadBoardLists.get(1).getName());
             if ((overallLeadBoardLists.get(1).getWinningAmount()) != 0.00) {
-                mSilverWinerCoinsTV.setText("Won: " + overallLeadBoardLists.get(1).getWinningAmount() + " Coins");
+                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(1).getWinningAmount()));
             } else {
-                mSilverWinerCoinsTV.setText("Won: 0 Coins");
+                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(overallLeadBoardLists.get(1).getDp())) {
                 Glide.with(this).load(overallLeadBoardLists.get(1).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mSliverWinerIV);
@@ -1416,9 +1415,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         } else if (size == 1) {
             mGoldWinerNameTV.setText("1." + overallLeadBoardLists.get(0).getName());
             if ((overallLeadBoardLists.get(0).getWinningAmount()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + overallLeadBoardLists.get(0).getWinningAmount() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(0).getWinningAmount()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(overallLeadBoardLists.get(0).getDp())) {
                 Glide.with(this).load(overallLeadBoardLists.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -1438,9 +1437,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         if (size >= 3) {
             mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
             if (!TextUtils.isEmpty(leaderboardList.get(0).getWinningAmount())) {
-                mGoldCoinsTV.setText("Won: " + leaderboardList.get(0).getWinningAmount() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(0).getWinningAmount()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(leaderboardList.get(0).getDp())) {
                 Glide.with(this).load(leaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -1450,9 +1449,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mSilverWinerNameTV.setText("2." + leaderboardList.get(1).getName());
             if (!TextUtils.isEmpty(leaderboardList.get(1).getWinningAmount())) {
-                mSilverWinerCoinsTV.setText("Won: " + leaderboardList.get(1).getWinningAmount() + " Coins");
+                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(1).getWinningAmount()));
             } else {
-                mSilverWinerCoinsTV.setText("Won: 0 Coins");
+                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(leaderboardList.get(1).getDp())) {
                 Glide.with(this).load(leaderboardList.get(1).getDp()).thumbnail(Glide.with(this).load(leaderboardList.get(1).getDp())).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mSliverWinerIV);
@@ -1462,9 +1461,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mBrownWinnerNameTV.setText("3." + leaderboardList.get(2).getName());
             if (!TextUtils.isEmpty(leaderboardList.get(2).getWinningAmount())) {
-                mBrownWinnerCoinsTV.setText("Won: " + leaderboardList.get(2).getWinningAmount() + " Coins");
+                mBrownWinnerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(2).getWinningAmount()));
             } else {
-                mBrownWinnerCoinsTV.setText("Won: 0 Coins");
+                mBrownWinnerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(leaderboardList.get(2).getDp())) {
                 Glide.with(this).load(leaderboardList.get(2).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mBronzeWinnerIV);
@@ -1476,9 +1475,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         } else if (size == 2) {
             mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
             if (!TextUtils.isEmpty(leaderboardList.get(0).getWinningAmount())) {
-                mGoldCoinsTV.setText("Won: " + leaderboardList.get(0).getWinningAmount() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(0).getWinningAmount()));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(leaderboardList.get(0).getDp())) {
                 Glide.with(this).load(leaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -1488,9 +1487,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             }
             mSilverWinerNameTV.setText("2." + leaderboardList.get(1).getName());
             if (!TextUtils.isEmpty(leaderboardList.get(1).getWinningAmount())) {
-                mSilverWinerCoinsTV.setText("Won: " + leaderboardList.get(1).getWinningAmount() + " Coins");
+                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(1).getWinningAmount()));
             } else {
-                mSilverWinerCoinsTV.setText("Won: 0 Coins");
+                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(leaderboardList.get(1).getDp())) {
                 Glide.with(this).load(leaderboardList.get(1).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mSliverWinerIV);
@@ -1502,9 +1501,9 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         } else if (size == 1) {
             mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
             if (!TextUtils.isEmpty(leaderboardList.get(0).getWinningAmount())) {
-                mGoldCoinsTV.setText("Won: " + leaderboardList.get(0).getWinningAmount() + " Coins");
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(Double.parseDouble(leaderboardList.get(0).getWinningAmount())));
             } else {
-                mGoldCoinsTV.setText("Won: 0 Coins");
+                mGoldCoinsTV.setText("Won: \u20B9 0");
             }
             if (!TextUtils.isEmpty(leaderboardList.get(0).getDp())) {
                 Glide.with(this).load(leaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
@@ -1570,7 +1569,7 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
 
     //newGameDialog
     public void showGameDialog() {
-        final Dialog dialog = new Dialog(this);
+        dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);

@@ -1,5 +1,6 @@
 package com.khiladiadda.withdrawcoins;
 
+import static android.view.View.GONE;
 import static com.khiladiadda.utility.AppConstant.PATYM;
 import static com.khiladiadda.utility.AppConstant.PATYMUPI;
 import static com.khiladiadda.utility.AppConstant.PATYMWALLTERUPI;
@@ -12,6 +13,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -32,8 +34,10 @@ import android.widget.Toast;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
@@ -44,11 +48,14 @@ import com.khiladiadda.dialogs.interfaces.IOnWithdrawVerifyListener;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.interfaces.IOnItemClickListener;
 import com.khiladiadda.main.MainActivity;
+import com.khiladiadda.main.adapter.BannerPagerAdapter;
+import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.request.AddBeneficieryRazorpay;
 import com.khiladiadda.network.model.request.RaceConditionPayoutRequest;
 import com.khiladiadda.network.model.response.AddBeneficiaryResponse;
+import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.BeneficiaryDetails;
 import com.khiladiadda.network.model.response.BeneficiaryResponse;
 import com.khiladiadda.network.model.response.BeneficiaryVerifyResponse;
@@ -56,9 +63,11 @@ import com.khiladiadda.network.model.response.ManualWithdrawResponse;
 import com.khiladiadda.network.model.response.OtpResponse;
 import com.khiladiadda.network.model.response.PayoutResponse;
 import com.khiladiadda.network.model.response.ProfileDetails;
+import com.khiladiadda.network.model.response.TdsResponse;
 import com.khiladiadda.network.model.response.WIthdrawLimitResponse;
 import com.khiladiadda.network.model.response.WithdrawComissionDetails;
 import com.khiladiadda.profile.update.AadharActivity;
+import com.khiladiadda.terms.TermsActivity;
 import com.khiladiadda.transaction.TransactionActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
@@ -128,8 +137,6 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     EditText mBankAccountNameET;
     @BindView(R.id.tv_policies_update)
     TextView mPoliciesUpdateTV;
-    @BindView(R.id.tv_withdraw_history)
-    TextView mWinningHistoryTV;
     @BindView(R.id.cv_paytmtick)
     CardView mPaytmTickCV;
     @BindView(R.id.cv_upitick)
@@ -149,6 +156,15 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     private List<WithdrawComissionDetails> mWithdrawCommission = null;
     private boolean mKYCVerified, mIsDataRefresh;
     private Activity activity;
+    @BindView(R.id.tv_payment_history)
+    TextView mPaymentHistoryTV;
+    @BindView(R.id.vp_advertisement)
+    ViewPager mBannerVP;
+    private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
+    private Handler mHandler;
+    @BindView(R.id.rl_image)
+    RelativeLayout mBannerRL;
+    private double mTDSAmount;
 
     @Override
     protected int getContentView() {
@@ -182,8 +198,11 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         mAddBeneficiaryBTN.setOnClickListener(this);
         mPoliciesUpdateTV.setOnClickListener(this);
         mSubmitBTN.setOnClickListener(this);
-        mWinningHistoryTV.setOnClickListener(this);
+//        mWinningHistoryTV.setOnClickListener(this);
         mPaytmWalletRV.setOnClickListener(this);
+        mPaymentHistoryTV.setOnClickListener(this);
+        mPaymentHistoryTV.setVisibility(View.VISIBLE);
+        mPaymentHistoryTV.setText(R.string.withdraw_history);
         if (mAppPreference.getBoolean(AppConstant.IS_PAYTMWALLET_ENABLED, false)) {
             mPoliciesUpdateTV.setVisibility(View.GONE);
             mPaytmWalletRV.setVisibility(View.VISIBLE);
@@ -257,7 +276,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
             case R.id.rl_upi:
                 setData(AppConstant.UPI);
                 break;
-            case R.id.tv_withdraw_history:
+            case R.id.tv_payment_history:
                 setData(AppConstant.FROM_WITHDRAW);
                 break;
             case R.id.rl_bank:
@@ -380,7 +399,6 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                 mPayoutSelect = 4;
                 break;
             case AppConstant.FROM_WITHDRAW:
-                mWinningHistoryTV.setSelected(true);
                 mLinkDetailsLL.setVisibility(View.GONE);
                 Intent i = new Intent(this, TransactionActivity.class);
                 i.putExtra(AppConstant.FROM, AppConstant.FROM_WITHDRAW);
@@ -420,14 +438,8 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     public void onValidationComplete() {
         if (mAmount < 20) {
             AppUtilityMethods.showMsg(this, getString(R.string.text_amount_less_ten), false);
-        } else if ((mAmount) <= mWinningCoins) {
-            if (mKYCVerified) {
-                showConfirmWithdrawDialog();
-            } else {
-                checkWithdrawLimit();
-            }
         } else {
-            AppUtilityMethods.showMsg(this, getString(R.string.text_not_enough_coins_wallet), false);
+            mPresenter.checkTDS(mAmount);
         }
     }
 
@@ -472,6 +484,13 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
             mUpiRL.setVisibility(View.GONE);
             mPaytmRV.setVisibility(View.GONE);
             mPaytmWalletRV.setVisibility(View.GONE);
+        }
+        List<BannerDetails> bannerData = responseModel.getBanner();
+        if (bannerData != null && bannerData.size() > 0) {
+            mBannerRL.setVisibility(View.VISIBLE);
+            setUpAdvertisementViewPager(bannerData);
+        } else {
+            mBannerRL.setVisibility(GONE);
         }
         hideProgress();
     }
@@ -625,6 +644,13 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                 } else {
                     showConfirmWithdrawDialog();
                 }
+            } else {
+                if (response.getResponse().isAadharVerified() && (mAmount > response.getResponse().getnWithdrawalLimit())) {
+                    showProgress(getString(R.string.txt_progress_authentication));
+                    mPresenter.verifyBeneficiary(mBID);
+                } else {
+                    showConfirmWithdrawDialog();
+                }
             }
         } else {
             showConfirmWithdrawDialog();
@@ -704,17 +730,31 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
 
     @Override
     public void onIPayComplete(PayoutResponse response) {
-        hideProgress();
-        if (response.isStatus()) {
-            showMsg(this, response.getMessage(), false, 1);
-        } else {
-            showMsg(this, response.getMessage(), false, 1);
-        }
+        onAllTransferDone(response);
     }
 
     @Override
     public void onIPayFailed(ApiError error) {
         hideProgress();
+    }
+
+    @Override
+    public void onCheckTDSComplete(TdsResponse response) {
+        mTDSAmount = response.getTdsAmount();
+        if ((mAmount) <= mWinningCoins) {
+            if (mKYCVerified) {
+                showConfirmWithdrawDialog();
+            } else {
+                checkWithdrawLimit();
+            }
+        } else {
+            AppUtilityMethods.showMsg(this, getString(R.string.text_not_enough_coins_wallet), false);
+        }
+    }
+
+    @Override
+    public void onCheckTDSFailed(ApiError error) {
+
     }
 
     public void showMsg(final Context activity, String msg, boolean isCancel, int from) {
@@ -873,6 +913,9 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         TextView withdrawCoins = dialog.findViewById(R.id.tv_withdraw);
         withdrawCoins.setText(String.valueOf(mAmount));
         TextView transactionFeeTV = dialog.findViewById(R.id.tv_transaction_fee);
+        TextView tdsTV = dialog.findViewById(R.id.tv_tds_fee);
+        TextView tdsInfoTV = dialog.findViewById(R.id.tv_tds_info);
+        tdsTV.setText(String.valueOf(mTDSAmount));
         double transactionFees;
         long comission = 0;
         //list loop - from to
@@ -889,7 +932,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         transactionFees = comission;
         transactionFees = Double.parseDouble(new DecimalFormat("##.##").format(transactionFees));
         transactionFeeTV.setText(String.valueOf(transactionFees));
-        double finalFee = mAmount - transactionFees;
+        double finalFee = mAmount - transactionFees - mTDSAmount;
         TextView finalPay = dialog.findViewById(R.id.tv_final_fee);
         finalPay.setText(String.valueOf(Double.parseDouble(new DecimalFormat("##.##").format(finalFee))));
         Button okBTN = dialog.findViewById(R.id.btn_send);
@@ -902,6 +945,11 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         mNoBTN.setOnClickListener(view -> {
             dialog.dismiss();
             mIsDataRefresh = false;
+        });
+        tdsInfoTV.setOnClickListener(view -> {
+            Intent i = new Intent(this, TermsActivity.class);
+            i.putExtra(AppConstant.FROM, AppConstant.TDS);
+            startActivity(i);
         });
         dialog.show();
     }
@@ -966,9 +1014,9 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                 }
             } else if (mPayoutGateway == 7) { /* ===Race-Condition after OTP Verify=== */
                 mPresenter.onRaceConditionTransferFinal(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
-            } else if (mPayoutGateway == 8){
+            } else if (mPayoutGateway == 8) {
                 mPresenter.onIPayTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp, LocationCheckUtils.getInstance().getmLatitute(), LocationCheckUtils.getInstance().getmLongitude());
-            }else {
+            } else {
                 mPresenter.onPaySharpTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
             }
         }
@@ -990,7 +1038,6 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     }
 
     private void refreshData() {
-        mWinningHistoryTV.setSelected(false);
         setPaymentSelected();
         mAmountDetailsLL.setVisibility(View.GONE);
         mAdapter.setSelectedPos(selectedPos);
@@ -1033,6 +1080,30 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     @Override
     public void iOnAddressFailure() {
 
+    }
+
+    private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
+        mAdvertisementsList.clear();
+        mAdvertisementsList.addAll(advertisementDetails);
+        List<Fragment> mFragmentList = new ArrayList<>();
+        for (BannerDetails advertisement : advertisementDetails) {
+            mFragmentList.add(BannerFragment.getInstance(advertisement));
+        }
+        BannerPagerAdapter adapter = new BannerPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
+        mBannerVP.setAdapter(adapter);
+        mBannerVP.setOffscreenPageLimit(3);
+        if (mHandler == null) {
+            mHandler = new Handler();
+            moveToNextAd(0);
+        }
+    }
+
+    private void moveToNextAd(int i) {
+        mBannerVP.setCurrentItem(i, true);
+        mHandler.postDelayed(() -> {
+            int currentItem = mBannerVP.getCurrentItem();
+            moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
+        }, 10000);
     }
 
 }

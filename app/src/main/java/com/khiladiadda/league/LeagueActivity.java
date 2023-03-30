@@ -239,6 +239,8 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
             if (responseModel.getResponse().size() > 0) {
                 mLeagueList.addAll(responseModel.getResponse());
                 mNoDataTV.setVisibility(View.GONE);
+            } else {
+                mNoDataTV.setVisibility(View.VISIBLE);
             }
             if (responseModel.getBanners() != null && responseModel.getBanners().size() > 0) {
                 setUpAdvertisementViewPager(responseModel.getBanners());

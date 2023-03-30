@@ -16,6 +16,7 @@ import com.khiladiadda.interfaces.IOnItemClickListener;
 import com.khiladiadda.network.model.response.TransactionDetails;
 import com.khiladiadda.utility.AppUtilityMethods;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,8 +50,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @Override
     public void onBindViewHolder(EventHolder holder, int position) {
         TransactionDetails details = mFDList.get(position);
+        final DecimalFormat decfor = new DecimalFormat("0.00");
         holder.mAmountTV.setText("₹" + details.getAmount());
-        holder.mWalletTV.setText("Deposit: " + details.getWallet().getDeposit() + ", Winning: " + details.getWallet().getWinning() + ", Bonus: " + details.getWallet().getBonus());
+        holder.mWalletTV.setText("Deposit: " + decfor.format(details.getWallet().getDeposit()) + ", Winning: " + decfor.format(details.getWallet().getWinning()) + ", Bonus: " + decfor.format(details.getWallet().getBonus()));
         if (!TextUtils.isEmpty(details.getCreatedAt())) {
             holder.mDateTV.setText(AppUtilityMethods.getConvertDateParkIn(details.getCreatedAt()));
         }
@@ -66,7 +68,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         } else {
             holder.mMessageTV.setVisibility(View.GONE);
         }
-        if(details.isIsDeducted() && details.isGst()){
+        if (details.isIsDeducted() && details.isGst()) {
             holder.mInvoiceBTN.setVisibility(View.VISIBLE);
         } else {
             holder.mInvoiceBTN.setVisibility(View.GONE);

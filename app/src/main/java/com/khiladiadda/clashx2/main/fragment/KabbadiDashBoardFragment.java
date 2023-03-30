@@ -64,7 +64,7 @@ public class KabbadiDashBoardFragment extends BaseFragment implements IOnItemGam
         rvKabaadiGames.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvKabaadiGames.setAdapter(gamesDashBoardAdapter);
 
-        getData();
+//        getData();
     }
 
     @Override
@@ -160,5 +160,10 @@ public class KabbadiDashBoardFragment extends BaseFragment implements IOnItemGam
     public void onMatchStatusError(ApiError error) {
         hideProgress();
         mMatchesSRL.setRefreshing(false);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
     }
 }

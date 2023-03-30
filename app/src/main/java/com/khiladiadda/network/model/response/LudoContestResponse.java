@@ -7,7 +7,6 @@ import com.khiladiadda.network.model.BaseResponse;
 import java.util.List;
 
 public class LudoContestResponse extends BaseResponse {
-
     @SerializedName("response")
     @Expose
     private List<LudoContest> response = null;
@@ -30,6 +29,16 @@ public class LudoContestResponse extends BaseResponse {
     private String LudoApkLink;
     @SerializedName("apk_version")
     private String apk_version;
+    @SerializedName("auto_roomcode_enabled")
+    private boolean auto_roomcode_enabled;
+
+    public boolean isAuto_roomcode_enabled() {
+        return auto_roomcode_enabled;
+    }
+
+    public void setAuto_roomcode_enabled(boolean auto_roomcode_enabled) {
+        this.auto_roomcode_enabled = auto_roomcode_enabled;
+    }
 
     public List<LudoContest> getResponse() {
         return response;

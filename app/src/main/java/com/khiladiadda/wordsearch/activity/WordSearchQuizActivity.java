@@ -56,17 +56,12 @@ public class WordSearchQuizActivity extends BaseActivity implements IOnClickList
     @BindView(R.id.tv_categories)
     TextView mCategoriesTv;
 
-
     private String mFrom;
-    private IWordSearchCategoryPresenter mCategoryPresenter;
     private IWordSearchMyQuizzesPresenter mMyQuizzesPresenter;
     private List<WordSearchCategoriesQuizzesResponse> mCategoriesQuizzesResponseList;
     private List<WordSearchMyQuizzesResponse> mMyQuizzesMainResponseList;
     private String mQuizId, mColorName = "D25656";
     private String mCategoryName;
-    private int mQuizStatus;
-    private int mCurrentPage = 0;
-
 
     @Override
     protected int getContentView() {
@@ -79,13 +74,9 @@ public class WordSearchQuizActivity extends BaseActivity implements IOnClickList
         mQuizId = getIntent().getStringExtra(AppConstant.WORD_SEARCH_QUIZ_ID);
         mCategoryName = getIntent().getStringExtra(AppConstant.WORD_SEARCH_CATEGORY_NAME);
         mColorName = getIntent().getStringExtra(AppConstant.WORD_SEARCH_COLOR_NAME);
-
-        mCategoryPresenter = new WordSearchCategoriesPresenter(this, mQuizId);
+        IWordSearchCategoryPresenter mCategoryPresenter = new WordSearchCategoriesPresenter(this, mQuizId);
         mMyQuizzesPresenter = new WordSearchMyQuizzesPresenter(this);
-
         setupRecycler();
-
-        // mNameTv.setText(R.string.text_my_tournaments);
         changeColor();
         setupUi();
     }
@@ -95,7 +86,6 @@ public class WordSearchQuizActivity extends BaseActivity implements IOnClickList
             mToolBarCl.setBackgroundColor(Color.parseColor("#" + mColorName));
             mNameTv.setText(R.string.text_my_tournaments);
             mFooterCl.setVisibility(View.VISIBLE);
-
         } else {
             mNameTv.setText("My Tournaments");
         }
@@ -107,7 +97,6 @@ public class WordSearchQuizActivity extends BaseActivity implements IOnClickList
         mQuizzesMcv.setOnClickListener(this);
         mTrendingTv.setOnClickListener(this);
         mCategoriesTv.setOnClickListener(this);
-
     }
 
     @Override
@@ -132,7 +121,6 @@ public class WordSearchQuizActivity extends BaseActivity implements IOnClickList
         }
     }
 
-
     private void getData() {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress("");
@@ -140,11 +128,6 @@ public class WordSearchQuizActivity extends BaseActivity implements IOnClickList
                 mMyQuizzesPresenter.getMyQuizzes();
                 mFooterCl.setVisibility(View.VISIBLE);
             }
-//            else {
-//                mCategoryPresenter.getCategoriesQuiz();
-//                mFooterCl.setVisibility(View.VISIBLE);
-//
-//            }
         } else {
             Toast.makeText(this, "" + R.string.error_internet, Toast.LENGTH_LONG).show();
         }
@@ -158,8 +141,7 @@ public class WordSearchQuizActivity extends BaseActivity implements IOnClickList
     public void onWordSearchQuizComplete(WordSearchCategoriesQuizzesMainResponse responseModel) {
         hideProgress();
         mCategoriesQuizzesResponseList = responseModel.getResponse();
-        mQuizzesRv.setAdapter(new WordSearchQuizAdapter(this, mCategoriesQuizzesResponseList,""));
-
+        mQuizzesRv.setAdapter(new WordSearchQuizAdapter(this, mCategoriesQuizzesResponseList, ""));
     }
 
     @Override
@@ -190,13 +172,11 @@ public class WordSearchQuizActivity extends BaseActivity implements IOnClickList
         Intent intent;
         if (mMyQuizzesMainResponseList.get(position).getQuiz().get(0).getQuizStatus() == 0) {
             intent = new Intent(this, WordSearchLeaderBoardActivity.class);
-//                Intent intent = new Intent(WordSearchDetailsActivity.this, FinalLeaderBoardActivity.class);
             intent.putExtra(AppConstant.FROM, true);
         } else {
             intent = new Intent(this, FinalLeaderBoardActivity.class);
         }
         intent.putExtra(AppConstant.WORD_SEARCH_QUIZ_ID, id);
-
         startActivity(intent);
     }
 
@@ -226,4 +206,5 @@ public class WordSearchQuizActivity extends BaseActivity implements IOnClickList
     public void onWordSearchMyQuizzesFailure(ApiError error) {
         hideProgress();
     }
+
 }

@@ -192,7 +192,8 @@
     <string name="text_fifty">50</string>
     <string name="text_rs_per_coin">Rs.1 = 1 Coin</string>
     <string name="text_payment_coming_soon">Hi, This feature is coming soon</string>
-    <string name="text_credential_pending">RoomId &amp; Password will be updated 15 minutes before the league start</string>
+<!--    <string name="text_credential_pending">RoomId &amp; Password will be updated 15 minutes before the league start</string>-->
+    <string name="text_credential_pending">RoomId &amp; Password will be updated in few seconds, Please refresh the page.</string>
     <string name="text_squd_league_joined">You have successfully joined in your friend team. \n \n 1. You can share TeamId with your friend if any one is left. \n 2. Now you can see your joined leagues in MyLeagues->Upcoming. \n 3. You can see your team details in MyLeagues->Upcoming->Click on View My Team. \n 4. You can view your RoomId and Password before 15 minutes of league start time. \n 5. Your joined league will be moved from upcoming to Live and there is button for View RoomId and Password.</string>
     <string name="text_participant">Participant</string>
     <string name="text_entry_fee">Entry Fee</string>
@@ -258,7 +259,8 @@
     <string name="text_registration_closed">Registration Closed</string>
     <string name="text_solo_league_joined">You have successfully joined this league. To visit your joined league, click on \n MyLeague->Upcoming.</string>
     <string name="text_how_room_pasword">How to get my RoomId &amp; Password? \n Click here to know!</string>
-    <string name="text_help_room_password">View RoomId &amp; Password \n\n 1. You can view your RoomId &amp; Password before 15min of league start time.\n2. Your joined league will be moved from Upcoming to Live in MyLeague before 15 minute from league start time and there is a button to view Room id and Password.\n3. You will also receive a notification with RoomId &amp; Password before start time of your league.</string>
+    <!--    <string name="text_help_room_password">View RoomId &amp; Password \n\n 1. You can view your RoomId &amp; Password before 15min of league start time.\n2. Your joined league will be moved from Upcoming to Live in MyLeague before 15 minute from league start time and there is a button to view Room id and Password.\n3. You will also receive a notification with RoomId &amp; Password before start time of your league.</string>-->
+    <string name="text_help_room_password">View RoomId &amp; Password \n\n 1. Your League will move from Upcoming to Live section on the Time of Match.\n2. In live section. Click on \'View\' Button to view the RoomId Password of the match. RoomId and Password will be pushed through notification also.\n3. Match will start after 10 minutes of sharing the RoomId and Password.</string>
     <string name="progres_loading_quiz">Preparing your Quiz!</string>
     <string name="help_drawable_map">Map \n ERANGLE</string>
     <string name="text_ends_time">End Date</string>
@@ -342,6 +344,7 @@
     <string name="text_help_captain">1. Now wait for some time till anyone accept your challenge.\n2. After opponent has accepted your challenge, you have to update the Room Code.\n3. You will get Room Code from Ludo King App.\n4. Once the challenge is finished, please update the result.\n5. 25 coins will be deducted, if you do not upload the result.\n6. 25 coins will be deducted if you upload the wrong result.\n7. Click on View Video option to know how to update Room Code.\n8. You have to update the room code within 15 minutes otherwise 25 coins will deducted</string>
     <string name="text_help_opponent">1. Now wait for your opponent to update the Room Code.\n2. When opponent will update the Room Code, you will receive a notification and you will also see a button(Play On Ludo King).\n3. Once you click on (Play On Ludo King) button, you can see the Room Code and Join the room.\n4. 25 coins will be deducted, if you do not upload the result.\n5. 25 coins will be deducted if you upload the wrong result.\n6. If your opponent does not update the room code in 30 minutes, then the challenge will be cancelled and your coins will be refunded automatically</string>
     <string name="text_no_ludo_challeneges">Hey, you have not played any ludo challenges. Create or accept challenges to play and earn.</string>
+    <string name="text_no_courtpiece_history">Hey, you have not played any CourtPiece Pro yet. Accept challenges to play and earn.</string>
     <string name="text_no_transaction">You havn\'t perform any transactions.</string>
     <string name="password_hide">********</string>
     <string name="text_play_now">Play Now</string>
@@ -435,6 +438,7 @@
     <string name="text_final_pay">Final Pay</string>
     <string name="s3">s</string>
     <string name="text_ludo_result_declared_error">Review-By Admin</string>
+    <string name="text_ludo_show_room_code">Show room code</string>
     <string name="text_ludo_upload_result">Upload Result</string>
     <string name="text_message_empty">Please type message to send</string>
     <string name="text_version_update">VERSION\nUPDATE</string>
@@ -578,7 +582,7 @@
     <string name="ludo_leaderborad">Ludo Leaderboard</string>
     <string name="freefire_leaderboard">FreeFire Leaderboard</string>
     <string name="freefire_max_leaderboard">FreeFire Max Leaderboard</string>
-    <string name="clash_leaderborad">Freefire ClashSquad Leaderboard</string>
+    <string name="clash_leaderborad">ClashSquad Leaderboard</string>
     <string name="fan_battle_leaderboard">FanBattle Leaderboard</string>
     <string name="text_dash">-</string>
     <string name="btn_got_it">I Got It !</string>
@@ -799,9 +803,9 @@
     <string name="text_droid">Droid-O</string>
     <string name="text_wordsearch">WordSearch</string>
     <string name="text_droid_leaderboard">Droid-O LeaderBoard</string>
-    <string name="text_ludo_tournament_leaderboard">Ludo Tournament LeaderBoard</string>
-    <string name="text_court_piece_leaderboard">CourtPiece LeaderBoard</string>
-    <string name="text_rummy_leaderboard">Rummy LeaderBoard</string>
+    <string name="text_ludo_tournament_leaderboard">Tournament LeaderBoard</string>
+    <string name="text_court_piece_leaderboard">CourtPiece Pro LeaderBoard</string>
+    <string name="text_rummy_leaderboard">Rummy Adda LeaderBoard</string>
     <string name="text_wordsearch_leaderboard">WordSearch LeaderBoard</string>
 
     <string name="no_games_avaliable_now">We are creating new Tournaments for you.</string>
@@ -939,4 +943,11 @@
     <string name="text_beneficiary_name_required">Your account beneficiary name is required.</string>
     <string name="text_court_piece_pro">CourtPiece Pro</string>
     <string name="courtpiece_history"><u>History</u></string>
+    <string name="text_history">History</string>
+    <string name="view_more"><u>View more</u></string>
+    <string name="ludo_tmt_english_rules"><u>Click here to see rules in English</u></string>
+    <string name="ludo_tmt_hindi_rules"><u>Click here to see rules in Hindi</u></string>
+    <string name="ludo_tmt_disclamier_one">Please Join your tournament by clicking on below <b>Play Now</b> button.</string>
+    <string name="ludo_tmt_disclamier_two">If you not Click on <b>Play Now</b> button in 5 minutes then you will lost the tournament.</string>
+    <string name="text_tds_fee">TDS</string>
 </resources>

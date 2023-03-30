@@ -24,7 +24,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <ImageView
             android:id="@+id/img_rules"
             android:layout_width="@dimen/margin_20"
@@ -59,6 +58,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_2">
+
+            <TextView
+                android:id="@+id/tv_view_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="@string/view_more"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_lose_english" />
 
             <ImageView
                 android:id="@+id/imageView5"
@@ -442,7 +452,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="हर राउंड जीतना आपको इस टूर्नामेंट के फाइनल में ले जाएगा, जहां जीत की रकम आपका इंतजार कर रही है"
+                android:text="हर राउंड जीतना आपको इस टूर्नामेंट के फाइनल में ले जाएगा, जहां जीत की रकम आपका इंतजार कर रही है\n"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_12"
                 android:visibility="gone"
@@ -491,13 +501,12 @@
                 app:layout_constraintStart_toEndOf="@+id/imageView10"
                 app:layout_constraintTop_toTopOf="@+id/imageView10" />
 
-
             <View
                 android:id="@+id/view9"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/margin_1"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_25"
                 android:layout_marginEnd="32dp"
                 android:background="#2BFFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -568,8 +577,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:visibility="gone"
                 android:background="@color/colorTransparent"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/tv_view_all_rounds"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -618,8 +627,8 @@
                             android:layout_marginTop="16dp"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_12"
-                            android:visibility="invisible"
                             android:textStyle="bold|italic"
+                            android:visibility="invisible"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -640,7 +649,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/droid_dash" />
+                                android:src="@drawable/app_logo" />
                         </com.google.android.material.card.MaterialCardView>
 
                         <TextView
@@ -674,7 +683,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/droid_dash" />
+                                android:src="@drawable/app_logo" />
                         </com.google.android.material.card.MaterialCardView>
 
                         <TextView
@@ -723,7 +732,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/productsansregular"
-                                android:text="In-Progress"
+                                android:text="Waiting for start"
                                 android:textColor="@color/white" />
                         </com.google.android.material.card.MaterialCardView>
 
@@ -853,8 +862,7 @@
                                 android:layout_width="26dp"
                                 android:layout_height="22dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/ic_refresh_new"
-                                />
+                                android:src="@drawable/ic_refresh_new" />
                         </com.google.android.material.card.MaterialCardView>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

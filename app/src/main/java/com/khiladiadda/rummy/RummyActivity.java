@@ -32,14 +32,20 @@ import com.khiladiadda.interfaces.IOnItemClickListener;
 import com.khiladiadda.main.adapter.BannerPagerAdapter;
 import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.network.model.ApiError;
+import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.Coins;
+import com.khiladiadda.network.model.response.ProfileResponse;
+import com.khiladiadda.network.model.response.ProfileTransactionResponse;
 import com.khiladiadda.network.model.response.RummyCheckGameResponse;
 import com.khiladiadda.network.model.response.RummyDetails;
 import com.khiladiadda.network.model.response.RummyPayload;
 import com.khiladiadda.network.model.response.RummyRefreshTokenMainResponse;
 import com.khiladiadda.network.model.response.RummyResponse;
 import com.khiladiadda.preference.AppSharedPreference;
+import com.khiladiadda.profile.ProfilePresenter;
+import com.khiladiadda.profile.interfaces.IProfilePresenter;
+import com.khiladiadda.profile.interfaces.IProfileView;
 import com.khiladiadda.rummy.adapter.RummyAdapter;
 import com.khiladiadda.rummy.interfaces.IRummyPresenter;
 import com.khiladiadda.rummy.interfaces.IRummyView;
@@ -51,7 +57,8 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class RummyActivity extends BaseActivity implements IRummyView, IOnItemClickListener {
+public class RummyActivity extends BaseActivity implements IRummyView, IOnItemClickListener, RummyDialog.OnPlayClick,
+        IProfileView {
 
     @BindView(R.id.iv_back)
     ImageView mBackIV;
@@ -75,15 +82,17 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     LinearLayout mModeOptionLL;
     @BindView(R.id.tv_how_to_play)
     TextView mHowToPlayTv;
-    @BindView(R.id.iv_history)
-    ImageView mHistoryTv;
+    @BindView(R.id.tv_history)
+    TextView mHistoryTv;
 
     private RummyAdapter mAdapter;
     private List<RummyDetails> mList;
     private IRummyPresenter mPresenter;
+    private IProfilePresenter mProfilePresenter;
     private String mType, mRefreshToken = "";
     private int mMode = 1, pos = 0;
     private long mLastClickTime = 0;
+    private boolean isPlayed = false;
 
 
     @BindView(R.id.vp_advertisement)
@@ -113,6 +122,7 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     @Override
     protected void initVariables() {
         mPresenter = new RummyPresenter(this);
+        mProfilePresenter = new ProfilePresenter(this);
         mList = new ArrayList<>();
         mAdapter = new RummyAdapter(this, mList, mMode);
         mRummyRV.setLayoutManager(new LinearLayoutManager(this));
@@ -177,11 +187,11 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
 //                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                    startActivity(intent);
 //                } catch (ActivityNotFoundException e) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=onb7Nd1uSso")));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/jP2AP1z_m6c")));
 //                }
                 break;
 
-            case R.id.iv_history:
+            case R.id.tv_history:
                 startActivity(new Intent(this, RummyHistoryActivity.class));
         }
     }
@@ -199,7 +209,6 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         mThreeTV.setTextColor(getResources().getColor(R.color.white));
         mThreeTV.setTextAppearance(this, R.style.RummyModeButton);
         mThreeTV.setSelected(false);
-
         switch (mode) {
             case 14:
                 mType = "pt_S13";
@@ -217,17 +226,17 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
                 setThree();
                 break;
             case 24:
-                mType = "pool101_S13";
+                mType = "pool51_S13";
                 setPool();
                 setOne();
                 break;
             case 25:
-                mType = "pool201_S13";
+                mType = "pool101_S13";
                 setPool();
                 setTwo();
                 break;
             case 26:
-                mType = "pool51_S13";
+                mType = "pool201_S13";
                 setPool();
                 setThree();
                 break;
@@ -287,7 +296,6 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         mDealTV.setTextColor(getResources().getColor(R.color.battle_red));
         mPointsTV.setTextColor(Color.parseColor("#9A9797"));
         mPoolTV.setTextColor(Color.parseColor("#9A9797"));
-
     }
 
     private void setPool() {
@@ -295,7 +303,6 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         mPoolTV.setTextColor(getResources().getColor(R.color.battle_red));
         mPointsTV.setTextColor(Color.parseColor("#9A9797"));
         mDealTV.setTextColor(Color.parseColor("#9A9797"));
-
     }
 
     private void setPoints() {
@@ -303,7 +310,6 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         mPointsTV.setTextColor(getResources().getColor(R.color.battle_red));
         mPoolTV.setTextColor(Color.parseColor("#9A9797"));
         mDealTV.setTextColor(Color.parseColor("#9A9797"));
-
     }
 
     private void getData() {
@@ -366,6 +372,7 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
 
     @Override
     public void onGetContestCheckGameSuccess(RummyCheckGameResponse responseModel) {
+        hideProgress();
         if (responseModel.isStatus()) {
             if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
                 return;
@@ -390,6 +397,7 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     @Override
     public void onItemClick(View view, int position, int tag) {
         pos = position;
+        showProgress("");
         mPresenter.getCheckGameStatus();
     }
 
@@ -400,9 +408,9 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
 
         RummyDialog addExpenseDialog;
         if (status == 1) {
-            addExpenseDialog = new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), "active", AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme, mList.get(position).getNumPlayers());
+            addExpenseDialog = new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), "active", AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme, mList.get(position).getNumPlayers(), this);
         } else {
-            addExpenseDialog = new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), mList.get(position).getCardId(), AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme, mList.get(position).getNumPlayers());
+            addExpenseDialog = new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), mList.get(position).getCardId(), AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme, mList.get(position).getNumPlayers(), this);
         }
         addExpenseDialog.setCancelable(true);
         addExpenseDialog.setCanceledOnTouchOutside(false);
@@ -433,4 +441,99 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         }, 10000);
     }
 
+    @Override
+    public void onPlayClicked() {
+        isPlayed = true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isPlayed){
+            getProfile();
+        }
+    }
+
+    private void getProfile() {
+        if (new NetworkStatus(this).isInternetOn()) {
+            showProgress(getString(R.string.txt_progress_authentication));
+            mProfilePresenter.getProfile();
+        } else {
+//            setProfileData();
+            Snackbar.make(mBackIV, getString(R.string.error_internet), Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+
+    @Override
+    public void onUpdatePasswordComplete(BaseResponse responseModel) {
+
+    }
+
+    @Override
+    public void onUpdatePasswordFailure(ApiError error) {
+
+    }
+
+    @Override
+    public void onUpdateDOBComplete(ProfileResponse responseModel) {
+
+    }
+
+    @Override
+    public void onUpdateDOBFailure(ApiError error) {
+
+    }
+
+    @Override
+    public void onProfileComplete(ProfileTransactionResponse responseModel) {
+        hideProgress();
+        mAppPreference.setProfileData(responseModel.getResponse());
+
+    }
+
+    @Override
+    public void onProfileFailure(ApiError error) {
+
+    }
+
+    @Override
+    public void onApplyVoucherComplete(BaseResponse responseModel) {
+
+    }
+
+    @Override
+    public void onApplyVoucherFailure(ApiError error) {
+
+    }
+
+    @Override
+    public void onSendOtpComplete(BaseResponse responseModel) {
+
+    }
+
+    @Override
+    public void onSendOtpFailure(ApiError error) {
+
+    }
+
+    @Override
+    public void onVerifyEmailComplete(BaseResponse responseModel) {
+
+    }
+
+    @Override
+    public void onVerifyEmailFailure(ApiError error) {
+
+    }
+
+    @Override
+    public void onUpdateEmailComplete(BaseResponse responseModel) {
+
+    }
+
+    @Override
+    public void onUpdateEmailFailure(ApiError error) {
+
+    }
 }

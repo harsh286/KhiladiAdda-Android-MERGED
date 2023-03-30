@@ -43,15 +43,12 @@ public class WordSearchLeaderBoardActivity extends BaseActivity implements IOnCl
     TextView mNameTv;
     @BindView(R.id.tv_rules)
     TextView mRulesTv;
-
-
     private String mQuizId;
     private IWordSearchParticipantsPresenter mParticipantsPresenter;
     private IWordSearchLiveLeaderboardPresenter mWordSearchLiveLeaderboardPresenter;
     private LeaderBoardAdapter adapter;
     private Boolean mFrom;
     private List<WordSearchLiveLeaderBoardlbResponse> leaderBoardList = new ArrayList<>();
-
 
     @Override
     protected int getContentView() {
@@ -62,7 +59,6 @@ public class WordSearchLeaderBoardActivity extends BaseActivity implements IOnCl
     protected void initViews() {
         mQuizId = getIntent().getStringExtra(AppConstant.WORD_SEARCH_QUIZ_ID);
         mFrom = getIntent().getBooleanExtra(AppConstant.FROM, false);
-
         if (!mFrom) {
             mNameTv.setText("Participants");
             mRulesTv.setVisibility(View.GONE);
@@ -70,14 +66,11 @@ public class WordSearchLeaderBoardActivity extends BaseActivity implements IOnCl
             mNameTv.setText("Live Leaderboard");
             mRulesTv.setVisibility(View.VISIBLE);
         }
-
         mRulesTv.setText("1. This is not a final leaderboard.\n" +
                 "2. You can see the final leaderboard once the tournament over.\n" +
                 "3. Once the tournament finishes, you can see leaderboard with the amount you have won.");
-
         mParticipantsPresenter = new WordSearchQuizParticipants(this, mQuizId);
         mWordSearchLiveLeaderboardPresenter = new WordSearchLiveLeaderboardPresenter(this, mQuizId);
-
         setUpRecyclerView();
     }
 
@@ -104,7 +97,6 @@ public class WordSearchLeaderBoardActivity extends BaseActivity implements IOnCl
             Toast.makeText(this, "" + R.string.error_internet, Toast.LENGTH_LONG).show();
         }
     }
-
 
     private void setUpRecyclerView() {
         mLeaderBoardRv.setLayoutManager(new LinearLayoutManager(this));
@@ -158,12 +150,11 @@ public class WordSearchLeaderBoardActivity extends BaseActivity implements IOnCl
             }
             adapter.notifyDataSetChanged();
         }
-
     }
 
     @Override
     public void onWordSearchLiveLeaderboardFailure(ApiError error) {
         hideProgress();
-
     }
+
 }

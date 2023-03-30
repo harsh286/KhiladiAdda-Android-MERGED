@@ -20,8 +20,11 @@ import com.khiladiadda.dialogs.interfaces.IOnRedeemVoucherListener;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
+import com.khiladiadda.network.model.response.NCallBreak;
 import com.khiladiadda.network.model.response.NFanBattle;
 import com.khiladiadda.network.model.response.NLudo;
+import com.khiladiadda.network.model.response.NLudoTournament;
+import com.khiladiadda.network.model.response.NRummy;
 import com.khiladiadda.network.model.response.ProfileDetails;
 import com.khiladiadda.network.model.response.ProfileResponse;
 import com.khiladiadda.network.model.response.ProfileTransactionResponse;
@@ -157,7 +160,7 @@ public class StatActivity extends BaseActivity implements IOnRedeemVoucherListen
     }
 
     private void setGameWon(NLudo game, TextView gameTV) {
-        SpannableString ludoWin = new SpannableString("Wins\n" + game.getWon());
+        SpannableString ludoWin = new SpannableString("Win\n" + game.getWon());
         ludoWin.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), R.color.color_green)), 4, ludoWin.length(), 0);
         ludoWin.setSpan(new StyleSpan(Typeface.BOLD), 4, ludoWin.length(), 0);
 //        ludoWin.setSpan(new RelativeSizeSpan(1.2f), 4, ludoWin.length(), 0);
@@ -166,6 +169,38 @@ public class StatActivity extends BaseActivity implements IOnRedeemVoucherListen
 
     private void setGameContest(NLudo game, TextView gameTV) {
         SpannableString ludpContest = new SpannableString("Contests\n" + (game.getWon() + game.getLost()));
+        ludpContest.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), R.color.blue_dark)), 8, ludpContest.length(), 0);
+        ludpContest.setSpan(new StyleSpan(Typeface.BOLD), 8, ludpContest.length(), 0);
+//        ludpContest.setSpan(new RelativeSizeSpan(1.2f), 8, ludpContest.length(), 0);
+        gameTV.setText(ludpContest);
+    }
+
+    private void setRummyAddaContest(NRummy game, TextView gameTV) {
+        SpannableString ludpContest = new SpannableString("Contests\n" + game.getPlayed());
+        ludpContest.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), R.color.blue_dark)), 8, ludpContest.length(), 0);
+        ludpContest.setSpan(new StyleSpan(Typeface.BOLD), 8, ludpContest.length(), 0);
+//        ludpContest.setSpan(new RelativeSizeSpan(1.2f), 8, ludpContest.length(), 0);
+        gameTV.setText(ludpContest);
+    }
+
+    private void setCallBreakContest(NCallBreak game, TextView gameTV) {
+        SpannableString ludpContest = new SpannableString("Contests\n" + game.getPlayed());
+        ludpContest.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), R.color.blue_dark)), 8, ludpContest.length(), 0);
+        ludpContest.setSpan(new StyleSpan(Typeface.BOLD), 8, ludpContest.length(), 0);
+//        ludpContest.setSpan(new RelativeSizeSpan(1.2f), 8, ludpContest.length(), 0);
+        gameTV.setText(ludpContest);
+    }
+
+    private void setCxContest(NLudo game, TextView gameTV) {
+        SpannableString ludpContest = new SpannableString("Contests\n" + (game.getWon() + game.getLost()));
+        ludpContest.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), R.color.blue_dark)), 8, ludpContest.length(), 0);
+        ludpContest.setSpan(new StyleSpan(Typeface.BOLD), 8, ludpContest.length(), 0);
+//        ludpContest.setSpan(new RelativeSizeSpan(1.2f), 8, ludpContest.length(), 0);
+        gameTV.setText(ludpContest);
+    }
+
+    private void setLudoTmtContest(NLudoTournament game, TextView gameTV) {
+        SpannableString ludpContest = new SpannableString("Contests\n" + game.getPlayed());
         ludpContest.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), R.color.blue_dark)), 8, ludpContest.length(), 0);
         ludpContest.setSpan(new StyleSpan(Typeface.BOLD), 8, ludpContest.length(), 0);
 //        ludpContest.setSpan(new RelativeSizeSpan(1.2f), 8, ludpContest.length(), 0);
@@ -252,12 +287,12 @@ public class StatActivity extends BaseActivity implements IOnRedeemVoucherListen
         setGameContest(profileData.getnSnake(), mSnakeContestTV);
         setGameContest(profileData.getNQuiz(), mQuizContestTV);
         setGameContest(profileData.getNGame(), mGameContestTV);
-        setGameContest(profileData.getnClashOfFans(), mCXContestTV);
+        setCxContest(profileData.getnClashOfFans(), mCXContestTV);
         setGameContest(profileData.getnWordSearch(), mWSContestTV);
         setGameContest(profileData.getnGKite(), mDroidContestTV);
-        setGameContest(profileData.getNQuiz(), mLudoTmtContestTv);
-        setGameContest(profileData.getnRummy(), mRummyContestTv);
-        setGameContest(profileData.getnCallBreak(), mCodePiecesContestTv);
+        setLudoTmtContest(profileData.getnLudoTournament(), mLudoTmtContestTv);
+        setRummyAddaContest(profileData.getnRummy(), mRummyContestTv);
+        setCallBreakContest(profileData.getnCallBreak(), mCodePiecesContestTv);
 
         setGameWon(profileData.getnLudo(), mLudoWinsTV);
         setGameWon(profileData.getnSnake(), mSnakeWinsTV);
@@ -284,6 +319,7 @@ public class StatActivity extends BaseActivity implements IOnRedeemVoucherListen
         setFanBattleGameContest(profileData.getnFanBattle());
 
         hideProgress();
+
     }
 
     private void setFanBattleGameContest(NFanBattle getnFanBattle) {
@@ -293,17 +329,13 @@ public class StatActivity extends BaseActivity implements IOnRedeemVoucherListen
             ludpContest.setSpan(new StyleSpan(Typeface.BOLD), 8, ludpContest.length(), 0);
             ludpContest.setSpan(new RelativeSizeSpan(1.2f), 8, ludpContest.length(), 0);
             mFBContestTV.setText(ludpContest);
-
         } else {
             SpannableString ludpContest = new SpannableString("Contests\n" + getnFanBattle.getPlayed());
             ludpContest.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.blue_dark)), 8, ludpContest.length(), 0);
             ludpContest.setSpan(new StyleSpan(Typeface.BOLD), 8, ludpContest.length(), 0);
             ludpContest.setSpan(new RelativeSizeSpan(1.2f), 8, ludpContest.length(), 0);
             mFBContestTV.setText(ludpContest);
-
         }
-
-
         if (getnFanBattle.getWon() < 0) {
             SpannableString ludoWin = new SpannableString("Wins\n" + 0);
             ludoWin.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_green)), 4, ludoWin.length(), 0);
@@ -317,8 +349,6 @@ public class StatActivity extends BaseActivity implements IOnRedeemVoucherListen
             ludoWin.setSpan(new RelativeSizeSpan(1.2f), 4, ludoWin.length(), 0);
             mFBWinsTV.setText(ludoWin);
         }
-
-
         if (getnFanBattle.getLost() < 0) {
             SpannableString gameLost = new SpannableString("Losses\n" + getnFanBattle.getLost());
             gameLost.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorPrimary)), 6, gameLost.length(), 0);
@@ -332,7 +362,6 @@ public class StatActivity extends BaseActivity implements IOnRedeemVoucherListen
             gameLost.setSpan(new RelativeSizeSpan(1.2f), 6, gameLost.length(), 0);
             mFbLosesTV.setText(gameLost);
         }
-
     }
 
     @Override

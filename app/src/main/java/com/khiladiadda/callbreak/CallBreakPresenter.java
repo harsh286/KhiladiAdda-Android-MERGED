@@ -7,6 +7,7 @@ import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.response.CallBreakJoinMainResponse;
 import com.khiladiadda.network.model.response.CallBreakResponse;
+import com.khiladiadda.network.model.response.CbHistoryRankMainResponse;
 import com.khiladiadda.rummy.RummyInteractor;
 import com.khiladiadda.rummy.interfaces.IRummyPresenter;
 import com.khiladiadda.rummy.interfaces.IRummyView;
@@ -55,6 +56,40 @@ public class CallBreakPresenter implements ICallBreakPresenter {
         @Override
         public void onError(ApiError error) {
             mView.onGetContestJoinFailure(error);
+        }
+    };
+
+    @Override
+    public void getCallBreakHistory() {
+        mSubscription = mInteractor.getCallBreakHistory(mGetCallBreakHistoryApiListener);
+    }
+
+    private IApiListener<CallBreakResponse> mGetCallBreakHistoryApiListener = new IApiListener<CallBreakResponse>() {
+        @Override
+        public void onSuccess(CallBreakResponse response) {
+            mView.onGetHistorySuccess(response);
+        }
+
+        @Override
+        public void onError(ApiError error) {
+            mView.onGetHistoryFailure(error);
+        }
+    };
+
+    @Override
+    public void getCallBreakHistoryRank(String id) {
+        mSubscription = mInteractor.getCallBreakHistoryRank(mGetCallBreakHistoryRankApiListener, id);
+    }
+
+    private IApiListener<CbHistoryRankMainResponse> mGetCallBreakHistoryRankApiListener = new IApiListener<CbHistoryRankMainResponse>() {
+        @Override
+        public void onSuccess(CbHistoryRankMainResponse response) {
+            mView.onGetHistoryRankSuccess(response);
+        }
+
+        @Override
+        public void onError(ApiError error) {
+            mView.onGetHistoryRankFailure(error);
         }
     };
 

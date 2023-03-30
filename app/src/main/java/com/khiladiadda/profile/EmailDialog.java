@@ -73,13 +73,13 @@ public class EmailDialog extends Dialog implements View.OnClickListener, View.On
     private String mEmail;
     private boolean mError;
 
-    public EmailDialog(@NonNull Context context, IOnVerifyEmailListener onVerifEmailListener, int from, String email,boolean error) {
+    public EmailDialog(@NonNull Context context, IOnVerifyEmailListener onVerifEmailListener, int from, String email, boolean error) {
         super(context);
         this.mContext = context;
         this.mOnVerifEmailListener = onVerifEmailListener;
         this.mFrom = from;
         this.mEmail = email;
-        this.mError=error;
+        this.mError = error;
         init();
     }
 
@@ -119,8 +119,10 @@ public class EmailDialog extends Dialog implements View.OnClickListener, View.On
             mEmailTV.setText(mEmail);
             mEmailLL.setVisibility(View.GONE);
             if (mError) {
-             //   AppUtilityMethods.showMsg(getContext(),"Please Provide Correct OTP",false);
-                Toast.makeText(getContext(),"Please Provide Correct OTP",Toast.LENGTH_SHORT).show();
+                //   AppUtilityMethods.showMsg(getContext(),"Please Provide Correct OTP",false);
+                Toast.makeText(getContext(), "Please Provide Correct OTP", Toast.LENGTH_SHORT).show();
+//                Snackbar.make(mOTPLL, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+
             }
         }
 
@@ -149,8 +151,10 @@ public class EmailDialog extends Dialog implements View.OnClickListener, View.On
                     mOnVerifEmailListener.onSendOTP(mEmailET.getText().toString().trim());
                     cancel();
                 } else {
-                    Toast.makeText(getContext(),"Please provide valid email address",Toast.LENGTH_SHORT).show();
-                 //   AppUtilityMethods.showMsg(mContext, "Please provide valid email address", false);
+                    Snackbar.make(mOTPLL, "Please provide valid email address", Snackbar.LENGTH_SHORT).show();
+
+//                    Toast.makeText(getContext(), "Please provide valid email address", Toast.LENGTH_SHORT).show();
+                    //   AppUtilityMethods.showMsg(mContext, "Please provide valid email address", false);
                 }
                 break;
             case R.id.btn_verify:
@@ -160,7 +164,7 @@ public class EmailDialog extends Dialog implements View.OnClickListener, View.On
                     cancel();
                 } else {
                     //AppUtilityMethods.showMsg(mContext, "Please provide valid otp", false);
-                    Toast.makeText(getContext(),"Please Provide Correct OTP",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please Provide Correct OTP", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.rl_close:

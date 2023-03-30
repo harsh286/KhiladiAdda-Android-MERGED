@@ -188,6 +188,7 @@
         <item name="cardElevation">@dimen/card_elevation_5</item>
         <item name="android:layout_marginStart">@dimen/margin_5</item>
         <item name="android:layout_marginEnd">@dimen/margin_5</item>
+        <item name="android:layout_marginBottom">@dimen/margin_8</item>
     </style>
 
     <style name="ItemCardAppearance" parent="CardView">

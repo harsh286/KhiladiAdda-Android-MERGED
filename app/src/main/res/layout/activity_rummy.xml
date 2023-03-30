@@ -69,6 +69,7 @@
             android:id="@+id/vp_advertisement"
             android:layout_width="match_parent"
             android:layout_height="120dp"
+            android:visibility="gone"
             android:layout_alignParentTop="true" />
 
         <ImageView
@@ -113,22 +114,17 @@
 
         <TextView
             android:id="@+id/tv_how_to_play"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:gravity="right|center"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
+            android:gravity="center_vertical"
+            android:drawablePadding="@dimen/padding_5"
             android:text="How To Play"
             android:textColor="@color/white"
+            android:drawableEnd="@drawable/ic_play"
             android:textSize="@dimen/text_14" />
-
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_play" />
 
     </RelativeLayout>
 

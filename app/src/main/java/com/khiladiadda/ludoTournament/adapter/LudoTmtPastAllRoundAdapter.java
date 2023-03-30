@@ -60,7 +60,7 @@ public class LudoTmtPastAllRoundAdapter extends RecyclerView.Adapter<LudoTmtPast
         LudoTmtAllPastRoundsResponse item = ludoTmtRoundsDetailsResponseList.get(position);
         holder.roundsTv.setText(String.format("ROUND %s", item.getLevel()));
 //        holder.matchTv.setText(String.format("MATCH %s", ludoTmtTournamentDetailsResponse.getTtMatch().toString()));
-        Glide.with(holder.firstPlayerIv.getContext()).load(item.getUserFirstInfo().getDp()).fallback(R.drawable.profile).into(holder.firstPlayerIv);
+//        Glide.with(holder.firstPlayerIv.getContext()).load(item.getUserFirstInfo().getDp()).fallback(R.drawable.profile).into(holder.firstPlayerIv);
         if (Objects.equals(item.getUserFirst(), AppSharedPreference.initialize(mContext).getMasterData().getResponse().getProfile().getId())) {
             holder.firstPlayerTv.setText("You");
             Glide.with(holder.firstPlayerIv.getContext()).load(item.getUserFirstInfo().getDp()).fallback(R.drawable.profile).into(holder.firstPlayerIv);
@@ -70,10 +70,10 @@ public class LudoTmtPastAllRoundAdapter extends RecyclerView.Adapter<LudoTmtPast
         }
         if (Objects.equals(item.getUserSecond(), AppSharedPreference.initialize(mContext).getMasterData().getResponse().getProfile().getId())) {
             holder.secondPlayerTv.setText("You");
-            Glide.with(holder.secondPlayerIv.getContext()).load(item.getUserFirstInfo().getDp()).fallback(R.drawable.profile).into(holder.firstPlayerIv);
+            Glide.with(holder.secondPlayerIv.getContext()).load(item.getUserSecondInfo().getDp()).fallback(R.drawable.profile).into(holder.secondPlayerIv);
         } else {
             holder.secondPlayerTv.setText(item.getUserSecondInfo().getRandomName());
-            Glide.with(holder.secondPlayerIv.getContext()).load(item.getUserFirstInfo().getRandomDp()).fallback(R.drawable.profile).into(holder.firstPlayerIv);
+            Glide.with(holder.secondPlayerIv.getContext()).load(item.getUserSecondInfo().getRandomDp()).fallback(R.drawable.profile).into(holder.secondPlayerIv);
         }
         if (mIsPlayAvailable) {
             holder.playNowBtn.setVisibility(View.VISIBLE);
@@ -92,6 +92,10 @@ public class LudoTmtPastAllRoundAdapter extends RecyclerView.Adapter<LudoTmtPast
             }
             if (item.getRoomStatus() == 5){
                 ButtonEnable(item, holder, 0, 0, 0, 0, 1,0);
+            }else if (item.getRoomStatus() == 6){
+                holder.oppWonBtn.setVisibility(View.VISIBLE);
+                holder.mOppWonTv.setText("Draw");
+//                holder.oppWonBtn.s
             }
         }
     }
@@ -115,6 +119,7 @@ public class LudoTmtPastAllRoundAdapter extends RecyclerView.Adapter<LudoTmtPast
             holder.wonBtn.setVisibility(View.VISIBLE);
         } else if (opp_won == 1) {
             holder.oppWonBtn.setVisibility(View.VISIBLE);
+            holder.mOppWonTv.setText("Opponent Won");
         }else if (cancelled == 1){
             holder.mTournamentCancelled.setVisibility(View.VISIBLE);
         } else {
@@ -156,6 +161,8 @@ public class LudoTmtPastAllRoundAdapter extends RecyclerView.Adapter<LudoTmtPast
         ConstraintLayout OutOfTmtCl;
         @BindView(R.id.btn_tournament_cancelled)
         MaterialCardView mTournamentCancelled;
+        @BindView(R.id.tv_opp_won)
+        TextView mOppWonTv;
 
 
         IOnClickListener iOnClickListener;

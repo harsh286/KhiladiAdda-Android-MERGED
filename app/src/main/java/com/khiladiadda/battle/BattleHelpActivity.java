@@ -33,7 +33,9 @@ public class BattleHelpActivity extends BaseActivity {
     private int mNextCount;
     private int[] mFBHelpDrawables = {R.drawable.fb_help_one, R.drawable.fb_help_two, R.drawable.fb_help_three, R.drawable.fb_help_four, R.drawable.refer_help};
     private int[] mFBCategoryDrawables = {R.drawable.reverse_1, R.drawable.reverse_2, R.drawable.reverse_3, R.drawable.reverse_4, R.drawable.refer_help};
-    private int[] mHTHDrawables = {R.drawable.hth_step1, R.drawable.hth_step2, R.drawable.hth_step3, R.drawable.hth_step4, R.drawable.hth_step5, R.drawable.hth_step6,R.drawable.hth_step7,R.drawable.hth_step8,R.drawable.hth_step9, R.drawable.refer_help};
+    private int[] mHTHDrawables = {R.drawable.hth_step1, R.drawable.hth_step2, R.drawable.hth_step3, R.drawable.hth_step4, R.drawable.hth_step5};
+    private int[] mFootballDrawables = {R.drawable.hth_step6_1, R.drawable.hth_step6_2, R.drawable.hth_step6_3, R.drawable.refer_help};
+    private int[] mKabaddiDrawables = {R.drawable.hth_step7, R.drawable.hth_step8, R.drawable.hth_step9, R.drawable.refer_help};
     private int mHowToPLay;
 
     @Override
@@ -55,6 +57,10 @@ public class BattleHelpActivity extends BaseActivity {
             mLuodHelpIV.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.fb_help_one));
         } else if (mHowToPLay == 2) {
             mLuodHelpIV.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.hth_step1));
+        } else if (mHowToPLay == 3) {
+            mLuodHelpIV.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.hth_step6_1));
+        } else if (mHowToPLay == 4) {
+            mLuodHelpIV.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.hth_step7));
         } else {
             mLuodHelpIV.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.reverse_1));
         }
@@ -73,13 +79,33 @@ public class BattleHelpActivity extends BaseActivity {
                 finish();
             }
         } else if (mHowToPLay == 2) {
-            if (mNextCount < 5) {
+            if (mNextCount < mHTHDrawables.length) {
                 mLuodHelpIV.setImageResource(helpResourceArray[mNextCount]);
-            } else if (mNextCount == 5) {
+            } else if (mNextCount == mHTHDrawables.length - 1) {
                 mLuodHelpIV.setImageResource(helpResourceArray[mNextCount]);
                 mNextBTN.setText(R.string.done);
                 mNextIV.setImageResource(0);
-            } else if (mNextCount == 6) {
+            } else if (mNextCount == mHTHDrawables.length) {
+                finish();
+            }
+        } else if (mHowToPLay == 3) {
+            if (mNextCount < mFootballDrawables.length) {
+                mLuodHelpIV.setImageResource(helpResourceArray[mNextCount]);
+            } else if (mNextCount == mFootballDrawables.length - 1) {
+                mLuodHelpIV.setImageResource(helpResourceArray[mNextCount]);
+                mNextBTN.setText(R.string.done);
+                mNextIV.setImageResource(0);
+            } else if (mNextCount == mFootballDrawables.length) {
+                finish();
+            }
+        } else if (mHowToPLay == 4) {
+            if (mNextCount < mKabaddiDrawables.length) {
+                mLuodHelpIV.setImageResource(helpResourceArray[mNextCount]);
+            } else if (mNextCount == mKabaddiDrawables.length - 1) {
+                mLuodHelpIV.setImageResource(helpResourceArray[mNextCount]);
+                mNextBTN.setText(R.string.done);
+                mNextIV.setImageResource(0);
+            } else if (mNextCount == mKabaddiDrawables.length) {
                 finish();
             }
         } else {
@@ -113,6 +139,10 @@ public class BattleHelpActivity extends BaseActivity {
                 updateOnNext(mFBHelpDrawables);
             } else if (mHowToPLay == 2) {
                 updateOnNext(mHTHDrawables);
+            } else if (mHowToPLay == 3) {
+                updateOnNext(mFootballDrawables);
+            } else if (mHowToPLay == 4) {
+                updateOnNext(mKabaddiDrawables);
             } else {
                 updateOnNext(mFBCategoryDrawables);
             }
@@ -122,6 +152,10 @@ public class BattleHelpActivity extends BaseActivity {
                 updateOnPrevious(mFBHelpDrawables);
             } else if (mHowToPLay == 2) {
                 updateOnPrevious(mHTHDrawables);
+            } else if (mHowToPLay == 3) {
+                updateOnPrevious(mFootballDrawables);
+            } else if (mHowToPLay == 4) {
+                updateOnPrevious(mKabaddiDrawables);
             } else {
                 updateOnPrevious(mFBCategoryDrawables);
             }

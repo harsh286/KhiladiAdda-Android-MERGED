@@ -2,8 +2,10 @@ package com.khiladiadda.main.game;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -86,6 +88,10 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
     ImageView mCallBreakIv;
     @BindView(R.id.iv_quiz)
     ImageView mQuizIv;
+    @BindView(R.id.sv_main)
+    ScrollView mMainSv;
+
+    private Handler handler;
 
     public static Fragment getInstance() {
         return new GameFragment();
@@ -128,8 +134,8 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
 
     @Override
     protected void initVariables() {
-
-
+        handler = new Handler();
+        handler.postDelayed(() -> hideProgress(), 2000);
     }
 
     @Override

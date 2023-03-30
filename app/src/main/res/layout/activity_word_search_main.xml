@@ -45,7 +45,7 @@
             <ImageView
                 android:id="@+id/iv_image"
                 android:layout_width="match_parent"
-                android:layout_height="165dp"
+                android:layout_height="132dp"
                 android:contentDescription="@string/text_pubg" />
         </RelativeLayout>
 
@@ -119,6 +119,7 @@
         android:layout_height="wrap_content"
         android:text="We are creating new Word Search Tournament for you."
         android:textColor="@color/white"
+        android:gravity="center"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

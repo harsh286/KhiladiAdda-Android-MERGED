@@ -189,9 +189,10 @@ public class HTHBattlesActivity extends BaseActivity implements ICreateBattleVie
 
     private void setData() {
         mDateTV.setText(("Date: " + AppUtilityMethods.getConvertDateFacts(mMatchDetail.getStartDateTime())));
-        mNameTV.setText(mMatchDetail.getSeries().getName());
         TeamHTH homeTeam = mMatchDetail.getPlayers().getHomeTeam().getTeam();
         TeamHTH awayTeam = mMatchDetail.getPlayers().getAwayTeam().getTeam();
+//        mNameTV.setText(mMatchDetail.getSeries().getName());
+        mNameTV.setText(homeTeam.getName() + " vs " + awayTeam.getName());
         mTeamOneTV.setText(homeTeam.getName());
         Glide.with(mTeamOneIV).load(homeTeam.getLogoUrl()).placeholder(R.drawable.splash_logo).into(mTeamOneIV);
         mTeamTwoTV.setText(awayTeam.getName());
@@ -258,7 +259,13 @@ public class HTHBattlesActivity extends BaseActivity implements ICreateBattleVie
                 break;
             case R.id.tv_how_play:
                 Intent i = new Intent(this, BattleHelpActivity.class);
-                i.putExtra(AppConstant.FROM, mHowtoPlay);
+                if (mFromMatches == 1)
+                    i.putExtra(AppConstant.FROM, mHowtoPlay);
+                else if (mFromMatches == 2)
+                    i.putExtra(AppConstant.FROM, 3);
+                else if (mFromMatches == 3)
+                    i.putExtra(AppConstant.FROM, 4);
+
                 startActivity(i);
                 break;
             case R.id.tv_calculate:

@@ -111,7 +111,6 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_withdraw"
             style="@style/ButtonBottomLast"
-            android:visibility="gone"
             android:drawableTop="@drawable/withdraw"
             android:text="@string/text_withdraw_next" />
 

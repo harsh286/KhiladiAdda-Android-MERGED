@@ -8,6 +8,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -95,9 +96,16 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
         mEmailView.setOnClickListener(this);
 
         mExistingUserTV.setOnClickListener(this);
-        if (PermissionUtils.hasGpsPermission(this)) {
-            if (!PermissionUtils.hasSMSReadPermission(this)) {
-                Snackbar.make(mNextBTN, R.string.txt_allow_permission, Snackbar.LENGTH_SHORT).show();
+        if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
+            if (PermissionUtils.hasGpsPermission(this)) {
+                if (!PermissionUtils.hasSMSReadPermission(this)) {
+                    Snackbar.make(mNextBTN, R.string.txt_allow_permission, Snackbar.LENGTH_SHORT).show();
+                }
+            }
+            if (!LocationCheckUtils.getInstance().hasLocationPermission()) {
+                LocationCheckUtils.getInstance().statusCheck();
+            } else {
+                LocationCheckUtils.getInstance().requestNewLocationData();
             }
         }
         String s = getString(R.string.text_terms);
@@ -108,11 +116,7 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
         mNameET.setText(mUsername);
         mMobileET.setText(mMobileno);
         mEmailET.setText(mEmail);
-        if (!LocationCheckUtils.getInstance().hasLocationPermission()) {
-            LocationCheckUtils.getInstance().statusCheck();
-        } else {
-            LocationCheckUtils.getInstance().requestNewLocationData();
-        }
+
     }
 
     @Override
@@ -121,7 +125,7 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
         if (mAppPreference.getBoolean(AppConstant.IS_GMAIL_ENABLED, false)) {
             mEmailView.setVisibility(View.VISIBLE);
             mEmailET.setEnabled(false);
-        }else{
+        } else {
             mEmailView.setVisibility(View.GONE);
             mEmailET.setEnabled(true);
         }
@@ -131,11 +135,21 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_next:
-                if (LocationCheckUtils.getInstance().hasLocationPermission()) {
-                    LocationCheckUtils.getInstance().requestNewLocationData();
-                    mPresenter.validateData();
+                if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
+                    if (LocationCheckUtils.getInstance().hasLocationPermission()) {
+                        LocationCheckUtils.getInstance().requestNewLocationData();
+                        mPresenter.validateData();
+                    } else {
+                        AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
+                    }
                 } else {
-                    AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
+                    if (mEmailET.getText().toString().isEmpty()) {
+                        Snackbar.make(mEmailET, "Please enter email id", Snackbar.LENGTH_SHORT).show();
+                    } else if (!Patterns.EMAIL_ADDRESS.matcher(mEmailET.getText().toString()).matches()) {
+                        Snackbar.make(mEmailET, "Email is not valid", Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        mPresenter.validateData();
+                    }
                 }
                 break;
             case R.id.tv_terms:

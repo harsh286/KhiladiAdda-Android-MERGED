@@ -37,7 +37,6 @@ public class WordSearchMainAdapter extends RecyclerView.Adapter<WordSearchMainAd
         this.context = context;
         this.mTrendingQuizList = mTrendingQuizList;
         this.mCategoryQuizList = mCategoryQuizList;
-
     }
 
     @NonNull
@@ -72,7 +71,6 @@ public class WordSearchMainAdapter extends RecyclerView.Adapter<WordSearchMainAd
         } else {
             holder.mViewALLMVC.setVisibility(View.VISIBLE);
         }
-
     }
 
     private void setupRecyclerview(ViewHolder holder, boolean isTrending, int position) {

@@ -263,6 +263,7 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
                 gameAllTournamentList.addAll(response.getResponse());
                 mAllTournamentGameAdapter.notifyDataSetChanged();
             } else {
+                filterNumbersTV.setVisibility(View.GONE);
                 gameAllTournamentList.clear();
                 mAllTournamentGameAdapter.notifyDataSetChanged();
                 tvError.setVisibility(View.VISIBLE);
@@ -287,6 +288,8 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
             gameMyTournamentList.clear();
             gameMyTournamentList.addAll(response.getTournamentList());
             myTournamentGameAdapter.notifyDataSetChanged();
+        }else {
+            tvError.setVisibility(View.VISIBLE);
         }
     }
 

@@ -82,7 +82,7 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
     private IScratchPresenter mPresenter;
     private ScratchCardAdapter mAdapter;
     private List<ScratchCardResponseDettails> mScratchList;
-    private int mCardType;
+    private int mCardType = 10;
 
     @Override
     protected int getContentView() {
@@ -122,7 +122,7 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
         mScratchCardRV.setLayoutManager(new GridLayoutManager(this, 3));
         mScratchCardRV.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
-        getCategory(AppConstant.LUDO);
+        getCategory(AppConstant.COURTPIECE_TYPE);
     }
 
     @Override
@@ -340,6 +340,7 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
 //                        AppUtilityMethods.showMsg(this, msg, true);
                         Snackbar.make(mBackIV, msg, Snackbar.LENGTH_SHORT).show();
                     }
+                    break;
                 case 11:
                     if (!mAppPreference.getBoolean(AppConstant.IS_RUMMY, false)) {
                         mAppPreference.setBoolean(AppConstant.IS_RUMMY, true);
@@ -363,7 +364,6 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
         hideProgress();
         if (responseModel.isStatus()) {
             getData();
-
         }
     }
 
@@ -388,7 +388,6 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
     public void onscratchcard_id(String card_id) {
         if (card_id != null) {
             mPresenter.applyScratchCard(card_id);
-
         }
     }
 

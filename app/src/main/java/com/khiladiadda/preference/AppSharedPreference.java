@@ -20,7 +20,7 @@ import com.khiladiadda.utility.AppConstant;
 
 import java.util.List;
 
-public class AppSharedPreference {
+public class    AppSharedPreference {
 
     private SharedPreferences sharedPreferences;
     private Editor editor;

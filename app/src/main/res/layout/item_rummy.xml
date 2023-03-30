@@ -155,11 +155,11 @@
             android:background="@drawable/button_background_selected"
             android:gravity="center"
             android:padding="@dimen/padding_5"
+            android:autoSizeTextType="uniform"
             android:layout_marginEnd="4dp"
             android:paddingStart="@dimen/text_12"
             android:paddingEnd="@dimen/text_12"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_16"
             android:textStyle="bold"
             tools:text="₹ 5k" />
 
@@ -170,6 +170,7 @@
             android:layout_below="@+id/tv_wining_amount"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/padding_5"
+            android:visibility="gone"
             android:gravity="center"
             android:drawablePadding="4dp"
             android:drawableLeft="@drawable/ic_discount"

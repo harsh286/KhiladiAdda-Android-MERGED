@@ -41,7 +41,6 @@ public class PayActivity extends BaseActivity implements ISwitchGamerCashView {
     int coins = 0;
     String mCouponCode = "";
 
-
     @Override
     protected int getContentView() {
         return R.layout.activity_pay;

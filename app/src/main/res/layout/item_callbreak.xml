@@ -150,12 +150,42 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:background="@drawable/bg_button_cb"
-            android:drawableStart="@drawable/ic_trophy"
+            android:drawableStart="@drawable/ic_trophy_hth2"
+            android:drawableTint="#EBBB14"
             android:drawablePadding="@dimen/padding_5"
             android:padding="@dimen/padding_8"
             android:text="1000"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_16" />
+            android:textSize="@dimen/text_13" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_view_more"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_button_cb"
+            android:drawablePadding="@dimen/padding_5"
+            android:padding="@dimen/padding_8"
+            android:text="1000"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_13" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_view_score"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:padding="@dimen/padding_5"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_button_cb"
+            android:text="View Score"
+            android:visibility="gone"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_13" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

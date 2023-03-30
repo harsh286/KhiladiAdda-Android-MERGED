@@ -87,7 +87,6 @@ public class WordSearchSubMainAdapter extends RecyclerView.Adapter<WordSearchSub
         holder.mNameTV.setText(name);
         holder.mWinTV.setText("" + winAmount + " Coins");
         holder.mEntryFeeTV.setText("Entry: " + entryAmount + " Coins");
-
     }
 
     @Override
@@ -125,7 +124,6 @@ public class WordSearchSubMainAdapter extends RecyclerView.Adapter<WordSearchSub
             mOnItemClickListener = onItemClickListener;
             mQuizzesMCV.setOnClickListener(this);
             mPLayBtn.setOnClickListener(this);
-
         }
 
         @Override

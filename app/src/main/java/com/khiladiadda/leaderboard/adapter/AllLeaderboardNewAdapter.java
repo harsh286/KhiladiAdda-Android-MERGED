@@ -15,6 +15,7 @@ import com.khiladiadda.R;
 import com.khiladiadda.network.model.response.LeaderboardSubResponse;
 import com.khiladiadda.network.model.response.LudoAddaResponseDetails;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,13 +50,10 @@ public class AllLeaderboardNewAdapter extends RecyclerView.Adapter<AllLeaderboar
         rank = position + 4;
         holder.mRankTV.setText("#" + rank);
         if (!TextUtils.isEmpty(String.valueOf(details.getTotalAmount()))) {
-            holder.mScoreTV.setText("Won: " + details.getTotalAmount() + " Coins");
+            holder.mScoreTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(details.getTotalAmount()));
         } else {
-            holder.mScoreTV.setText("Won: 0 Coins");
+            holder.mScoreTV.setText("Won: \u20B9 0");
         }
-//        if (details.getnLudo() != null) {
-//            holder.mUsernameTV.setText("Won: " + details.getFullDetails()..getWon() + " Challenges");
-//        }
     }
 
     @Override

@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".profile.ProfileActivity">
 
-<include layout="@layout/actionbar_transparent"/>
+    <include layout="@layout/actionbar_transparent" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -153,6 +153,7 @@
                     layout="@layout/profile_pubg"
                     android:visibility="visible" />
             </LinearLayout>
+
             <include layout="@layout/bannermoengage" />
         </RelativeLayout>
     </ScrollView>

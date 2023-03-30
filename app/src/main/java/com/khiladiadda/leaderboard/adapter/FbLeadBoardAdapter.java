@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.khiladiadda.R;
 import com.khiladiadda.network.model.response.OverallLeadBoardList;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,9 +40,9 @@ public class FbLeadBoardAdapter extends RecyclerView.Adapter<FbLeadBoardAdapter.
         OverallLeadBoardList details = overallLeadBoardLists.get(position);
         holder.mNameTV.setText(String.valueOf(details.getName()));
         if (!TextUtils.isEmpty(String.valueOf(details.getWinningAmount()))) {
-            holder.mScoreTV.setText("Won: " + details.getWinningAmount() + " Coins");
+            holder.mScoreTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(details.getWinningAmount()));
         } else {
-            holder.mScoreTV.setText("Won: 0 Coins");
+            holder.mScoreTV.setText("Won: \u20B9 0");
         }
         if (!TextUtils.isEmpty(details.getDp())) {
             Glide.with(holder.mProfileIV.getContext()).load(details.getDp()).placeholder(R.mipmap.ic_launcher).into(holder.mProfileIV);

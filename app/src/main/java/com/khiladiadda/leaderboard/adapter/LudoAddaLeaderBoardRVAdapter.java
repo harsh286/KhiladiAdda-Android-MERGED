@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.khiladiadda.R;
 import com.khiladiadda.network.model.response.LudoAddaResponseDetails;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,9 +49,9 @@ public class LudoAddaLeaderBoardRVAdapter extends RecyclerView.Adapter<LudoAddaL
         rank = position + 4;
         holder.mRankTV.setText("#" + rank);
         if (!TextUtils.isEmpty(String.valueOf(details.getTotal()))) {
-            holder.mScoreTV.setText("Won: " + details.getTotal() + " Coins");
+            holder.mScoreTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(details.getTotal()));
         } else {
-            holder.mScoreTV.setText("Won: 0 Coins");
+            holder.mScoreTV.setText("Won: \u20B9 0");
         }
         if (details.getnLudo() != null) {
             holder.mUsernameTV.setText("Won: " + details.getnLudo().getWon() + " Challenges");

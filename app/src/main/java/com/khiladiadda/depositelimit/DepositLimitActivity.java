@@ -52,7 +52,6 @@ public class DepositLimitActivity extends BaseActivity implements IDepositView {
     private int min = 5000, max = 50000, step = 1000;
     private IDepositeLimitPresenter mIDepositeLimitPresenter;
 
-
     @Override
     protected int getContentView() {
         return R.layout.activity_deposit_limit;
@@ -62,9 +61,7 @@ public class DepositLimitActivity extends BaseActivity implements IDepositView {
     protected void initViews() {
         mLimitSeekBar.setMax((max - min) / step);
         mIDepositeLimitPresenter = new DepositLimitPresenter(this);
-
         doSeekBar();
-
     }
 
     @Override
@@ -150,14 +147,14 @@ public class DepositLimitActivity extends BaseActivity implements IDepositView {
 //                mProgress = i * 1000 + 5000
                 if (i == 0) {
                     mPriceChangeTv.setText("₹ " + 5000 + "/-");
-                    mMonthPriceChangeTv.setText("₹ " + (5000*20) + "/-");
+                    mMonthPriceChangeTv.setText("₹ " + (5000 * 20) + "/-");
                     mAddIv.setEnabled(true);
                     mAddIv.setImageDrawable(getDrawable(R.drawable.ic_deposit_add));
                     mMinusIv.setEnabled(false);
                     mMinusIv.setImageDrawable(getDrawable(R.drawable.ic_deposit_minus_disable));
                 } else if (i == 45) {
                     mPriceChangeTv.setText("₹ " + 50000 + "/-");
-                    mMonthPriceChangeTv.setText("₹ " + (50000*20) + "/-");
+                    mMonthPriceChangeTv.setText("₹ " + (50000 * 20) + "/-");
                     mAddIv.setEnabled(false);
                     mAddIv.setImageDrawable(getDrawable(R.drawable.ic_deposit_add_disable));
                     mMinusIv.setEnabled(true);
@@ -210,7 +207,8 @@ public class DepositLimitActivity extends BaseActivity implements IDepositView {
             int limit = 0;
             limit = response.getResponse().getRemainingLimit();
             mLimitLeft.setText("₹ " + limit + "/-");
-            mLimitSeekBar.setProgress((limit-min)/1000);
+            mLimitSeekBar.setProgress((limit - min) / 1000);
+            mMonthPriceChangeTv.setText("" + response.getResponse().getMonthlyLimit());
             mLastDateTv.setText("You can update your limit after " + AppUtilityMethods.getTimeLeft(response.getResponse().getLimitUpdatedAt()));
         } else {
             Snackbar.make(mSetLimitBtn, response.getMessage(), Snackbar.LENGTH_SHORT).show();

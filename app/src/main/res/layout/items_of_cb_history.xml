@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcv_cb_history"
+        android:layout_width="0dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:cardCornerRadius="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_numbering"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                tools:text="#1"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civ_profile"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_numbering"
+                app:layout_constraintStart_toEndOf="@+id/tv_numbering"
+                app:layout_constraintTop_toTopOf="@+id/tv_numbering"
+                tools:src="@drawable/lead_droido" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:maxLines="2"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/civ_profile"
+                app:layout_constraintEnd_toStartOf="@+id/tv_points"
+                app:layout_constraintStart_toEndOf="@+id/civ_profile"
+                app:layout_constraintTop_toTopOf="@+id/civ_profile"
+                tools:text="Name" />
+
+            <TextView
+                android:id="@+id/tv_points_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:text="Points"
+                android:textColor="#939393"
+                android:textSize="@dimen/text_12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/civ_profile"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_won_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Won"
+                android:textColor="#939393"
+                android:textSize="@dimen/text_12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_points_txt"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_points"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+                app:layout_constraintEnd_toEndOf="@+id/tv_points_txt"
+                app:layout_constraintStart_toStartOf="@+id/tv_points_txt"
+                app:layout_constraintTop_toTopOf="@+id/tv_name"
+                tools:text="21" />
+
+            <TextView
+                android:id="@+id/tv_won"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+                app:layout_constraintEnd_toEndOf="@+id/tv_won_txt"
+                app:layout_constraintStart_toStartOf="@+id/tv_won_txt"
+                app:layout_constraintTop_toTopOf="@+id/tv_name"
+                tools:text="21" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

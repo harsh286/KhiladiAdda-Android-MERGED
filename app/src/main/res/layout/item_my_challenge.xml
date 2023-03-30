@@ -6,7 +6,6 @@
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="@dimen/card_corner_radius_10"
     app:cardElevation="@dimen/card_elevation_5"
-    android:layout_marginStart="@dimen/margin_5"
     android:layout_marginEnd="@dimen/margin_5"
     android:orientation="vertical">
 
@@ -112,6 +111,18 @@
             android:background="@color/color_yellow"
             android:text="@string/text_ludo_result_declared_error"
             android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_11" />
+        <TextView
+            android:id="@+id/tv_show_room_code"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:gravity="center"
+            android:padding="@dimen/padding_5"
+            android:background="@color/color_green"
+            android:text="@string/text_ludo_result_declared_error"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_11" />
     </LinearLayout>
     </LinearLayout>

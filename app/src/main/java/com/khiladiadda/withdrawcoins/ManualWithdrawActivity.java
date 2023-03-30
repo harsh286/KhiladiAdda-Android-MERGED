@@ -30,6 +30,7 @@ import com.khiladiadda.network.model.response.ManualWithdrawDetails;
 import com.khiladiadda.network.model.response.ManualWithdrawResponse;
 import com.khiladiadda.network.model.response.OtpResponse;
 import com.khiladiadda.network.model.response.PayoutResponse;
+import com.khiladiadda.network.model.response.TdsResponse;
 import com.khiladiadda.network.model.response.WIthdrawLimitResponse;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
@@ -350,6 +351,16 @@ public class ManualWithdrawActivity extends BaseActivity implements IWithdrawVie
 
     @Override
     public void onIPayFailed(ApiError error) {
+
+    }
+
+    @Override
+    public void onCheckTDSComplete(TdsResponse response) {
+
+    }
+
+    @Override
+    public void onCheckTDSFailed(ApiError error) {
 
     }
 

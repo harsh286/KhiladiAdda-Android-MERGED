@@ -105,7 +105,6 @@ public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerVi
         });
 
         mPresenter = new CxBannerPresenter(this);
-        getData("41 42 43");
     }
 
 
@@ -195,6 +194,7 @@ public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerVi
     @Override
     protected void onResume() {
         super.onResume();
+        getData("41 42 43");
         viewPager.setCurrentItem(0);
     }
 }

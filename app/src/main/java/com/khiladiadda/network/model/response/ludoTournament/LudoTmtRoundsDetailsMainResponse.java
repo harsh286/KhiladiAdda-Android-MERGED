@@ -17,6 +17,10 @@ public class LudoTmtRoundsDetailsMainResponse extends BaseResponse {
     @Expose
     private boolean isExist;
 
+    @SerializedName("isParticipantsFull")
+    @Expose
+    private boolean isParticipantsFull;
+
     public boolean isExist() {
         return isExist;
     }
@@ -39,5 +43,13 @@ public class LudoTmtRoundsDetailsMainResponse extends BaseResponse {
 
     public void setResponse(List<LudoTmtRoundsDetailsResponse> response) {
         this.response = response;
+    }
+
+    public boolean isParticipantsFull() {
+        return isParticipantsFull;
+    }
+
+    public void setParticipantsFull(boolean participantsFull) {
+        isParticipantsFull = participantsFull;
     }
 }

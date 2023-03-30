@@ -15,9 +15,12 @@
         android:id="@+id/rv_rummy_history"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:listitem="@layout/items_of_rummy_history"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include4" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include4"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/items_of_rummy_history" />
 
     <TextView
         android:id="@+id/tv_error"
@@ -26,7 +29,7 @@
         android:layout_centerInParent="true"
         android:fontFamily="@font/rowdies_regular"
         android:gravity="center"
-        android:text="No History Found"
+        android:text="@string/text_no_transaction"
         android:textColor="@color/white"
         android:textSize="@dimen/text_16"
         android:visibility="gone"

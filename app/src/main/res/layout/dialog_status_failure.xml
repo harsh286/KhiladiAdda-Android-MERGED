@@ -62,13 +62,15 @@
             android:id="@+id/tv_amt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_20"
             android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginEnd="@dimen/margin_20"
             android:text="fghfhg fffhfhfhfhf hfhfhffgfhdfgdgdfgdfgdfgfhf  hfhg gfhgf h hg fhffh gh fgh hf jf gn g f f hg hg kg h h hg h h gk gk jm hjk hjh jhjhjh kj mhb hmb mjb mjb hm kjh jhg jh hg hjg hjk kh hk h kkhb gkh jkhlhj nj k,bmbmbhmbhm bjm jk hjkj h ,hj h,j kh khj khubkubkuiubkbku "
             android:textAlignment="center"
             android:textColor="#272727"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
             android:textSize="@dimen/text_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/img_status_success" />
 
         <Button

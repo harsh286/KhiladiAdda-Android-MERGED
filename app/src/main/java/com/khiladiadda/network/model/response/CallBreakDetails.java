@@ -28,6 +28,28 @@ public class CallBreakDetails {
     @SerializedName("__v")
     @Expose
     private Long v;
+    @SerializedName("isMatchPlayable")
+    @Expose
+    private boolean isMatchPlayable;
+    @SerializedName("players")
+    @Expose
+    private List<CallBreakHistoryPlayerResponse> players;
+
+    public List<CallBreakHistoryPlayerResponse> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<CallBreakHistoryPlayerResponse> players) {
+        this.players = players;
+    }
+
+    public boolean isMatchPlayable() {
+        return isMatchPlayable;
+    }
+
+    public void setMatchPlayable(boolean matchPlayable) {
+        isMatchPlayable = matchPlayable;
+    }
 
     @SerializedName("prizePoolBreakthrough")
     @Expose

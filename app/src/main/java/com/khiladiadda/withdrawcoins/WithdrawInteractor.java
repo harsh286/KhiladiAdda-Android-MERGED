@@ -19,6 +19,7 @@ import com.khiladiadda.network.model.response.BeneficiaryVerifyResponse;
 import com.khiladiadda.network.model.response.ManualWithdrawResponse;
 import com.khiladiadda.network.model.response.OtpResponse;
 import com.khiladiadda.network.model.response.PayoutResponse;
+import com.khiladiadda.network.model.response.TdsResponse;
 import com.khiladiadda.network.model.response.WIthdrawLimitResponse;
 
 import rx.Subscription;
@@ -155,6 +156,12 @@ public class WithdrawInteractor {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
         return manager.createObservable(service.onInstantPayTransfer(beneficiaryId, amount, otp, latitude, longitude)).subscribe(new SubscriberCallback<>(listener));
+    }
+
+    public Subscription checkTDS(IApiListener<TdsResponse> listener, int amount) {
+        ApiManager manager = ApiManager.getInstance();
+        ApiService service = manager.createService();
+        return manager.createObservable(service.onCheckTDS(amount)).subscribe(new SubscriberCallback<>(listener));
     }
 
 }

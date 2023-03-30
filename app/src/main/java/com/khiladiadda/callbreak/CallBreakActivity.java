@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -48,6 +49,7 @@ import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.CallBreakDetails;
 import com.khiladiadda.network.model.response.CallBreakJoinMainResponse;
 import com.khiladiadda.network.model.response.CallBreakResponse;
+import com.khiladiadda.network.model.response.CbHistoryRankMainResponse;
 import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.PrizePoolBreakthrough;
 import com.khiladiadda.preference.AppSharedPreference;
@@ -63,7 +65,6 @@ import com.moengage.core.analytics.MoEAnalyticsHelper;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +103,12 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
     private String mEntryFee;
+    @BindView(R.id.tv_history)
+    TextView mHistoryTV;
+    @BindView(R.id.tv_help_video)
+    TextView mHelpVideoTV;
+    private int mDownUp = 1;
+    private long mLastClickTime = 0;
 
     @Override
     protected int getContentView() {
@@ -111,9 +118,6 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     @Override
     protected void initViews() {
         mActivityNameTV.setText(R.string.text_court_piece_pro);
-        mBackIV.setOnClickListener(this);
-        mDownloadTV.setOnClickListener(this);
-        callBreakDialog = new CallBreakDialog(this);
     }
 
     @Override
@@ -125,6 +129,11 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
         mCallBreakRV.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
         mWalletLL.setOnClickListener(this);
+        mBackIV.setOnClickListener(this);
+        mDownloadTV.setOnClickListener(this);
+        mHelpVideoTV.setOnClickListener(this);
+        mHistoryTV.setOnClickListener(this);
+        callBreakDialog = new CallBreakDialog(this);
         getData();
     }
 
@@ -137,6 +146,10 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
         } else if (view.getId() == R.id.rl_wallet) {
             Intent profile = new Intent(this, WalletActivity.class);
             startActivity(profile);
+        } else if (view.getId() == R.id.tv_history) {
+            startActivity(new Intent(this, CBHistoryActivity.class));
+        } else if (view.getId() == R.id.tv_help_video) {
+            AppUtilityMethods.openYoutube(this);
         }
     }
 
@@ -165,7 +178,6 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
 
     @Override
     public void onGetContestSuccess(CallBreakResponse responseModel) {
-        hideProgress();
         if (responseModel.isStatus()) {
             mainResponse = responseModel;
             mList.addAll(responseModel.getResponse());
@@ -179,8 +191,10 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
             } else {
                 mBannerVP.setVisibility(GONE);
             }
+            hideProgress();
             apkCheck();
         } else {
+            hideProgress();
             AppUtilityMethods.showMsg(this, responseModel.getMessage(), false);
         }
     }
@@ -194,26 +208,58 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     public void onGetContestJoinSuccess(CallBreakJoinMainResponse responseModel) {
         hideProgress();
         if (responseModel.isStatus()) {
-            Map<String, Object> eventParameters2 = new HashMap<>();
-            eventParameters2.put(AFInAppEventParameterName.REVENUE, responseModel.getResponse().getWinningAmount()); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-            eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-            eventParameters2.put(AppConstant.GAME, AppConstant.WORD_SEARCH);
-            eventParameters2.put(AppConstant.EntryFee, mEntryFee);
-            AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.CALL_BREAK_JOIN, eventParameters2);
-            //Mo Engage
-            Properties mProperties = new Properties();
-            mProperties.addAttribute(AppConstant.GAMETYPE, AppConstant.CALL_BREAK_JOIN);
-            mProperties.addAttribute("EnrtyFee", mEntryFee);
-            MoEAnalyticsHelper.INSTANCE.trackEvent(this, AppConstant.CALL_BREAK_JOIN, mProperties);
-            launchUnityWithData(mainResponse.getResponse().get(position).getId(), mainResponse.getResponse().get(position).getEntryFees(), mainResponse.getResponse().get(position).getWinningAmount(), responseModel.getResponse().getRandomName(), responseModel.getResponse().getRandomDp(), mainResponse.getResponse().get(position).prizePoolBreakup);
+            if (responseModel.getStatusCode() == 200 || responseModel.getStatusCode() == 202) { // okay
+                Map<String, Object> eventParameters2 = new HashMap<>();
+                eventParameters2.put(AFInAppEventParameterName.REVENUE, responseModel.getResponse().getWinningAmount()); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
+                eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
+                eventParameters2.put(AppConstant.GAME, AppConstant.WORD_SEARCH);
+                eventParameters2.put(AppConstant.EntryFee, mEntryFee);
+                AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.CALL_BREAK_JOIN, eventParameters2);
+                //Mo Engage
+                Properties mProperties = new Properties();
+                mProperties.addAttribute(AppConstant.GAMETYPE, AppConstant.CALL_BREAK_JOIN);
+                mProperties.addAttribute("EnrtyFee", mEntryFee);
+                MoEAnalyticsHelper.INSTANCE.trackEvent(this, AppConstant.CALL_BREAK_JOIN, mProperties);
+                launchUnityWithData(mainResponse.getResponse().get(position).getId(), mainResponse.getResponse().get(position).getEntryFees(), mainResponse.getResponse().get(position).getWinningAmount(), responseModel.getResponse().getRandomName(), responseModel.getResponse().getRandomDp(), mainResponse.getResponse().get(position).prizePoolBreakup);
+            } else if (responseModel.getStatusCode() == 201) {
+                AppUtilityMethods.showMsg(this, "You have already joined other match", false);
+            } else if (responseModel.getStatusCode() == 203) {
+                AppUtilityMethods.showRechargeMsg(this, "Your wallet balance is insufficient. Please recharge your wallet to play and earn.");
+            } else {
+                AppUtilityMethods.showMsg(this, responseModel.getMessage(), false);
+            }
         } else {
-            Toast.makeText(this, responseModel.getMessage(), Toast.LENGTH_SHORT).show();
+            if (responseModel.getStatusCode() == 203) {
+                AppUtilityMethods.showRechargeMsg(this, "Your wallet balance is insufficient. Please recharge your wallet to play and earn.");
+            } else {
+                Toast.makeText(this, responseModel.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
     @Override
     public void onGetContestJoinFailure(ApiError error) {
         hideProgress();
+    }
+
+    @Override
+    public void onGetHistorySuccess(CallBreakResponse responseModel) {
+
+    }
+
+    @Override
+    public void onGetHistoryFailure(ApiError error) {
+
+    }
+
+    @Override
+    public void onGetHistoryRankSuccess(CbHistoryRankMainResponse responseModel) {
+
+    }
+
+    @Override
+    public void onGetHistoryRankFailure(ApiError error) {
+
     }
 
     private Dialog downloadOptionPopup(final Context activity, final IOnVesrionDownloadListener listener) {
@@ -227,6 +273,10 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
         ProgressBar progressBar = dialog.findViewById(R.id.pb_apk_download);
         AppCompatButton iv_playstore = dialog.findViewById(R.id.iv_download);
         ImageView ivCross = dialog.findViewById(R.id.iv_cross);
+        TextView tvMsg = dialog.findViewById(R.id.textView9);
+        if (mDownUp == 2) {
+            tvMsg.setText("It seem like you haven't update our CourtPiece pro game to play contests, So please click on download button to download the game.");
+        }
         ivCross.setOnClickListener(view -> {
             dialog.dismiss();
         });
@@ -324,10 +374,14 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
                 mWalletLL.setVisibility(View.VISIBLE);
                 mAppPreference.setBoolean("CallBreakDownload", true);
             } else {
+                mDownloadTV.setVisibility(View.VISIBLE);
                 mDownloadTV.setText("Update");
+                mDownUp = 2;
+                mWalletLL.setVisibility(GONE);
             }
         } else {
             mDownloadTV.setVisibility(View.VISIBLE);
+            mWalletLL.setVisibility(GONE);
         }
         if (mLink != null) {
             mAppPreference.setString("CBVersion", mCurrentVersion);
@@ -350,7 +404,7 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
                 installApk(mFilePath);
             }
             apkCheck();
-        }else {
+        } else {
             AppDialog.showRestartDialog(this, "We are restarting");
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -370,7 +424,12 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     public void onItemClick(View view, int position, int tag) {
         if (mAppPreference.getBoolean("CallBreakDownload", false)) {
             if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 openBottomDialog(position);
+
             } else {
                 mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
             }
@@ -401,13 +460,10 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
             if (mAppPreference.getProfileData().getId() != null || !mAppPreference.getProfileData().getId().isEmpty()) {
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.setComponent(new ComponentName(AppConstant.CallBreakPackageName, "com.unity3d.player.UnityPlayerActivity"));
-
 //                launchGameIntent.putExtra("userToken", mAppPreference.getSessionToken().toString());
 //                launchGameIntent.putExtra("playerId", mAppPreference.getProfileData().getId());
 //                launchGameIntent.putExtra("amount", mAmount);
 //                launchGameIntent.putExtra("prizePoolBreakUp", String.valueOf(myCustomArray));
-
-
                 intent.putExtra("userToken", mAppPreference.getSessionToken().toString());
                 intent.putExtra("playerId", mAppPreference.getProfileData().getId());
                 intent.putExtra("amount", mAmount);
@@ -432,6 +488,12 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     public void onConfirmClick(int pos) {
         position = pos;
         getJoinData(pos);
+        callBreakDialog.dismiss();
+//        int total = (int) (mCoins.getDeposit() + mCoins.getWinning());
+//        if (total >= Integer.parseInt(mEntryFee)) {
+//        } else {
+//            AppUtilityMethods.showRechargeMsg(this, "Your wallet balance is insufficient. Please recharge your wallet to play and earn.");
+//        }
     }
 
     private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {

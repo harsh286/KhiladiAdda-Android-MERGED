@@ -8,6 +8,7 @@ import com.khiladiadda.network.model.response.BeneficiaryVerifyResponse;
 import com.khiladiadda.network.model.response.ManualWithdrawResponse;
 import com.khiladiadda.network.model.response.OtpResponse;
 import com.khiladiadda.network.model.response.PayoutResponse;
+import com.khiladiadda.network.model.response.TdsResponse;
 import com.khiladiadda.network.model.response.WIthdrawLimitResponse;
 
 public interface IWithdrawView {
@@ -84,5 +85,8 @@ public interface IWithdrawView {
 
     void onIPayComplete(PayoutResponse response);
     void onIPayFailed(ApiError error);
+
+    void onCheckTDSComplete(TdsResponse response);
+    void onCheckTDSFailed(ApiError error);
 
 }

@@ -46,6 +46,17 @@ public class RummyHistoryResponse {
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
+    @SerializedName("rummyCode")
+    @Expose
+    private String rummyCode;
+
+    public String getRummyCode() {
+        return rummyCode;
+    }
+
+    public void setRummyCode(String rummyCode) {
+        this.rummyCode = rummyCode;
+    }
 
     public String getId() {
         return id;

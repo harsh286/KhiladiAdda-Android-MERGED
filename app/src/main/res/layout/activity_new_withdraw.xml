@@ -37,34 +37,32 @@
         android:textSize="@dimen/text_13"
         android:visibility="gone" />
 
+    <RelativeLayout
+        android:id="@+id/rl_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_wining_cash"
+        android:visibility="visible"
+        android:background="@color/white">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_advertisement"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_alignParentTop="true" />
+
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tv_coins"
+        android:layout_below="@+id/rl_image"
         android:background="@color/colorWhite">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="@dimen/margin_30"
-                android:layout_marginTop="@dimen/margin_10"
-                android:layout_marginEnd="@dimen/margin_30"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:id="@+id/tv_withdraw_history"
-                    style="@style/CRButtonGreyRed"
-                    android:layout_marginStart="@dimen/margin_5"
-                    android:layout_weight="1"
-                    android:text="@string/withdraw_history" />
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_cash_option"
@@ -254,6 +252,7 @@
                         android:hint="@string/text_ifsc"
                         android:inputType="textCapCharacters"
                         android:textColorHint="@color/lighter_black" />
+
                     <EditText
                         android:id="@+id/et_bank_name"
                         style="@style/AmountEditText"

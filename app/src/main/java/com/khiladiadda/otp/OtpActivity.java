@@ -43,6 +43,7 @@ import com.khiladiadda.network.model.response.MasterResponse;
 import com.khiladiadda.network.model.response.OtpResponse;
 import com.khiladiadda.otp.interfaces.IOtpPresenter;
 import com.khiladiadda.otp.interfaces.IOtpView;
+import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.registration.RegistrationActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
@@ -144,7 +145,7 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
                 } else {
                     if (PermissionUtils.hasStoragePermission(this)) {
                         mPresenter.validateData();
-                    }else {
+                    } else {
                         AppUtilityMethods.showStoragePermisisionMsg(this, "", false);
                     }
                 }
@@ -235,8 +236,8 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
             mAppPreference.setSessionToken(responseModel.getJwt());
             mAppPreference.setIsLogin(true);
             mPresenter.getMasterData();
-            MoEAnalyticsHelper.INSTANCE.setUniqueId(this,responseModel.getJwt());
-             Properties properties = new Properties();
+            MoEAnalyticsHelper.INSTANCE.setUniqueId(this, responseModel.getJwt());
+            Properties properties = new Properties();
             MoEAnalyticsHelper.INSTANCE.trackEvent(this, "LoginUser", properties);
             AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AFInAppEventType.LOGIN, null, new AppsFlyerRequestListener() {
                 @Override
@@ -268,6 +269,7 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
     @Override
     public void onMasterComplete(MasterResponse responseModel) {
         AppUtilityMethods.saveMasterData(responseModel);
+        appsFlyer("direct", AppSharedPreference.getInstance().getMobile());
         hideProgress();
         startActivity(new Intent(this, MainActivity.class));
         MoEAnalyticsHelper.INSTANCE.setUniqueId(this, mAppPreference.getProfileData().getId());
@@ -393,6 +395,14 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
+    }
+
+    private void appsFlyer(String socialName, String mMobileNumber) {
+        Map<String, Object> eventParameters2 = new HashMap<>();
+        eventParameters2.put(AppConstant.LOGIN_NUMBER, mMobileNumber);
+        eventParameters2.put(AppConstant.LOGIN_METHOD, socialName);
+        eventParameters2.put(AppConstant.LOGIN, "login");
+        AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
     }
 
 }

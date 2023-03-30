@@ -35,6 +35,9 @@ import com.cashfree.pg.core.api.exception.CFException;
 import com.cashfree.pg.core.api.utils.CFErrorResponse;
 import com.cashfree.pg.ui.api.CFDropCheckoutPayment;
 import com.cashfree.pg.ui.api.CFPaymentComponent;
+import com.cashfree.pg.ui.api.upi.intent.CFIntentTheme;
+import com.cashfree.pg.ui.api.upi.intent.CFUPIIntentCheckout;
+import com.cashfree.pg.ui.api.upi.intent.CFUPIIntentCheckoutPayment;
 import com.easebuzz.payment.kit.PWECouponsActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
@@ -91,6 +94,7 @@ import com.phonepe.intent.sdk.api.UPIApplicationInfo;
 
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -171,11 +175,18 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
     private final String mApiEndPoint = "/pg/v1/pay";
     private static final int B2B_PG_REQUEST_CODE = 777;
     private boolean isGamerCashEnabled;
+    private long mRemainingAddLimit = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PhonePe.init(this);
+
+        try {
+            CFPaymentGatewayService.getInstance().setCheckoutCallback(this);
+        } catch (CFException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -351,6 +362,8 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
         mNeokredTV.setSelected(false);
         mPhonepeTV.setSelected(false);
         mGamerCashTV.setSelected(false);
+        mGamerCashVerifiedTV.setSelected(false);
+        getmPaymentFrom = 0;
         switch (from) {
             case 1:
                 mGPayIV.setSelected(true);
@@ -438,49 +451,55 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
     public void onValidationComplete() {
         mCoins = Long.parseLong(mAmountET.getText().toString().trim());
         mAmount = mAmountET.getText().toString().trim() + ".00";
-        if (mCoins > 5000 && mAppPreference.getProfileData().getAadharUpdated() != 3) {
-            checkPanStatus();
-        } else {
-            showProgress(getString(R.string.txt_progress_authentication));
-            if (mPaymentFrom == AppConstant.FROM_GPAY_UPI) {
-                if (mUpiPaymentType == 1) {
-                    mPaymentFrom = AppConstant.FROM_CASHFREE_UPI;
-                } else if (mUpiPaymentType == 2) {
-                    mPaymentFrom = AppConstant.FROM_PAYTM;
-                } else if (mUpiPaymentType == 3) {
-                    mPaymentFrom = AppConstant.FROM_EASEBUZZ;
-                } else if (mUpiPaymentType == 4) {
-                    mPaymentFrom = AppConstant.FROM_PAYSHARP;
-                } else if (mUpiPaymentType == 5) {
-                    mPaymentFrom = AppConstant.FROM_PHONEPE_GPAY;
+
+        if (mCoins <= mRemainingAddLimit) {
+            if (mCoins > 5000 && mAppPreference.getProfileData().getAadharUpdated() != 3) {
+                checkPanStatus();
+            } else {
+                showProgress(getString(R.string.txt_progress_authentication));
+                if (mPaymentFrom == AppConstant.FROM_GPAY_UPI) {
+                    if (mUpiPaymentType == 1) {
+                        mPaymentFrom = AppConstant.FROM_CASHFREE_UPI;
+                    } else if (mUpiPaymentType == 2) {
+                        mPaymentFrom = AppConstant.FROM_PAYTM;
+                    } else if (mUpiPaymentType == 3) {
+                        mPaymentFrom = AppConstant.FROM_EASEBUZZ;
+                    } else if (mUpiPaymentType == 4) {
+                        mPaymentFrom = AppConstant.FROM_PAYSHARP;
+                    } else if (mUpiPaymentType == 5) {
+                        mPaymentFrom = AppConstant.FROM_PHONEPE_GPAY;
+                    }
+                } else if (mPaymentFrom == AppConstant.FROM_PAYTM_UPI) {
+                    if (mUpiPaymentType == 1) {
+                        mPaymentFrom = AppConstant.FROM_CASHFREE_UPI;
+                    } else if (mUpiPaymentType == 2) {
+                        mPaymentFrom = AppConstant.FROM_PAYTM;
+                    } else if (mUpiPaymentType == 3) {
+                        mPaymentFrom = AppConstant.FROM_EASEBUZZ;
+                    } else if (mUpiPaymentType == 4) {
+                        mPaymentFrom = AppConstant.FROM_PAYSHARP;
+                    } else if (mUpiPaymentType == 5) {
+                        mPaymentFrom = AppConstant.FROM_PHONEPE_PaytmPAY;
+                    }
+                } else if (mPaymentFrom == AppConstant.FROM_PHONEPAY_UPI) {
+                    if (mUpiPaymentType == 1) {
+                        mPaymentFrom = AppConstant.FROM_CASHFREE_UPI;
+                    } else if (mUpiPaymentType == 2) {
+                        mPaymentFrom = AppConstant.FROM_PAYTM;
+                    } else if (mUpiPaymentType == 3) {
+                        mPaymentFrom = AppConstant.FROM_EASEBUZZ;
+                    } else if (mUpiPaymentType == 4) {
+                        mPaymentFrom = AppConstant.FROM_PAYSHARP;
+                    } else if (mUpiPaymentType == 5) {
+                        mPaymentFrom = AppConstant.FROM_PHONEPE_PhonePePAY;
+                    }
                 }
-            } else if (mPaymentFrom == AppConstant.FROM_PAYTM_UPI) {
-                if (mUpiPaymentType == 1) {
-                    mPaymentFrom = AppConstant.FROM_CASHFREE_UPI;
-                } else if (mUpiPaymentType == 2) {
-                    mPaymentFrom = AppConstant.FROM_PAYTM;
-                } else if (mUpiPaymentType == 3) {
-                    mPaymentFrom = AppConstant.FROM_EASEBUZZ;
-                } else if (mUpiPaymentType == 4) {
-                    mPaymentFrom = AppConstant.FROM_PAYSHARP;
-                } else if (mUpiPaymentType == 5) {
-                    mPaymentFrom = AppConstant.FROM_PHONEPE_PaytmPAY;
-                }
-            } else if (mPaymentFrom == AppConstant.FROM_PHONEPAY_UPI) {
-                if (mUpiPaymentType == 1) {
-                    mPaymentFrom = AppConstant.FROM_CASHFREE_UPI;
-                } else if (mUpiPaymentType == 2) {
-                    mPaymentFrom = AppConstant.FROM_PAYTM;
-                } else if (mUpiPaymentType == 3) {
-                    mPaymentFrom = AppConstant.FROM_EASEBUZZ;
-                } else if (mUpiPaymentType == 4) {
-                    mPaymentFrom = AppConstant.FROM_PAYSHARP;
-                } else if (mUpiPaymentType == 5) {
-                    mPaymentFrom = AppConstant.FROM_PHONEPE_PhonePePAY;
-                }
+                callPaymentGateway();
             }
-            callPaymentGateway();
+        } else {
+            AppUtilityMethods.showMsg(this, "You can only add ₹" + mRemainingAddLimit + " amount as per your daily limit.", false);
         }
+
     }
 
     private void callPaymentGateway() {
@@ -509,29 +528,34 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
 
     private void checkGamerCashStatus() {
         mCoins = Long.parseLong(mAmountET.getText().toString().trim());
-        if (mAmountET.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Please add amount to proceed.\nMinimum amount to be added is Rs.10", Toast.LENGTH_SHORT).show();
+        if (mAmountET.getText().toString().trim().isEmpty() || mCoins < 10) {
+            AppUtilityMethods.showMsg(this, "Please add amount to proceed.\nMinimum amount to be added is Rs.10", false);
+//            Toast.makeText(this, "Please add amount to proceed.\nMinimum amount to be added is Rs.10", Toast.LENGTH_SHORT).show();
         } else {
-            if (mAppPreference.getIsGamerCashLinked()) {
-                if (mCoins > coins) {
-                    AppDialog.showInsufficientGCDialog(this);
-                } else {
-                    if (mCoins > 5000 && mAppPreference.getProfileData().getAadharUpdated() != 3) {
-                        checkPanStatus();
+            if (mCoins <= mRemainingAddLimit) {
+                if (mAppPreference.getIsGamerCashLinked()) {
+                    if (mCoins > coins) {
+                        AppDialog.showInsufficientGCDialog(this);
                     } else {
-                        Intent intent = new Intent(this, PayActivity.class);
-                        intent.putExtra("coins", coins);
-                        intent.putExtra("coupon", mCouponCode);
-                        intent.putExtra("enter_amount", mAmountET.getText().toString().trim());
-                        startActivity(intent);
-                        finish();
+                        if (mCoins > 5000 && mAppPreference.getProfileData().getAadharUpdated() != 3) {
+                            checkPanStatus();
+                        } else {
+                            Intent intent = new Intent(this, PayActivity.class);
+                            intent.putExtra("coins", coins);
+                            intent.putExtra("coupon", mCouponCode);
+                            intent.putExtra("enter_amount", mAmountET.getText().toString().trim());
+                            startActivity(intent);
+                            finish();
+                        }
                     }
+                } else {
+                    Intent intent = new Intent(this, GamerCashActivity.class);
+                    intent.putExtra("coins", coins);
+                    intent.putExtra("enter_amount", mAmountET.getText().toString().trim());
+                    startActivity(intent);
                 }
             } else {
-                Intent intent = new Intent(this, GamerCashActivity.class);
-                intent.putExtra("coins", coins);
-                intent.putExtra("enter_amount", mAmountET.getText().toString().trim());
-                startActivity(intent);
+                AppUtilityMethods.showMsg(this, "You can only add ₹" + mRemainingAddLimit + " amount as per your daily limit.", false);
             }
         }
     }
@@ -912,17 +936,16 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
 
     @Override
     public void onGetGamerCashSuccess(GetGamerCashResponse response) {
-        hideProgress();
         if (response.isStatus()) {
             AppSharedPreference.getInstance().setIsGamerCashLinked(response.getAlreadyLinked() || response.getLinked());
             if (isGamerCashEnabled) {
+                mRemainingAddLimit = response.getRemainingAddLimit();
                 if (response.getAlreadyLinked() || response.getLinked()) {
                     coins = response.getResponse().getCoins();
                     mGamerCashTV.setVisibility(View.GONE);
                     if (mAppPreference.getBoolean(AppConstant.IS_GAMERCASH_ENABLED, false)) {
                         mGamerCashVerifiedTV.setVisibility(View.VISIBLE);
                     }
-
                     mGamerCashVerifiedTV.setText(getString(R.string.gamer_cash_coins) + coins + " GC");
                 } else {
                     if (mAppPreference.getBoolean(AppConstant.IS_GAMERCASH_ENABLED, false)) {
@@ -935,6 +958,7 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
         } else {
             Snackbar.make(mAmountET, response.getMessage(), Snackbar.LENGTH_LONG);
         }
+        hideProgress();
     }
 
     @Override
@@ -1029,13 +1053,6 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
                     .setPaymentSessionID(cashfreeChecksumData.getChecksum())
                     .setOrderId(cashfreeChecksumData.getOrderId())
                     .build();
-            //For payment modes
-            CFPaymentComponent cfPaymentComponent = new CFPaymentComponent.CFPaymentComponentBuilder()
-                    .add(CFPaymentComponent.CFPaymentModes.CARD)
-                    .add(CFPaymentComponent.CFPaymentModes.UPI)
-                    .add(CFPaymentComponent.CFPaymentModes.WALLET)
-                    .add(CFPaymentComponent.CFPaymentModes.NB)
-                    .build();
             //setting theme in pg screen
             CFTheme cfTheme = new CFTheme.CFThemeBuilder()
                     .setNavigationBarBackgroundColor("#ed213a")
@@ -1045,14 +1062,36 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
                     .setPrimaryTextColor("#000000")
                     .setSecondaryTextColor("#000000")
                     .build();
-            //checkout payment
-            CFDropCheckoutPayment cfDropCheckoutPayment = new CFDropCheckoutPayment.CFDropCheckoutPaymentBuilder()
-                    .setSession(cfSession)
-                    .setCFUIPaymentModes(cfPaymentComponent)
-                    .setCFNativeCheckoutUITheme(cfTheme)
-                    .build();
-            CFPaymentGatewayService gatewayService = CFPaymentGatewayService.getInstance();
-            gatewayService.doPayment(AddWalletActivity.this, cfDropCheckoutPayment);
+            if (mPaymentFrom == AppConstant.FROM_CASHFREE) {
+                //For payment modes
+                CFPaymentComponent cfPaymentComponent = new CFPaymentComponent.CFPaymentComponentBuilder()
+                        .add(CFPaymentComponent.CFPaymentModes.CARD)
+                        .add(CFPaymentComponent.CFPaymentModes.UPI)
+                        .add(CFPaymentComponent.CFPaymentModes.WALLET)
+                        .add(CFPaymentComponent.CFPaymentModes.NB)
+                        .build();
+                //checkout payment
+                CFDropCheckoutPayment cfDropCheckoutPayment = new CFDropCheckoutPayment.CFDropCheckoutPaymentBuilder()
+                        .setSession(cfSession)
+                        .setCFUIPaymentModes(cfPaymentComponent)
+                        .setCFNativeCheckoutUITheme(cfTheme)
+                        .build();
+                CFPaymentGatewayService gatewayService = CFPaymentGatewayService.getInstance();
+                gatewayService.doPayment(AddWalletActivity.this, cfDropCheckoutPayment);
+            } else {
+                CFUPIIntentCheckout cfupiIntentCheckout = new CFUPIIntentCheckout.CFUPIIntentBuilder()
+                        // Use either the enum or the application package names to order the UPI apps as per your needed
+                        // Remove both if you want to use the default order which cashfree provides based on the popularity
+                        // NOTE - only one is needed setOrder or setOrderUsingPackageName
+//                        .setOrder(Arrays.asList(CFUPIIntentCheckout.CFUPIApps.BHIM, CFUPIIntentCheckout.CFUPIApps.PHONEPE, CFUPIIntentCheckout.CFUPIApps.GOOGLE_PAY, CFUPIIntentCheckout.CFUPIApps.PAYTM))
+                        .build();
+                CFUPIIntentCheckoutPayment cfDropCheckoutPayment = new CFUPIIntentCheckoutPayment.CFUPIIntentPaymentBuilder()
+                        .setSession(cfSession)
+                        .setCfUPIIntentCheckout(cfupiIntentCheckout)
+                        .build();
+                CFPaymentGatewayService gatewayService = CFPaymentGatewayService.getInstance();
+                gatewayService.doPayment(AddWalletActivity.this, cfDropCheckoutPayment);
+            }
         } catch (CFException exception) {
             exception.printStackTrace();
         }

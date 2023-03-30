@@ -75,6 +75,7 @@
                 android:inputType="textEmailAddress"
                 android:maxLength="30"
                 android:maxLines="1"
+                android:digits = "0123456789abcdefghijklmnopqrstuvwxyz@."
                 android:padding="@dimen/margin_10"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"

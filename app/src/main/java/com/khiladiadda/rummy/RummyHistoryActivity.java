@@ -28,8 +28,8 @@ import com.khiladiadda.wordsearch.listener.IOnClickListener;
 import butterknife.BindView;
 
 public class RummyHistoryActivity extends BaseActivity implements IRummyHistoryView, IOnItemClickListener {
-    @BindView(R.id.iv_history)
-    ImageView mHistoryIv;
+    @BindView(R.id.tv_history)
+    TextView mHistoryIv;
     @BindView(R.id.rv_rummy_history)
     RecyclerView mRummyHistoryRv;
     @BindView(R.id.iv_back)
@@ -76,7 +76,7 @@ public class RummyHistoryActivity extends BaseActivity implements IRummyHistoryV
             showProgress(getString(R.string.txt_progress_authentication));
             mPresenter.getRummyHistoryStatus();
         } else {
-            Snackbar.make(mHistoryIv, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mActivityName, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
     }
 

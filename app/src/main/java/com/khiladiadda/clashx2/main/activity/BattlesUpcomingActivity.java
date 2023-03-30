@@ -131,9 +131,10 @@ public class BattlesUpcomingActivity extends BaseActivity implements ICreateBatt
 
     private void setData() {
         mDateTV.setText(("Date: " + AppUtilityMethods.getConvertDateFacts(mMatchDetail.getStartDateTime())));
-        mNameTV.setText(mMatchDetail.getSeries().getName());
+//        mNameTV.setText(mMatchDetail.getSeries().getName());
         TeamHTH homeTeam = mMatchDetail.getPlayers().getHomeTeam().getTeam();
         TeamHTH awayTeam = mMatchDetail.getPlayers().getAwayTeam().getTeam();
+        mNameTV.setText(homeTeam.getName() + " vs " + awayTeam.getName());
         mTeamOneTV.setText(homeTeam.getName());
         Glide.with(mTeamOneIV).load(homeTeam.getLogoUrl()).placeholder(R.drawable.splash_logo).into(mTeamOneIV);
         mTeamTwoTV.setText(awayTeam.getName());

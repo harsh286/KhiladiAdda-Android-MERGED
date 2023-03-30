@@ -64,6 +64,18 @@ public class AppDialog {
         return dialog;
     }
 
+    public static Dialog getAppProgressDialogWithMessage(Context context, String message) {
+        Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_wait);
+        dialog.getWindow().setBackgroundDrawableResource(R.color.colorTransparent);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        final TextView mMessageTv = dialog.findViewById(R.id.tv_msg);
+        mMessageTv.setText(message);
+        return dialog;
+    }
+
     public static Dialog showPaymentConfirmation(Activity activity, final IOnPaymentListener listener, String heading, String msg, boolean result) {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -335,7 +347,7 @@ public class AppDialog {
         return dialog;
     }
 
-    public static Dialog addChallengeDialog(Activity activity, final IOnAddChallengeListener listener, String gameUsername, int contestType, int mode) {
+    public static Dialog addChallengeDialog(Activity activity, final IOnAddChallengeListener listener, String gameUsername, int contestType, int mode, double walletBalance) {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_add_challange);
@@ -456,8 +468,8 @@ public class AppDialog {
             i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_LUDO);
             activity.startActivity(i);
         });
-        Coins coins = AppSharedPreference.getInstance().getProfileData().getCoins();
-        double walletBalance = coins.getBonus() + coins.getDeposit() + coins.getWinning();
+//        Coins coins = AppSharedPreference.getInstance().getProfileData().getCoins();
+//        double walletBalance = coins.getBonus() + coins.getDeposit() + coins.getWinning();
         mSetBTN.setOnClickListener(v -> {
             String amount = amountET.getText().toString().trim();
             if (ludoIdET.getText().toString().trim().isEmpty()) {

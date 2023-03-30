@@ -105,12 +105,15 @@
 
                     <TextView
                         android:id="@+id/tv_change_limit_descp"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="14dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:maxLines="2"
                         android:fontFamily="@font/productsansregular"
                         android:text="You can only change your daily limit once in 48 hours."
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_change_limit" />
 
@@ -221,7 +224,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/productsansregular"
-                        android:text="₹ 10000/-"
+                        tools:text="₹ 10000/-"
                         android:textColor="@color/black"
                         android:textSize="24sp"
                         android:textStyle="bold"
@@ -266,12 +269,14 @@
 
                     <TextView
                         android:id="@+id/tv_daily_limit_descp"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="14dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
                         android:fontFamily="@font/productsansregular"
-                        android:text="As per government rules, you are allowed to add up to Rs. 50,000 per day."
+                        android:text="You are allowed to add up to Rs. 50,000 per day."
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_your_daily_limit" />
 
@@ -381,7 +386,7 @@
                 android:id="@+id/tv_last_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="54dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginBottom="16dp"
                 android:fontFamily="@font/productsansregular"
                 android:textSize="@dimen/text_12"

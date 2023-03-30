@@ -60,8 +60,6 @@ import butterknife.BindView;
 
 public class WordSearchMainActivity extends BaseActivity implements IOnViewAllClickListener, IWordSearchMainView {
 
-    //    @BindView(R.id.rv_main_quizes)
-//    RecyclerView mMainQuizesRv;
     @BindView(R.id.rv_trending_quizes)
     RecyclerView mTrendingQuiz;
     @BindView(R.id.mcv_quizes)
@@ -82,8 +80,6 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
     TextView mTournamentsTv;
     @BindView(R.id.tv_categories)
     TextView mCategoriesTv;
-    //    @BindView(R.id.tv_categories)
-//    TextView mCategorgiesTV;
     private boolean mIsRequestingAppInstallPermission;
     private String mFilePath;
     private double Amount;
@@ -100,6 +96,7 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
     RelativeLayout mImageRL;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
+    private int mDownUp = 1;
 
     @Override
     protected int getContentView() {
@@ -110,25 +107,14 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
     protected void initViews() {
         mPresenter = new WordSearchPresenter(this);
         mAllQuizzesTv.setText("My Tournaments");
-        mAppPreference.setBoolean("WSDownload", false);
-        setupRecycler();
-//        launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.WordSearchPackageName);
-//        if (launchIntent != null) getVersion();
-    }
-
-    private void setupRecycler() {
         mToolbar.setBackgroundColor(Color.parseColor("#DA0000"));
-        //For Trending
         mTrendingQuiz.setLayoutManager(new LinearLayoutManager(this));
         mTrendingQuiz.setVisibility(View.VISIBLE);
-        //For Category
-//        mMainQuizesRv.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
     protected void initVariables() {
         mQuizzesMcv.setVisibility(View.GONE);
-//        mQuizzesMcv.setOnClickListener(this);
         mBackIv.setOnClickListener(this);
         mDownloadMVC.setOnClickListener(this);
         mTournamentsTv.setOnClickListener(this);
@@ -172,7 +158,6 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
                 startActivity(intent3);
                 finish();
                 break;
-
         }
     }
 
@@ -197,21 +182,19 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
         mAppPreference.setString(AppConstant.WS_VERSION, mCurrentVersion);
         mTrendingMainResponse = responseModel.getResponse();
         mTrendingQuiz.setAdapter(new WordSearchMainAdapter(this, this, responseModel.getResponse().getTrendingQuiz(), null));
-//        mMainQuizesRv.setAdapter(new WordSearchMainAdapter(this, this, null, responseModel.getResponse().getCategoryQuiz()));
         if (launchIntent != null) {
             if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
-//                mQuizzesMcv.setVisibility(View.VISIBLE);
                 mDownloadMVC.setVisibility(View.GONE);
                 Properties properties = new Properties();
                 properties.addAttribute("WordSearchVersion", mCurrentVersion);
                 MoEAnalyticsHelper.INSTANCE.trackEvent(this, "WordSearch", properties);
             } else {
                 mDownloadTV.setText("Update");
+                mDownUp = 2;
                 mQuizzesMcv.setVisibility(View.GONE);
                 mDownloadMVC.setVisibility(View.VISIBLE);
             }
         } else {
-//            mQuizzesMcv.setVisibility(View.GONE);
             mDownloadMVC.setVisibility(View.VISIBLE);
         }
     }
@@ -222,43 +205,38 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
         hideProgress();
     }
 
-
     @Override
     public void onViewAllItemClick(int pos) {
-//        Intent intent = new Intent(WordSearchMainActivity.this, WordSearchQuizActivity.class);
-//        intent.putExtra(AppConstant.FROM, "");
-//        intent.putExtra(AppConstant.WORD_SEARCH_CATEGORY_NAME, mTrendingMainResponse.getCategoryQuiz().get(pos).getName());
-//        intent.putExtra(AppConstant.WORD_SEARCH_COLOR_NAME, mTrendingMainResponse.getCategoryQuiz().get(pos).getColour());
-//        intent.putExtra(AppConstant.WORD_SEARCH_QUIZ_ID, mTrendingMainResponse.getCategoryQuiz().get(pos).getId());
-//        startActivity(intent);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.WordSearchPackageName);
-        if (launchIntent != null) getVersion();
-        else mAppPreference.setBoolean("WSDownload", false);
+        if (launchIntent != null) {
+            getVersion();
+        } else {
+            mAppPreference.setBoolean("WSDownload", false);
+        }
         if (mAppPreference.getBoolean("WSDownload", false)) {
             try {
                 Intent launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.WordSearchPackageName);
                 if (launchIntent != null) {
                     if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
-                        mDownloadTV.setText("Update");
-                        mQuizzesMcv.setVisibility(View.GONE);
-                        mDownloadMVC.setVisibility(View.VISIBLE);
-                    } else {
+                        mDownloadMVC.setVisibility(View.GONE);
                         finish();
                         startActivity(new Intent(this, WordSearchMainActivity.class));
+                    } else {
+                        mDownloadTV.setText("Update");
+                        mDownUp = 2;
+                        mQuizzesMcv.setVisibility(View.GONE);
+                        mDownloadMVC.setVisibility(View.VISIBLE);
                     }
                 }
             } catch (Exception e) {
                 finish();
                 startActivity(new Intent(this, WordSearchMainActivity.class));
-
             }
-        }else {
-            mDownloadMVC.setVisibility(View.VISIBLE);
         }
     }
 
@@ -268,10 +246,13 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.wordsearch_download_popup);
-        TextView tv = dialog.findViewById(R.id.textView9);
         ProgressBar progressBar = dialog.findViewById(R.id.pb_apk_download);
         AppCompatButton iv_playstore = dialog.findViewById(R.id.iv_download);
         ImageView ivCross = dialog.findViewById(R.id.iv_cross);
+        TextView tvMsg = dialog.findViewById(R.id.textView9);
+        if (mDownUp == 2) {
+            tvMsg.setText("It seem like you haven't updated our WordSearch game to play contests, So please click on download button to update the game.");
+        }
         ivCross.setOnClickListener(view -> {
             dialog.dismiss();
         });
@@ -294,7 +275,6 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
                 new DownloadApk(mOnFileDownloadedListener).execute(mLink);
             }
         }
-
     };
 
     private final IOnFileDownloadedListener mOnFileDownloadedListener = new IOnFileDownloadedListener() {
@@ -317,7 +297,6 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
                     Toast.makeText(WordSearchMainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
-
         }
 
         @Override
@@ -326,8 +305,6 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
                 ProgressBar progressBar = mVersionDialog.findViewById(R.id.pb_apk_download);
                 TextView tv = mVersionDialog.findViewById(R.id.textView9);
                 progressBar.setProgress(progress);
-
-
             }
         }
     };
@@ -347,7 +324,6 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
             uri = FileProvider.getUriForFile(WordSearchMainActivity.this, GenericFileProvider.AUTHORITY, new File(filePath));
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-
         }
         intent.setDataAndType(uri, "application/vnd.android.package-archive");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -362,6 +338,7 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
             PackageManager pm = this.getPackageManager();
             PackageInfo pInfo = pm.getPackageInfo(AppConstant.WordSearchPackageName, 0);
             mVersion = pInfo.versionName;
+            mAppPreference.getBoolean("WSDownload", false);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

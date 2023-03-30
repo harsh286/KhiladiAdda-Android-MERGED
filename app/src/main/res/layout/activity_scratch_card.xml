@@ -138,23 +138,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_second"
+            android:layout_marginStart="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_10"
             android:layout_marginBottom="@dimen/margin_5"
             android:gravity="center"
             android:orientation="horizontal"
             android:visibility="visible">
 
             <ImageView
-                android:id="@+id/rl_ludo"
+                android:id="@+id/rl_lu"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_80"
+                android:layout_marginEnd="@dimen/margin_5"
                 android:layout_weight="1"
                 android:src="@drawable/la_sc" />
 
             <ImageView
-                android:id="@+id/rl_lu"
+                android:id="@+id/rl_ludo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_80"
+                android:layout_marginStart="@dimen/margin_5"
                 android:layout_weight="1"
                 android:src="@drawable/lk_sc" />
         </LinearLayout>

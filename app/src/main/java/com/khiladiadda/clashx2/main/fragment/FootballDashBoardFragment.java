@@ -64,7 +64,7 @@ public class FootballDashBoardFragment extends BaseFragment implements IOnItemGa
         rvFootballGames.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvFootballGames.setAdapter(gamesDashBoardAdapter);
 
-        getData();
+//        getData();
     }
 
     @Override
@@ -163,5 +163,10 @@ public class FootballDashBoardFragment extends BaseFragment implements IOnItemGa
     public void onMatchStatusError(ApiError error) {
         hideProgress();
         mMatchesSRL.setRefreshing(false);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
     }
 }

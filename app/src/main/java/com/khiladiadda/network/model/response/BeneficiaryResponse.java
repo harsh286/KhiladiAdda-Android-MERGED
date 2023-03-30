@@ -21,6 +21,10 @@ public class BeneficiaryResponse extends BaseResponse {
     @SerializedName("userProfileData") @Expose private ProfileDetails profileDetails;
     @SerializedName("parallel_payout") @Expose private int parallelPayout;
 
+    @SerializedName("banners")
+    @Expose
+    private List<BannerDetails> banner = null;
+
     public int getParallelPayout() {
         return parallelPayout;
     }
@@ -76,4 +80,13 @@ public class BeneficiaryResponse extends BaseResponse {
     public void setProfileDetails(ProfileDetails profileDetails) {
         this.profileDetails = profileDetails;
     }
+
+    public List<BannerDetails> getBanner() {
+        return banner;
+    }
+
+    public void setBanner(List<BannerDetails> banner) {
+        this.banner = banner;
+    }
+
 }

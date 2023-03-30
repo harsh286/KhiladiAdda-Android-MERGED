@@ -143,14 +143,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginBottom="@dimen/margin_5"
             android:baselineAligned="false">
             <include
                 layout="@layout/rummy_stats"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_5"
-                android:layout_marginEnd="@dimen/margin_10"
-                android:layout_weight="1" />
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_10" />
         </LinearLayout>
         </LinearLayout>
 

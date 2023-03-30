@@ -27,6 +27,7 @@ public class CallBreakResponse extends BaseResponse {
     @Expose
     private Long timerKA;
 
+
     public List<CallBreakDetails> getResponse() {
         return response;
     }

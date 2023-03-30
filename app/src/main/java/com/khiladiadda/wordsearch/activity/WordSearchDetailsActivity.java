@@ -78,32 +78,18 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
     ProgressBar mJoinedPb;
     @BindView(R.id.rv_prize_pool_breakup)
     RecyclerView mPrizePoolBreakup;
-    //    @BindView(R.id.tv_progress)
-//    TextView mProgressTv;
     @BindView(R.id.btn_view_full_pool)
     AppCompatButton mViewAllPool;
-    //    @BindView(R.id.tv_win)
-//    TextView mTvWin;
-//    @BindView(R.id.tv_attempt)
-//    TextView mAttemptTv;
     @BindView(R.id.tv_entry)
     TextView mEntryTv;
-    //    @BindView(R.id.tv_name)
-//    TextView mNameTv;
     @BindView(R.id.iv_back)
     ImageView mBackIv;
-    //    @BindView(R.id.tv_total_participants)
-//    TextView mTotalParticipantsTv;
     @BindView(R.id.iv_image)
     ImageView mQuizImage;
     @BindView(R.id.tv_date)
     TextView mEndDate;
     @BindView(R.id.tv_grid)
     TextView mGridTv;
-    //    @BindView(R.id.tv_days_left)
-//    TextView mDaysLeftTv;
-//    @BindView(R.id.tv_participants)
-//    TextView mParticipantsTv;
     @BindView(R.id.tv_activity_name)
     TextView mTitleTv;
     @BindView(R.id.tv_progress)
@@ -116,15 +102,13 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
     ImageView mNotificationIv;
     @BindView(R.id.tv_view_prizepool)
     TextView mViewPrizePoolTv;
-
-
     private WordSearchCategoriesQuizzesResponse mCategoriesQuizzesResponse;
     private IWordSearchStartPresenter mStartPresenter;
     private WordSearchQuizResponse mCategoryList;
     private WordSearchMyQuizzesResponse mMyQuizzesResponse;
     private WordSearchTrendingQuizResponse mTrendingQuizResponse;
     private int mType, mBonusCode = 0, mParticipants, mAttempt = 3, mQuizStatus;
-    private int mEntryFee, mWinFee;
+    private int mEntryFee;
     private double mTotalWalletBal, mDepositWinWallet, mBonusBal, mBonusPayable, mWalletPayable;
     private boolean mIsPlayed = false, mLowBalance, isPlayedOnce = false, isSuccessfulGameOpen = false, isParticipantsFull = false;
     private String mQuizId, mImageUrl, mDayLeft;
@@ -133,8 +117,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
     private long lasPressTime;
     private String mCategoryName;
     private Dialog mVersionDialog;
-    private boolean mIsRequestingAppInstallPermission;
-    private String mFilePath;
     private String mLink;
     private String mVersion;
     private String mCurrentVersion, mGrid;
@@ -148,7 +130,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
 
     @Override
     protected void initViews() {
-//        mDayLeftMCV.setVisibility(View.VISIBLE);
         mNotificationIv.setVisibility(View.GONE);
         launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.WordSearchPackageName);
         if (launchIntent != null) getVersion();
@@ -157,7 +138,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
             mTrendingQuizResponse = getIntent().getParcelableExtra(AppConstant.WORD_SEARCH_CATEGORY_QUIZZES);
             mEntryFee = mTrendingQuizResponse.getEntryFees();
             mBonusCode = mTrendingQuizResponse.getBonusCode();
-            mWinFee = mTrendingQuizResponse.getPrizemoney();
             mQuizId = mTrendingQuizResponse.getId();
             mGrid = "Grid: " + mTrendingQuizResponse.getnRow() + " x " + mTrendingQuizResponse.getnColumns();
             mQuizName = mTrendingQuizResponse.getName();
@@ -172,7 +152,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
             mIsPlayed = mTrendingQuizResponse.getAttemptedQuiz() == 0 ? false : true;
             isParticipantsFull = Objects.equals(mTrendingQuizResponse.getPlayedparticipants(), mTrendingQuizResponse.getTotalparticipants());
             participants = "" + mTrendingQuizResponse.getPlayedparticipants() + "/" + mTrendingQuizResponse.getTotalparticipants();
-//            mTotalParticipantsTv.setText(mTrendingQuizResponse.getPlayedparticipants() + " / " + mTrendingQuizResponse.getTotalparticipants());
             mParticipants = getPlayedPercentage(mTrendingQuizResponse.getPlayedparticipants(), mTrendingQuizResponse.getTotalparticipants());
             showHideViewMoreButton(mTrendingQuizResponse.getPrizePoolBreakthrough().size());
             mCategoryName = mTrendingQuizResponse.getCategory_name();
@@ -180,7 +159,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
             mCategoryList = getIntent().getParcelableExtra(AppConstant.WORD_SEARCH_CATEGORY_QUIZZES);
             mEntryFee = mCategoryList.getEntryFees();
             mIsPlayed = mCategoryList.getAttemptedQuiz() == 0 ? false : true;
-            mWinFee = mCategoryList.getPrizemoney();
             mQuizId = mCategoryList.getId();
             mAttempt -= mCategoryList.getAttemptedQuiz();
             mImageUrl = mCategoryList.getImage();
@@ -194,7 +172,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
             mQuizStatus = mCategoryList.getQuizStatus();
             isParticipantsFull = Objects.equals(mCategoryList.getPlayedparticipants(), mCategoryList.getTotalparticipants());
             participants = "" + mCategoryList.getPlayedparticipants() + "/" + mCategoryList.getTotalparticipants();
-//            mTotalParticipantsTv.setText(mCategoryList.getPlayedparticipants() + " / " + mCategoryList.getTotalparticipants());
             mParticipants = getPlayedPercentage(mCategoryList.getPlayedparticipants(), mCategoryList.getTotalparticipants());
             showHideViewMoreButton(mCategoryList.getPrizePoolBreakthrough().size());
             mCategoryName = getIntent().getStringExtra(AppConstant.WORD_SEARCH_CATEGORY_NAME);
@@ -202,7 +179,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
             mMyQuizzesResponse = getIntent().getParcelableExtra(AppConstant.WORD_SEARCH_MY_QUIZZES);
             mEntryFee = mMyQuizzesResponse.getEntryFees();
             mIsPlayed = mMyQuizzesResponse.getQuiz().get(0).getAttemptedQuiz() == 0 ? false : true;
-            mWinFee = mMyQuizzesResponse.getQuiz().get(0).getPrizemoney();
             mQuizId = mMyQuizzesResponse.getQuizId();
             mAttempt -= mMyQuizzesResponse.getQuiz().get(0).getAttemptedQuiz();
             mImageUrl = mMyQuizzesResponse.getQuiz().get(0).getImage();
@@ -217,15 +193,12 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
             participants = "" + mMyQuizzesResponse.getQuiz().get(0).getPlayedparticipants() + "/" + mMyQuizzesResponse.getQuiz().get(0).getTotalparticipants();
             mDayLeft = AppUtilityMethods.getDayLeft(mMyQuizzesResponse.getQuiz().get(0).getEnd());
             mEndTime = mMyQuizzesResponse.getQuiz().get(0).getEnd();
-//            mTotalParticipantsTv.setText(mMyQuizzesResponse.getQuiz().get(0).getPlayedparticipants() + " / " + mMyQuizzesResponse.getQuiz().get(0).getTotalparticipants());
             mParticipants = getPlayedPercentage(mMyQuizzesResponse.getQuiz().get(0).getPlayedparticipants(), mMyQuizzesResponse.getQuiz().get(0).getTotalparticipants());
             showHideViewMoreButton(mMyQuizzesResponse.getQuiz().get(0).getPrizePoolBreakthrough().size());
             mCategoryName = getIntent().getStringExtra(AppConstant.WORD_SEARCH_CATEGORY_NAME);
         } else {
             mCategoriesQuizzesResponse = getIntent().getParcelableExtra(AppConstant.WORD_SEARCH_CATEGORY_QUIZZES);
             mEntryFee = mCategoriesQuizzesResponse.getEntryFees();
-//            mBonusCode = mCategoriesQuizzesResponse.getBonusCode();
-            mWinFee = mCategoriesQuizzesResponse.getPrizemoney();
             mIsPlayed = mCategoriesQuizzesResponse.getAttemptedQuiz() == 0 ? false : true;
             mQuizId = mCategoriesQuizzesResponse.getId();
             mPrizeMoneyTv.setText("Prize: " + mCategoriesQuizzesResponse.getPrizemoney() + " Coins");
@@ -240,23 +213,18 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
             participants = "" + mCategoriesQuizzesResponse.getPlayedparticipants() + "/" + mCategoriesQuizzesResponse.getTotalparticipants();
             mDayLeft = AppUtilityMethods.getDayLeft(mCategoriesQuizzesResponse.getEnd());
             mEndTime = mCategoriesQuizzesResponse.getEnd();
-//            mTotalParticipantsTv.setText(mCategoriesQuizzesResponse.getPlayedparticipants() + " / " + mCategoriesQuizzesResponse.getTotalparticipants());
             mParticipants = getPlayedPercentage(mCategoriesQuizzesResponse.getPlayedparticipants(), mCategoriesQuizzesResponse.getTotalparticipants());
             showHideViewMoreButton(mCategoriesQuizzesResponse.getPrizePoolBreakthrough().size());
             mCategoryName = getIntent().getStringExtra(AppConstant.WORD_SEARCH_CATEGORY_NAME);
-
         }
         mGridTv.setText(mGrid);
         mStartPresenter = new WordSearchStartPresenter(this, mQuizId);
         Glide.with(this).load(mImageUrl).placeholder(R.drawable.wordsearch_placeholder_large).into(mQuizImage);
-//        mAttemptTv.setText("" + mAttempt + " Attempts Left");
         if (!AppUtilityMethods.getTimeDiff(mEndTime, Calendar.getInstance().getTime()))
             mEndDate.setText(mDayLeft);
         else mEndDate.setText("Ended");
-//        mProgressTv.setText(mParticipants);
         mProgressesTV.setText("Filling Fast" + participants);
         mEntryTv.setText("Entry Fee: " + mEntryFee + " Coins");
-//        mTvWin.setText("Prize Pool: " + mWinFee);
         mJoinedPb.setProgress(mParticipants);
         mTitleTv.setText(mQuizName);
         if (mAttempt < 3) {
@@ -324,7 +292,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
                     } else {
                         mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
                     }
-
                 } else {
                     Snackbar.make(mPlayzCl, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
                 }
@@ -363,7 +330,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
                 Intent intent = new Intent(this, WordSearchPrizeBreakthroughActivity.class);
                 intent.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_QUIZ);
                 intent.putExtra(AppConstant.MatchName, mQuizName);
-//                intent.putExtra(AppConstant.DATA_QUIZ, (Parcelable) mPrizePoolBreakthroughList);
                 intent.putParcelableArrayListExtra(AppConstant.DATA_QUIZ, (ArrayList<? extends Parcelable>) mPrizePoolBreakthroughList);
                 startActivity(intent);
                 break;
@@ -450,7 +416,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
             mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
         }
     }
-
 
     private void getWalletData() {
         Coins coins = mAppPreference.getProfileData().getCoins();
@@ -611,24 +576,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
         launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.WordSearchPackageName);
         if (launchIntent != null) getVersion();
         else mAppPreference.setBoolean("WSDownload", false);
-        if (mAppPreference.getBoolean("WSDownload", false)) {
-            try {
-                Intent launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.WordSearchPackageName);
-                if (launchIntent != null) {
-                    if (!mVersion.equalsIgnoreCase(mCurrentVersion)) {
-                        finish();
-                        Intent intent = new Intent(this, WordSearchMainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                    }
-                }
-            } catch (Exception e) {
-                finish();
-                Intent intent = new Intent(this, WordSearchMainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        }
         if (isSuccessfulGameOpen) {
             openLiveLeaderboard();
             finish();
@@ -676,6 +623,8 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
     };
 
     private void installApk(String filePath) {
+        boolean mIsRequestingAppInstallPermission;
+        String mFilePath;
         if (Build.VERSION.SDK_INT >= 26 && !WordSearchDetailsActivity.this.getPackageManager().canRequestPackageInstalls()) {
             startActivity(new Intent(android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:com.khiladiadda")));
             mIsRequestingAppInstallPermission = true;
@@ -690,7 +639,6 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
             uri = FileProvider.getUriForFile(WordSearchDetailsActivity.this, GenericFileProvider.AUTHORITY, new File(filePath));
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-
         }
         intent.setDataAndType(uri, "application/vnd.android.package-archive");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

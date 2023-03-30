@@ -198,10 +198,10 @@ public class WalletInteractor {
         return manager.createObservable(service.payGamerCashData()).subscribe(new SubscriberCallback<>(listener));
     }
 
-    Subscription getCashfreeStatus(IApiListener<BaseResponse> listener) {
+    Subscription getCashfreeStatus(IApiListener<BaseResponse> listener, String orderId) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
-        return manager.createObservable(service.getCashfreeStatus()).subscribe(new SubscriberCallback<>(listener));
+        return manager.createObservable(service.getCashfreeStatus(orderId)).subscribe(new SubscriberCallback<>(listener));
     }
 
 }

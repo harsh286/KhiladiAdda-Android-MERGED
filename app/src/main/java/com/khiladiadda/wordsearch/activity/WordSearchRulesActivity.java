@@ -21,7 +21,6 @@ public class WordSearchRulesActivity extends BaseActivity {
     @Override
     protected int getContentView() {
         return R.layout.activity_word_search_rules;
-
     }
 
     @Override
@@ -41,7 +40,6 @@ public class WordSearchRulesActivity extends BaseActivity {
                 "7. The result of the last attempt will be considered as the final result.\n\n" +
                 "8. Please play all tournaments with your full honesty if anyone is found guilty his/her account may be terminated.\n\n"+
                 "9. Ranks will be calculated according to the highest score and the fastest time span";
-
         mRulesTv.setText(rules);
     }
 

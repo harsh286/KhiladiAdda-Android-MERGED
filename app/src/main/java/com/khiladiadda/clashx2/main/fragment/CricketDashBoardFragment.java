@@ -64,7 +64,6 @@ public class CricketDashBoardFragment extends BaseFragment implements IOnItemGam
         rvCricketGames.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvCricketGames.setAdapter(gamesDashBoardAdapter);
 
-        getData();
     }
 
     @Override
@@ -161,5 +160,11 @@ public class CricketDashBoardFragment extends BaseFragment implements IOnItemGam
     public void onMatchStatusError(ApiError error) {
         hideProgress();
         mMatchesSRL.setRefreshing(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
     }
 }

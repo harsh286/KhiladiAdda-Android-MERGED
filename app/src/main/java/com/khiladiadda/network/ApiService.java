@@ -11,6 +11,7 @@ import com.khiladiadda.network.model.request.RaceConditionPayoutRequest;
 import com.khiladiadda.network.model.request.deposite.DepositLimitRequest;
 import com.khiladiadda.network.model.response.CallBreakJoinMainResponse;
 import com.khiladiadda.network.model.response.CallBreakResponse;
+import com.khiladiadda.network.model.response.CbHistoryRankMainResponse;
 import com.khiladiadda.network.model.response.CxBannerMainResponse;
 import com.khiladiadda.network.model.response.GamerCashResponse;
 import com.khiladiadda.network.model.response.GetGamerCashResponse;
@@ -23,6 +24,7 @@ import com.khiladiadda.network.model.response.RummyCheckGameResponse;
 import com.khiladiadda.network.model.response.RummyHistoryMainResponse;
 import com.khiladiadda.network.model.response.RummyRefreshTokenMainResponse;
 import com.khiladiadda.network.model.response.RummyResponse;
+import com.khiladiadda.network.model.response.TdsResponse;
 import com.khiladiadda.network.model.response.deposite.DepositLimitMainResponse;
 import com.khiladiadda.network.model.response.deposite.FetchDepositLimitMainResponse;
 import com.khiladiadda.network.model.response.droid_doresponse.DroidoHistoryGameList;
@@ -976,6 +978,11 @@ public interface ApiService {
     @GET(AppConstant.API_GET_CALLBREAK_JOIN)
     Observable<CallBreakJoinMainResponse> getCallBreakJoin(@Path("id") String id);
 
+    @GET(AppConstant.API_GET_CALLBREAK_HISTORY_LIST)
+    Observable<CallBreakResponse> getCallBreakHistory();
+    @GET(AppConstant.API_GET_CALLBREAK_HISTORY_RANK)
+    Observable<CbHistoryRankMainResponse> getCallBreakHistoryRank(@Path("id") String id);
+
     //New Added
     @POST(AppConstant.API_PAYMENT_URL)
     Observable<PhonePePaymentResponse> getPaymentUrl(@Body() PhonepeRequest phonepeRequest);
@@ -985,9 +992,12 @@ public interface ApiService {
 
     //Cashfree Status
     @GET(AppConstant.API_CASHFREE_STATUS)
-    Observable<BaseResponse> getCashfreeStatus();
+    Observable<BaseResponse> getCashfreeStatus(@Path("orderId") String orderId);
 
     @GET(AppConstant.API_CX_BANNER)
     Observable<CxBannerMainResponse> getCxBanner(@Query("type") String type);
+
+    @GET(AppConstant.API_CHECK_TDS)
+    Observable<TdsResponse> onCheckTDS(@Query("amount") int amount);
 
 }

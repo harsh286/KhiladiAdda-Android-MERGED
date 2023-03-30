@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl_tooltip"
     android:layout_width="match_parent"
-    android:layout_height="115dp"
+    android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/margin_40"
     android:background="@drawable/toolbar_bg"
     android:padding="@dimen/margin_8">
@@ -12,29 +13,28 @@
         android:id="@+id/tv_english"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:maxLines="2"
-        android:text="Click on this button to know more about the brackets and matches"
+        android:text="@string/ludo_tmt_english_rules"
         android:textColor="@color/white"
         android:textSize="@dimen/text_12"
-        app:layout_constraintBottom_toTopOf="@id/tv_hindi"
+        app:layout_constraintBottom_toTopOf="@+id/tv_hindi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_hindi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="@dimen/margin_30"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
         android:maxLines="2"
-        android:padding="@dimen/text_12"
-        android:text="ब्रैकेट्स और मैचेस के बारे में जान्ने के लिए ऊपर दिए गए बटन पर क्लिक करें"
+        android:text="@string/ludo_tmt_hindi_rules"
         android:textColor="@color/white"
         android:textSize="@dimen/text_12"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,6 +42,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_english"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_english" />
 </androidx.constraintlayout.widget.ConstraintLayout>

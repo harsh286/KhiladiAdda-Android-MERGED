@@ -30,7 +30,6 @@ import butterknife.BindView;
 public class FinalLeaderBoardActivity extends BaseActivity implements IWordSearchLiveLeaderboardView {
 
     private IWordSearchLiveLeaderboardPresenter mWordSearchLiveLeaderboardPresenter;
-
     @BindView(R.id.tv_name)
     TextView mNameTv;
     @BindView(R.id.rv_leaderboard)
@@ -72,7 +71,6 @@ public class FinalLeaderBoardActivity extends BaseActivity implements IWordSearc
     private String mQuizId;
     private FinalLeaderBoardAdapter adapter;
     private List<WordSearchLiveLeaderBoardlbResponse> leaderBoardList = new ArrayList<>();
-    private Boolean mFrom;
 
     @Override
     protected int getContentView() {
@@ -111,9 +109,8 @@ public class FinalLeaderBoardActivity extends BaseActivity implements IWordSearc
 
     private void setUpRecyclerView() {
         mLeaderBoardRv.setLayoutManager(new LinearLayoutManager(this));
-         adapter = new FinalLeaderBoardAdapter(leaderBoardList);
+        adapter = new FinalLeaderBoardAdapter(leaderBoardList);
         mLeaderBoardRv.setAdapter(adapter);
-
     }
 
     @Override
@@ -129,72 +126,14 @@ public class FinalLeaderBoardActivity extends BaseActivity implements IWordSearc
                 leaderBoardList.add(0, myResult);
                 mLeaderBoardRv.setAdapter(adapter);
             } catch (Exception e) {
-
             }
             adapter.notifyDataSetChanged();
-
-//        if (leaderBoardList.size() > 3) {
-//            if (leaderBoardList.get(0).getRank().equals(leaderBoardList.get(0).getMyRank()))
-//            int myIndex = leaderBoardList.indexOf(new WordSearchLiveLeaderBoardlbResponse(mAppPreference.getProfileData().getId()));
-//            WordSearchLiveLeaderBoardlbResponse myResult = leaderBoardList.get(myIndex);
-//            mTopMain.setVisibility(View.VISIBLE);
-//            Glide.with(this).load(leaderBoardList.get(0).getUser().getDp()).placeholder(R.drawable.profile).into(mFirstPic);
-//            mFirstNameTv.setText(leaderBoardList.get(0).getUser().getName());
-//            mFirstWonTv.setText("Won: " + leaderBoardList.get(0).getWinningAmount().toString() + " coins");
-//            mFirstBestTime.setText("Best Time: " + timeConverter(leaderBoardList.get(0).getTimeTaken()));
-//            mFirstWordCountTV.setText("Word Count:" + leaderBoardList.get(0).getRightAnswers());
-//            Glide.with(this).load(leaderBoardList.get(1).getUser().getDp()).placeholder(R.drawable.profile).into(mSecondPic);
-//            mSecondNameTv.setText(leaderBoardList.get(1).getUser().getName());
-//            mSecondWonTv.setText("Won: " + leaderBoardList.get(1).getWinningAmount().toString() + " coins");
-//            mSecondBestTime.setText("Best Time: " + timeConverter(leaderBoardList.get(1).getTimeTaken()));
-//            mSecondWordCountTV.setText("Word Count:" + leaderBoardList.get(1).getRightAnswers());
-//            Glide.with(this).load(leaderBoardList.get(2).getUser().getDp()).placeholder(R.drawable.profile).into(mThirdPic);
-//            mThirdNameTv.setText(leaderBoardList.get(2).getUser().getName());
-//            mThirdWonTv.setText("Won: " + leaderBoardList.get(2).getWinningAmount().toString() + " coins");
-//            mThirdBestTime.setText("Best Time: " + timeConverter(leaderBoardList.get(2).getTimeTaken()));
-//            mThirdWordCountTV.setText("Word Count:" + leaderBoardList.get(2).getRightAnswers());
-//            adapter = new FinalLeaderBoardAdapter(leaderBoardList.subList(3,leaderBoardList.size()));
-//            mLeaderBoardRv.setAdapter(adapter);
-//            if (responseModel.getResponse().getLeaderboard().size() > 0)
-//                leaderBoardList.addAll(responseModel.getResponse().getLeaderboard());
-//                try {
-//
-//                    leaderBoardList.remove(myResult);
-//                    leaderBoardList.add(0, myResult);
-//                } catch (Exception e) {
-//
-//                }
-//                adapter.notifyDataSetChanged();
-//
-//        } else {
-//            if (responseModel.getResponse().getLeaderboard().size() > 0) {
-//                leaderBoardList.addAll(responseModel.getResponse().getLeaderboard());
-//                try {
-//                    int myIndex = leaderBoardList.indexOf(new WordSearchLiveLeaderBoardlbResponse(mAppPreference.getProfileData().getId()));
-//                    WordSearchLiveLeaderBoardlbResponse myResult = leaderBoardList.get(myIndex);
-//                    leaderBoardList.remove(myResult);
-//                    leaderBoardList.add(0, myResult);
-//                } catch (Exception e) {
-//
-//                }
-//                adapter.notifyDataSetChanged();
-//                mTopMain.setVisibility(View.GONE);
-//
-//            }
-//        }
         }
     }
 
     @Override
     public void onWordSearchLiveLeaderboardFailure(ApiError error) {
-       hideProgress();
-
+        hideProgress();
     }
 
-    private String timeConverter(long millis) {
-        return String.format("%d.%02ds",
-                TimeUnit.MILLISECONDS.toSeconds(millis),
-                millis -
-                        (TimeUnit.MILLISECONDS.toSeconds(millis) * 1000));
-    }
 }

@@ -28,6 +28,9 @@ public class LudoTmtDashboardAdapter extends RecyclerView.Adapter<LudoTmtDashboa
     private IOnClickListener mIOnClickListener;
     private List<LudoTmtAllTournamentResponse> mLudoTmtAllTournamentResponses;
 
+    public LudoTmtDashboardAdapter(Context mContext) {
+        this.mContext = mContext;
+    }
 
     public LudoTmtDashboardAdapter(Context mContext, IOnClickListener mIOnClickListener, List<LudoTmtAllTournamentResponse> mLudoTmtAllTournamentResponses) {
         this.mContext = mContext;
@@ -47,8 +50,8 @@ public class LudoTmtDashboardAdapter extends RecyclerView.Adapter<LudoTmtDashboa
     public void onBindViewHolder(@NonNull LudoTmtDashboardAdapter.ViewHolder holder, int position) {
         LudoTmtAllTournamentResponse item = mLudoTmtAllTournamentResponses.get(position);
         holder.tournamentTv.setText(item.getName());
-        holder.entryTv.setText(String.format("%s Coins", Double.parseDouble(item.getEntryFees().toString())));
-        holder.priceTv.setText(String.format("%s Coins", Double.parseDouble(item.getPrize().toString())));
+        holder.entryTv.setText(String.format("%s Coins",item.getEntryFees().toString()));
+        holder.priceTv.setText(String.format("%s Coins", item.getPrize().toString()));
         holder.roundTv.setText("" + item.getTtLevel());
         holder.startTimeTv.setText(AppUtilityMethods.getConvertDateTimeMatch(item.getStartDate()));
         holder.totalParticipantsTv.setText("" + item.getnParticipants());
@@ -61,7 +64,6 @@ public class LudoTmtDashboardAdapter extends RecyclerView.Adapter<LudoTmtDashboa
             holder.joinBtn.setText("Join Tournament");
         }
     }
-
 
     @Override
     public int getItemCount() {
@@ -89,8 +91,6 @@ public class LudoTmtDashboardAdapter extends RecyclerView.Adapter<LudoTmtDashboa
         ProgressBar joinedPb;
         @BindView(R.id.mcv_tournaments)
         MaterialCardView tournamentMcv;
-
-
         IOnClickListener iOnClickListener;
 
         public ViewHolder(View view, IOnClickListener mIOnClickListener) {
@@ -110,6 +110,5 @@ public class LudoTmtDashboardAdapter extends RecyclerView.Adapter<LudoTmtDashboa
             }
         }
     }
-
 
 }

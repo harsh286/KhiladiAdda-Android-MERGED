@@ -63,9 +63,12 @@ public class TermsActivity extends BaseActivity {
         } else if (from.equalsIgnoreCase(AppConstant.ABOUT)) {
             mActivityNameTV.setText(R.string.text_about_us);
             mWebview.loadUrl(AppConstant.URL_HOME + "about");
-        }else if (from.equalsIgnoreCase(AppConstant.PATYMUPI)){
+        } else if (from.equalsIgnoreCase(AppConstant.PATYMUPI)) {
             mActivityNameTV.setText(R.string.paytm_upi);
             mWebview.loadUrl(AppConstant.URL_HOME + "payout-help");
+        } else if (from.equalsIgnoreCase(AppConstant.TDS)) {
+            mActivityNameTV.setText(R.string.text_tds_fee);
+            mWebview.loadUrl(AppConstant.URL_HOME + "tdsinformation");
         }
         mWebview.setWebViewClient(new WebViewClient() {
             @Override

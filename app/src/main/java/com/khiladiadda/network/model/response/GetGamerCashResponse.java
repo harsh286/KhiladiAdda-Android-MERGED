@@ -18,10 +18,16 @@ public class GetGamerCashResponse extends BaseResponse {
     @Expose
     private Boolean isLinked;
 
-    public GetGamerCashResponse(ResponseFetchDetail response, Boolean isAlreadyLinked, Boolean isLinked) {
+
+    @SerializedName("remaining_add_limit")
+    @Expose
+    private long remainingAddLimit;
+
+    public GetGamerCashResponse(ResponseFetchDetail response, Boolean isAlreadyLinked, Boolean isLinked, long remainingAddLimit) {
         this.response = response;
         this.isAlreadyLinked = isAlreadyLinked;
         this.isLinked = isLinked;
+        this.remainingAddLimit = remainingAddLimit;
     }
 
     public ResponseFetchDetail getResponse() {
@@ -47,4 +53,13 @@ public class GetGamerCashResponse extends BaseResponse {
     public void setLinked(Boolean linked) {
         isLinked = linked;
     }
+
+    public long getRemainingAddLimit() {
+        return remainingAddLimit;
+    }
+
+    public void setRemainingAddLimit(long remainingAddLimit) {
+        this.remainingAddLimit = remainingAddLimit;
+    }
+
 }

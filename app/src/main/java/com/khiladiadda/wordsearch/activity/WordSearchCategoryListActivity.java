@@ -77,9 +77,7 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
         mCategoryPresenter = new WordSearchCategoriesPresenter(this, mQuizId);
         mMyQuizzesPresenter = new WordSearchMyQuizzesPresenter(this);
         setupRecycler();
-        // mNameTv.setText(R.string.text_my_tournaments);
         changeColor();
-        setupUi();
     }
 
     private void changeColor() {
@@ -113,11 +111,6 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
             startActivity(intent3);
             finish();
         }
-    }
-
-    private void setupUi() {
-//        if (mFrom.equals(AppConstant.ALL_QUIZZES)) {
-//        }
     }
 
     private void getData() {
@@ -200,8 +193,6 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
                 mNoDataTv.setVisibility(View.GONE);
                 mQuizzesRv.setAdapter(new WordSearchTrendingQuizAdapter(this, mMyQuizzesMainResponseList, mColorName, mCategoryName));
             } else {
-                /*Remove this line*/
-//                mQuizzesRv.setAdapter(new WordSearchTrendingQuizAdapter(this, mMyQuizzesMainResponseList, mColorName));
                 mNoDataTv.setVisibility(View.VISIBLE);
             }
         }
@@ -211,4 +202,5 @@ public class WordSearchCategoryListActivity extends BaseActivity implements IOnC
     public void onWordSearchMyQuizzesFailure(ApiError error) {
         hideProgress();
     }
+
 }

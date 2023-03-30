@@ -377,6 +377,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onUpdateFavouriteFailure(ApiError error) {
         hideProgress();
+
     }
 
     ActivityResultLauncher<Intent> notificationActivityResultLauncher = registerForActivityResult(
@@ -414,5 +415,4 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     mPresenter.updateFavourite(request);
                 }
             });
-
 }

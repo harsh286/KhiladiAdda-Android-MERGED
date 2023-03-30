@@ -15,12 +15,11 @@ public class AppConstant {
     //public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29t";
 
 //       public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29tLw==";
-//     public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8="; //uat
+     public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8="; //uat
 
-    public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";//QA
+//    public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";//QA
 
 //    public static final String URL = "aHR0cHM6Ly9raGlsYWRpLnRyb29weC5pby8=";// https://khiladi.troopx.io/
-
 
     //     public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";
     public static final String URL_HOME = "https://www.khiladiadda.com/";
@@ -124,31 +123,34 @@ public class AppConstant {
     public static final String API_GET_RUMMY_REFRESH_TOKEN = "/user/rummy/fetchRefreshToken";
     public static final String API_GET_CALLBREAK_LIST = "/user/callbreak/fetchCards";
     public static final String API_GET_CALLBREAK_JOIN = "/user/callbreak/joinCard/{id}";
-    public static final String ADDA_CLASSIC_RULES = "1. All opponent's as well as your's tokens, will be at Home square by default and on rolling diceroll6, you will be able to take it out to play.\n" +
-            "2. The first player with all the tokens in the Victory Box, wins the match.\n" +
-            "3. Player cannot overlap with their tokens other than Safe Boxes (ie. Star Boxes and Colored Boxes).\n" +
-            "4. On placing your token on any Safe Box, the opponent cannot defeat your token.\n" +
-            "5. Only highlighted tokens are playble at your turn.\n" +
-            "6. Player cannot get consecutively 3 diceroll6s.\n" +
-            "7. After defeating any token, opponent's or your's, the token will travel back and get placed inside the Home sqaure and you can access it only on diceroll6.";
-    public static final String ADDA_TIMER_RULES = "1. All opponent's as well as your's tokens, will be placed at starting box at the start of the game.\n" +
-            "2. The scoring of the game will be according to the token travelled multiplied by 2. (This number can be changed on the admin)\n" +
-            "3. After successful completion of the timer, the game result will be declared and the player with having higher score, wins the match.\n" +
-            "4. In case, the score of both players are same, the game result will be declared as Draw.\n" +
-            "5. On defeating your opponent's token, the total score will be depleated by the distance that token has covered.\n" +
-            "6. After defeating any token, the token will tarvel back and get placed at the starting box.\n" +
-            "7. Only highlighted tokens are playble at your turn.\n" +
-            "8. Player cannot get consecutively 3 diceroll6s.\n" +
-            "9. Game timer  and individual score will be displayed on the game screen.\n" +
-            "10. Your scores will be displayed on the left side of the game screen.\n" +
-            "11. Game score will be updated on every successfull turn switches.";
-    public static final String ADDA_SERIES_RULES = "1. All opponent's as well as your's tokens, will be placed at starting box at the start of the game.\n" +
-            "2. Your upcoming 6 dicerolls will be displayed in the Dice Panel present in the center of the screen below the game board.\n" +
-            "3. You cannot see tour opponent's future dicerolls and vice-versa.\n" +
-            "4. The diceroll present in the right most corner of the panel will be blinking and it will be your latest upcoming diceroll on your turn.\n" +
-            "5. Player cannot get consecutively 3 diceroll6s.\n" +
-            "6. After defeating any token, the token will tarvel back and get placed at the starting box.\n" +
-            "7. Only highlighted tokens are playble at your turn.";
+
+    public static final String API_GET_CALLBREAK_HISTORY_LIST = "/user/callbreak/history";
+    public static final String API_GET_CALLBREAK_HISTORY_RANK = "/user/callbreak/historyRank/{id}";
+    public static final String ADDA_CLASSIC_RULES = "1. All opponent's as well as yours tokens, will be at Home square by default and on rolling diceroll6, you will be able to take it out to play.\n\n" +
+            "2. The first player with all the tokens in the Victory Box, wins the match.\n\n" +
+            "3. Player cannot overlap with their tokens other than Safe Boxes (ie. Star Boxes and Colored Boxes).\n\n" +
+            "4. On placing your token on any Safe Box, the opponent cannot defeat your token.\n\n" +
+            "5. Only highlighted tokens are playable at your turn.\n\n" +
+            "6. Player cannot get consecutively 3 diceroll6s.\n\n" +
+            "7. After defeating any token, opponent's or yours, the token will travel back and get placed inside the Home square and you can access it only on diceroll6.\n";
+    public static final String ADDA_TIMER_RULES = "1. All opponent's as well as yours tokens, will be placed at starting box at the start of the game. \n\n" +
+            "2. The scoring of the game will be according to the token travelled multiplied by 2. (This number can be changed.) \n\n" +
+            "3. After successful completion of the timer, the game result will be declared and the player with a higher score, wins the match. \n\n" +
+            "4. In case, the score of both players are same, the game result will be declared as Draw. \n\n" +
+            "5. On defeating your opponent's token, the total score will be depleted by the distance that token has covered. \n\n" +
+            "6. After defeating any token, the token will travel back and get placed at the starting box. \n\n" +
+            "7. Only highlighted tokens are playable at your turn. \n\n" +
+            "8. Player cannot get consecutively 3 diceroll6s. \n\n" +
+            "9. Game timer and individual score will be displayed on the game screen. \n\n" +
+            "10. Your score will be displayed on the left side of the game screen. \n\n" +
+            "11. Game score will be updated on every successful turn switches.\n";
+    public static final String ADDA_SERIES_RULES = "1. All opponent's as well as yours tokens, will be placed at starting box at the start of the game.\n\n" +
+            "2. Your upcoming 6 dicerolls will be displayed in the Dice Panel present in the center of the screen below the game board.\n\n" +
+            "3. You cannot see your opponent's future dicerolls and vice-versa.\n\n" +
+            "4. The diceroll present in the right most corner of the panel will be blinking and it will be your latest upcoming diceroll on your turn.\n\n" +
+            "5. Player cannot get consecutively 3 diceroll6s.\n\n" +
+            "6. After defeating any token, the token will travel back and get placed at the starting box.\n\n" +
+            "7. Only highlighted tokens are playable at your turn.\n";
     public static final String WORD_SEARCH = "Word Search";
     public static final String RUMMY = "Rummy";
     public static final String LUDO_TOURNAMENT = "LUDO TOURNAMENT";
@@ -490,6 +492,7 @@ public class AppConstant {
     public static final String ABOUT = "ABOUT";
     public static final String CANCELLATION = "CANCELLATION";
     public static final String PRIVACY = "PRIVACY";
+    public static final String TDS = "TDS";
     public static final String LEGALITY = "LEGALITY";
     public static final String FROM_UPDATE_MOBILE = "UPDATE MOBILE";
     public static final String ANDORID = "ANDROID";
@@ -881,6 +884,9 @@ public class AppConstant {
     public static final String PLAYERTYPE = "PLAYERTYPE";
     public static final String INVEST = "af_invest";
     public static final String GAME = "af_game";
+    public static final String LOGIN = "af_login";
+    public static final String LOGIN_METHOD = "af_social_method";
+    public static final String LOGIN_NUMBER = "af_login_number";
     public static final String LEAGUETYPE = "af_LEAGUETYPE";
     public static final String LEAGUEGAME = "af_LEAGUEGAME";
 
@@ -908,6 +914,9 @@ public class AppConstant {
     public static final String API_SEND_OTP_EMAIL = "/user/email-verify/{email}";
     public static final String API_VERIFY_EMAIL = "/user/email-verify-otp/{email}/{otp}";
     public static final String API_UPDATE_EMAIL = "auth/gmail_verification/{email}";
+
+    public static final String API_CHECK_TDS = "withdraw/tds";
+
     public static final String TEXT_ENCRYPTION = "secure_pass_key_";
     public static final String WebPayment = "WebPayment";
     public static final int PaymentDone = 1005;
@@ -1046,10 +1055,114 @@ public class AppConstant {
     public static final int FROM_PHONEPAY_UPI = 503;
 
     //Cashfree Status
-    public static final String API_CASHFREE_STATUS = "/cashfree/getOrder";
+    public static final String API_CASHFREE_STATUS = "/cashfree/getOrder/{orderId}";
 
     public static String LT_CLASSIC = "Classic";
     public static String LT_SERIES = "Series";
     public static String LT_TIMER = "Timer";
 
+    public static String TIMER_RULES_HINDI = "1. किसी भी मोड के टूर्नामेंट में सफलतापूर्वक शामिल होने के बाद, खिलाड़ी को एक पुष्टिकरण पॉप-अप के साथ प्रदर्शित किया जाएगा और ऑल-टूर्नामेंट टैब पर रीडायरेक्ट किया जाएगा।\n\n" +
+            "2. टूर्नामेंट में हर मैच नॉक-आउट मैच होगा।\n\n" +
+            "3. शामिल हुए टूर्नामेंट को माई टूर्नामेंट >> अपकमिंग टैब + में प्रदर्शित किया जाएगा।\n\n" +
+            "4. वांछित समय पर, मेरा टूर्नामेंट >> लाइव टैब के तहत टूर्नामेंट लाइव और खेलने योग्य होगा।\n\n" +
+            "5. खिलाड़ियों से अनुरोध है कि वे टूर्नामेंट की अद्यतन स्थिति की जांच करने के लिए टूर्नामेंट स्क्रीन को रीफ्रेश करते रहें।\n\n" +
+            "6. यदि दोनों खिलाड़ियों को टूर्नामेंट स्क्रीन पर 'प्ले नाउ' बटन के साथ प्रदर्शित किया जाता है और उन्होंने मैच शुरू नहीं किया। 5 मिनट के बाद, दोनों खिलाड़ियों को टूर्नामेंट से बाहर कर दिया जाएगा और वे अब कोई मैच नहीं खेल पाएंगे उस टूर्नामेंट में।\n\n" +
+            "7. यदि दोनों खिलाड़ियों को टूर्नामेंट स्क्रीन पर 'प्ले नाउ' बटन के साथ प्रदर्शित किया जाता है और उनमें से एक ने मैच शुरू नहीं किया है। 1 मिनट के बाद, गेमप्ले के अंदर के खिलाड़ी को विजेता घोषित किया जाएगा और अगले के लिए पदोन्नत किया जाएगा। टूर्नामेंट में राउंड। इसी तरह, जो खिलाड़ी मैच में शामिल नहीं हुआ, उसे हारने वाला घोषित किया जाएगा और टूर्नामेंट से बाहर कर दिया जाएगा।\n\n" +
+            "8. उच्च स्कोर वाला खिलाड़ी मैच जीत जाएगा।\n\n" +
+            "9. यदि नियम 8 संतुष्ट हो जाता है, तो जिस खिलाड़ी के पास विक्ट्री बॉक्स में अधिक संख्या में टोकन होंगे, वह मैच जीत जाएगा।\n\n" +
+            "10. यदि नियम 8 और नियम 9 संतुष्ट हो जाते हैं, तो अधिक संख्या में टोकन-कट काउंटर वाला खिलाड़ी मैच जीत जाता है।\n\n" +
+            "11. यदि नियम 8, नियम 9, और नियम 10 संतुष्ट हो जाते हैं, तो शेष टोकन के उच्च स्कोर वाला खिलाड़ी जो विजय बॉक्स में मौजूद नहीं है, मैच जीतता है।\n\n" +
+            "12. खेल का स्कोरिंग 2 से गुणा किए गए टोकन के अनुसार होगा। (यह संख्या बदली जा सकती है।)\n\n" +
+            "13. अपने प्रतिद्वंद्वी के टोकन को हराने पर, टोकन द्वारा तय की गई दूरी से कुल स्कोर कम हो जाएगा।\n\n" +
+            "14. किसी भी टोकन को हराने के बाद, टोकन वापस यात्रा करेगा और शुरुआती बॉक्स में रखा जाएगा।\n\n" +
+            "15. आपकी बारी पर केवल हाइलाइट किए गए टोकन ही चलाए जा सकते हैं।\n\n" +
+            "16. खिलाड़ी को लगातार 3 डाइसरोल6s नहीं मिल सकते हैं।\n\n" +
+            "17. गेम टाइमर और व्यक्तिगत स्कोर गेम स्क्रीन पर प्रदर्शित होंगे।\n\n" +
+            "18. आपका स्कोर गेम स्क्रीन के बाईं ओर प्रदर्शित होगा।\n\n" +
+            "19 गेम स्कोर हर सफल टर्न स्विच पर अपडेट किया जाएगा।\n\n";
+
+    public static String TIMER_RULE = "1. After successfully joining the tournament of any mode, the player will be displayed with a confirmation pop-up and redirected to the All-Tournament tab.\n\n" +
+            "2. Every match in the tournament will be a Knock-out match.\n\n" +
+            "3. The joined tournament will be displayed in the My Tournament >> Upcoming tab\n\n" +
+            "4. At the desired time, the tournament will be live and playable under the My Tournament >> Live tab.\n\n" +
+            "5. Players are requested to keep refreshing the tournament screen to check the updated status of the tournament.\n\n" +
+            "6. If both players are displayed with the ‘Play Now' button on the tournament screen and they didn’t start the match. After 5 minutes, both players will be Kicked Off the tournament and they are no longer able to play any match in that tournament.\n\n" +
+            "7. If both players are displayed with ‘Play Now' button on the tournament screen and one of them didn’t start the match. After 1 minute, the player inside the gameplay will be declared as Winner and will be promoted to the next round in the tournament. Likewise, the player who didn’t join the match will be declared as Loser and will be eliminated from the tournament.\n\n" +
+            "8. Player having a higher score will win the match.\n\n" +
+            "9. If Rule 8 gets satisfied, the player with a higher number of tokens in the Victory Box, wins the match.\n\n" +
+            "10. If Rule 8 and Rule 9 get satisfied, the player with a higher number of token-cut counter wins the match.\n\n" +
+            "11. If Rule 8, Rule 9, and Rule 10 get satisfied, the player with a higher score of remaining token(s) which are NOT present in the Victory Box, wins the match.\n\n" +
+            "12. The scoring of the game will be according to the token travelled multiplied by 2. (This number can be changed.)\n\n" +
+            "13. On defeating your opponent's token, the total score will be depleted by the distance that token has covered.\n\n" +
+            "14. After defeating any token, the token will travel back and get placed at the starting box.\n\n" +
+            "15. Only highlighted tokens are playable at your turn.\n\n" +
+            "16. Player cannot get consecutively 3 diceroll6s.\n\n" +
+            "17. Game timer and individual score will be displayed on the game screen.\n\n" +
+            "18. Your score will be displayed on the left side of the game screen.\n\n" +
+            "19 Game score will be updated on every successful turn switches.\n\n";
+
+    public static String SERIES_RULES = "1. After successfully joining the tournament of any mode, the player will be displayed with a confirmation pop-up and redirected to the All Tournament tab.\n\n" +
+            "2. Every match in the tournament will be a Knock-out match.\n\n" +
+            "3. The joined tournament will be displayed in the My Tournament >> Upcoming tab\n\n" +
+            "4. At the desired time, the tournament will be live and playable under the My Tournament >> Live tab.\n\n" +
+            "5. Players are requested to keep refreshing the tournament screen to check the updated status of the tournament.\n\n" +
+            "6. If both players are displayed with ‘Play Now’ button on the tournament screen and they didn’t start the match. After 5 minutes, both players will be Kicked Off from the tournament and they are no longer able to play any match in that tournament.\n\n" +
+            "7. If both players are displayed with ‘Play Now' button on the tournament screen and one of them didn’t start the match. After 1 minute, the player inside the gameplay will be declared as Winner and will be promoted to the next round in the tournament. Likewise, the player who didn’t join the match will be declared as Loser and will be eliminated from the tournament.\n\n" +
+            "8. All opponent's as well as yours tokens, will be placed at starting box at the start of the game.\n\n" +
+            "9. Your upcoming 6 dicerolls will be displayed in the Dice Panel present in the center of the screen below the game board.\n\n" +
+            "10. You cannot see your opponent's future dicerolls and vice-versa.\n\n" +
+            "11. The diceroll present in the right most corner of the panel will be blinking and it will be your latest upcoming diceroll on your turn.\n\n" +
+            "12. Player cannot get consecutively 3 diceroll6s.\n\n" +
+            "13. After defeating any token, the token will travel back and get placed at the starting box.\n\n" +
+            "14. Only highlighted tokens are playable at your turn.\n";
+
+
+    public static String SERIES_RULE_HINDI = "1. किसी भी मोड के टूर्नामेंट में सफलतापूर्वक शामिल होने के बाद, खिलाड़ी को एक पुष्टिकरण पॉप-अप के साथ प्रदर्शित किया जाएगा और ऑल-टूर्नामेंट टैब पर रीडायरेक्ट किया जाएगा।\n\n" +
+            "2. टूर्नामेंट में हर मैच नॉक-आउट मैच होगा।\n\n" +
+            "3. शामिल हुए टूर्नामेंट को माई टूर्नामेंट >> अपकमिंग टैब + में प्रदर्शित किया जाएगा।\n\n" +
+            "4. वांछित समय पर, मेरा टूर्नामेंट >> लाइव टैब के तहत टूर्नामेंट लाइव और खेलने योग्य होगा।\n\n" +
+            "5. खिलाड़ियों से अनुरोध है कि वे टूर्नामेंट की अद्यतन स्थिति की जांच करने के लिए टूर्नामेंट स्क्रीन को रीफ्रेश करते रहें।\n\n" +
+            "6. यदि दोनों खिलाड़ियों को टूर्नामेंट स्क्रीन पर 'प्ले नाउ' बटन के साथ प्रदर्शित किया जाता है और उन्होंने मैच शुरू नहीं किया। 5 मिनट के बाद, दोनों खिलाड़ियों को टूर्नामेंट से बाहर कर दिया जाएगा और वे अब कोई मैच नहीं खेल पाएंगे उस टूर्नामेंट में।\n\n" +
+            "7. यदि दोनों खिलाड़ियों को टूर्नामेंट स्क्रीन पर 'प्ले नाउ' बटन के साथ प्रदर्शित किया जाता है और उनमें से एक ने मैच शुरू नहीं किया है। 1 मिनट के बाद, गेमप्ले के अंदर के खिलाड़ी को विजेता घोषित किया जाएगा और अगले के लिए पदोन्नत किया जाएगा। टूर्नामेंट में राउंड। इसी तरह, जो खिलाड़ी मैच में शामिल नहीं हुआ, उसे हारने वाला घोषित किया जाएगा और टूर्नामेंट से बाहर कर दिया जाएगा।\n\n" +
+            "8. सभी विरोधियों के साथ-साथ आपके टोकन, गेम की शुरुआत में शुरुआती बॉक्स में रखे जाएंगे।\n\n" +
+            "9. आपके आगामी 6 डाइसरोल गेम बोर्ड के नीचे स्क्रीन के केंद्र में मौजूद डाइस पैनल में प्रदर्शित होंगे।\n\n" +
+            "10. आप अपने प्रतिद्वंद्वी के भविष्य के डाइसरोल और इसके विपरीत नहीं देख सकते हैं।\n\n" +
+            "11. पैनल के सबसे दाहिने कोने में मौजूद डाइसरोल ब्लिंक करेगा और यह आपकी बारी पर आपका नवीनतम आगामी डाइसरोल होगा।\n\n" +
+            "12. खिलाड़ी को लगातार 3 डाइसरोल6s नहीं मिल सकते हैं।\n\n" +
+            "13. किसी भी टोकन को हराने के बाद, टोकन वापस यात्रा करेगा और शुरुआती बॉक्स में रखा जाएगा।\n\n" +
+            "14. आपकी बारी पर केवल हाइलाइट किए गए टोकन ही चलाए जा सकते हैं।\n";
+
+    public static String CLASSIC_RULE = "1. After successfully joining the tournament of any mode, the player will be displayed with a confirmation pop-up and redirected to the All Tournament tab.\n\n" +
+            "2. Every match in the tournament will be a Knock-out match.\n\n" +
+            "3. The joined tournament will be displayed in the My Tournament >> Upcoming tab.\n\n" +
+            "4. At the desired time, the tournament will be live and playable under the My Tournament >> Live tab.\n\n" +
+            "5. Players are requested to keep refreshing the tournament screen to check the updated status of the tournament.\n\n" +
+            "6. If both players are displayed with ‘Play Now’ button on the tournament screen and they didn’t start the match. After 5 minutes, both players will be Kicked Off from the tournament and they are no longer able to play any match in that tournament.\n\n" +
+            "7. If both players are displayed with ‘Play Now' button on the tournament screen and one of them didn’t start the match. After 1 minute, the player inside the gameplay will be declared as Winner and will be promoted to the next round in the tournament. Likewise, the player who didn’t join the match will be declared as Loser and will be eliminated from the tournament.\n\n" +
+            "8. All opponent's as well as yours tokens, will be at Home square by default and on rolling diceroll6, you will be able to take it out to play.\n\n" +
+            "9. The first player with all the tokens in the Victory Box, wins the match.\n\n" +
+            "10. Player cannot overlap with their tokens other than Safe Boxes (ie. Star Boxes and Colored Boxes).\n\n" +
+            "11. On placing your token on any Safe Box, the opponent cannot defeat your token.\n\n" +
+            "12. Only highlighted tokens are playable at your turn.\n\n" +
+            "13. Player cannot get consecutively 3 diceroll6s.\n\n" +
+            "14. After defeating any token, opponent's or yours, the token will travel back and get placed inside the Home square and you can access it only on diceroll6.\n";
+
+    public static String CLASSIC_RULE_HINDI = "1. किसी भी मोड के टूर्नामेंट में सफलतापूर्वक शामिल होने के बाद, खिलाड़ी को एक पुष्टिकरण पॉप-अप के साथ प्रदर्शित किया जाएगा और ऑल-टूर्नामेंट टैब पर रीडायरेक्ट किया जाएगा।\n\n" +
+            "2. टूर्नामेंट में हर मैच नॉक-आउट मैच होगा।\n\n" +
+            "3. शामिल हुए टूर्नामेंट को माई टूर्नामेंट >> अपकमिंग टैब + में प्रदर्शित किया जाएगा।\n\n" +
+            "4. वांछित समय पर, मेरा टूर्नामेंट >> लाइव टैब के तहत टूर्नामेंट लाइव और खेलने योग्य होगा।\n\n" +
+            "5. खिलाड़ियों से अनुरोध है कि वे टूर्नामेंट की अद्यतन स्थिति की जांच करने के लिए टूर्नामेंट स्क्रीन को रीफ्रेश करते रहें।\n\n" +
+            "6. यदि दोनों खिलाड़ियों को टूर्नामेंट स्क्रीन पर 'प्ले नाउ' बटन के साथ प्रदर्शित किया जाता है और उन्होंने मैच शुरू नहीं किया। 5 मिनट के बाद, दोनों खिलाड़ियों को टूर्नामेंट से बाहर कर दिया जाएगा और वे अब कोई मैच नहीं खेल पाएंगे उस टूर्नामेंट में।\n\n" +
+            "7. यदि दोनों खिलाड़ियों को टूर्नामेंट स्क्रीन पर 'प्ले नाउ' बटन के साथ प्रदर्शित किया जाता है और उनमें से एक ने मैच शुरू नहीं किया है। 1 मिनट के बाद, गेमप्ले के अंदर के खिलाड़ी को विजेता घोषित किया जाएगा और अगले के लिए पदोन्नत किया जाएगा। टूर्नामेंट में राउंड। इसी तरह, जो खिलाड़ी मैच में शामिल नहीं हुआ, उसे हारने वाला घोषित किया जाएगा और टूर्नामेंट से बाहर कर दिया जाएगा।\n\n" +
+            "8. सभी विरोधियों के साथ-साथ आपके टोकन, डिफ़ॉल्ट रूप से होम स्क्वायर पर होंगे और डाइसरोल6 रोल करने पर, आप इसे खेलने के लिए बाहर निकालने में सक्षम होंगे।\n\n" +
+            "9. विक्ट्री बॉक्स में सभी टोकन वाला पहला खिलाड़ी, मैच जीतता है।\n\n" +
+            "10. खिलाड़ी सुरक्षित बॉक्स (यानी स्टार बॉक्स और रंगीन बॉक्स) के अलावा अपने टोकन के साथ ओवरलैप नहीं कर सकता है।\n\n" +
+            "11. किसी सेफ बॉक्स पर अपना टोकन रखने पर, विरोधी आपके टोकन को हरा नहीं सकता है।\n\n" +
+            "12. आपकी बारी पर केवल हाइलाइट किए गए टोकन ही चलाए जा सकते हैं।\n\n" +
+            "13. खिलाड़ी को लगातार 3 डाइसरोल6s नहीं मिल सकते हैं।\n\n" +
+            "14. किसी भी टोकन, प्रतिद्वंद्वी या आपके को हराने के बाद, टोकन वापस यात्रा करेगा और होम स्क्वायर के अंदर रखा जाएगा और आप इसे केवल डाइसरोल6 पर एक्सेस कर सकते हैं।\n";
+
+    public static String LUDO_TOURNAMENT_DISCLAMIER = "Please Join your tournament by clicking on below Play Now button.\n" +
+            "\n" +
+            "If you not Click on Play Now button in 5 minutes then you will lost the tournament.";
 }

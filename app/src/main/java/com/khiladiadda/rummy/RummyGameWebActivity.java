@@ -17,16 +17,23 @@ import com.google.gson.Gson;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.dialogs.AppDialog;
+import com.khiladiadda.dialogs.interfaces.IOnNetworkErrorListener;
 import com.khiladiadda.gameleague.GamesFinalResultActivity;
 import com.khiladiadda.network.model.response.RummyGameModel;
+import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
+import com.khiladiadda.utility.NetworkStatus;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 import butterknife.BindView;
 
 public class RummyGameWebActivity extends BaseActivity {
+
     @BindView(R.id.web_view)
     WebView webViewGame;
     private String info;
@@ -42,43 +49,25 @@ public class RummyGameWebActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
-        getUrlFromSettings();
-        webViewGame.getSettings().setJavaScriptEnabled(true);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mGameDroidoNotificationReceiver, new IntentFilter(AppConstant.GAME_DROIDO_CLASS_PACKAGE));
         webViewGame.addJavascriptInterface(new JsObject(), "Android");
+        webViewGame.getSettings().setJavaScriptEnabled(true);
+//        webViewGame.getSettings().setDomStorageEnabled(true);
+        webViewGame.getSettings().setBuiltInZoomControls(false);
+        getUrlFromSettings();
     }
-
-
-    private final BroadcastReceiver mGameDroidoNotificationReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-//            String data = intent.getStringExtra(AppConstant.FROM);
-//            if (data.equalsIgnoreCase(AppConstant.DROIDO)) {
-//                Intent intLeaderboard = new Intent(RummyGameWebActivity.this, GamesFinalResultActivity.class);
-//                intLeaderboard.putExtra("id", iD);
-//                intLeaderboard.putExtra("tournamentid", tournamentid);
-//                startActivity(intLeaderboard);
-//                finish();
-//            }
-        }
-    };
 
     public void getUrlFromSettings() {
         Intent intLeaderboard = getIntent();
         info = intLeaderboard.getStringExtra("info");
-        webViewGame.getSettings().setJavaScriptEnabled(true);
-        webViewGame.getSettings().setDomStorageEnabled(true);
-        webViewGame.getSettings().setBuiltInZoomControls(false);
 //        gameurl = "https://playmagicrummy.com/build/webbuild/khiladiAdda/debug/web-mobile/index.html?info=" + info;
-        gameurl = "https://playmagicrummy.com/build/webbuild/khiladiAdda/debug/web-mobile/index.html?info=" + info + ",pb=ka";
+        gameurl = AppSharedPreference.initialize(this).getVersion().getResponse().getRummyLink() + "?info=" + info;
+//        gameurl = "https://playmagicrummy.com/build/webbuild/khiladiAdda/debug/web-mobile/index.html?info=" + info + ",pb=ka";
         webViewGame.loadUrl(gameurl);
     }
 
     @Override
     public void onBackPressed() {
-//        showDeletePopup();
         sendDataToWebView("back");
-
     }
 
     private void sendDataToWebView(String data) {
@@ -104,7 +93,7 @@ public class RummyGameWebActivity extends BaseActivity {
     public void onClick(View view) {
     }
 
-    class JsObject {
+    class JsObject implements IOnNetworkErrorListener {
         @JavascriptInterface
         public void receiveMessage(String data) throws JSONException {
             Log.i("JsObject", "new postMessage data= " + data);
@@ -112,13 +101,25 @@ public class RummyGameWebActivity extends BaseActivity {
             if (filteredData.getRedirectionType().equals("exit") && filteredData.getRedirectionParams().getRedirectionUrl() != null &&
                     filteredData.getRedirectionParams().getRedirectionUrl().equals("addMoney")) {
                 AppDialog.showRummyRechargeMsg(RummyGameWebActivity.this, "Recharge Now");
-                Log.e("TAG", "receiveMessage: " );
-            }else if (filteredData.getRedirectionType().equals("RELOAD")) {
-                webViewGame.getSettings().setBuiltInZoomControls(false);
-                webViewGame.loadUrl(gameurl);
+                Log.e("TAG", "receiveMessage: ");
+            } else if (filteredData.getRedirectionType().equals("RELOAD")) {
                 finish();
+                Intent intLeaderboard = new Intent(RummyGameWebActivity.this, RummyGameWebActivity.class);
+                intLeaderboard.putExtra("info", info);
+                startActivity(intLeaderboard);
+
             } else if (filteredData.getRedirectionType().equals("exit") || filteredData.getRedirectionType().equals("EXIT")) {
                 finish();
+            }
+        }
+
+        @Override
+        public void onRetry() {
+            if (new NetworkStatus(RummyGameWebActivity.this).isInternetOn()) {
+                finish();
+                startActivity(new Intent(RummyGameWebActivity.this, RummyGameWebActivity.class));
+            } else {
+                AppDialog.showNetworkErrorDialog(RummyGameWebActivity.this, this);
             }
         }
     }

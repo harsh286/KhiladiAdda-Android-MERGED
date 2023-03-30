@@ -50,7 +50,6 @@ public class WordSearchPrizeBreakthroughActivity extends BaseActivity {
     protected void initVariables() {
         String from = getIntent().getStringExtra(AppConstant.FROM);
         if (from.equalsIgnoreCase(AppConstant.FROM_VIEW_QUIZ)) {
-//            QuizListDetails mQuizDetails = getIntent().getParcelableExtra(AppConstant.DATA_QUIZ);
             List<PrizePoolBreakthrough> mPrizePoolBreakthroughList = getIntent().getParcelableArrayListExtra(AppConstant.DATA_QUIZ);
             String mQuizName = getIntent().getStringExtra(AppConstant.MatchName);
             mQuizNameTV.setText(mQuizName);
@@ -81,4 +80,5 @@ public class WordSearchPrizeBreakthroughActivity extends BaseActivity {
                 break;
         }
     }
+
 }

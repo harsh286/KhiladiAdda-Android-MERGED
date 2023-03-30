@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -137,6 +139,8 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
     ViewPager mBannerVP;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
+    private boolean getLudoKingAuto;
+    private double mTotalWalletBal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,13 +155,13 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
 
     @Override
     protected void initViews() {
-        Bundle intent=getIntent().getExtras();
-        if (intent!=null){
+        Bundle intent = getIntent().getExtras();
+        if (intent != null) {
             String redirect = intent.getString(AppConstant.PushFrom);
-            if (redirect!=null)
-            if (redirect.equalsIgnoreCase(AppConstant.MoEngage)) {
-                mAppPreference.setIsDeepLinking(true);
-            }
+            if (redirect != null)
+                if (redirect.equalsIgnoreCase(AppConstant.MoEngage)) {
+                    mAppPreference.setIsDeepLinking(true);
+                }
         }
         mBackIV.setOnClickListener(this);
         mNotificationIV.setOnClickListener(this);
@@ -183,7 +187,7 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
         mLudoContestRV.setAdapter(mAllChallengeAdapter);
         mAllChallengeAdapter.setOnItemChildClickListener(this);
         mMyContestList = new ArrayList<>();
-        mMyChallengeAdapter = new MyChallengeAdapter(this, mMyContestList);
+        mMyChallengeAdapter = new MyChallengeAdapter(this, mMyContestList, getLudoKingAuto);
         mMyContestRV.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mMyContestRV.setAdapter(mMyChallengeAdapter);
         mMyChallengeAdapter.setOnItemClickListener(this);
@@ -279,9 +283,9 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
 
     private void createChallenge() {
         if (getCredential()) {
-            mAddChallengeDialog = AppDialog.addChallengeDialog(this, this, mGameCharacterId, mContestType, mMode);
+            mAddChallengeDialog = AppDialog.addChallengeDialog(this, this, mGameCharacterId, mContestType, mMode, mTotalWalletBal);
         } else {
-            mAddChallengeDialog = AppDialog.addChallengeDialog(this, this, "", mContestType, mMode);
+            mAddChallengeDialog = AppDialog.addChallengeDialog(this, this, "", mContestType, mMode, mTotalWalletBal);
         }
     }
 
@@ -300,12 +304,12 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
     public void onGetContestSuccess(LudoContestResponse responseModel) {
         mSyncProfile = false;
         mLudoContestList.clear();
+        getLudoKingAuto = responseModel.isAuto_roomcode_enabled();
         mLudoContestList.addAll(responseModel.getResponse());
         mAllChallengeAdapter.notifyDataSetChanged();
         mMyContestList.clear();
         mMyContestList.addAll(responseModel.getMyContests());
         mMyChallengeAdapter.notifyDataSetChanged();
-
         List<BannerDetails> bannerData = responseModel.getBanner();
         if (bannerData != null && bannerData.size() > 0) {
             mBannerVP.setVisibility(View.VISIBLE);
@@ -313,7 +317,6 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
         } else {
             mBannerVP.setVisibility(GONE);
         }
-
         if (mMyContestList.size() >= 1) {
             mNoDataTV.setVisibility(View.GONE);
         } else {
@@ -329,16 +332,14 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
         mAppPreference.setProfileData(responseModel.getProfile());
         mCoins = responseModel.getProfile().getCoins();
         if (mCoins != null) {
-            double mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
+            mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
             mWalletBalanceTV.setText("₹" + AppUtilityMethods.roundUpNumber(mTotalWalletBal));
         }
-
         if (responseModel.isIs_popular_enabled()) {
             mLLMode.setVisibility(View.VISIBLE);
         } else {
             mLLMode.setVisibility(View.GONE);
         }
-
     }
 
     @Override
@@ -449,8 +450,7 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
     }
 
     private void acceptChallenge(int position) {
-        double walletBalance = mCoins.getBonus() + mCoins.getDeposit() + mCoins.getWinning();
-        if (mLudoContestList.get(position).getEntryFees() <= walletBalance) {
+        if (mLudoContestList.get(position).getEntryFees() <= mTotalWalletBal) {
             OpponentLudoRequest request = new OpponentLudoRequest(mGameCharacterId);
             acceptAlert(this, mLudoContestList.get(position).getEntryFees(), mLudoContestList.get(position).getId(), request, AppConstant.FROM_ADD);
         } else {

@@ -50,4 +50,5 @@ public interface IWithdrawPresenter extends IBasePresenter {
     //Instant Payout
     void onIPayTransfer(String beneficiaryId, String amount, String otp, String lat, String lon);
 
+    void checkTDS(int amount);
 }

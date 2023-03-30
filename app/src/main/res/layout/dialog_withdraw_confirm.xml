@@ -56,6 +56,28 @@
         android:padding="@dimen/padding_5">
 
         <TextView
+            android:id="@+id/tv_tds_info"
+            style="@style/WalletTextViewOne"
+            android:layout_marginStart="@dimen/margin_3"
+            android:drawableEnd="@drawable/ic_info"
+            android:text="@string/text_tds_fee" />
+
+        <TextView
+            android:id="@+id/tv_tds_fee"
+            style="@style/WalletTextViewTwo"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@drawable/border_grey"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_5">
+
+        <TextView
             style="@style/WalletTextViewOne"
             android:layout_marginStart="@dimen/margin_3"
             android:text="@string/text_transaction_fee" />

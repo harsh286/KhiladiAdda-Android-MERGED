@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.khiladiadda.R;
 import com.khiladiadda.network.model.response.hth.LeaderBoardHthResponseDetails;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,7 +40,8 @@ public class HTHLeadBoardAdapter extends RecyclerView.Adapter<HTHLeadBoardAdapte
         LeaderBoardHthResponseDetails details = overallLeadBoardLists.get(position);
         holder.mNameTV.setText(String.valueOf(details.getName()));
         if (!TextUtils.isEmpty(String.valueOf(details.getTotal()))) {
-            holder.mScoreTV.setText("Won: " + details.getTotal() + " Coins");
+//            holder.mScoreTV.setText("Won: " + details.getTotal() + " Coins");
+            holder.mScoreTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(details.getTotal()));
         } else {
             holder.mScoreTV.setText("Won: 0 Coins");
         }

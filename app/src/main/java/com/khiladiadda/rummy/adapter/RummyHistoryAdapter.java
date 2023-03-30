@@ -54,13 +54,14 @@ public class RummyHistoryAdapter extends RecyclerView.Adapter<RummyHistoryAdapte
         RummyHistoryResponse item = mRummyHistoryResponseList.get(position);
         holder.mDateTv.setText(AppUtilityMethods.getConvertDateParkIn(item.getCreatedAt()));
         holder.mTransactionId.setText(item.getTxnID());
-        holder.mPriceTv.setText("Entry ₹"+item.getAmount());
-        if (item.getWinningAmount() >= 0){
-            holder.mWinningPriceTv.setText("Won ₹"+String.format("%.2f", Double.parseDouble(item.getWinningAmount().toString().replaceAll("[+-]", ""))));
+        holder.mRummyCode.setText(item.getRummyCode());
+        holder.mPriceTv.setText("Entry ₹" + item.getAmount());
+        if (item.getWinningAmount() >= 0) {
+            holder.mWinningPriceTv.setText("Won ₹" + String.format("%.2f", Double.parseDouble(item.getWinningAmount().toString().replaceAll("[+-]", ""))));
             holder.mWinningPriceTv.setTextColor(Color.parseColor("#00910E"));
             holder.mDetailsCl.setVisibility(View.VISIBLE);
-        }else {
-            holder.mWinningPriceTv.setText("Lose ₹"+String.format("%.2f", Double.parseDouble(item.getWinningAmount().toString().replaceAll("[+-]", ""))));
+        } else {
+            holder.mWinningPriceTv.setText("Lose ₹" + String.format("%.2f", Double.parseDouble(item.getWinningAmount().toString().replaceAll("[+-]", ""))));
             holder.mWinningPriceTv.setTextColor(Color.parseColor("#CA2236"));
             holder.mArrowIv.setImageResource(R.drawable.up_arrow_show);
             holder.mWinningPriceTv.setVisibility(View.GONE);
@@ -71,17 +72,17 @@ public class RummyHistoryAdapter extends RecyclerView.Adapter<RummyHistoryAdapte
         holder.mHistoryMcv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (holder.mDetailsCl.isShown()){
+                if (holder.mDetailsCl.isShown()) {
                     holder.mDetailsCl.setVisibility(View.GONE);
                     holder.mArrowIv.setImageResource(R.drawable.up_arrow_show);
-                    if (item.getWinningAmount() < 0){
+                    if (item.getWinningAmount() < 0) {
                         holder.mWinningPriceTv.setVisibility(View.GONE);
-                    }else
+                    } else
                         holder.mWinningPriceTv.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     holder.mDetailsCl.setVisibility(View.VISIBLE);
                     holder.mArrowIv.setImageResource(R.drawable.down_arrow_hide);
-                    if (item.getWinningAmount() < 0){
+                    if (item.getWinningAmount() < 0) {
                         holder.mWinningPriceTv.setVisibility(View.VISIBLE);
                     }
                 }
@@ -113,6 +114,8 @@ public class RummyHistoryAdapter extends RecyclerView.Adapter<RummyHistoryAdapte
         TextView mPriceTv;
         @BindView(R.id.iv_arrow)
         ImageView mArrowIv;
+        @BindView(R.id.tv_rummy_code)
+        TextView mRummyCode;
 
         private IOnItemClickListener mOnItemClickListener;
 

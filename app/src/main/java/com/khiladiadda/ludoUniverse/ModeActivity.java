@@ -26,6 +26,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -88,7 +89,8 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
     TextView mLudoEnableTV;
     @BindView(R.id.tv_rules)
     TextView rulesTv;
-
+    @BindView(R.id.vv_tutorial)
+    ConstraintLayout mVideoCL;
     private Dialog mVersionDialog;
     private String mVersion, mLink, mFilePath, mCurrentVersion;
     private boolean mIsRequestingAppInstallPermission;
@@ -96,12 +98,11 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
     private Intent launchIntent;
     private int mFrom = 1;
     private List<BannerDetails> bannerData = new ArrayList<>();
-
-
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
+    private int mDownUp = 1;
 
     @Override
     protected int getContentView() {
@@ -124,6 +125,7 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
         launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
         if (launchIntent != null) getVersion();
         else mAppPreference.setBoolean("LudoDownload", false);
+        mVideoCL.setOnClickListener(this);
     }
 
     @Override
@@ -153,6 +155,7 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
                 mPlayTV.setText(R.string.play_classic);
                 doSelection(true, false, false);
                 mActivityNameTV.setText("Classic");
+                rulesTv.scrollTo(0,0);
                 rulesTv.setText(AppConstant.ADDA_CLASSIC_RULES);
                 fetchBanner();
                 break;
@@ -161,6 +164,7 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
                 mPlayTV.setText(R.string.play_timer);
                 doSelection(false, true, false);
                 mActivityNameTV.setText("Timer");
+                rulesTv.scrollTo(0,0);
                 rulesTv.setText(AppConstant.ADDA_TIMER_RULES);
                 fetchBanner();
                 break;
@@ -169,6 +173,7 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
                 mPlayTV.setText(R.string.play_series);
                 doSelection(false, false, true);
                 mActivityNameTV.setText("Series");
+                rulesTv.scrollTo(0,0);
                 rulesTv.setText(AppConstant.ADDA_SERIES_RULES);
                 fetchBanner();
                 break;
@@ -191,6 +196,9 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
                 } else {
                     mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
                 }
+                break;
+            case R.id.vv_tutorial:
+                AppUtilityMethods.openYoutube(this);
                 break;
         }
     }
@@ -300,10 +308,13 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.ludoadda_download_popup);
-        TextView tv = dialog.findViewById(R.id.textView9);
         ProgressBar progressBar = dialog.findViewById(R.id.pb_apk_download);
         AppCompatButton iv_playstore = dialog.findViewById(R.id.iv_download);
         ImageView ivCross = dialog.findViewById(R.id.iv_cross);
+        TextView tvMsg = dialog.findViewById(R.id.textView9);
+        if (mDownUp == 2) {
+            tvMsg.setText("It seem like you haven't updated our Ludo Adda game to play contests, So please click on download button to update the game.");
+        }
         ivCross.setOnClickListener(view -> {
             dialog.dismiss();
         });
@@ -427,6 +438,7 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
                 mAppPreference.setBoolean("LudoDownload", true);
             } else {
                 mDownloadTV.setText("Update");
+                mDownUp = 2;
             }
         } else {
             mDownloadTV.setVisibility(View.VISIBLE);

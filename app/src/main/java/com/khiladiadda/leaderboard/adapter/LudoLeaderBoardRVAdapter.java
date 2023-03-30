@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.khiladiadda.R;
 import com.khiladiadda.network.model.response.LudoLeaderboardDetails;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,12 +29,14 @@ public class LudoLeaderBoardRVAdapter extends RecyclerView.Adapter<LudoLeaderBoa
     }
 
     @NonNull
-    @Override public EventHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override
+    public EventHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_leaderboard, parent, false);
         return new EventHolder(itemView);
     }
 
-    @Override public void onBindViewHolder(EventHolder holder, int position) {
+    @Override
+    public void onBindViewHolder(EventHolder holder, int position) {
         int rank = 0;
         LudoLeaderboardDetails details = mLudoList.get(position);
         if (!TextUtils.isEmpty(details.getDp())) {
@@ -46,26 +49,32 @@ public class LudoLeaderBoardRVAdapter extends RecyclerView.Adapter<LudoLeaderBoa
         rank = position + 4;
         holder.mRankTV.setText("#" + rank);
         if (!TextUtils.isEmpty(String.valueOf(details.getTotal()))) {
-            holder.mScoreTV.setText("Won: " + details.getTotal() + " Coins");
+            holder.mScoreTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(details.getTotal()));
         } else {
-            holder.mScoreTV.setText("Won: 0 Coins");
+            holder.mScoreTV.setText("Won: \u20B9 0");
         }
         if (details.getnLudo() != null) {
             holder.mUsernameTV.setText("Won: " + details.getnLudo().getWon() + " Challenges");
         }
     }
 
-    @Override public int getItemCount() {
+    @Override
+    public int getItemCount() {
         return mLudoList.size();
     }
 
     public static class EventHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.tv_name) TextView mNameTV;
-        @BindView(R.id.tv_score) TextView mScoreTV;
-        @BindView(R.id.tv_rank) TextView mRankTV;
-        @BindView(R.id.tv_username) TextView mUsernameTV;
-        @BindView(R.id.iv_profile) ImageView mProfileIV;
+        @BindView(R.id.tv_name)
+        TextView mNameTV;
+        @BindView(R.id.tv_score)
+        TextView mScoreTV;
+        @BindView(R.id.tv_rank)
+        TextView mRankTV;
+        @BindView(R.id.tv_username)
+        TextView mUsernameTV;
+        @BindView(R.id.iv_profile)
+        ImageView mProfileIV;
 
         public EventHolder(View view) {
             super(view);
@@ -74,7 +83,8 @@ public class LudoLeaderBoardRVAdapter extends RecyclerView.Adapter<LudoLeaderBoa
             mUsernameTV.setVisibility(View.VISIBLE);
         }
 
-        @Override public void onClick(View v) {
+        @Override
+        public void onClick(View v) {
             v.getId();
         }
     }

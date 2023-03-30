@@ -483,9 +483,16 @@ public class KabaddiCreateTeamActivity extends BaseActivity implements ICreateBa
         } else if (mFrom == 2) {
             if (mFromPLayer.equalsIgnoreCase(AppConstant.Opponent)) {
                 if (mBattleList != null && mBattleList.getCaptainTeam() != null && !mBattleList.getCaptainTeam().isEmpty()) {
+//                    for (int i = 0; i < kaplayerList.size(); i++) {
+//                        if (kaplayerList.get(i).getId().contains(mBattleList.getCaptainTeam().get(i).getPlayerId())) {
+//                            oppent = oppent + 1;
+//                        }
+//                    }
                     for (int i = 0; i < kaplayerList.size(); i++) {
-                        if (kaplayerList.get(i).getId().contains(mBattleList.getCaptainTeam().get(i).getPlayerId())) {
-                            oppent = oppent + 1;
+                        for (int j = 0; j < mBattleList.getCaptainTeam().size(); j++) {
+                            if (kaplayerList.get(i).getId().contains(mBattleList.getCaptainTeam().get(j).getPlayerId())) {
+                                oppent = oppent + 1;
+                            }
                         }
                     }
                     if (oppent == 6) {
@@ -502,9 +509,16 @@ public class KabaddiCreateTeamActivity extends BaseActivity implements ICreateBa
                 }
             } else if (mFromPLayer.equalsIgnoreCase(AppConstant.Captain)) {
                 if (mBattleList != null && mBattleList.getOpponentTeam() != null && !mBattleList.getOpponentTeam().isEmpty()) {
+//                    for (int i = 0; i < kaplayerList.size(); i++) {
+//                        if (kaplayerList.get(i).getId().contains(mBattleList.getOpponentTeam().get(i).getPlayerId())) {
+//                            oppent = oppent + 1;
+//                        }
+//                    }
                     for (int i = 0; i < kaplayerList.size(); i++) {
-                        if (kaplayerList.get(i).getId().contains(mBattleList.getOpponentTeam().get(i).getPlayerId())) {
-                            oppent = oppent + 1;
+                        for (int j = 0; j < mBattleList.getOpponentTeam().size(); j++) {
+                            if (kaplayerList.get(i).getId().contains(mBattleList.getOpponentTeam().get(j).getPlayerId())) {
+                                oppent = oppent + 1;
+                            }
                         }
                     }
                     if (oppent == 6) {

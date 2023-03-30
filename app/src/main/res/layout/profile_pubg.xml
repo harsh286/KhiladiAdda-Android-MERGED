@@ -19,7 +19,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/s3"
-                android:src="@drawable/ic_bgmi" />
+                android:src="@drawable/bgmilb" />
 
             <TextView
                 android:id="@+id/tv_pubg"
@@ -35,7 +35,7 @@
 
         </RelativeLayout>
 
-<!--        <include layout="@layout/view_line_gray" />-->
+        <!--        <include layout="@layout/view_line_gray" />-->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -53,7 +53,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/s3"
-                android:src="@drawable/tdm" />
+                android:src="@drawable/tdmlb" />
 
             <TextView
                 android:id="@+id/tv_pubg_lite"
@@ -73,6 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/light_red_white" />
+
         <RelativeLayout
             android:id="@+id/rl_freefire"
             android:layout_width="match_parent"
@@ -85,7 +86,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/s3"
-                android:src="@drawable/ic_ff" />
+                android:src="@drawable/fflb" />
 
             <TextView
                 android:id="@+id/tv_freefire"
@@ -99,13 +100,13 @@
                 android:id="@+id/btn_play_ff"
                 style="@style/ProfileCredentialButtonPlay" />
 
-
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/light_red_white" />
+
         <RelativeLayout
             android:id="@+id/rl_ludo"
             android:layout_width="match_parent"
@@ -118,7 +119,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/s3"
-                android:src="@drawable/ic_ludo" />
+                android:src="@drawable/ludolb" />
 
             <TextView
                 android:id="@+id/tv_ludo"
@@ -137,18 +138,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/light_red_white" />
-        <RelativeLayout
-            android:id="@+id/rl_clashroyale"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/padding_5"
-            android:visibility="gone">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_play_clash_royale"
-                style="@style/ProfileCredentialButtonPlay" />
-
-        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_cod"
@@ -175,7 +164,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/s3"
-                android:src="@drawable/ff_clashs" />
+                android:src="@drawable/clssqlb" />
 
             <TextView
                 android:id="@+id/tv_ff_clash"
@@ -194,6 +183,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/light_red_white" />
+
         <RelativeLayout
             android:id="@+id/rl_pubg_global"
             android:layout_width="match_parent"
@@ -206,7 +196,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/s3"
-                android:src="@drawable/pubg_gobal_lite" />
+                android:src="@drawable/pubglite_lead" />
 
             <TextView
                 android:id="@+id/tv_pubg_global"
@@ -225,6 +215,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/light_red_white" />
+
         <RelativeLayout
             android:id="@+id/rl_esports_per"
             android:layout_width="match_parent"
@@ -237,7 +228,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/s3"
-                android:src="@drawable/esports_per" />
+                android:src="@drawable/esportsperlb" />
 
             <TextView
                 android:id="@+id/tv_esports_per"
@@ -256,6 +247,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/light_red_white" />
+
         <RelativeLayout
             android:id="@+id/rl_ff_max"
             android:layout_width="match_parent"
@@ -268,7 +260,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/s3"
-                android:src="@drawable/freefire_max" />
+                android:src="@drawable/ffmaxlb" />
 
             <TextView
                 android:id="@+id/tv_ff_max"
@@ -283,6 +275,106 @@
 
         </RelativeLayout>
 
+        <!--    Ludo Adda    -->
+        <RelativeLayout
+            android:id="@+id/rl_ludo_adda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_ludo_adda"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/lead_ludoadda" />
+
+            <TextView
+                android:id="@+id/tv_ludo_adda"
+                style="@style/ProfileHeadText"
+                android:layout_toStartOf="@+id/btn_ludo_adda"
+                android:layout_toEndOf="@+id/iv_ludo_adda"
+                android:padding="@dimen/padding_5"
+                android:text="Ludo Adda" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_ludo_adda"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_red_white" />
+        <!--    Droid    -->
+        <RelativeLayout
+            android:id="@+id/rl_droid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_droid"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/lead_droido" />
+
+            <TextView
+                android:id="@+id/tv_droid"
+                style="@style/ProfileHeadText"
+                android:layout_toStartOf="@+id/btn_droid"
+                android:layout_toEndOf="@+id/iv_droid"
+                android:padding="@dimen/padding_5"
+                android:text="Droid-O" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_droid"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_red_white" />
+        <!--    WordSearch    -->
+
+        <RelativeLayout
+            android:id="@+id/rl_wordsearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_wordsearch"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/s3"
+                android:src="@drawable/lead_ws" />
+
+            <TextView
+                android:id="@+id/tv_wordsearch"
+                style="@style/ProfileHeadText"
+                android:layout_toStartOf="@+id/btn_wordsearch"
+                android:layout_toEndOf="@+id/iv_wordsearch"
+                android:padding="@dimen/padding_5"
+                android:text="WordSearch" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_wordsearch"
+                style="@style/ProfileCredentialButtonPlay" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_red_white" />
         <!--    Ludo Tournament    -->
         <RelativeLayout
             android:id="@+id/rl_ludo_tournament"
@@ -296,15 +388,15 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/s3"
-                android:src="@drawable/ludotmt_tournament_mainlogo" />
+                android:src="@drawable/lead_ludoadda" />
 
             <TextView
                 android:id="@+id/tv_ludo_tournament"
                 style="@style/ProfileHeadText"
-                android:text="Ludo Tournament"
                 android:layout_toStartOf="@+id/btn_ludo_tournament"
                 android:layout_toEndOf="@+id/iv_ludo_tournament"
-                android:padding="@dimen/padding_5" />
+                android:padding="@dimen/padding_5"
+                android:text="Ludo Tournament" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_ludo_tournament"
@@ -312,6 +404,10 @@
 
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_red_white" />
         <!--    Rummy    -->
         <RelativeLayout
             android:id="@+id/rl_rummy"
@@ -325,15 +421,15 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/s3"
-                android:src="@drawable/ic_rummy_img" />
+                android:src="@drawable/rummy_leaderboard" />
 
             <TextView
                 android:id="@+id/tv_rummy"
                 style="@style/ProfileHeadText"
-                android:text="Rummy"
                 android:layout_toStartOf="@+id/btn_rummy"
                 android:layout_toEndOf="@+id/iv_rummy"
-                android:padding="@dimen/padding_5" />
+                android:padding="@dimen/padding_5"
+                android:text="Rummy" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_rummy"
@@ -341,6 +437,10 @@
 
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_red_white" />
         <!--    Call Break    -->
         <RelativeLayout
             android:id="@+id/rl_callbreak"
@@ -354,15 +454,15 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/s3"
-                android:src="@drawable/codepiece" />
+                android:src="@drawable/courtpiece_leaderboard" />
 
             <TextView
                 android:id="@+id/tv_callbreak"
                 style="@style/ProfileHeadText"
-                android:text="Court Pieces"
                 android:layout_toStartOf="@+id/btn_callbreak"
                 android:layout_toEndOf="@+id/iv_callbreak"
-                android:padding="@dimen/padding_5" />
+                android:padding="@dimen/padding_5"
+                android:text="Court Pieces" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_callbreak"

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cb_background"
+    android:orientation="vertical"
+    tools:context=".rummy.RummyActivity">
+
+    <include
+        android:id="@+id/include5"
+        layout="@layout/actionbar_cb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include5"
+        android:id="@+id/constraintLayout20">
+
+        <ImageView
+            android:id="@+id/imageView17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/s3"
+            android:src="@drawable/cb_score"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="@dimen/text_20"
+            android:text="Score Board"
+            android:textColor="#380A62"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView17" />
+
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--            android:id="@+id/materialCardView21"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="58dp"-->
+<!--            android:layout_marginStart="24dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginEnd="24dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/textView28">-->
+
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_numbering"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    tools:text="#1" />-->
+
+<!--                <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                    android:id="@+id/civ_profile"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/tv_numbering"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/tv_numbering"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/tv_numbering"-->
+<!--                    tools:src="@drawable/lead_droido" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_name"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/civ_profile"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/civ_profile"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/civ_profile"-->
+<!--                    tools:text="Name" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_points_txt"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:layout_marginTop="4dp"-->
+<!--                    android:text="Points"-->
+<!--                    android:textColor="#939393"-->
+<!--                    android:textSize="@dimen/text_12"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/civ_profile"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_won_txt"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="4dp"-->
+<!--                    android:text="Won"-->
+<!--                    android:textColor="#939393"-->
+<!--                    android:textSize="@dimen/text_12"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/tv_points_txt"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_points"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/tv_name"-->
+<!--                    app:layout_constraintEnd_toEndOf="@+id/tv_points_txt"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/tv_points_txt"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/tv_name"-->
+<!--                    tools:text="21" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_won"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/tv_name"-->
+<!--                    app:layout_constraintEnd_toEndOf="@+id/tv_won_txt"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/tv_won_txt"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/tv_name"-->
+<!--                    tools:text="21" />-->
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--        </com.google.android.material.card.MaterialCardView>-->
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_callbreak"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/mcv_play"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView28"
+            app:layout_constraintVertical_bias="0.0"
+            tools:listitem="@layout/items_of_cb_history" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_play"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="#380A62"
+            app:cardCornerRadius="180dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Play again"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

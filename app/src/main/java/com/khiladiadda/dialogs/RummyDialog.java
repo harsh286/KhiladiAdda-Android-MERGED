@@ -31,6 +31,7 @@ import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,8 +43,9 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
     private Context mContext;
     private String mEntryFee, mTotalBal, mDepWinAmount, cardId, token, refreshToken;
     private int numPlayer;
+    private OnPlayClick mOnPlayClicked;
 
-    public RummyDialog(@NonNull Context context, String entryFee, String totalBal, String depWinAmount, String cardId, String token, String refreshToken, int theme, int numPlayer) {
+    public RummyDialog(@NonNull Context context, String entryFee, String totalBal, String depWinAmount, String cardId, String token, String refreshToken, int theme, int numPlayer, OnPlayClick mOnPlayClicked) {
         super(context);
         this.mContext = context;
         this.mEntryFee = entryFee;
@@ -53,6 +55,7 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
         this.token = token;
         this.refreshToken = refreshToken;
         this.numPlayer = numPlayer;
+        this.mOnPlayClicked = mOnPlayClicked;
     }
 
     @Override
@@ -89,11 +92,13 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
     }
 
     private void initVariables() {
+        final DecimalFormat decfor = new DecimalFormat("0.00");
+
         mPlayBTN.setOnClickListener(this);
         mCancelBtn.setOnClickListener(this);
 //        mTwoPlayer.setOnClickListener(this);
 //        mMorePlayer.setOnClickListener(this);
-        mEntryFeeTV.setText("₹" + mEntryFee);
+        mEntryFeeTV.setText("₹" + decfor.format(Float.parseFloat(mEntryFee)/100));
         mTotalBalanceTV.setText("₹" + mTotalBal);
         mDepWinTV.setText("₹" + mDepWinAmount);
     }
@@ -122,6 +127,7 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
                 mProperties.addAttribute("EnrtyFee", mEntryFee);
                 MoEAnalyticsHelper.INSTANCE.trackEvent(mContext, AppConstant.RUMMY, mProperties);
                 mContext.startActivity(intLeaderboard);
+                mOnPlayClicked.onPlayClicked();
                 dismiss();
                 break;
             case R.id.tv_two_players:
@@ -145,4 +151,7 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
         return Base64.encodeToString(data, Base64.DEFAULT);
     }
 
+    public interface OnPlayClick{
+        public void onPlayClicked();
+    }
 }

@@ -14,6 +14,7 @@ import com.khiladiadda.R;
 import com.khiladiadda.interfaces.IOnItemClickListener;
 import com.khiladiadda.network.model.response.AllLederBoardDetails;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,9 +50,9 @@ public class AllLeaderBoardRVAdapter extends RecyclerView.Adapter<AllLeaderBoard
         AllLederBoardDetails details = mFDList.get(position);
         holder.mNameTV.setText(String.valueOf(details.getName()));
         if (!TextUtils.isEmpty(details.getWinningAmount())) {
-            holder.mScoreTV.setText("Won: " + details.getWinningAmount() + " Coins");
+            holder.mScoreTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(Double.parseDouble(details.getWinningAmount())));
         } else {
-            holder.mScoreTV.setText("Won: 0 Coins");
+            holder.mScoreTV.setText("Won: \u20B9 0");
         }
         if (mFrom == 1) {
             rank = position + 4;

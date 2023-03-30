@@ -1481,7 +1481,7 @@ public class AppUtilityMethods {
     }
 
     //LUDO Tournament
-    public static void showTooltip(Activity activity, TextView mTV, String textMsg) {
+    public static void showTooltip(Activity activity, TextView mTV, String textMsg, int type) {
         View ludoToolTip = LayoutInflater.from(activity).inflate(R.layout.rules_info_tooltip, null);
         PopupWindow mWindow = new PopupWindow(ludoToolTip, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         if (Build.VERSION.SDK_INT >= 21) {
@@ -1495,12 +1495,14 @@ public class AppUtilityMethods {
         tvEnglish.setOnClickListener(view -> {
             Intent intent = new Intent(activity, LudoTmtRulesActivity.class);
             intent.putExtra("lang", "english");
+            intent.putExtra("type", type);
             activity.startActivity(intent);
             mWindow.dismiss();
         });
         tvhindi.setOnClickListener(view -> {
             Intent intent = new Intent(activity, LudoTmtRulesActivity.class);
             intent.putExtra("lang", "hindi");
+            intent.putExtra("type", type);
             activity.startActivity(intent);
             mWindow.dismiss();
         });
@@ -1508,7 +1510,7 @@ public class AppUtilityMethods {
     }
 
     //LUDO Tournament
-    public static void showTooltipFromImage(Activity activity, ImageView mTV, String textMsg) {
+    public static void showTooltipFromImage(Activity activity, ImageView mTV, String textMsg, int type) {
         View ludoToolTip = LayoutInflater.from(activity).inflate(R.layout.rules_info_tooltip, null);
         PopupWindow mWindow = new PopupWindow(ludoToolTip, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         if (Build.VERSION.SDK_INT >= 21) {
@@ -1522,12 +1524,14 @@ public class AppUtilityMethods {
         tvEnglish.setOnClickListener(view -> {
             Intent intent = new Intent(activity, LudoTmtRulesActivity.class);
             intent.putExtra("lang", "english");
+            intent.putExtra("type", type);
             activity.startActivity(intent);
             mWindow.dismiss();
         });
         tvhindi.setOnClickListener(view -> {
             Intent intent = new Intent(activity, LudoTmtRulesActivity.class);
             intent.putExtra("lang", "hindi");
+            intent.putExtra("type", type);
             activity.startActivity(intent);
             mWindow.dismiss();
         });

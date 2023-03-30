@@ -31,14 +31,15 @@
 
                     <ImageView
                         android:id="@+id/iv_back"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignParentStart="true"
                         android:layout_gravity="center"
+                        android:layout_marginTop="14dp"
                         android:contentDescription="@string/s3"
                         android:padding="@dimen/padding_5"
-                        android:visibility="gone"
-                        android:src="@drawable/ic_arrow_back_white" />
+                        android:src="@drawable/ic_arrow_back_white"
+                        android:visibility="gone" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -58,14 +59,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_above="@id/gold_crown"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginStart="@dimen/margin_40"
+                        android:layout_marginTop="@dimen/dimen_22sp"
                         android:layout_marginBottom="@dimen/margin_5"
                         android:fontFamily="@font/montserrat"
                         android:letterSpacing=".2"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="@dimen/dimen_22sp"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginStart="@dimen/margin_40"
                         android:text="@string/freefire_leaderboard"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
@@ -82,7 +83,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="@dimen/margin_30"
                         android:layout_marginEnd="@dimen/text_12"
-                        android:background="@drawable/leaderboard_spinner_ng"
+                        android:background="@drawable/border_bottom_white"
                         android:dropDownVerticalOffset="34dp"
                         android:foregroundGravity="center_horizontal"
                         android:popupBackground="#38000000"
@@ -164,7 +165,6 @@
                         android:layout_below="@id/gold_winner"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/montserrat"
-                        android:text="1234456778889000"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_10" />
 
@@ -175,7 +175,6 @@
                         android:layout_below="@id/text_gold_winner_name"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/montserrat"
-                        android:text="test"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_10" />
 
@@ -195,7 +194,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/text_silver_winner_name"
-                        android:layout_marginStart="@dimen/margin_40"
+                        android:layout_marginStart="@dimen/margin_65"
                         android:fontFamily="@font/montserrat"
                         android:gravity="center"
                         android:textColor="@color/white"
@@ -219,10 +218,9 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/brown_winner_name"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="@dimen/margin_40"
+                        android:layout_marginEnd="@dimen/margin_65"
                         android:fontFamily="@font/montserrat"
                         android:gravity="center"
-                        android:text="test"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_10" />
 
@@ -305,23 +303,6 @@
                 android:text="@string/fan_battle" />
 
 
-            <!--            <androidx.appcompat.widget.AppCompatButton-->
-            <!--                android:id="@+id/btn_ff_clash_squad"-->
-            <!--                style="@style/ButtonBottomLeaderBoardOutline"-->
-            <!--                android:text="@string/text_clash_squad" />-->
-
-            <!--            <androidx.appcompat.widget.AppCompatButton-->
-            <!--                android:id="@+id/btn_bgmi"-->
-            <!--                style="@style/ButtonBottomLeaderBoardOutline"-->
-            <!--                android:text="@string/text_bgmi_leaderboard" />-->
-
-            <!--            <androidx.appcompat.widget.AppCompatButton-->
-            <!--                android:id="@+id/btn_tdm"-->
-            <!--                style="@style/ButtonBottomLeaderBoardOutline"-->
-            <!--                android:text="@string/text_tdm"-->
-            <!--                android:visibility="gone" />-->
-
-
             <LinearLayout
                 android:id="@+id/ll_more"
                 style="@style/ButtonBottomLeaderBoardOutline"
@@ -347,24 +328,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="@dimen/margin_3"-->
-        <!--            android:orientation="horizontal">-->
-
-
-        <!--            <androidx.appcompat.widget.AppCompatButton-->
-        <!--                android:id="@+id/btn__ff_max"-->
-        <!--                style="@style/ButtonBottomLeaderBoardOutline"-->
-        <!--                android:text="@string/leaderboard__ff_max" />-->
-
-        <!--            <androidx.appcompat.widget.AppCompatButton-->
-        <!--                android:id="@+id/btn_quiz"-->
-        <!--                style="@style/ButtonBottomLeaderBoardOutline"-->
-        <!--                android:text="@string/text_quiz" />-->
-
-        <!--        </LinearLayout>-->
     </LinearLayout>
 
     <LinearLayout
@@ -432,6 +395,7 @@
         android:layout_marginTop="@dimen/margin_80"
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_all_leaderboard"
         android:layout_width="match_parent"
@@ -439,7 +403,6 @@
         android:layout_marginTop="@dimen/margin_80"
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
 
     <TextView
         android:id="@+id/tv_no_data"
@@ -458,99 +421,4 @@
 
     <include layout="@layout/bannermoengage" />
 
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="100dp"-->
-    <!--        android:layout_gravity="bottom"-->
-    <!--        android:background="@drawable/ic_my_leaderboard_down">-->
-
-    <!--        <RelativeLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="16dp"-->
-    <!--            android:layout_marginEnd="16dp"-->
-    <!--            android:layout_marginBottom="8dp"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent">-->
-
-    <!--            <com.mikhaellopez.circularimageview.CircularImageView-->
-    <!--                android:id="@+id/iv_profile"-->
-    <!--                android:layout_width="50dp"-->
-    <!--                android:layout_height="50dp"-->
-    <!--                android:layout_centerVertical="true"-->
-    <!--                android:layout_margin="@dimen/margin_3"-->
-    <!--                android:src="@mipmap/ic_launcher"-->
-    <!--                app:civ_border_color="@color/colorPrimary"-->
-    <!--                app:civ_border_width="1dp"-->
-    <!--                app:civ_shadow="true"-->
-    <!--                app:civ_shadow_color="@color/colorPrimaryDark"-->
-    <!--                app:civ_shadow_radius="5" />-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/tv_name"-->
-    <!--                style="@style/HelpQuestionText"-->
-    <!--                android:layout_marginStart="@dimen/margin_5"-->
-    <!--                android:layout_marginTop="8dp"-->
-    <!--                android:layout_marginEnd="@dimen/margin_10"-->
-    <!--                android:layout_toStartOf="@+id/tv_rank"-->
-    <!--                android:layout_toEndOf="@+id/iv_profile"-->
-    <!--                android:text="You"-->
-    <!--                android:textColor="@color/white" />-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/tv_rank"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_alignParentEnd="true"-->
-    <!--                android:layout_marginTop="@dimen/margin_2"-->
-    <!--                android:layout_marginEnd="@dimen/margin_5"-->
-    <!--                android:padding="@dimen/padding_5"-->
-    <!--                android:text="#12"-->
-    <!--                android:textColor="@color/white"-->
-    <!--                android:textSize="@dimen/text_13" />-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/tv_score"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_below="@+id/tv_name"-->
-    <!--                android:layout_marginStart="@dimen/margin_10"-->
-    <!--                android:layout_marginTop="@dimen/margin_5"-->
-    <!--                android:layout_marginEnd="@dimen/margin_10"-->
-    <!--                android:layout_toStartOf="@+id/tv_time"-->
-    <!--                android:layout_toEndOf="@+id/iv_profile"-->
-    <!--                android:text="Won: 10000"-->
-    <!--                android:textColor="@color/white"-->
-    <!--                android:textSize="@dimen/text_9" />-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/tv_time"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_below="@+id/tv_rank"-->
-    <!--                android:layout_alignParentEnd="true"-->
-    <!--                android:layout_marginTop="@dimen/margin_5"-->
-    <!--                android:layout_marginEnd="@dimen/margin_10"-->
-    <!--                android:textColor="@color/colorPrimary"-->
-    <!--                android:textSize="@dimen/text_9" />-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/tv_username"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_below="@+id/tv_score"-->
-    <!--                android:layout_marginStart="@dimen/margin_10"-->
-    <!--                android:layout_marginTop="@dimen/margin_2"-->
-    <!--                android:layout_marginEnd="@dimen/margin_5"-->
-    <!--                android:layout_toStartOf="@+id/tv_time"-->
-    <!--                android:layout_toEndOf="@+id/iv_profile"-->
-    <!--                android:textColor="@color/colorPrimary"-->
-    <!--                android:textSize="@dimen/text_9"-->
-    <!--                android:visibility="gone" />-->
-
-    <!--        </RelativeLayout>-->
-
-
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

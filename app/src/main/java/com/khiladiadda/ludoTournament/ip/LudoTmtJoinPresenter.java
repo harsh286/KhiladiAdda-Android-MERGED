@@ -23,7 +23,6 @@ public class LudoTmtJoinPresenter implements ILudoTmtDetailsPresenter {
         mSubscription = mInteractor.onJoinLudoTournament(mLudoTmtJoinMainResponseIApiListener, id);
     }
 
-
     private IApiListener<LudoTmtJoinMainResponse> mLudoTmtJoinMainResponseIApiListener = new IApiListener<LudoTmtJoinMainResponse>() {
         @Override
         public void onSuccess(LudoTmtJoinMainResponse response) {

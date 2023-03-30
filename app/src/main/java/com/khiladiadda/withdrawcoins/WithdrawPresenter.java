@@ -19,6 +19,7 @@ import com.khiladiadda.network.model.response.BeneficiaryVerifyResponse;
 import com.khiladiadda.network.model.response.ManualWithdrawResponse;
 import com.khiladiadda.network.model.response.OtpResponse;
 import com.khiladiadda.network.model.response.PayoutResponse;
+import com.khiladiadda.network.model.response.TdsResponse;
 import com.khiladiadda.network.model.response.WIthdrawLimitResponse;
 import com.khiladiadda.withdrawcoins.interfaces.IWithdrawPresenter;
 import com.khiladiadda.withdrawcoins.interfaces.IWithdrawView;
@@ -436,6 +437,22 @@ public class WithdrawPresenter implements IWithdrawPresenter {
         }
     };
 
+    @Override
+    public void checkTDS(int amount) {
+        mSubscription = mInteractor.checkTDS(mCheckTDSApiListener, amount);
+    }
+
+    private IApiListener<TdsResponse> mCheckTDSApiListener = new IApiListener<TdsResponse>() {
+        @Override
+        public void onSuccess(TdsResponse response) {
+            mView.onCheckTDSComplete(response);
+        }
+
+        @Override
+        public void onError(ApiError error) {
+            mView.onCheckTDSFailed(error);
+        }
+    };
 
     @Override
     public void destroy() {

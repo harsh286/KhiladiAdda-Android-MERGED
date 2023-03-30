@@ -5,12 +5,23 @@ import com.google.gson.annotations.SerializedName;
 import com.khiladiadda.network.model.BaseResponse;
 
 public class CallBreakJoinMainResponse extends BaseResponse {
+    @SerializedName("statusCode")
+    @Expose
+    private int statusCode;
     @SerializedName("response")
     @Expose
     private CallBreakJoinResponse response;
     @SerializedName("isAlreadyJoined")
     @Expose
     private Boolean isAlreadyJoined;
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
+    }
 
     public CallBreakJoinResponse getResponse() {
         return response;

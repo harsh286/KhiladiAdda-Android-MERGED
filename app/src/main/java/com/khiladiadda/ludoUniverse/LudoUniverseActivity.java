@@ -143,12 +143,11 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
     private String pos, mAmount, mFilePath, mLink, mContestCode, mCurrentVersion, mVersion = "", mRandomName, mRandomDp;
     private double mWinAmount, Amount, mTotalWalletBal;
     private boolean mDownloadClick;
-
-
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
+    private int mDownUp = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,7 +192,11 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         mDownloadLL.setOnClickListener(this);
 //        getVersion();
 
+        try {
+            mCurrentVersion = mAppPreference.getVersion().getResponse().getLudoAddaVersion();
+        } catch (Exception e) {
 
+        }
     }
 
     @Override
@@ -726,6 +729,9 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         if (launchIntent != null) {
             if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
                 mAppPreference.setBoolean("LudoDownload", true);
+            } else {
+                mDownloadTV.setText("Update");
+                mDownUp = 2;
             }
         }
     }
@@ -736,10 +742,13 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.ludoadda_download_popup);
-        TextView tv = dialog.findViewById(R.id.textView9);
         ProgressBar progressBar = dialog.findViewById(R.id.pb_apk_download);
         AppCompatButton iv_playstore = dialog.findViewById(R.id.iv_download);
         ImageView ivCross = dialog.findViewById(R.id.iv_cross);
+        TextView tvMsg = dialog.findViewById(R.id.textView9);
+        if (mDownUp == 2) {
+            tvMsg.setText("It seem like you haven't update our Ludo Adda game to play contests, So please click on download button to download the game.");
+        }
         ivCross.setOnClickListener(view -> {
             dialog.dismiss();
         });

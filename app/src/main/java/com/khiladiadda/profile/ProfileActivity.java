@@ -37,10 +37,13 @@ import com.khiladiadda.dialogs.interfaces.IOnChangePasswordListener;
 import com.khiladiadda.dialogs.interfaces.IOnVerifyEmailListener;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.forgotpassword.ForgotPasswordActivity;
+import com.khiladiadda.gameleague.NewDroidoActivity;
 import com.khiladiadda.league.LeagueActivity;
 import com.khiladiadda.ludo.LudoChallengeActivity;
 import com.khiladiadda.ludoTournament.activity.LudoTmtAllRoundActivity;
 import com.khiladiadda.ludoTournament.activity.LudoTmtDashboardActivity;
+import com.khiladiadda.ludoUniverse.LudoUniverseActivity;
+import com.khiladiadda.ludoUniverse.ModeActivity;
 import com.khiladiadda.main.MainActivity;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
@@ -58,6 +61,7 @@ import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.utility.PermissionUtils;
+import com.khiladiadda.wordsearch.activity.WordSearchMainActivity;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
 import com.moengage.inapp.MoEInAppHelper;
 import com.moengage.widgets.NudgeView;
@@ -122,8 +126,6 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
     RelativeLayout mFreeFireRL;
     @BindView(R.id.rl_ludo)
     RelativeLayout mLudoRL;
-    @BindView(R.id.rl_clashroyale)
-    RelativeLayout mClaashRoyaleRL;
     @BindView(R.id.rl_ff_clash)
     RelativeLayout mFFClashRL;
     @BindView(R.id.rl_cod)
@@ -148,8 +150,6 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
     Button mPlayFFClashBTN;
     @BindView(R.id.btn_play_cod)
     Button mPlayCodBTN;
-    @BindView(R.id.btn_play_clash_royale)
-    Button mPlayCRBTN;
     @BindView(R.id.btn_play_ludo)
     Button mPlayLudoBTN;
     @BindView(R.id.tv_share)
@@ -182,6 +182,12 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
     TextView mLudoTournamentTv;
     @BindView(R.id.btn_ludo_tournament)
     AppCompatButton mLudoTournamentBtn;
+    @BindView(R.id.btn_wordsearch)
+    AppCompatButton mWordSearchBtn;
+    @BindView(R.id.btn_ludo_adda)
+    AppCompatButton mLudoAddaBtn;
+    @BindView(R.id.btn_droid)
+    AppCompatButton mDroidBtn;
     @BindView(R.id.rl_rummy)
     RelativeLayout mRummyRl;
     @BindView(R.id.tv_rummy)
@@ -232,7 +238,7 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
         mPlayPubGLiteBTN.setOnClickListener(this);
         mPlayFFBTN.setOnClickListener(this);
         mPlayCodBTN.setOnClickListener(this);
-        mPlayCRBTN.setOnClickListener(this);
+//        mPlayCRBTN.setOnClickListener(this);
         mPlayLudoBTN.setOnClickListener(this);
         mPlayFFClashBTN.setOnClickListener(this);
         mUpdateEmailTV.setOnClickListener(this);
@@ -240,6 +246,9 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
         mPubglobalBTN.setOnClickListener(this);
         mFFMaxBTN.setOnClickListener(this);
         mLudoTournamentBtn.setOnClickListener(this);
+        mWordSearchBtn.setOnClickListener(this);
+        mDroidBtn.setOnClickListener(this);
+        mLudoAddaBtn.setOnClickListener(this);
         mRummyBtn.setOnClickListener(this);
         mCallBreakBtn.setOnClickListener(this);
     }
@@ -326,9 +335,6 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
                 cod.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_CALLOFDUTY);
                 startActivity(cod);
                 break;
-            case R.id.btn_play_clash_royale:
-                startActivity(new Intent(this, ClashRoyaleActivity.class));
-                break;
             case R.id.btn_play_ludo:
                 Intent ludo = new Intent(this, LudoChallengeActivity.class);
                 ludo.putExtra(AppConstant.CONTEST_TYPE, AppConstant.TYPE_LUDO);
@@ -372,6 +378,18 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
             case R.id.btn_callbreak:
                 Intent cbIntent = new Intent(this, CallBreakActivity.class);
                 startActivity(cbIntent);
+                break;
+            case R.id.btn_ludo_adda:
+                Intent laIntent = new Intent(this, ModeActivity.class);
+                startActivity(laIntent);
+                break;
+            case R.id.btn_droid:
+                Intent daIntent = new Intent(this, NewDroidoActivity.class);
+                startActivity(daIntent);
+                break;
+            case R.id.btn_wordsearch:
+                Intent wsIntent = new Intent(this, WordSearchMainActivity.class);
+                startActivity(wsIntent);
                 break;
         }
     }
@@ -428,10 +446,12 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
                 } else if (credentialList.get(i).getGameId().equalsIgnoreCase(mAppPreference.getString(AppConstant.LUDO_ID, ""))) {
                     mLudoRL.setVisibility(View.VISIBLE);
                     mLudoTV.setText(credentialList.get(i).getGameCharacterId());
-                } else if (credentialList.get(i).getGameId().equalsIgnoreCase(mAppPreference.getString(AppConstant.CLASHROYALE_ID, ""))) {
-                    mClaashRoyaleRL.setVisibility(View.VISIBLE);
-                    //mClashRoyaleTV.setText(credentialList.get(i).getGameUsername() + " - " + credentialList.get(i).getGameCharacterId());
-                } else if (credentialList.get(i).getGameId().equalsIgnoreCase(mAppPreference.getString(AppConstant.CALL_DUTY_ID, ""))) {
+                }
+//                else if (credentialList.get(i).getGameId().equalsIgnoreCase(mAppPreference.getString(AppConstant.CLASHROYALE_ID, ""))) {
+//                    mClaashRoyaleRL.setVisibility(View.VISIBLE);
+//                    //mClashRoyaleTV.setText(credentialList.get(i).getGameUsername() + " - " + credentialList.get(i).getGameCharacterId());
+//                }
+                else if (credentialList.get(i).getGameId().equalsIgnoreCase(mAppPreference.getString(AppConstant.CALL_DUTY_ID, ""))) {
                     mCodRL.setVisibility(View.VISIBLE);
                     // mCodTV.setText(credentialList.get(i).getGameUsername());
                 } else if (credentialList.get(i).getGameId().equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_CLASH_ID, ""))) {
@@ -582,12 +602,17 @@ public class ProfileActivity extends BaseActivity implements IProfileView {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == AppConstant.RC_ASK_PERMISSIONS_STORAGE) {
-            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, getString(R.string.txt_storage_permission), Toast.LENGTH_SHORT).show();
-            } else {
-                startActivity(new Intent(this, UpdateProfileActivity.class));
-                finish();
+            try {
+                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, getString(R.string.txt_storage_permission), Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(this, UpdateProfileActivity.class));
+                    finish();
+                }
+            } catch (Exception e){
+                Log.e("Exception",  e.getLocalizedMessage());
             }
+
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
