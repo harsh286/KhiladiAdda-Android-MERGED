@@ -95,7 +95,6 @@ public class AppConstant {
     public static final int FROM_FAVOURITE = 777;
     public static final String MATCH_LIVE = "MATCH_LIVE";
     public static final int FROM_NEOKRED = 8;
-    //    public static final int FROM_GAMECASE = 9;
     public static final String MATCH_TYPE = "MATCH_TYPE";
     public static final String API_CX_BANNER = "user/fantasy/fetch-banners";
     public static final String API_RACE_CONDITION = "racecondition/createContact";
