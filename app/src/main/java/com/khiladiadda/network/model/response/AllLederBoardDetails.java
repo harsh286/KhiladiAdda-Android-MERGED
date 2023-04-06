@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class AllLederBoardDetails {
 
     @SerializedName("_id") @Expose private String id;
-    @SerializedName("winning_amount") @Expose private String winningAmount;
+    @SerializedName("winning_amount") @Expose private double winningAmount;
     @SerializedName("rank") @Expose private long rank;
     @SerializedName("killed") @Expose private long killed;
     @SerializedName("game_character_id") @Expose private String gameCharacterId;
@@ -88,11 +88,11 @@ public class AllLederBoardDetails {
         this.username = username;
     }
 
-    public String getWinningAmount() {
+    public double getWinningAmount() {
         return winningAmount;
     }
 
-    public void setWinningAmount(String winningAmount) {
+    public void setWinningAmount(double winningAmount) {
         this.winningAmount = winningAmount;
     }
 }

@@ -33,10 +33,10 @@ public class BattleInteractor {
         return manager.createObservable(service.joinBattleGroup(request, id)).subscribe(new SubscriberCallback<>(listener));
     }
 
-    public Subscription getCalculationBanner(IApiListener<BannerResponse> listener) {
+    public Subscription getCalculationBanner(IApiListener<BannerResponse> listener, int bannerType) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
-        return manager.createObservable(service.getBanner(6)).subscribe(new SubscriberCallback<>(listener));
+        return manager.createObservable(service.getBanner(bannerType)).subscribe(new SubscriberCallback<>(listener));
     }
 
     public Subscription cancelGroup(IApiListener<BaseResponse> listener, String groupId) {

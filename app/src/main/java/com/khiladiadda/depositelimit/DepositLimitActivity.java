@@ -49,8 +49,11 @@ public class DepositLimitActivity extends BaseActivity implements IDepositView {
     public CheckBox mTermCB;
     @BindView(R.id.tv_limit_left)
     public TextView mLimitLeft;
+    @BindView(R.id.tv_change_limit_descp)
+    public TextView mChangeLimitDescp;
     private int min = 5000, max = 50000, step = 1000;
     private IDepositeLimitPresenter mIDepositeLimitPresenter;
+    private int mLeftTime;
 
     @Override
     protected int getContentView() {
@@ -189,7 +192,7 @@ public class DepositLimitActivity extends BaseActivity implements IDepositView {
         hideProgress();
         if (response.isStatus()) {
             Snackbar.make(mSetLimitBtn, response.getMessage(), Snackbar.LENGTH_SHORT).show();
-            mLastDateTv.setText("You can update your limit on " + AppUtilityMethods.getTimeLeft(response.getResponse().getLimitUpdatedAt()));
+            mLastDateTv.setText("You can update your limit after " + mLeftTime + " hours.");
         } else {
             Snackbar.make(mSetLimitBtn, response.getMessage(), Snackbar.LENGTH_SHORT).show();
         }
@@ -204,12 +207,13 @@ public class DepositLimitActivity extends BaseActivity implements IDepositView {
     public void onFetchDepositLimitComplete(FetchDepositLimitMainResponse response) {
         hideProgress();
         if (response.isStatus()) {
-            int limit = 0;
-            limit = response.getResponse().getRemainingLimit();
+            mLeftTime = response.getDepositLimitTime() * 24;
+            int limit = response.getResponse().getRemainingLimit();
             mLimitLeft.setText("₹ " + limit + "/-");
             mLimitSeekBar.setProgress((limit - min) / 1000);
             mMonthPriceChangeTv.setText("" + response.getResponse().getMonthlyLimit());
-            mLastDateTv.setText("You can update your limit after " + AppUtilityMethods.getTimeLeft(response.getResponse().getLimitUpdatedAt()));
+            mChangeLimitDescp.setText("You can only change your daily limit once in " + mLeftTime + " hours.");
+//            mLastDateTv.setText("You can update your limit after " + mLeftTime + " hours.");
         } else {
             Snackbar.make(mSetLimitBtn, response.getMessage(), Snackbar.LENGTH_SHORT).show();
         }

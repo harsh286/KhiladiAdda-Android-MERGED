@@ -104,4 +104,12 @@ public class WithdrawLimitDetails {
     public void setnWithdrawalLimit(int nWithdrawalLimit) {
         this.nWithdrawalLimit = nWithdrawalLimit;
     }
+
+    public int getAmountData() {
+        return amountData;
+    }
+
+    public void setAmountData(int amountData) {
+        this.amountData = amountData;
+    }
 }

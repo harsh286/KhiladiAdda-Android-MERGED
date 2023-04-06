@@ -98,11 +98,12 @@
             <TextView
                 style="@style/TextViewPredictionPoints"
                 android:maxLines="1"
-                android:text=" For Every 5 Passes Completed" />
+                android:text="Every 5 Pass" />
 
             <TextView
                 style="@style/TextViewPredictionPoints"
-                android:text="Tackle Won" />
+                android:maxLines="1"
+                android:text="2 Shots" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -117,13 +118,17 @@
 
             <TextView
                 style="@style/TextViewPredictionPoints"
+                android:text="Tackle Won" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
                 android:maxLines="1"
                 android:text="Interception Won" />
 
             <TextView
                 style="@style/TextViewPredictionPoints"
                 android:maxLines="1"
-                android:text="Saves by Goalkeeper" />
+                android:text="Saves by G.K" />
 
             <TextView
                 style="@style/TextViewPredictionPoints"
@@ -144,7 +149,7 @@
             <TextView
                 style="@style/TextViewPredictionPoints"
                 android:maxLines="1"
-                android:text="Super 60” (Played more than 60 min.)" />
+                android:text="Played 60 min" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -217,7 +222,15 @@
             <TextView
                 android:id="@+id/tv_for_every_5_passes_completed"
                 style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
 
+            <TextView
+                android:id="@+id/tv_2_shots_scored"
+                style="@style/TextViewPredictionPoints"
+                tools:text="jhgkg" />
+
+            <TextView
+                style="@style/TextViewPredictionPoints"
                 tools:text="jhgkg" />
 
             <TextView
@@ -225,10 +238,6 @@
                 style="@style/TextViewPredictionPoints"
                 tools:text="jhgkg" />
 
-
-            <TextView
-                style="@style/TextViewPredictionPoints"
-                tools:text="jhgkg" />
             <!--            <TextView-->
             <!--                android:layout_width="match_parent"-->
             <!--                android:layout_height="wrap_content"-->
@@ -345,7 +354,7 @@
                 style="@style/TextViewPredictionPoints" />
 
             <TextView
-                android:id="@+id/tv_tackle_won_points"
+                android:id="@+id/tv_2_shots_points"
                 style="@style/TextViewPredictionPoints" />
 
             <TextView style="@style/TextViewPredictionPoints" />
@@ -360,6 +369,9 @@
             <!--                android:textColor="@color/black"-->
             <!--                android:textSize="@dimen/text_14"-->
             <!--                android:textStyle="bold" />-->
+            <TextView
+                android:id="@+id/tv_tackle_won_points"
+                style="@style/TextViewPredictionPoints" />
 
             <TextView
                 android:id="@+id/tv_interception_won_points"

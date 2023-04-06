@@ -12,10 +12,8 @@ public class AppConstant {
     public static final long TIME_OUT = 30;
     public static final long SUREPASS_TIME_OUT = 120;
     //PRODUCTION SERVER
-    //public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29t";
-
-//       public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29tLw==";
-     public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8="; //uat
+    public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29t";
+//     public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8="; //uat
 
 //    public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";//QA
 
@@ -50,20 +48,16 @@ public class AppConstant {
     public static final String API_GMAIL_LOGIN = "auth/gmail_login";
     public static final String API_FB_LOGIN = "auth/fb_login";
     public static final String API_FORGOT_PASSWORD = "auth/forgotpassword";
-
     public static final String API_FP_VERIFY_OTP = "auth/verifyforgotpasswordotp";
     public static final String API_RESET_PASSWORD = "auth/reset-password";
-
     public static final String API_CHANGE_PASSWORD = "auth/changepassword";
     public static final String API_SEND_OTP = "user/send_otp";
     public static final String API_CHANGE_MOBILE = "user/change_mobile";
-
     public static final String API_FAN_BATTLE = "user/cricket-fantasy-matches";
     public static final String API_BATTLE = "user/cricket-fantasy-matches-battle";
     public static final String API_GROUP = "user/cricket-fantasy-battle-group";
     public static final String API_JOIN_GROUP = "user/join-cricket-fantasy-matches-battle/{id}";
     public static final String API_MY_FAN_BATTLE = "user/cricket-fantasy-my-matches";
-
     public static final String API_CREATE_GROUP = "user/fantasy/create-battle-group";
     public static final String API_MY_BATTLE = "user/fantasy/fetch-my-battles";
     public static final String API_UPDATE_BATTLE = "user/fantasy/update-battle-group/{groupId}";
@@ -76,34 +70,27 @@ public class AppConstant {
     public static final String API_BANNER = "user/banner";
     public static final String API_CANCEL_GROUP = "user/cancel-group/{id}";
     public static final String API_VERIFY_BENEFICIARY = "cashfree/add/beneficiary/verify/{id}";
-
     public static final String API_WITHDRAW_LIMIT = "user/fetch-withdrawal-status";
     public static final String API_ADD_BENEFICIARY = "cashfree/add/beneficiary";
     public static final String API_GET_BENEFICIARY = "cashfree/get/beneficiary";
     public static final String API_REMOVE_BENEFICIARY = "cashfree/remove/beneficiary/{beneId}";
     public static final String API_TRANSFER_AMOUNT_BANK = "cashfree/transfer/amount/{id}";
-
     public static final String API_TRUECALLER = "/auth/truecallerlogin";
     public static final String TRUECALLER_POLICY_URL = "https://truecaller.com";
     public static final String TRUECALLER_PRIVACY_URL = "https://truecaller.com";
-
     public static final String API_RAZORPAY_ADD_BENEFICIARY = "razorpay/add-contact";
     public static final String API_RAZORPAY_TRANSFER_AMOUNT = "razorpay/transfer-coins";
-
     public static final String API_MANUAL_WITHDRAW_HISTORY = "user/withdrawals";
     public static final String API_WITHDRAW_HISTORY = "user/withdrawal-history";
     public static final String API_WITHDRAW_REQUEST = "user/withdrawal/request";
 
     public static final String API_TRANSFER_COINS = "user/coins/transfer";
     public static final String API_TRANSACTION = "user/transaction";
-
     public static final String API_PAYMENT_DETAILS = "user/payment-details";
     public static final String API_PAYMENT_STATUS = "refresh-payment-details/{paymentId}";
-
     public static final String API_PAYU_CHECKSUM = "payumoney/getchecksum";
     public static final String LUDO_CREATE = "LUDO_CREATE";
     public static final String LUDO_ACCEPT = "LUDO_ACCEPT";
-
     public static final String CALL_BREAK_JOIN = "CALL_BREAK_JOIN";
     public static final int FROM_FAVOURITE = 777;
     public static final String MATCH_LIVE = "MATCH_LIVE";
@@ -111,7 +98,6 @@ public class AppConstant {
     //    public static final int FROM_GAMECASE = 9;
     public static final String MATCH_TYPE = "MATCH_TYPE";
     public static final String API_CX_BANNER = "user/fantasy/fetch-banners";
-
     public static final String API_RACE_CONDITION = "racecondition/createContact";
     public static final String API_RACE_CONDITION_FINAL = "racecondition/transfer/{beneId}/{amount}/{otp}";
     public static final String API_INSTANT_PAY = "ipay/transfer/{beneId}/{amount}/{otp}/{latitude}/{longitude}";
@@ -165,7 +151,6 @@ public class AppConstant {
     public static final String API_PAYKUN_PAYMENT = "paykun/payment-processed/{paymentId}/{orderId}";
     public static final String API_PAYTM_CHECKSUM = "getchecksum";
     public static final String API_PAYTM_PAYMENT = "savePayment";
-
     public static final String API_USERS_TOKEN = "user/contest-opponent/token/{contestId}";
     public static final String API_CONTEST = "user/contest";
     public static final String API_JOIN_CONTEST = "user/join/contest/{contest_id}";
@@ -175,10 +160,8 @@ public class AppConstant {
     public static final String API_CONTEST_REASON = "user/contest/result-not-update/reason/{contest_id}";
     public static final String API_BUDDY_OPPONENT = "user/recent-opponents";
     public static final String API_NOTIFY_OPPONENT = "user/send-notification-opponents";
-
     public static final String API_FAQ = "user/faqs";
     public static final String API_CATEGORY_FAQ = "user/categories-faqs";
-
     //Ludo Universe
     public static final String API_LU_CONTEST = "user/ludo-universe/fetch-challanges";
     public static final String API_LU_MY_CONTEST = "user/ludo-universe/fetch-self-challanges";
@@ -196,13 +179,10 @@ public class AppConstant {
     public static final String API_RUMMY = "/user/rummy/leaderboard";
     public static final String API_RUMMY_CHECKGAMESTATUS = "/user/rummy/checkGameStatus";
     public static final String API_RUMMY_HISTORY = "/user/rummy/history";
-
     public static final String API_ADD_CASHFREE_BENEFICIARY = "cashfree/add/beneficiary";
     public static final String TEXT_KEY_TYPE = "type";
-
     public static final String API_FIREBASE = "user/firebase";
     public static final String API_MATE_DATA = "user-detail/mobile/{id}";
-
     public static final String API_REFER_HISTORY = "user/reference";
     public static final String API_BOOKMARK_FACT = "user/bookmark/Fact/{id}";
     public static final String API_BOOKMARK_FACT_LIST = "user/bookmarked-facts";
@@ -211,15 +191,12 @@ public class AppConstant {
     public static final String API_FACTS = "user/facts";
     public static final String API_FACT_DETAIL = "user/fact/{id}";
     public static final String API_LIKED_FACTS = "user/like/Fact/{id}";
-
     public static final String API_CHECK_AADHAR = "user/check-aadhaar-exists";
     public static final String API_INVOICE = "user/invoice-pdf/{id}";
     public static final String API_APPLY_COUPON = "user/check-coupon/{coupon}";
-
     public static final String API_PROFILE = "profile";
     public static final String API_UPDATE_PROFILE = "user/profile";
     public static final String API_UPLOAD_IMAGE = "upload";
-
     public static final String API_TRENDING_QUIZ = "user/trending-quiz";
     public static final String API_QUIZ_LIST = "user/quiz/{id}";
     public static final String API_QUIZ_DETAIL = "user/quiz-detail/{id}";
@@ -230,7 +207,6 @@ public class AppConstant {
     public static final String API_QUIZ_LEADERBOARD_ALL = "user/leaderboard";
     public static final String API_QUIZ_LEADERBOARD_MONTHLY = "user/leaderboard/month";
     public static final String API_QUIZ_LEADERBOARD = "user/leaderboard/{id}";
-
     public static final String API_SCRATCH_CARDS = "user/fetch-scratch-cards";
     public static final String API_SCRATCHED_CARD = "/user/use-scratchCard/{scratched}";
     public static final String API_APPLY_VOUCHER = "/user/use-voucherCard";
@@ -251,12 +227,10 @@ public class AppConstant {
     public static final String API_GAME_LEADERBOARD = "user/league/leaderboard/{id}";
     public static final String API_GAME_TEAM_LEADERBOARD = "user/league/team-leaderboard/{id}";
     public static final String API_CONTEST_LEADERBOARD = "user/contest-leaderboard";
-
     public static final String API_JOIN_SUBSTITUTE_GROUP = "user/change/joined-group";
     public static final String API_FB_GROUP_PARTICIPANT = "user/fantasy-leaderboard";
     public static final String API_OVERALLLEADBOARD = "user/fantasy-overall-leaderboard";
     public static final String API_HTH_OVERALLLEADBOARD = "user/fantasy/clash-battle-leaderboard";
-
     public static final String API_AADHAR_GET_CAPTCHA = "getCaptcha";
     public static final String API_AADHAR_GET_OTP = "enterAadhaar";
     public static final String API_AADHAR_VERIFY_OTP = "enterOtp";
@@ -271,7 +245,6 @@ public class AppConstant {
     public static final int RC_ASK_PERMISSIONS_GPS = 103;
     public static final int RC_ASK_PERMISSIONS_MSG = 105;
     public static final int REQUEST_GALLERY = 202;
-
     /**
      * Word Search End Points
      **/
@@ -281,7 +254,6 @@ public class AppConstant {
     public static final String API_WORD_SEARCH_QUIZ_PARTICIPANTS = "user/word-search/quiz/participants/list/{quizId}";
     public static final String API_WORD_SEARCH_MY_QUZZIES = "user/word-search/my-quizzes";
     public static final String API_WORD_SEARCH_LIVE_LEADERBOARD = "user/word-search/live-leaderboard/{quizId}";
-
     /**
      * LUDO TOURNAMENT
      **/
@@ -292,8 +264,6 @@ public class AppConstant {
     public static final String API_LUDO_UPCOMING_TOURNAMENT = "user/ludo/tournament/my/upcoming-tournaments";
     public static final String API_LUDO_TOURNAMENT_ROUNDS = "user/ludo/tournament/tournament/room-details/{id}";
     public static final String API_LUDO_TOURNAMENT_PAST_ROUNDS = "user/ludo/tournament/tournament/past-rooms-details/{id}";
-
-
     public static final int FROM_WON = 1;
     public static final int FROM_LOST = 2;
     public static final int PAGE_SIZE = 20;
@@ -987,13 +957,10 @@ public class AppConstant {
     public static final String GAME_START = "/user/gamekite/tournament/start/game";
     public static final String API_MYTOURNAMET_LIST = "user/gamekite/tournament/my-tournaments";
     public static final String API_FILTER_DROIDO = "user/gamekite/tournaments";
-
     public static final String DROIDO_MY_RANK = "my_ranks";
     public static final String GAME_DROIDO_CLASS_PACKAGE = "com.khiladiadda.droido";
     public static final String DROIDO = "droido";
     public static final String GAMEURLDROIDO = "https://prod.freakx.in/khiladi-adda/v1/index.html";
-
-
     public static String WordSearchPackageName = "com.tb.ka.wordsearch";
     public static String LudoAddaPackageName = "com.tb.ludouniverse.in";
     public static String CallBreakPackageName = "com.KhiladiAdda.CourtPiecePro";
@@ -1006,17 +973,13 @@ public class AppConstant {
     public static final String LUDOTMT_LOBBY_FULL = "LUDOTMT_LOBBY_FULL";
     public static final String WS_VERSION = "WS_VERSION";
     public static final String WS_LINK = "WS_LINK";
-
     public static final String LUDOTOUR_KOMMUNI_CATEGORY = "LudoTournament";
     public static final String CALLBREAK_KOMMUNI_CATEGORY = "CallBreak";
     public static final String RUMMY_KOMMUNI_CATEGORY = "Rummy";
-
-
     //Neokred PG
     public static final String API_NEOKRED_PG = "neoKred/startPayment";
     public static final String API_NEOKRED_CREATE = "neoKred/createContact";
     public static final String API_NEOKRED_PAYOUT = "neoKred/transferAmount/{beneId}/{amount}/{otp}";
-
     //Deposit Limit
     public static final String API_ADD_LIMIT = "/profile/modify/add-limit";
     public static final String API_DEPOSIT_GET_LIMIT = "/profile/fetch/add-limit";

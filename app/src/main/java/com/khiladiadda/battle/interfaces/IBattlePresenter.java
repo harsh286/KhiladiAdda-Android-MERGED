@@ -12,7 +12,7 @@ public interface IBattlePresenter extends IBasePresenter {
 
     void joinBattleGroup(JoinGroupRequest request, String id);
 
-    void getCalculationBanner();
+    void getCalculationBanner(int bannerType);
 
     void cancelGroup(String groupId);
 

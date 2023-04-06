@@ -120,7 +120,7 @@
     <string name="txt_dob">Date of Birth</string>
     <string name="text_invitation_code">Invitation Code</string>
     <string name="my_add_money">Add Money</string>
-    <string name="my_withdraw_wallet">Withdraw Wallet</string>
+    <string name="my_withdraw_wallet">Withdraw</string>
     <string name="wallet_transaction">Wallet Transactions</string>
     <string name="text_invite_friends">Invite Friends</string>
     <string name="text_logout">Logout</string>
@@ -428,7 +428,7 @@
     <string name="hint_ff_userid">FreeFire UserId</string>
     <!--    <string name="text_rules_withdraw">1. For every transaction on UPI &amp; Bank Transfer, Rs.5 wil be deducted from your wallet.\n2. For every withdraw transaction on Paytm, 3% of withdraw amount will be deducted from your KhiladiAdda wallet (Ex-If you withdraw 100coins than 97coins will be credited to your paytm and 3coins wil be deducted as withdraw charges).\n3. One withdraw is allowed in a day.</string>-->
 
-    <string name="text_rules_withdraw">Only two withdraw is allowed in a day.</string>
+    <string name="text_rules_withdraw">Only three withdraw is allowed in a day.</string>
 
     <string name="text_insufficient_bal">You have insufficient balance! Recharge your wallet now.</string>
     <string name="text_withdraw_history">Withdraw History</string>
@@ -638,7 +638,7 @@
     <string name="btn_continue">Continue</string>
     <string name="needsupport_taphere">Need Support? Tap Here!</string>
     <string name="withdraw_history">Withdraw History</string>
-    <string name="select_a_method_to_withdraw">Select a method to withdraw</string>
+    <string name="select_a_method_to_withdraw">Select a method</string>
     <string name="paytm_upi">Paytm Wallet &amp; UPI</string>
     <string name="bhim_upi">BHIM UPI</string>
     <string name="bank_transfer">Bank Transfer</string>
@@ -828,7 +828,8 @@
     <string name="text_my_tournaments">Tournaments</string>
     <string name="text_view_all">View all</string>
     <string name="text_upi">UPI</string>
-    <string name="truecaller_partnerKey">d0LUD5cc589983d9d48d1ac66614d7895b186</string>
+<!--    <string name="truecaller_partnerKey">d0LUD5cc589983d9d48d1ac66614d7895b186</string>-->
+    <string name="truecaller_partnerKey">J733C4964f16ed71e4bd1aa8a80cff81a6c6e</string>
     <string name="not_allowed">You are not allowed! Sorry!!</string>
     <string name="text_age_terms">I\'m 18 years old and I understand that under-age use of this app may be illegal. I agree to complete my KYC before the first cash withdrawal on the app.</string>
     <string name="text_terms__wallet_limit">I agree to <u><font color='red'>Terms and Conditions</font></u></string>

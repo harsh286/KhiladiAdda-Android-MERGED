@@ -59,6 +59,10 @@ public class FootballPlayerStatusAdapter extends RecyclerView.Adapter<FootballPl
         personViewHolder.mTvYellowCardScore.setText(String.valueOf(details.getFbScore().getPenalitiesYellowCard()));
         personViewHolder.mTvRedCardScore.setText(String.valueOf(details.getFbScore().getPenalitiesRedCard()));
         personViewHolder.mTvOwnGoalScore.setText(String.valueOf(details.getFbScore().getPenalitiesOwnGoal()));
+
+        personViewHolder.mTwoShotsScoredTV.setText(String.valueOf(details.getFbScore().getAttackTwoShots()));
+        personViewHolder.mTwoShotsPointsTV.setText(String.valueOf(details.getFbPoints().getAttackTwoShots()));
+
 //        personViewHolder.mFiveWicketScoreTV.setText(String.valueOf(details.getScore().getFiveWickets()));
 //        personViewHolder.mCatchOnFieldScoreTV.setText(String.valueOf(details.getScore().getFieldCatch()));
         personViewHolder.mTvGoalScoredPoints.setText(String.valueOf(details.getFbPoints().getAttackGoal()));
@@ -140,6 +144,10 @@ public class FootballPlayerStatusAdapter extends RecyclerView.Adapter<FootballPl
         TextView mTvRedCardFootballPoints;
         @BindView(R.id.tv_own_goal_score_points)
         TextView mTvOwnGoalScorePoints;
+        @BindView(R.id.tv_2_shots_scored)
+        TextView mTwoShotsScoredTV;
+        @BindView(R.id.tv_2_shots_points)
+        TextView mTwoShotsPointsTV;
 //        @BindView(R.id.tv_opposition_all_out_points)
 //        TextView mFiveWicketTV;
 //        @BindView(R.id.tv_green_card_points)

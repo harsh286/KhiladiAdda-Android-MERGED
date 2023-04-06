@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -49,6 +50,7 @@ import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.LudoContestResponse;
 import com.khiladiadda.network.model.response.ModeResponse;
+import com.khiladiadda.terms.TermsActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.DownloadApk;
@@ -96,13 +98,14 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
     private boolean mIsRequestingAppInstallPermission;
     private ILudoUniversePresenter mPresenter;
     private Intent launchIntent;
-    private int mFrom = 1;
+    private int mFrom = 1, mDownUp = 1;
     private List<BannerDetails> bannerData = new ArrayList<>();
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
+    @BindView(R.id.rl_image)
+    RelativeLayout mBannerRL;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
-    private int mDownUp = 1;
 
     @Override
     protected int getContentView() {
@@ -148,14 +151,14 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
                 mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
                 break;
             case R.id.tv_help_video:
-                AppUtilityMethods.openLudoVideo(ModeActivity.this);
+                openLink();
                 break;
             case R.id.btn_classic_mode:
                 mFrom = 1;
                 mPlayTV.setText(R.string.play_classic);
                 doSelection(true, false, false);
                 mActivityNameTV.setText("Classic");
-                rulesTv.scrollTo(0,0);
+                rulesTv.scrollTo(0, 0);
                 rulesTv.setText(AppConstant.ADDA_CLASSIC_RULES);
                 fetchBanner();
                 break;
@@ -164,7 +167,7 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
                 mPlayTV.setText(R.string.play_timer);
                 doSelection(false, true, false);
                 mActivityNameTV.setText("Timer");
-                rulesTv.scrollTo(0,0);
+                rulesTv.scrollTo(0, 0);
                 rulesTv.setText(AppConstant.ADDA_TIMER_RULES);
                 fetchBanner();
                 break;
@@ -173,7 +176,7 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
                 mPlayTV.setText(R.string.play_series);
                 doSelection(false, false, true);
                 mActivityNameTV.setText("Series");
-                rulesTv.scrollTo(0,0);
+                rulesTv.scrollTo(0, 0);
                 rulesTv.setText(AppConstant.ADDA_SERIES_RULES);
                 fetchBanner();
                 break;
@@ -198,8 +201,22 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
                 }
                 break;
             case R.id.vv_tutorial:
-                AppUtilityMethods.openYoutube(this);
+                openLink();
                 break;
+        }
+    }
+
+    private void openLink() {
+        if (mFrom == 1) {
+            AppUtilityMethods.openYoutubeCallbreak(this, "www.youtube.com/playlist?list=PLIvWNKDITNJA-lKa_RUj6L1mJvfy8McSG", "https://www.youtube.com/playlist?list=PLIvWNKDITNJA-lKa_RUj6L1mJvfy8McSG");
+        } else if (mFrom == 2) {
+            Intent terms = new Intent(this, TermsActivity.class);
+            terms.putExtra(AppConstant.FROM, AppConstant.LT_TIMER);
+            startActivity(terms);
+        } else {
+            Intent terms = new Intent(this, TermsActivity.class);
+            terms.putExtra(AppConstant.FROM, AppConstant.LT_SERIES);
+            startActivity(terms);
         }
     }
 
@@ -220,7 +237,6 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
             mSeriesModeBTN.setBackgroundResource(R.drawable.ic_selectable);
             mSeriesModeBTN.setTextColor(Color.parseColor("#000000"));
         }
-
     }
 
     @Override
@@ -289,10 +305,10 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
             apkCheck();
             bannerData = responseModel.getResponse().getBanners();
             if (bannerData != null && bannerData.size() > 0) {
-                mBannerVP.setVisibility(View.VISIBLE);
+                mBannerRL.setVisibility(View.VISIBLE);
                 setUpAdvertisementViewPager(bannerData);
             } else {
-                mBannerVP.setVisibility(GONE);
+                mBannerRL.setVisibility(GONE);
             }
         }
     }
@@ -475,6 +491,5 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
             moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
         }, 10000);
     }
-
 
 }

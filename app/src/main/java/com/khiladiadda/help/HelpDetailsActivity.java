@@ -44,7 +44,6 @@ public class HelpDetailsActivity extends BaseActivity implements IHelpView, Help
     @BindView(R.id.btn_email) Button mEmailBTN;
     @BindView(R.id.ll_whatsapp) LinearLayout mWhatsAppLL;
     @BindView(R.id.btn_view_video) Button mVideoBTN;
-
     private HelpAdapter mAdapter;
     private ArrayList<HelpDetails> mList;
     private FaqCategoryDetails mDetails;

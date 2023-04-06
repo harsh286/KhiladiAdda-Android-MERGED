@@ -11,44 +11,18 @@
 
     <include layout="@layout/bannermoengage" />
 
-    <TextView
-        android:id="@+id/tv_wining_cash"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/action_bar"
-        android:layout_marginStart="@dimen/margin_30"
-        android:layout_marginTop="@dimen/margin_5"
-        android:layout_marginBottom="@dimen/margin_10"
-        android:text="@string/text_wining_cash"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/text_20" />
-
-    <TextView
-        android:id="@+id/tv_coins"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_wining_cash"
-        android:layout_marginStart="@dimen/margin_30"
-        android:layout_marginTop="@dimen/margin_10"
-        android:layout_toEndOf="@+id/tv_cash_option"
-        android:padding="@dimen/padding_2"
-        android:text="@string/text_rs_per_coin"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/text_13"
-        android:visibility="gone" />
-
     <RelativeLayout
         android:id="@+id/rl_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_wining_cash"
-        android:visibility="visible"
-        android:background="@color/white">
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_below="@+id/action_bar"
+        android:background="@color/white"
+        android:visibility="gone">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_advertisement"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="80dp"
             android:layout_alignParentTop="true" />
 
     </RelativeLayout>
@@ -64,16 +38,32 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_cash_option"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_10"
-                android:layout_marginTop="@dimen/margin_3"
-                android:padding="@dimen/padding_5"
-                android:text="@string/select_a_method_to_withdraw"
-                android:textColor="#646464"
-                android:textSize="@dimen/text_15" />
+                android:layout_marginTop="@dimen/margin_3">
+
+                <TextView
+                    android:id="@+id/tv_cash_option"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_10"
+                    android:gravity="center"
+                    android:text="@string/select_a_method_to_withdraw"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_14" />
+
+                <TextView
+                    android:id="@+id/tv_wining_cash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/margin_10"
+                    android:text="@string/text_wining_cash"
+                    android:textColor="@color/card_red"
+                    android:textSize="@dimen/text_14"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

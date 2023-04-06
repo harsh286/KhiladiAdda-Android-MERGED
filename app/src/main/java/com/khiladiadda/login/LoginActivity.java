@@ -35,8 +35,10 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -96,9 +98,10 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
     private LoginPresenter mPresenter;
     private GmailRegisterRequest mGmailRequest;
     private TrueCallerPresenter mPresenterTrueCaller;
-    private String mFBToken, mUserName, mMobileNumber, mEmail, socialLogin;
+    private String mFBToken, mUserName, mMobileNumber, mEmail;
     private boolean isAllowed = true;
     private long mLastClickTime = 0;
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +109,9 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
         getFirebaseId();
         setUpGoogle();
         setUpFb();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, setUpGoogle());
+        signOut();
+        revokeAccess();
     }
 
     @Override
@@ -165,53 +171,35 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
                             mPresenter.validateData();
                         else
                             Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
-
                     } else {
                         AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
                     }
                 } else {
                     mPresenter.validateData();
-
                 }
                 break;
             case R.id.iv_fb:
-                if (new NetworkStatus(this).isInternetOn()) {
+                if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
                     if (LocationCheckUtils.getInstance().hasLocationPermission()) {
                         LocationCheckUtils.getInstance().requestNewLocationData();
-                        if (isAllowed) {
-                            if (mAppPreference.getBoolean(AppConstant.IS_FB_ENABLED, false)) {
-                                socialLogin = "facebook";
-                                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
-                            } else {
-                                new FBErrorDialog(this, 0, onSocialLoginErrorListener);
-                            }
-                        } else
-                            Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
+                        facebookLogin();
                     } else {
                         AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
                     }
                 } else {
-                    Snackbar.make(mLoginBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+                    facebookLogin();
                 }
                 break;
             case R.id.iv_google:
-                if (LocationCheckUtils.getInstance().hasLocationPermission()) {
-                    LocationCheckUtils.getInstance().requestNewLocationData();
-                    if (isAllowed) {
-                        if (new NetworkStatus(this).isInternetOn()) {
-                            if (mAppPreference.getBoolean(AppConstant.IS_GMAIL_ENABLED, false)) {
-                                socialLogin = "gmail";
-                                googleSignIn();
-                            } else {
-                                new FBErrorDialog(this, 1, onSocialLoginErrorListener);
-                            }
-                        } else
-                            Snackbar.make(mLoginBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+                if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
+                    if (LocationCheckUtils.getInstance().hasLocationPermission()) {
+                        LocationCheckUtils.getInstance().requestNewLocationData();
+                        googleLogin();
                     } else {
-                        Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
+                        AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
                     }
                 } else {
-                    AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
+                    googleLogin();
                 }
                 break;
             case R.id.ll_need_support:
@@ -225,26 +213,15 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
                     Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
                 break;
             case R.id.iv_truecaller:
-                if (LocationCheckUtils.getInstance().hasLocationPermission()) {
-                    LocationCheckUtils.getInstance().requestNewLocationData();
-                    if (new NetworkStatus(this).isInternetOn()) {
-                        if (isAllowed) {
-                            if (mAppPreference.getBoolean(AppConstant.IS_TRUECALLER_ENABLED, false)) {
-                                if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
-                                    return;
-                                }
-                                mLastClickTime = SystemClock.elapsedRealtime();
-                                socialLogin = "truecaller";
-                                setupTruecaller();
-                            } else
-                                new FBErrorDialog(this, 2, onSocialLoginErrorListener);
-                        } else
-                            Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
+                if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
+                    if (LocationCheckUtils.getInstance().hasLocationPermission()) {
+                        LocationCheckUtils.getInstance().requestNewLocationData();
+                        truecallerLogin();
                     } else {
-                        Snackbar.make(mLoginBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+                        AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
                     }
                 } else {
-                    AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
+                    truecallerLogin();
                 }
                 break;
         }
@@ -445,23 +422,6 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
         }
     }
 
-    private void buildAlertMessageNoGps() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        try {
-            builder.setMessage("Location Required\nWe need to insure this game is allowed in your state of residence.\nPlease allow to access your location for the first time.")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(final DialogInterface dialog, final int id) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                        }
-                    });
-            final AlertDialog alert = builder.create();
-            alert.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     protected void onDestroy() {
         mPresenter.destroy();
@@ -583,7 +543,6 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
             mUserName = "" + trueProfile.firstName + " " + trueProfile.lastName;
             mMobileNumber = "" + trueProfile.phoneNumber;
             mEmail = "" + trueProfile.email;
-            Log.e("TAG", "onSuccessProfileShared: " + trueProfile);
             request.setSignatureAlgorithm(trueProfile.signatureAlgorithm);
             if (new NetworkStatus(mEmailET.getContext()).isInternetOn()) {
                 showProgress(getString(R.string.txt_progress_authentication));
@@ -591,13 +550,11 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
             } else {
                 Snackbar.make(mLoginBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
             }
-
         }
 
         @Override
         public void onFailureProfileShared(@NonNull TrueError trueError) {
             hideProgress();
-//            Snackbar.make(mLoginBTN, "TrueCaller is not installed in your device or you are not registered on truecaller", Snackbar.LENGTH_SHORT).show();
             if (trueError.getErrorType() == TrueError.ERROR_TYPE_INVALID_ACCOUNT_STATE) {
                 Snackbar.make(mLoginBTN, "TrueCaller is not installed in your device or you are not registered on truecaller", Snackbar.LENGTH_SHORT).show();
             }
@@ -621,14 +578,12 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
                 if (!response.isExists) {
                     hideProgress();
                     Intent intent = new Intent(this, RegistrationActivity.class);
-//                startActivity(new Intent(this, RegistrationActivity.class));
                     intent.putExtra("name", mUserName);
                     intent.putExtra("mobile_number", mMobileNumber);
                     if (mEmail != null && !mEmail.equals("null"))
                         intent.putExtra("email", mEmail);
                     else
                         intent.putExtra("email", "");
-
                     startActivity(intent);
                     finish();
                 } else {
@@ -688,4 +643,73 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
         eventParameters2.put(AppConstant.LOGIN, "login");
         AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
     }
+
+    private void truecallerLogin() {
+        if (new NetworkStatus(this).isInternetOn()) {
+            if (isAllowed) {
+                if (mAppPreference.getBoolean(AppConstant.IS_TRUECALLER_ENABLED, false)) {
+                    if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+                        return;
+                    }
+                    mLastClickTime = SystemClock.elapsedRealtime();
+                    setupTruecaller();
+                } else
+                    new FBErrorDialog(this, 2, onSocialLoginErrorListener);
+            } else
+                Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
+        } else {
+            Snackbar.make(mLoginBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    private void googleLogin() {
+        if (isAllowed) {
+            if (new NetworkStatus(this).isInternetOn()) {
+                if (mAppPreference.getBoolean(AppConstant.IS_GMAIL_ENABLED, false)) {
+                    googleSignIn();
+                } else {
+                    new FBErrorDialog(this, 1, onSocialLoginErrorListener);
+                }
+            } else
+                Snackbar.make(mLoginBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+        } else {
+            Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    private void facebookLogin() {
+        if (isAllowed) {
+            if (new NetworkStatus(this).isInternetOn()) {
+                if (mAppPreference.getBoolean(AppConstant.IS_FB_ENABLED, false)) {
+                    LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
+                } else {
+                    new FBErrorDialog(this, 0, onSocialLoginErrorListener);
+                }
+            } else
+                Snackbar.make(mLoginBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+        } else {
+            Snackbar.make(mLoginBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    private void signOut() {
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                    }
+                });
+    }
+
+    private void revokeAccess() {
+        mGoogleSignInClient.revokeAccess()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                    }
+                });
+    }
+
 }

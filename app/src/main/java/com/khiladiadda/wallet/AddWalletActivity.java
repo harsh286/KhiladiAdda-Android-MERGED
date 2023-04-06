@@ -451,7 +451,6 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
     public void onValidationComplete() {
         mCoins = Long.parseLong(mAmountET.getText().toString().trim());
         mAmount = mAmountET.getText().toString().trim() + ".00";
-
         if (mCoins <= mRemainingAddLimit) {
             if (mCoins > 5000 && mAppPreference.getProfileData().getAadharUpdated() != 3) {
                 checkPanStatus();
@@ -497,9 +496,8 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
                 callPaymentGateway();
             }
         } else {
-            AppUtilityMethods.showMsg(this, "You can only add ₹" + mRemainingAddLimit + " amount as per your daily limit.", false);
+            AppUtilityMethods.showMsg(this, "You can only add ₹" + mRemainingAddLimit + " as per your daily limit.", false);
         }
-
     }
 
     private void callPaymentGateway() {
@@ -522,42 +520,46 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
         } else if (mPaymentFrom == AppConstant.FROM_NEOKRED) {
             mPresenter.checkNeokredPG(mEaseBuzzAmount, mCouponCode);
         } else if (mPaymentFrom == AppConstant.FROM_PHONEPE || mPaymentFrom == AppConstant.FROM_PHONEPE_PhonePePAY || mPaymentFrom == AppConstant.FROM_PHONEPE_GPAY || mPaymentFrom == AppConstant.FROM_PHONEPE_PaytmPAY) {
-            paymentIntegration();
+            phonePePaymentIntegration();
         }
     }
 
     private void checkGamerCashStatus() {
-        mCoins = Long.parseLong(mAmountET.getText().toString().trim());
-        if (mAmountET.getText().toString().trim().isEmpty() || mCoins < 10) {
+        if (mAmountET.getText().toString().trim().isEmpty()) {
             AppUtilityMethods.showMsg(this, "Please add amount to proceed.\nMinimum amount to be added is Rs.10", false);
-//            Toast.makeText(this, "Please add amount to proceed.\nMinimum amount to be added is Rs.10", Toast.LENGTH_SHORT).show();
-        } else {
-            if (mCoins <= mRemainingAddLimit) {
-                if (mAppPreference.getIsGamerCashLinked()) {
-                    if (mCoins > coins) {
-                        AppDialog.showInsufficientGCDialog(this);
-                    } else {
-                        if (mCoins > 5000 && mAppPreference.getProfileData().getAadharUpdated() != 3) {
-                            checkPanStatus();
+        } else if (!mAmountET.getText().toString().trim().isEmpty()) {
+            mCoins = Long.parseLong(mAmountET.getText().toString().trim());
+            if (mCoins < 10) {
+                AppUtilityMethods.showMsg(this, "Please add amount to proceed.\nMinimum amount to be added is Rs.10", false);
+            } else {
+                if (mCoins <= mRemainingAddLimit) {
+                    if (mAppPreference.getIsGamerCashLinked()) {
+                        if (mCoins > coins) {
+                            AppDialog.showInsufficientGCDialog(this);
                         } else {
-                            Intent intent = new Intent(this, PayActivity.class);
-                            intent.putExtra("coins", coins);
-                            intent.putExtra("coupon", mCouponCode);
-                            intent.putExtra("enter_amount", mAmountET.getText().toString().trim());
-                            startActivity(intent);
-                            finish();
+                            if (mCoins > 5000 && mAppPreference.getProfileData().getAadharUpdated() != 3) {
+                                checkPanStatus();
+                            } else {
+                                Intent intent = new Intent(this, PayActivity.class);
+                                intent.putExtra("coins", coins);
+                                intent.putExtra("coupon", mCouponCode);
+                                intent.putExtra("enter_amount", mAmountET.getText().toString().trim());
+                                startActivity(intent);
+                                finish();
+                            }
                         }
+                    } else {
+                        Intent intent = new Intent(this, GamerCashActivity.class);
+                        intent.putExtra("coins", coins);
+                        intent.putExtra("enter_amount", mAmountET.getText().toString().trim());
+                        startActivity(intent);
                     }
                 } else {
-                    Intent intent = new Intent(this, GamerCashActivity.class);
-                    intent.putExtra("coins", coins);
-                    intent.putExtra("enter_amount", mAmountET.getText().toString().trim());
-                    startActivity(intent);
+                    AppUtilityMethods.showMsg(this, "You can only add ₹" + mRemainingAddLimit + " amount as per your daily limit.", false);
                 }
-            } else {
-                AppUtilityMethods.showMsg(this, "You can only add ₹" + mRemainingAddLimit + " amount as per your daily limit.", false);
             }
         }
+
     }
 
     @Override
@@ -936,10 +938,10 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
 
     @Override
     public void onGetGamerCashSuccess(GetGamerCashResponse response) {
+        mRemainingAddLimit = response.getRemainingAddLimit();
         if (response.isStatus()) {
-            AppSharedPreference.getInstance().setIsGamerCashLinked(response.getAlreadyLinked() || response.getLinked());
+            mAppPreference.setIsGamerCashLinked(response.getAlreadyLinked() || response.getLinked());
             if (isGamerCashEnabled) {
-                mRemainingAddLimit = response.getRemainingAddLimit();
                 if (response.getAlreadyLinked() || response.getLinked()) {
                     coins = response.getResponse().getCoins();
                     mGamerCashTV.setVisibility(View.GONE);
@@ -956,7 +958,7 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
                 }
             }
         } else {
-            Snackbar.make(mAmountET, response.getMessage(), Snackbar.LENGTH_LONG);
+            Snackbar.make(mAmountET, response.getMessage(), Snackbar.LENGTH_LONG).show();
         }
         hideProgress();
     }
@@ -994,24 +996,26 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
     //Paytm Transaction Response
     @Override
     public void onTransactionResponse(Bundle inResponse) {
-//        Toast.makeText(this, "Response (onTransactionResponse) : " + inResponse.toString(), Toast.LENGTH_SHORT).show();
-//        Log.e("PaytmRes", "" + inResponse);
-        PaymentRequest request = new PaymentRequest();
-        request.setCustomerID(mAppPreference.getProfileData().getId());
-        request.setType(AppConstant.PATYM);
-        request.setStatus(inResponse.getString(AppConstant.STATUS));
-        request.setOrderId(mOrderId);
-        request.setBankName(inResponse.getString(AppConstant.BANKNAME));
-        request.setAmount(inResponse.getString(AppConstant.TXN_AMOUNT));
-        request.setDate(inResponse.getString(AppConstant.TXN_DATE));
-        request.setTxnId(inResponse.getString(AppConstant.TXN_ID));
-        request.setPaymentMode(inResponse.getString(AppConstant.PAYMENT_MODE));
-        request.setBankTxnId(inResponse.getString(AppConstant.BANK_TXN_ID));
-        request.setCurrency(inResponse.getString(AppConstant.CURRENCY));
-        request.setGatewayName(inResponse.getString(AppConstant.GATEWAY_NAME));
-        request.setCoupon(mCouponCode);
-        showProgress(getString(R.string.txt_progress_authentication));
-        mPresenter.savePaytmPayment(request);
+        try {
+            PaymentRequest request = new PaymentRequest();
+            request.setCustomerID(mAppPreference.getProfileData().getId());
+            request.setType(AppConstant.PATYM);
+            request.setStatus(inResponse.getString(AppConstant.STATUS));
+            request.setOrderId(mOrderId);
+            request.setBankName(inResponse.getString(AppConstant.BANKNAME));
+            request.setAmount(inResponse.getString(AppConstant.TXN_AMOUNT));
+            request.setDate(inResponse.getString(AppConstant.TXN_DATE));
+            request.setTxnId(inResponse.getString(AppConstant.TXN_ID));
+            request.setPaymentMode(inResponse.getString(AppConstant.PAYMENT_MODE));
+            request.setBankTxnId(inResponse.getString(AppConstant.BANK_TXN_ID));
+            request.setCurrency(inResponse.getString(AppConstant.CURRENCY));
+            request.setGatewayName(inResponse.getString(AppConstant.GATEWAY_NAME));
+            request.setCoupon(mCouponCode);
+            showProgress(getString(R.string.txt_progress_authentication));
+            mPresenter.savePaytmPayment(request);
+        } catch (Exception e) {
+            Snackbar.make(mPayBTN, "Please try again.", Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -1102,10 +1106,10 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
 
     @Override
     public void onPaymentComplete(PhonePePaymentResponse response) {
+        hideProgress();
         if (response.isStatus()) {
             phonePePayment(response);
         } else {
-            hideProgress();
             AppUtilityMethods.showMsg(this, response.getMessage(), false);
         }
     }
@@ -1133,15 +1137,18 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PAYTM_REQUEST_CODE && data != null) {
-            Log.e("PaytmRes", "" + data.getStringExtra("response"));
-            PaymentRequest request = new PaymentRequest();
-            request.setCustomerID(mAppPreference.getProfileData().getId());
-            request.setType(AppConstant.PATYM);
-            request.setCoupon(mCouponCode);
-            request.setOrderId(mOrderId);
-            request.setAmount(mAmount);
-            showProgress(getString(R.string.txt_progress_authentication));
-            mPresenter.savePaytmPayment(request);
+            try {
+                PaymentRequest request = new PaymentRequest();
+                request.setCustomerID(mAppPreference.getProfileData().getId());
+                request.setType(AppConstant.PATYM);
+                request.setCoupon(mCouponCode);
+                request.setOrderId(mOrderId);
+                request.setAmount(mAmount);
+                showProgress(getString(R.string.txt_progress_authentication));
+                mPresenter.savePaytmPayment(request);
+            } catch (Exception e) {
+                Snackbar.make(mPayBTN, "Please try again.", Snackbar.LENGTH_LONG).show();
+            }
         } else if (requestCode == B2B_PG_REQUEST_CODE) {  //phonepe
             showProgress("");
             if (resultCode == RESULT_OK) {
@@ -1279,7 +1286,6 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
         if (mPaySharp) {
             PaymentWaitDialog dialog = new PaymentWaitDialog(this, mOnPaymentWaitListener);
         }
-//        payGamerCashVerifyAPI();
     }
 
     private void payGamerCashVerifyAPI() {
@@ -1297,7 +1303,7 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
     }
 
     //PhonePe Payment Integration
-    private void paymentIntegration() {
+    private void phonePePaymentIntegration() {
         if (new NetworkStatus(this).isInternetOn()) {
             PhonepeRequest phonepeRequest = new PhonepeRequest();
             if (!mAmountET.getText().toString().equals("")) {
@@ -1321,43 +1327,68 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
     }
 
     private void phonePePayment(PhonePePaymentResponse response) {
-        String mPaymentPackage = "";
+        String upiPackage = "";
+        if (mPaymentFrom == AppConstant.FROM_PHONEPE_GPAY) {
+            upiPackage = "com.google.android.apps.nbu.paisa.user";
+        } else if (mPaymentFrom == AppConstant.FROM_PHONEPE_PaytmPAY) {
+            upiPackage = "net.one97.paytm";
+        } else {
+            upiPackage = "com.phonepe.app";
+        }
         try {
             List<UPIApplicationInfo> upiApps = PhonePe.getUpiApps();
-            mPaymentPackage = upiApps.get(0).getPackageName();
-        } catch (PhonePeInitException exception) {
-            exception.printStackTrace();
-        }
-        if (mPaymentPackage.isEmpty()) {
-            Snackbar.make(mPayBTN, "No UPI option on your device.", Snackbar.LENGTH_LONG).show();
-        } else {
-            //prod //String string_signature = PhonePe.getPackageSignature();
-            mPhonepeOrderId = response.getTransactionId();
-            B2BPGRequest b2BPGRequest = new B2BPGRequestBuilder()
-                    .setData(response.getBase64())
-                    .setChecksum(response.getChecksum())
-                    .setUrl(mApiEndPoint)
-                    .build();
-            //Package name should be dynamic //UAT = com.phonepe.app.preprod //PROD = com.phonepe.app
-            String upiPackage = "com.phonepe.app";
-            try {
-                if (mPaymentFrom == AppConstant.FROM_PHONEPE_GPAY) {
-                    upiPackage = "com.google.android.apps.nbu.paisa.user";
-                } else if (mPaymentFrom == AppConstant.FROM_PHONEPE_PaytmPAY) {
-                    upiPackage = "net.one97.paytm";
+            if (upiApps.size() > 0) {
+                for (int i = 0; i < upiApps.size(); i++) {
+                    if (upiApps.get(i).getPackageName().equalsIgnoreCase(upiPackage)) {
+                        //prod //String string_signature = PhonePe.getPackageSignature();
+                        mPhonepeOrderId = response.getTransactionId();
+                        B2BPGRequest b2BPGRequest = new B2BPGRequestBuilder()
+                                .setData(response.getBase64())
+                                .setChecksum(response.getChecksum())
+                                .setUrl(mApiEndPoint)
+                                .build();
+                        //Package name should be dynamic //UAT = com.phonepe.app.preprod //PROD = com.phonepe.app
+                        try {
+                            if (isPackageInstalled(upiPackage)) {
+                                startActivityForResult(PhonePe.getImplicitIntent(
+                                        this, b2BPGRequest, upiPackage), B2B_PG_REQUEST_CODE);
+                                break;
+                            } else {
+                                AppUtilityMethods.showMsg(this, "This UPI App is not installed  on your device or you haven't setup your UPI yet.\n" +
+                                        "Please retry With another UPI App", false);
+                            }
+                        } catch (PhonePeInitException e) {
+                            AppUtilityMethods.showMsg(this, "This UPI App is not installed  on your device or you haven't setup your UPI yet.\n" +
+                                    "Please retry With another UPI App", false);
+                        }
+                    } else if ((upiApps.size() - 1) == i) {
+                        AppUtilityMethods.showMsg(this, "This UPI App is not installed  on your device or you haven't setup your UPI yet.\n" +
+                                "Please retry With another UPI App", false);
+                    }
                 }
-                startActivityForResult(PhonePe.getImplicitIntent(
-                        this, b2BPGRequest, upiPackage), B2B_PG_REQUEST_CODE);
-            } catch (PhonePeInitException e) {
-                Log.e("TAG", "onPaymentComplete: " + e.getMessage());
+            } else {
+                AppUtilityMethods.showMsg(this, "This UPI App is not installed  on your device or you haven't setup your UPI yet.\n" +
+                        "Please retry With another UPI App", false);
             }
+        } catch (PhonePeInitException exception) {
+            AppUtilityMethods.showMsg(this, "This UPI App is not installed  on your device or you haven't setup your UPI yet.\n" +
+                    "Please retry With another UPI App", false);
+        }
+    }
+
+    private boolean isPackageInstalled(String packageName) {
+        PackageManager packageManager = getPackageManager();
+        try {
+            packageManager.getPackageInfo(packageName, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
     }
 
     //Cashfree New SDK Callback
     @Override
     public void onPaymentVerify(String orderID) {
-        Log.e("onPaymentVerify", "verifyPayment triggered");
         showProgress("Please wait...");
         mPresenter.getCashfreeStatus(orderID);
     }

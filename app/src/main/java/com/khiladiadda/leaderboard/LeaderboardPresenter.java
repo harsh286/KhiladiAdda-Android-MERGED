@@ -89,7 +89,6 @@ public class LeaderboardPresenter implements ILeaderboardPresenter {
         mSubscription = mInteractor.getLudoAdda(mLudoAddaListerner, page, limit, type);
     }
 
-
     private IApiListener<LudoAddaMainResponse> mLudoAddaListerner = new IApiListener<LudoAddaMainResponse>() {
         @Override
         public void onSuccess(LudoAddaMainResponse response) {
@@ -105,14 +104,11 @@ public class LeaderboardPresenter implements ILeaderboardPresenter {
     @Override
     public void getWS(int page, int limit, String type) {
         mSubscription = mInteractor.getWS(mWSListerner, page, limit, type);
-
-
     }
 
     @Override
     public void getDroidDo(int page, int limit, String type) {
         mSubscription = mInteractor.getDroid_Do(mDroidListerner, page, limit, type);
-
     }
 
     @Override
@@ -130,7 +126,6 @@ public class LeaderboardPresenter implements ILeaderboardPresenter {
         mSubscription = mInteractor.getLeaderBoardRummy(mAllLeaderboardListerner, page, limit, type);
     }
 
-
     private IApiListener<LeaderboardMainResponse> mAllLeaderboardListerner = new IApiListener<LeaderboardMainResponse>() {
         @Override
         public void onSuccess(LeaderboardMainResponse response) {
@@ -142,7 +137,6 @@ public class LeaderboardPresenter implements ILeaderboardPresenter {
             mView.onAllLeaderBoardError(error);
         }
     };
-
 
     private IApiListener<AllLeaderBoardResponse> mWSListerner = new IApiListener<AllLeaderBoardResponse>() {
         @Override
@@ -200,7 +194,6 @@ public class LeaderboardPresenter implements ILeaderboardPresenter {
         @Override
         public void onError(ApiError error) {
             mView.onLeaderFanBattleFailure(error);
-
         }
     };
 
@@ -215,7 +208,6 @@ public class LeaderboardPresenter implements ILeaderboardPresenter {
             mView.onLeaderBoardFailure(error);
         }
     };
-
 
     @Override
     public void destroy() {

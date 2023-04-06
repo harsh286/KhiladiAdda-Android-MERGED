@@ -96,7 +96,7 @@
 
             <TextView
                 style="@style/TextViewPredictionPoints"
-                android:text="Super Ten Raid" />
+                android:text="10 Raids" />
 
             <TextView
                 style="@style/TextViewPredictionPoints"
@@ -108,15 +108,15 @@
 
             <TextView
                 style="@style/TextViewPredictionPoints"
-                android:text="Substitue" />
+                android:text="Substitute" />
 
             <TextView
                 style="@style/TextViewPredictionPoints"
-                android:text="Unsuccess R" />
+                android:text="Failed Raids" />
 
             <TextView
                 style="@style/TextViewPredictionPoints"
-                android:text="Unsuccess T" />
+                android:text="Failed Tackles" />
 
             <TextView
                 style="@style/TextViewPredictionPoints"

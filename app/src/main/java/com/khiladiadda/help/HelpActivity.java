@@ -85,7 +85,6 @@ public class HelpActivity extends BaseActivity implements IHelpView {
     ImageView mRummyIV;
     @BindView(R.id.nudge)
     NudgeView mNV;
-
     private IHelpPresenter mPresenter;
     private boolean mSupportVia;
     private String mFrom;
@@ -277,7 +276,6 @@ public class HelpActivity extends BaseActivity implements IHelpView {
                     startActivity(i);
                 }
                 break;
-
             case R.id.iv_ludo_tournament:
                 if (mSupportVia) {
                     mFrom = AppConstant.LUDOTOUR_KOMMUNI_CATEGORY;

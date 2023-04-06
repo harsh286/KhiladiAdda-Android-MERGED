@@ -237,7 +237,7 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
                 ludoResultActivityResultLauncher.launch(i);
                 break;
             case R.id.tv_refresh:
-                getLudoContest(true, mSyncProfile);
+                getLudoContest(true, true);
                 break;
             case R.id.tv_buddy_list:
                 Intent buddy = new Intent();

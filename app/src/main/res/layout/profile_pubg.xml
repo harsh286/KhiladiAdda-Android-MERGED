@@ -462,7 +462,7 @@
                 android:layout_toStartOf="@+id/btn_callbreak"
                 android:layout_toEndOf="@+id/iv_callbreak"
                 android:padding="@dimen/padding_5"
-                android:text="Court Pieces" />
+                android:text="Court Piece" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_callbreak"

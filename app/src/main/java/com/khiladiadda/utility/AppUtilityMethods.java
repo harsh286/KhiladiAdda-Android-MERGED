@@ -449,6 +449,7 @@ public class AppUtilityMethods {
             logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             // Add new Flag to start new Activity
             logout.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            deleteCache(activity);
             dialog.dismiss();
             activity.finish();
             activity.finishAffinity();
@@ -964,6 +965,16 @@ public class AppUtilityMethods {
         }
     }
 
+    public static void openYoutubeCallbreak(final Activity activity, final String link, final String linkLast) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + link));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivity(intent);
+        } catch (Exception e) {
+            activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(linkLast)));
+        }
+    }
+
     public static void openInstagram(final Activity activity) {
         try {
             Uri uri = Uri.parse("https://instagram.com/khiladiadda?igshid=lc8vrajuubq4");
@@ -1365,7 +1376,7 @@ public class AppUtilityMethods {
                     totalDates = "Ended";
                 }
                 return totalDates;
-            }else
+            } else
                 return "Ends in: 00:00:00";
         } catch (ParseException e) {
             Log.e("TAG", "e: " + e.getLocalizedMessage());

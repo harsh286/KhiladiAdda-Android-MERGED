@@ -265,11 +265,17 @@ public class HTHBattlesActivity extends BaseActivity implements ICreateBattleVie
                     i.putExtra(AppConstant.FROM, 3);
                 else if (mFromMatches == 3)
                     i.putExtra(AppConstant.FROM, 4);
-
                 startActivity(i);
                 break;
             case R.id.tv_calculate:
-                startActivity(new Intent(this, BattlePointsActivity.class));
+                Intent calculate = new Intent(this, BattlePointsActivity.class);
+                if (mFromMatches == 1)
+                    calculate.putExtra(AppConstant.FROM, AppConstant.FROM_CRICKET);
+                else if (mFromMatches == 2)
+                    calculate.putExtra(AppConstant.FROM, AppConstant.FROM_FOOTBALL);
+                else if (mFromMatches == 3)
+                    calculate.putExtra(AppConstant.FROM, AppConstant.FROM_KABAADI);
+                startActivity(calculate);
                 break;
             case R.id.rl_create_battle:
                 showProgress("");

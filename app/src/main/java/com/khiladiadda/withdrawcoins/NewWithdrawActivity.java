@@ -151,11 +151,10 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     private NewBeneficiaryAdapter mAdapter;
     private ArrayList<BeneficiaryDetails> mList = null;
     private String mName, mBank, mIfsc, mPayoutGatewayName, mPaymentMode = AppConstant.UPI, mBeneficiaryId, mFundAccountId, mBID;
-    private double mWinningCoins;
-    private int mAmount, mPayoutGateway, mParallelPayoutGateway, selectedPos = RecyclerView.NO_POSITION, mPayoutSelect = 0;
+    private double mWinningCoins, mTDSAmount;
+    private int mAmount, mPayoutGateway, selectedPos = RecyclerView.NO_POSITION, mPayoutSelect = 0;
     private List<WithdrawComissionDetails> mWithdrawCommission = null;
-    private boolean mKYCVerified, mIsDataRefresh;
-    private Activity activity;
+    private boolean mKYCVerified, mIsDataRefresh, mIsWithdrawVerified;
     @BindView(R.id.tv_payment_history)
     TextView mPaymentHistoryTV;
     @BindView(R.id.vp_advertisement)
@@ -164,7 +163,6 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     private Handler mHandler;
     @BindView(R.id.rl_image)
     RelativeLayout mBannerRL;
-    private double mTDSAmount;
 
     @Override
     protected int getContentView() {
@@ -180,7 +178,6 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
 
     @Override
     protected void initViews() {
-        activity = this;
         Bundle intent = getIntent().getExtras();
         if (intent != null) {
             String redirect = intent.getString(AppConstant.PushFrom);
@@ -198,7 +195,6 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         mAddBeneficiaryBTN.setOnClickListener(this);
         mPoliciesUpdateTV.setOnClickListener(this);
         mSubmitBTN.setOnClickListener(this);
-//        mWinningHistoryTV.setOnClickListener(this);
         mPaytmWalletRV.setOnClickListener(this);
         mPaymentHistoryTV.setOnClickListener(this);
         mPaymentHistoryTV.setVisibility(View.VISIBLE);
@@ -439,18 +435,16 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         if (mAmount < 20) {
             AppUtilityMethods.showMsg(this, getString(R.string.text_amount_less_ten), false);
         } else {
+            showProgress(getString(R.string.txt_progress_authentication));
+            mSubmitBTN.setEnabled(false);
             mPresenter.checkTDS(mAmount);
         }
     }
 
     @Override
     public void onValidationFailure(String errorMsg) {
+        mSubmitBTN.setEnabled(true);
         AppUtilityMethods.showMsg(this, errorMsg, false);
-    }
-
-    private void checkWithdrawLimit() {
-        showProgress(getString(R.string.txt_progress_authentication));
-        mPresenter.getWithdrawLimit();
     }
 
     @Override
@@ -458,9 +452,9 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         mList.clear();
         mAppPreference.setProfileData(responseModel.getProfileDetails());
         mPayoutGateway = responseModel.getPayoutEnable();
-        mParallelPayoutGateway = responseModel.getParallelPayout();
+//        mParallelPayoutGateway = responseModel.getParallelPayout();
         mWithdrawCommission = responseModel.getWithdrawCommission();
-//        mIsWithdrawVerified = responseModel.isWithdrawVerified();
+        mIsWithdrawVerified = responseModel.isWithdrawVerified();
         if (responseModel.isManualWithdraw()) {
             showWithdrawConfirmation(getString(R.string.text_manual_withdraw), responseModel.getMessage(), false, responseModel.isManualWithdraw());
         } else {
@@ -630,31 +624,31 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
 
     @Override
     public void onWithdrawLimitComplete(WIthdrawLimitResponse response) {
-        hideProgress();
-//        boolean isWithdrawLimitExceeded = response.getResponse().isWithdrawLimitExceeded();
         if (response.isStatus()) {
             if (response.getResponse().isKycEnabled()) {
                 //addahr not verified then check limit amount
                 //aadhar verified and withdraw limit
                 if (!response.getResponse().isAadharVerified() && (mAmount > response.getResponse().getLimitAmount())) {
+                    hideProgress();
                     new WithdrawVerificationDialog(NewWithdrawActivity.this, response.getMessage(), mName, mBank, mIfsc, mBID);
-                } else if (response.getResponse().isAadharVerified() && (mAmount > response.getResponse().getnWithdrawalLimit())) {
-                    showProgress(getString(R.string.txt_progress_authentication));
+                } else if (!response.getResponse().isAadharVerified() && ((mAmount + response.getResponse().getAmountData()) > response.getResponse().getLimitAmount())) {
+                    hideProgress();
+                    new WithdrawVerificationDialog(NewWithdrawActivity.this, response.getMessage(), mName, mBank, mIfsc, mBID);
+                } else if (mIsWithdrawVerified && response.getResponse().isAadharVerified() && (mAmount > response.getResponse().getnWithdrawalLimit())) {
                     mPresenter.verifyBeneficiary(mBID);
                 } else {
+                    hideProgress();
                     showConfirmWithdrawDialog();
                 }
             } else {
-                if (response.getResponse().isAadharVerified() && (mAmount > response.getResponse().getnWithdrawalLimit())) {
-                    showProgress(getString(R.string.txt_progress_authentication));
-                    mPresenter.verifyBeneficiary(mBID);
-                } else {
-                    showConfirmWithdrawDialog();
-                }
+                hideProgress();
+                showConfirmWithdrawDialog();
             }
         } else {
+            hideProgress();
             showConfirmWithdrawDialog();
         }
+        mSubmitBTN.setEnabled(true);
     }
 
     @Override
@@ -743,18 +737,22 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         mTDSAmount = response.getTdsAmount();
         if ((mAmount) <= mWinningCoins) {
             if (mKYCVerified) {
+                hideProgress();
                 showConfirmWithdrawDialog();
             } else {
-                checkWithdrawLimit();
+                mPresenter.getWithdrawLimit();
             }
         } else {
+            mSubmitBTN.setEnabled(true);
+            hideProgress();
             AppUtilityMethods.showMsg(this, getString(R.string.text_not_enough_coins_wallet), false);
         }
     }
 
     @Override
     public void onCheckTDSFailed(ApiError error) {
-
+        mSubmitBTN.setEnabled(true);
+        hideProgress();
     }
 
     public void showMsg(final Context activity, String msg, boolean isCancel, int from) {
@@ -824,7 +822,6 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
             mAmountDetailsLL.setVisibility(View.VISIBLE);
             mAdapter.setSelectedPos(position);
             mAdapter.notifyDataSetChanged();
-
             mName = mList.get(position).getName();
             mBID = mList.get(position).getId();
             if (mList.get(position).getTransferType() == 4) {
@@ -918,9 +915,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         tdsTV.setText(String.valueOf(mTDSAmount));
         double transactionFees;
         long comission = 0;
-        //list loop - from to
-        //amount - from-to = comission
-//        List<WithdrawComissionDetails> mWithdrawComissionDetailsList = mAppPreference.getWithdrawComission().getWithdrawCommission();
+        //list loop - from to //amount - from-to = comission
         for (int i = 0; i < mWithdrawCommission.size(); i++) {
             long from, to;
             from = mWithdrawCommission.get(i).getFrom();
@@ -938,12 +933,14 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         Button okBTN = dialog.findViewById(R.id.btn_send);
         okBTN.setOnClickListener(view -> {
             dialog.dismiss();
+            mSubmitBTN.setEnabled(true);
             showProgress(getString(R.string.txt_progress_authentication));
             mPresenter.sendOtp(mAppPreference.getMobile());
         });
         Button mNoBTN = dialog.findViewById(R.id.btn_cancel);
         mNoBTN.setOnClickListener(view -> {
             dialog.dismiss();
+            mSubmitBTN.setEnabled(true);
             mIsDataRefresh = false;
         });
         tdsInfoTV.setOnClickListener(view -> {
@@ -981,15 +978,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
             showProgress(getString(R.string.txt_progress_authentication));
             if (mPayoutGateway == 1) {//cashfree
                 mPayoutGatewayName = "CashFree";
-                if (mParallelPayoutGateway == 17)
-                    mPresenter.onCashfreeTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
-                else {
-                    if (LocationCheckUtils.getInstance().hasLocationPermission()) {
-                        mPresenter.onIPayTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp, LocationCheckUtils.getInstance().getmLatitute(), LocationCheckUtils.getInstance().getmLongitude());
-                    } else {
-                        AppDialog.DialogWithLocationCallBack(activity, "KhiladiAdda need to access your location.");
-                    }
-                }
+                mPresenter.onCashfreeTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
             } else if (mPayoutGateway == 2) {  //razorpay - bank_account
                 mPayoutGatewayName = "Razorpay";
                 mPresenter.onRazorpayTransfer(mFundAccountId, mPaymentMode, mAmountET.getText().toString().trim(), otp, mBeneficiaryId);
@@ -1003,15 +992,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                     mPayoutGatewayName = "Neokred";
                 }
                 double amount = Double.parseDouble(mAmountET.getText().toString().trim());
-                if (mParallelPayoutGateway == 17)
-                    mPresenter.onEasebuzzTransfer(mBeneficiaryId, amount, otp, mPayoutGateway);
-                else {
-                    if (LocationCheckUtils.getInstance().hasLocationPermission()) {
-                        mPresenter.onIPayTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp, LocationCheckUtils.getInstance().getmLatitute(), LocationCheckUtils.getInstance().getmLongitude());
-                    } else {
-                        AppDialog.DialogWithLocationCallBack(activity, "KhiladiAdda need to access your location.");
-                    }
-                }
+                mPresenter.onEasebuzzTransfer(mBeneficiaryId, amount, otp, mPayoutGateway);
             } else if (mPayoutGateway == 7) { /* ===Race-Condition after OTP Verify=== */
                 mPresenter.onRaceConditionTransferFinal(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
             } else if (mPayoutGateway == 8) {

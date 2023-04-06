@@ -139,7 +139,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnClickL
     protected void showVersionDialog() {
         if (mVersionDialog == null) {
             AppUtilityMethods.deleteCache(this);
-                mVersionDialog = AppDialog.showMsgVersionExit(this, mOnVersionListener);
+            mVersionDialog = AppDialog.showMsgVersionExit(this, mOnVersionListener);
         }
     }
 

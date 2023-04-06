@@ -18,4 +18,5 @@ public class LeaderBoardHthResponse extends BaseResponse {
     public void setResponse(List<LeaderBoardHthResponseDetails> response) {
         this.response = response;
     }
+
 }

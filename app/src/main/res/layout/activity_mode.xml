@@ -12,6 +12,7 @@
         android:id="@+id/rl_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_below="@+id/action_bar">
 
         <androidx.viewpager.widget.ViewPager
@@ -19,13 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_alignParentTop="true" />
-
-        <ImageView
-            android:id="@+id/iv_image"
-            android:layout_width="match_parent"
-            android:layout_height="165dp"
-            android:contentDescription="@string/text_pubg"
-            android:visibility="gone" />
     </RelativeLayout>
 
     <TextView

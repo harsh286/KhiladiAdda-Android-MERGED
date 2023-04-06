@@ -302,7 +302,6 @@
                 style="@style/ButtonBottomLeaderBoardOutline"
                 android:text="@string/fan_battle" />
 
-
             <LinearLayout
                 android:id="@+id/ll_more"
                 style="@style/ButtonBottomLeaderBoardOutline"
@@ -335,7 +334,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_40"
         android:layout_marginEnd="@dimen/margin_5"
         android:orientation="horizontal"
         android:visibility="gone"
@@ -360,15 +358,15 @@
         android:id="@+id/rv_leaderboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_80"
-        android:layout_marginBottom="80dp"
+        android:layout_marginTop="@dimen/margin_40"
+        android:layout_marginBottom="@dimen/margin_40"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_ludo_leaderboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_80"
+        android:layout_marginTop="@dimen/margin_40"
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -376,7 +374,7 @@
         android:id="@+id/rv_fanbattle_leaderboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_80"
+        android:layout_marginTop="@dimen/margin_40"
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -384,7 +382,7 @@
         android:id="@+id/rv_hth_leaderboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_80"
+        android:layout_marginTop="@dimen/margin_40"
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -392,7 +390,7 @@
         android:id="@+id/rv_ludoadda_leaderboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_80"
+        android:layout_marginTop="@dimen/margin_40"
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -400,7 +398,7 @@
         android:id="@+id/rv_all_leaderboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_80"
+        android:layout_marginTop="@dimen/margin_40"
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

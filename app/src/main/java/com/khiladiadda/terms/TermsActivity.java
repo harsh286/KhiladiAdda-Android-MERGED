@@ -69,7 +69,14 @@ public class TermsActivity extends BaseActivity {
         } else if (from.equalsIgnoreCase(AppConstant.TDS)) {
             mActivityNameTV.setText(R.string.text_tds_fee);
             mWebview.loadUrl(AppConstant.URL_HOME + "tdsinformation");
+        } else if (from.equalsIgnoreCase(AppConstant.LT_TIMER)) {
+            mActivityNameTV.setText("LudoAdda : Timer");
+            mWebview.loadUrl(AppConstant.URL_HOME + "ludoadda-timer");
+        } else if (from.equalsIgnoreCase(AppConstant.LT_SERIES)) {
+            mActivityNameTV.setText("LudoAdda : Series");
+            mWebview.loadUrl(AppConstant.URL_HOME + "ludoadda-series");
         }
+
         mWebview.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedSslError(WebView v, SslErrorHandler handler, SslError er) {

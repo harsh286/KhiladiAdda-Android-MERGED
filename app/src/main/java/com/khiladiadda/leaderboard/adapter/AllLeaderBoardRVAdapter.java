@@ -40,17 +40,19 @@ public class AllLeaderBoardRVAdapter extends RecyclerView.Adapter<AllLeaderBoard
         this.mOnItemChildClickListener = mOnItemChildClickListener;
     }
 
-    @Override public EventHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override
+    public EventHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_leaderboard, parent, false);
         return new EventHolder(itemView, mOnItemClickListener, mOnItemChildClickListener);
     }
 
-    @Override public void onBindViewHolder(EventHolder holder, int position) {
+    @Override
+    public void onBindViewHolder(EventHolder holder, int position) {
         int rank = 0;
         AllLederBoardDetails details = mFDList.get(position);
         holder.mNameTV.setText(String.valueOf(details.getName()));
-        if (!TextUtils.isEmpty(details.getWinningAmount())) {
-            holder.mScoreTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(Double.parseDouble(details.getWinningAmount())));
+        if (details.getWinningAmount() > 0) {
+            holder.mScoreTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(details.getWinningAmount()));
         } else {
             holder.mScoreTV.setText("Won: \u20B9 0");
         }
@@ -74,18 +76,25 @@ public class AllLeaderBoardRVAdapter extends RecyclerView.Adapter<AllLeaderBoard
         }
     }
 
-    @Override public int getItemCount() {
+    @Override
+    public int getItemCount() {
         return mFDList.size();
     }
 
     public class EventHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.tv_name) TextView mNameTV;
-        @BindView(R.id.tv_score) TextView mScoreTV;
-        @BindView(R.id.tv_time) TextView mTimeTV;
-        @BindView(R.id.tv_rank) TextView mRankTV;
-        @BindView(R.id.tv_username) TextView mUsernameTV;
-        @BindView(R.id.iv_profile) ImageView mProfileIV;
+        @BindView(R.id.tv_name)
+        TextView mNameTV;
+        @BindView(R.id.tv_score)
+        TextView mScoreTV;
+        @BindView(R.id.tv_time)
+        TextView mTimeTV;
+        @BindView(R.id.tv_rank)
+        TextView mRankTV;
+        @BindView(R.id.tv_username)
+        TextView mUsernameTV;
+        @BindView(R.id.iv_profile)
+        ImageView mProfileIV;
 
         private IOnItemClickListener mOnItemClickListener;
         private IOnItemChildClickListener mOnItemChildClickListener;
@@ -101,7 +110,8 @@ public class AllLeaderBoardRVAdapter extends RecyclerView.Adapter<AllLeaderBoard
             view.setOnClickListener(this);
         }
 
-        @Override public void onClick(View v) {
+        @Override
+        public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.iv_wishlist:
                     if (mOnItemChildClickListener != null) {

@@ -131,7 +131,6 @@ public class BattlesUpcomingActivity extends BaseActivity implements ICreateBatt
 
     private void setData() {
         mDateTV.setText(("Date: " + AppUtilityMethods.getConvertDateFacts(mMatchDetail.getStartDateTime())));
-//        mNameTV.setText(mMatchDetail.getSeries().getName());
         TeamHTH homeTeam = mMatchDetail.getPlayers().getHomeTeam().getTeam();
         TeamHTH awayTeam = mMatchDetail.getPlayers().getAwayTeam().getTeam();
         mNameTV.setText(homeTeam.getName() + " vs " + awayTeam.getName());
@@ -157,7 +156,15 @@ public class BattlesUpcomingActivity extends BaseActivity implements ICreateBatt
                 finish();
                 break;
             case R.id.tv_calculate:
-                startActivity(new Intent(this, BattlePointsActivity.class));
+//                startActivity(new Intent(this, BattlePointsActivity.class));
+                Intent calculate = new Intent(this, BattlePointsActivity.class);
+                if (mMatch_Type == 1)
+                    calculate.putExtra(AppConstant.FROM, AppConstant.FROM_CRICKET);
+                else if (mMatch_Type == 2)
+                    calculate.putExtra(AppConstant.FROM, AppConstant.FROM_FOOTBALL);
+                else if (mMatch_Type == 3)
+                    calculate.putExtra(AppConstant.FROM, AppConstant.FROM_KABAADI);
+                startActivity(calculate);
                 break;
             case R.id.ll_amount:
                 AppUtilityMethods.showInfo(this, mPointsTV, getString(R.string.maximum_battle));

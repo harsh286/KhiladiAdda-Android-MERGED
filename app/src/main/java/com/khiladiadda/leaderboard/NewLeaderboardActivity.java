@@ -135,12 +135,10 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
     NudgeView mNV;
     @BindView(R.id.spinner)
     Spinner mSpinner;
-
     private ILeaderboardPresenter mPresenter;
     private String mGameId;
     private boolean mIsLoading, mIsLastPage;
     private int mCurrentPage = 0, mItemCount, mContestType, mListingType = AppConstant.LEADERBOARD_LISTING_ALL, mType = AppConstant.LEADERBOARD_TYPE_GAME;
-
     private LinearLayoutManager mLeagueLayoutManager;
     private LinearLayoutManager mLudoLayoutManager;
     private LinearLayoutManager mFanBattleManager;
@@ -240,7 +238,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         mGameId = mAppPreference.getString(AppConstant.FREEFIRE_ID, "");
         mALLMonthSW.setChecked(false);
         mFreeFireBTN.setSelected(true);
-//        getData();
 
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
@@ -277,7 +274,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
     private void getData() {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
-
             //QUIZ
             if (mListingType == AppConstant.LEADERBOARD_LISTING_ALL && (mType == AppConstant.LEADERBOARD_TYPE_QUIZ)) {
                 mPresenter.getQuizAll(mCurrentPage, AppConstant.PAGE_SIZE);
@@ -288,7 +284,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             } else if (mListingType == AppConstant.LEADERBOARD_LISTING_WEEKLY && mType == AppConstant.LEADERBOARD_TYPE_QUIZ) {
                 mPresenter.getQuizWeekly(mCurrentPage, AppConstant.PAGE_SIZE);
             }
-
             //GAME(DONE)
             else if (mListingType == AppConstant.LEADERBOARD_LISTING_ALL && mType == AppConstant.LEADERBOARD_TYPE_GAME) {
                 mPresenter.getGameAll(mGameId, mCurrentPage, AppConstant.PAGE_SIZE);
@@ -299,7 +294,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             } else if (mListingType == AppConstant.LEADERBOARD_LISTING_WEEKLY && mType == AppConstant.LEADERBOARD_TYPE_GAME) {
                 mPresenter.getGameWeekly(mGameId, mCurrentPage, AppConstant.PAGE_SIZE);
             }
-
             //LUDO
             else if (mListingType == AppConstant.LEADERBOARD_LISTING_ALL && (mType == AppConstant.LEADERBOARD_TYPE_LUDO || mType == AppConstant.LEADERBOARD_TYPE_SNAKE)) {
                 mPresenter.getLudo(mCurrentPage, AppConstant.PAGE_SIZE, AppConstant.TYPE_ALL, mContestType);
@@ -310,7 +304,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             } else if (mListingType == AppConstant.LEADERBOARD_LISTING_WEEKLY && (mType == AppConstant.LEADERBOARD_TYPE_LUDO || mType == AppConstant.LEADERBOARD_TYPE_SNAKE)) {
                 mPresenter.getLudo(mCurrentPage, AppConstant.PAGE_SIZE, AppConstant.TYPE_WEEKLY, mContestType);
             }
-
             //FANBATTLE
             else if (mListingType == AppConstant.LEADERBOARD_LISTING_ALL && mType == AppConstant.LEADERBOARD_TYPE_FAN_BATTLE) {
                 mPresenter.getFanBattle(mCurrentPage, AppConstant.PAGE_SIZE, AppConstant.LEADERBOARD_FANBATTLE_LISTING_ALL);
@@ -321,7 +314,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             } else if (mListingType == AppConstant.LEADERBOARD_LISTING_WEEKLY && mType == AppConstant.LEADERBOARD_TYPE_FAN_BATTLE) {
                 mPresenter.getFanBattle(mCurrentPage, AppConstant.PAGE_SIZE, AppConstant.LEADERBOARD_FANBATTLE_LISTING_WEEKLY);
             }
-
             //HTH BATTLE
             else if (mListingType == AppConstant.LEADERBOARD_LISTING_ALL && mType == AppConstant.LEADERBOARD_TYPE_HTH_BATTLE) {
                 mPresenter.getHTHBattles(mCurrentPage, AppConstant.PAGE_SIZE, "");
@@ -332,7 +324,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             } else if (mListingType == AppConstant.LEADERBOARD_LISTING_WEEKLY && mType == AppConstant.LEADERBOARD_TYPE_HTH_BATTLE) {
                 mPresenter.getHTHBattles(mCurrentPage, AppConstant.PAGE_SIZE, AppConstant.TYPE_WEEKLY);
             }
-
             //LUDOADDA
             else if (mListingType == AppConstant.LEADERBOARD_LISTING_ALL && mType == AppConstant.LEADERBOARD_TYPE_LUDOADDA) {
                 mPresenter.getLudoAdda(mCurrentPage, AppConstant.PAGE_SIZE, "");
@@ -343,7 +334,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             } else if (mListingType == AppConstant.LEADERBOARD_LISTING_WEEKLY && mType == AppConstant.LEADERBOARD_TYPE_LUDOADDA) {
                 mPresenter.getLudoAdda(mCurrentPage, AppConstant.PAGE_SIZE, AppConstant.TYPE_WEEKLY);
             }
-
             //WS
             else if (mListingType == AppConstant.LEADERBOARD_LISTING_ALL && mType == AppConstant.LEADERBOARD_TYPE_WS) {
                 mPresenter.getWS(mCurrentPage, AppConstant.PAGE_SIZE, "");
@@ -354,7 +344,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             } else if (mListingType == AppConstant.LEADERBOARD_LISTING_WEEKLY && mType == AppConstant.LEADERBOARD_TYPE_WS) {
                 mPresenter.getWS(mCurrentPage, AppConstant.PAGE_SIZE, AppConstant.TYPE_WEEKLY);
             }
-
             //DROID-O
             else if (mListingType == AppConstant.LEADERBOARD_LISTING_ALL && mType == AppConstant.LEADERBOARD_TYPE_DROID_DO) {
                 mPresenter.getDroidDo(mCurrentPage, AppConstant.PAGE_SIZE, "");
@@ -365,7 +354,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             } else if (mListingType == AppConstant.LEADERBOARD_LISTING_WEEKLY && mType == AppConstant.LEADERBOARD_TYPE_DROID_DO) {
                 mPresenter.getDroidDo(mCurrentPage, AppConstant.PAGE_SIZE, AppConstant.TYPE_WEEKLY);
             }
-
             //Ludo Tournament
             else if (mListingType == AppConstant.LEADERBOARD_LISTING_ALL && mType == AppConstant.LEADERBOARD_TYPE_LUDO_TOURNAMENT) {
                 mPresenter.getLudoTournament("", mCurrentPage, AppConstant.PAGE_SIZE);
@@ -376,7 +364,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             } else if (mListingType == AppConstant.LEADERBOARD_LISTING_WEEKLY && mType == AppConstant.LEADERBOARD_TYPE_LUDO_TOURNAMENT) {
                 mPresenter.getLudoTournament(AppConstant.TYPE_WEEKLY, mCurrentPage, AppConstant.PAGE_SIZE);
             }
-
             //Court Piece
             else if (mListingType == AppConstant.LEADERBOARD_LISTING_ALL && mType == AppConstant.LEADERBOARD_TYPE_COURTPIECE) {
                 mPresenter.getCourtPiece("", mCurrentPage, AppConstant.PAGE_SIZE);
@@ -387,7 +374,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             } else if (mListingType == AppConstant.LEADERBOARD_LISTING_WEEKLY && mType == AppConstant.LEADERBOARD_TYPE_COURTPIECE) {
                 mPresenter.getCourtPiece(AppConstant.TYPE_WEEKLY, mCurrentPage, AppConstant.PAGE_SIZE);
             }
-
             //Rummy
             else if (mListingType == AppConstant.LEADERBOARD_LISTING_ALL && mType == AppConstant.LEADERBOARD_TYPE_RUMMY) {
                 mPresenter.getRummy("", mCurrentPage, AppConstant.PAGE_SIZE);
@@ -398,8 +384,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             } else if (mListingType == AppConstant.LEADERBOARD_LISTING_WEEKLY && mType == AppConstant.LEADERBOARD_TYPE_RUMMY) {
                 mPresenter.getRummy(AppConstant.TYPE_WEEKLY, mCurrentPage, AppConstant.PAGE_SIZE);
             }
-
-
         } else {
             Snackbar.make(mBackIV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
@@ -530,6 +514,7 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         mFBLists.clear();
         mHTHLists.clear();
         mLudoAddaLists.clear();
+        mLeaderboardSubResponsesList.clear();
         mCurrentPage = 0;
         mItemCount = 0;
         mIsLastPage = false;
@@ -876,7 +861,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         }
         mAdapter.notifyDataSetChanged();
         hideProgress();
-
     }
 
     @Override
@@ -1436,7 +1420,7 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         mGoldCoinsTV.setText("");
         if (size >= 3) {
             mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
-            if (!TextUtils.isEmpty(leaderboardList.get(0).getWinningAmount())) {
+            if ((leaderboardList.get(0).getWinningAmount()) != 0.00) {
                 mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(0).getWinningAmount()));
             } else {
                 mGoldCoinsTV.setText("Won: \u20B9 0");
@@ -1448,7 +1432,7 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
                 mGoldWinnerIV.setImageResource(R.drawable.splash_logo);
             }
             mSilverWinerNameTV.setText("2." + leaderboardList.get(1).getName());
-            if (!TextUtils.isEmpty(leaderboardList.get(1).getWinningAmount())) {
+            if ((leaderboardList.get(1).getWinningAmount()) != 0.00) {
                 mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(1).getWinningAmount()));
             } else {
                 mSilverWinerCoinsTV.setText("Won: \u20B9 0");
@@ -1460,7 +1444,7 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
                 mSliverWinerIV.setImageResource(R.drawable.splash_logo);
             }
             mBrownWinnerNameTV.setText("3." + leaderboardList.get(2).getName());
-            if (!TextUtils.isEmpty(leaderboardList.get(2).getWinningAmount())) {
+            if ((leaderboardList.get(2).getWinningAmount()) != 0.00) {
                 mBrownWinnerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(2).getWinningAmount()));
             } else {
                 mBrownWinnerCoinsTV.setText("Won: \u20B9 0");
@@ -1474,7 +1458,7 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             showTopLeaderVisible(3);
         } else if (size == 2) {
             mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
-            if (!TextUtils.isEmpty(leaderboardList.get(0).getWinningAmount())) {
+            if ((leaderboardList.get(0).getWinningAmount()) != 0.00) {
                 mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(0).getWinningAmount()));
             } else {
                 mGoldCoinsTV.setText("Won: \u20B9 0");
@@ -1486,7 +1470,7 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
                 mGoldWinnerIV.setImageResource(R.drawable.splash_logo);
             }
             mSilverWinerNameTV.setText("2." + leaderboardList.get(1).getName());
-            if (!TextUtils.isEmpty(leaderboardList.get(1).getWinningAmount())) {
+            if ((leaderboardList.get(1).getWinningAmount()) != 0.00) {
                 mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(1).getWinningAmount()));
             } else {
                 mSilverWinerCoinsTV.setText("Won: \u20B9 0");
@@ -1500,8 +1484,8 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             showTopLeaderVisible(2);
         } else if (size == 1) {
             mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
-            if (!TextUtils.isEmpty(leaderboardList.get(0).getWinningAmount())) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(Double.parseDouble(leaderboardList.get(0).getWinningAmount())));
+            if ((leaderboardList.get(0).getWinningAmount()) != 0.00) {
+                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(0).getWinningAmount()));
             } else {
                 mGoldCoinsTV.setText("Won: \u20B9 0");
             }
@@ -1587,13 +1571,11 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         ImageView mPUBGOBALIV = dialog.findViewById(R.id.iv_pubg_gobal);
         ImageView mESPORTSPERIV = dialog.findViewById(R.id.iv_esportsperimum);
         ImageView mLudoAdda = dialog.findViewById(R.id.iv_ludo_universe);
-//        ImageView mComing = dialog.findViewById(R.id.iv_coming);
         ImageView mWS = dialog.findViewById(R.id.iv_wordsearch);
         ImageView mDroid = dialog.findViewById(R.id.iv_droid);
         ImageView mLudoTournament = dialog.findViewById(R.id.iv_ludo_tournament);
         ImageView mCourPiece = dialog.findViewById(R.id.iv_courtpiece);
         ImageView mRummy = dialog.findViewById(R.id.iv_rummy);
-
         mCloseIV.setOnClickListener(v -> {
             dialog.dismiss();
         });
@@ -1665,12 +1647,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             setSelectedBackground();
             dialog.dismiss();
         });
-//        mPubgNS.setOnClickListener(v -> {
-//            mType = AppConstant.LEADERBOARD_TYPE_GAME;
-//            mGameId = mAppPreference.getString(AppConstant.PUBG_NEWSTATE_ID, "");
-//            setSelectedBackground();
-//            dialog.dismiss();
-//        });
         mDroid.setOnClickListener(view -> {
             mType = AppConstant.LEADERBOARD_TYPE_DROID_DO;
             setSelectedBackground();
@@ -1724,4 +1700,5 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
 }

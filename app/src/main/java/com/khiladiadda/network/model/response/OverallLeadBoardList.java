@@ -7,24 +7,20 @@ public class OverallLeadBoardList  {
     @SerializedName("_id")
     @Expose
     private String id;
-
     @SerializedName("winning_amount")
     @Expose
     private double winningAmount;
     @SerializedName("amount")
     @Expose
     private long amount;
-
     @SerializedName("user_id")
     @Expose
     private String userId;
-
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("dp")
     private String dp;
-
 
     public String getDp() {
         return dp;
@@ -73,4 +69,5 @@ public class OverallLeadBoardList  {
     public void setName(String name) {
         this.name = name;
     }
+
 }

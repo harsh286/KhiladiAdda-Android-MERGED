@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".ludoTournament.fragment.LiveLudoTmtFragment">
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_live_tournament"
             android:layout_width="match_parent"

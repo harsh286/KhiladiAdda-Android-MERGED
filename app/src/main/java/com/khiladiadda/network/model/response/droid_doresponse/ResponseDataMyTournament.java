@@ -24,9 +24,9 @@ public class ResponseDataMyTournament {
     @SerializedName("end")
     public String endIn;
     @SerializedName("totalparticipants")
-    public Integer totalparticipants;
+    public long totalparticipants;
     @SerializedName("playedparticipants")
-    public Integer playedparticipants;
+    public long playedparticipants;
 
     @SerializedName("prizemoney")
     private Integer winPrize;
@@ -125,19 +125,19 @@ public class ResponseDataMyTournament {
         this.endIn = endIn;
     }
 
-    public Integer getTotalparticipants() {
+    public long getTotalparticipants() {
         return totalparticipants;
     }
 
-    public void setTotalparticipants(Integer totalparticipants) {
+    public void setTotalparticipants(long totalparticipants) {
         this.totalparticipants = totalparticipants;
     }
 
-    public Integer getPlayedparticipants() {
+    public long getPlayedparticipants() {
         return playedparticipants;
     }
 
-    public void setPlayedparticipants(Integer playedparticipants) {
+    public void setPlayedparticipants(long playedparticipants) {
         this.playedparticipants = playedparticipants;
     }
 

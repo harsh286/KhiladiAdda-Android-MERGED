@@ -60,8 +60,19 @@ public class TournamentMoreGameAdapter extends RecyclerView.Adapter<TournamentMo
         holder.tv1stPrize.setText(mContext.getString(R.string.first_rupee) + tournamentTrendingModel.getPrizePools().get(0).getPrizeMoney());
         holder.tvParticipants.setText(tournamentTrendingModel.getPlayedparticipants() + "/" + tournamentTrendingModel.getTotalparticipants());
         holder.tvTournamentName.setText(tournamentTrendingModel.getName());
-        holder.pbDroido.setProgress(tournamentTrendingModel.getPlayedparticipants());
-        holder.pbDroido.setMax(tournamentTrendingModel.getTotalparticipants());//sets the maximum value 100
+//        holder.pbDroido.setProgress(tournamentTrendingModel.getPlayedparticipants());
+//        holder.pbDroido.setMax(tournamentTrendingModel.getTotalparticipants());//sets the maximum value 100
+
+        if (tournamentTrendingModel.getPlayedparticipants() == tournamentTrendingModel.getTotalparticipants()) {
+            holder.pbDroido.setProgress(100);
+        } else if (tournamentTrendingModel.getPlayedparticipants() == 0) {
+            holder.pbDroido.setProgress(1);
+        } else {
+            double divideResult = (double) tournamentTrendingModel.getPlayedparticipants() / (double) tournamentTrendingModel.getTotalparticipants();
+            double participant = divideResult * 100;
+            holder.pbDroido.setProgress((int) participant);
+        }
+
         Glide.with(mContext)
                 .load(tournamentTrendingModel.getImage())
                 .placeholder(R.drawable.droido_defautl)

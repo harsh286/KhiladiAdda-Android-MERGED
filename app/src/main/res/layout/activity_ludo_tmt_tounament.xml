@@ -942,7 +942,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
                     android:fontFamily="sans-serif"
-                    android:text="As you lost your last match, so you are not eligible to enter in further matches. But you can check other matches if you want"
+                    android:text="As you lost/draw your last match, so you are not eligible to enter in further matches. But you can check other matches if you want"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="12sp"

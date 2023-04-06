@@ -137,6 +137,6 @@
         android:text="@string/text_rules_withdraw"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_15"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </LinearLayout>

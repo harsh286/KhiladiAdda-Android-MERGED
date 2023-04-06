@@ -81,4 +81,5 @@ public class LeaderBoardHthResponseDetails {
     public void setnCof(NCof nCof) {
         this.nCof = nCof;
     }
+
 }

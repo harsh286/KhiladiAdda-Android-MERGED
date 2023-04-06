@@ -21,6 +21,7 @@ import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.response.BannerDetails;
+import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.NetworkStatus;
 
 import java.util.ArrayList;
@@ -32,34 +33,49 @@ import static android.view.View.GONE;
 
 public class BattlePointsActivity extends BaseActivity implements IBattleView {
 
-    @BindView(R.id.iv_back) ImageView mBackIV;
-    @BindView(R.id.tv_activity_name) TextView mActivityNameTV;
-    @BindView(R.id.iv_notification) ImageView mNotificationIV;
-    @BindView(R.id.iv_point) ImageView mPointIV;
+    @BindView(R.id.iv_back)
+    ImageView mBackIV;
+    @BindView(R.id.tv_activity_name)
+    TextView mActivityNameTV;
+    @BindView(R.id.iv_notification)
+    ImageView mNotificationIV;
+    @BindView(R.id.iv_point)
+    ImageView mPointIV;
 
     private IBattlePresenter mPresenter;
 
-    @Override protected int getContentView() {
+    @Override
+    protected int getContentView() {
         return R.layout.activity_battle_points;
     }
 
-    @Override protected void initViews() {
+    @Override
+    protected void initViews() {
         mBackIV.setOnClickListener(this);
         mNotificationIV.setOnClickListener(this);
         mActivityNameTV.setText(getString(R.string.text_calculate_point_activity));
     }
 
-    @Override protected void initVariables() {
+    @Override
+    protected void initVariables() {
+        int mFrom = getIntent().getIntExtra(AppConstant.FROM, 0);
         mPresenter = new BattlePresenter(this);
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
-            mPresenter.getCalculationBanner();
+            if (mFrom == AppConstant.FROM_FOOTBALL) {
+                mPresenter.getCalculationBanner(61);
+            } else if (mFrom == AppConstant.FROM_KABAADI) {
+                mPresenter.getCalculationBanner(62);
+            } else {
+                mPresenter.getCalculationBanner(6);
+            }
         } else {
             Snackbar.make(mBackIV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
     }
 
-    @Override public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
             case R.id.tv_home:
@@ -71,31 +87,38 @@ public class BattlePointsActivity extends BaseActivity implements IBattleView {
         }
     }
 
-    @Override public void onGetBattleListComplete(BattleResponse responseModel) {
+    @Override
+    public void onGetBattleListComplete(BattleResponse responseModel) {
 
     }
 
-    @Override public void onGetBattleListFailure(ApiError error) {
+    @Override
+    public void onGetBattleListFailure(ApiError error) {
 
     }
 
-    @Override public void onGetGroupListComplete(BattleGroupResponse responseModel) {
+    @Override
+    public void onGetGroupListComplete(BattleGroupResponse responseModel) {
 
     }
 
-    @Override public void onGetGroupListFailure(ApiError error) {
+    @Override
+    public void onGetGroupListFailure(ApiError error) {
 
     }
 
-    @Override public void onJoinComplete(BaseResponse responseModel) {
+    @Override
+    public void onJoinComplete(BaseResponse responseModel) {
 
     }
 
-    @Override public void onJoinFailure(ApiError error) {
+    @Override
+    public void onJoinFailure(ApiError error) {
 
     }
 
-    @Override public void onGetCalculationBannerComplete(BannerResponse responseModel) {
+    @Override
+    public void onGetCalculationBannerComplete(BannerResponse responseModel) {
         if (responseModel.getResponse().size() > 0) {
             if (!TextUtils.isEmpty(responseModel.getResponse().get(0).getImg())) {
                 Glide.with(mPointIV).load(responseModel.getResponse().get(0).getImg()).placeholder(R.mipmap.ic_launcher).into(mPointIV);
@@ -104,27 +127,33 @@ public class BattlePointsActivity extends BaseActivity implements IBattleView {
         hideProgress();
     }
 
-    @Override public void onGetCalculationBannerFailure(ApiError error) {
+    @Override
+    public void onGetCalculationBannerFailure(ApiError error) {
 
     }
 
-    @Override public void onCancelComplete(BaseResponse responseModel) {
+    @Override
+    public void onCancelComplete(BaseResponse responseModel) {
 
     }
 
-    @Override public void onCancelFailure(ApiError error) {
+    @Override
+    public void onCancelFailure(ApiError error) {
 
     }
 
-    @Override public void onJoinSubstituteComplete(BaseResponse responseModel) {
+    @Override
+    public void onJoinSubstituteComplete(BaseResponse responseModel) {
 
     }
 
-    @Override public void onJoinSubstituteFailure(ApiError error) {
+    @Override
+    public void onJoinSubstituteFailure(ApiError error) {
 
     }
 
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         mPresenter.destroy();
         super.onDestroy();
     }

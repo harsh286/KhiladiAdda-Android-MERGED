@@ -149,7 +149,8 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
         } else if (view.getId() == R.id.tv_history) {
             startActivity(new Intent(this, CBHistoryActivity.class));
         } else if (view.getId() == R.id.tv_help_video) {
-            AppUtilityMethods.openYoutube(this);
+            AppUtilityMethods.openYoutubeCallbreak(this,"www.youtube.com/watch?v=BQXaInDe4m4", "https://www.youtube.com/watch?v=BQXaInDe4m4");
+
         }
     }
 

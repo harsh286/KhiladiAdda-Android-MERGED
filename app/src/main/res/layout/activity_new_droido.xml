@@ -56,7 +56,6 @@
     <!--        app:layout_constraintTop_toBottomOf="@+id/tab_layout_droido"-->
     <!--        android:layout_height="wrap_content">-->
 
-
     <TextView
         android:id="@+id/tv_trending_txt"
         android:layout_width="wrap_content"
@@ -86,7 +85,6 @@
         android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/tv_trending_txt"
         app:layout_constraintTop_toBottomOf="@+id/tab_layout_droido" />
-
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/mcv_filters"
@@ -149,13 +147,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-    <!--            android:id="@+id/swipe_all_tournament"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginTop="@dimen/text_14"-->
-    <!--            app:layout_constraintTop_toBottomOf="@id/tv_trending_txt">-->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_more_tournaments"
         android:layout_width="match_parent"
@@ -170,7 +161,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_trending_txt" />
-    <!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_my_tournaments"
@@ -202,23 +192,5 @@
         app:layout_constraintTop_toBottomOf="@id/tv_trending_txt"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/tv_error_my_tournament"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_centerInParent="true"-->
-    <!--        android:layout_marginTop="160dp"-->
-    <!--        android:fontFamily="@font/rowdies_regular"-->
-    <!--        android:gravity="center"-->
-    <!--        android:text="@string/You_haven_t_participated_in_any_tournament"-->
-    <!--        android:textColor="@color/white"-->
-    <!--        android:textSize="@dimen/text_16"-->
-    <!--        android:visibility="visible"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/tv_trending_txt"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-    <!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
 

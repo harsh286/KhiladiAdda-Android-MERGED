@@ -110,8 +110,8 @@
                         android:layout_marginStart="14dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
-                        android:maxLines="2"
                         android:fontFamily="@font/productsansregular"
+                        android:maxLines="2"
                         android:text="You can only change your daily limit once in 48 hours."
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -224,13 +224,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/productsansregular"
-                        tools:text="₹ 10000/-"
                         android:textColor="@color/black"
                         android:textSize="24sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/view5"
-                        app:layout_constraintTop_toBottomOf="@+id/view5" />
+                        app:layout_constraintTop_toBottomOf="@+id/view5"
+                        tools:text="₹ 10000/-" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -386,7 +386,7 @@
                 android:id="@+id/tv_last_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="16dp"
                 android:fontFamily="@font/productsansregular"
                 android:textSize="@dimen/text_12"

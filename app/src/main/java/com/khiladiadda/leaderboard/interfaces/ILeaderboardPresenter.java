@@ -12,7 +12,6 @@ public interface ILeaderboardPresenter extends IBasePresenter {
 
     void getQuizMonth(int page, int limit);
 
-
     void getGameAll(String id, int page, int limit);
 
     void getGameDaily(String id, int page, int limit);

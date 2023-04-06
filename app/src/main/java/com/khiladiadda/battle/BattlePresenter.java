@@ -68,8 +68,8 @@ public class BattlePresenter implements IBattlePresenter {
         }
     };
 
-    @Override public void getCalculationBanner() {
-        mSubscription = mInteractor.getCalculationBanner(mGetBannerApiListener);
+    @Override public void getCalculationBanner(int bannerType) {
+        mSubscription = mInteractor.getCalculationBanner(mGetBannerApiListener, bannerType);
     }
 
     private IApiListener<BannerResponse> mGetBannerApiListener = new IApiListener<BannerResponse>() {

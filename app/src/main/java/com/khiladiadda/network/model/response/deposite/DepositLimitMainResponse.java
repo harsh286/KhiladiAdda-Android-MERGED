@@ -16,4 +16,5 @@ public class DepositLimitMainResponse extends BaseResponse {
     public void setResponse(DepositLimitResponse response) {
         this.response = response;
     }
+
 }

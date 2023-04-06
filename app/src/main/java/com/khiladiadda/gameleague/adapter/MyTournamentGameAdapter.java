@@ -55,8 +55,21 @@ public class MyTournamentGameAdapter extends RecyclerView.Adapter<MyTournamentGa
         holder.tvFiltersTournament.setText(tournamentTrendingData.getTournaments_name());
         holder.acbTotalParticipants.setText(mContext.getString(R.string.attempts) + tournamentTrendingData.getN_attempts() + "/" + 3);
         holder.tvParticipants.setText(tournamentTrendingData.playedparticipants + "/" + tournamentTrendingData.totalparticipants);
-        holder.pbDroido.setProgress(tournamentTrendingData.playedparticipants);
-        holder.pbDroido.setMax(tournamentTrendingData.totalparticipants);//sets the maximum value 100
+
+//        holder.pbDroido.setProgress(tournamentTrendingData.playedparticipants);
+//        holder.pbDroido.setMax(tournamentTrendingData.totalparticipants);//sets the maximum value 100
+
+
+        if (tournamentTrendingData.getPlayedparticipants() == tournamentTrendingData.getTotalparticipants()) {
+            holder.pbDroido.setProgress(100);
+        } else if (tournamentTrendingData.getPlayedparticipants() == 0) {
+            holder.pbDroido.setProgress(1);
+        } else {
+            double divideResult = (double) tournamentTrendingData.getPlayedparticipants() / (double) tournamentTrendingData.getTotalparticipants();
+            double participant = divideResult * 100;
+            holder.pbDroido.setProgress((int) participant);
+        }
+
         Glide.with(mContext)
                 .load(tournamentTrendingData.getTournaments_image())
                 .placeholder(R.drawable.droido_defautl)
