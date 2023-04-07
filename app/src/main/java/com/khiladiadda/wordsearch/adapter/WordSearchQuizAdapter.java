@@ -44,30 +44,28 @@ public class WordSearchQuizAdapter extends RecyclerView.Adapter<WordSearchQuizAd
         WordSearchCategoriesQuizzesResponse categoriesQuizzesResponse = mCategoriesQuizzesResponseList.get(position);
         Glide.with(holder.itemView.getContext()).load(categoriesQuizzesResponse.getImage()).placeholder(R.drawable.wordsearch_placeholder).into(holder.mQuizIV);
         holder.mQuizNameTV.setText(categoriesQuizzesResponse.getName());
-//        holder.mCategoryName.setVisibility(View.INVISIBLE);
         holder.mCategoryName.setText("Category: " + categoryName);
-
         if (categoriesQuizzesResponse.getAttemptedQuiz() != 0) {
-//            holder.mApptemptMVC.setVisibility(View.VISIBLE);
             holder.mAttemptsTV.setText("Attempts: " + categoriesQuizzesResponse.getAttemptedQuiz() + "/3");
-//            holder.view.setBackgroundColor(Color.parseColor("#33" + mColorName));
-//            holder.mAttemptsTV.setTextColor(Color.parseColor("#" + mColorName));
         } else {
             holder.mAttemptsTV.setVisibility(View.GONE);
         }
-
-        if (categoriesQuizzesResponse.getQuizStatus() == 2) {
-//            holder.ViewBtn.setText("Tournament Cancelled!");
-        }
-        if (categoriesQuizzesResponse.getQuizStatus() == 1) {
-//            holder.ViewBtn.setText("View Leaderboard");
-        }
-//        holder.ViewBtn.setBackgroundColor(Color.parseColor("#" + mColorName));
         holder.mWinPrizeTV.setText(" " + categoriesQuizzesResponse.getPrizePoolBreakthrough().get(0).getPrizeMoney() + " Coins");
         holder.mEntryFeeTV.setText("Entry: " + categoriesQuizzesResponse.getEntryFees() + " Coins");
         holder.mTotalParticipants.setText("" + categoriesQuizzesResponse.getPlayedparticipants() + "/" + categoriesQuizzesResponse.getTotalparticipants());
-        holder.mJoinedPb.setProgress(categoriesQuizzesResponse.getPlayedparticipants());
-        holder.mJoinedPb.setMax(categoriesQuizzesResponse.getTotalparticipants());
+//        holder.mJoinedPb.setProgress(categoriesQuizzesResponse.getPlayedparticipants());
+//        holder.mJoinedPb.setMax(categoriesQuizzesResponse.getTotalparticipants());
+
+        if (categoriesQuizzesResponse.getPlayedparticipants() == categoriesQuizzesResponse.getTotalparticipants()) {
+            holder.mJoinedPb.setProgress(100);
+        } else if (categoriesQuizzesResponse.getPlayedparticipants() == 0) {
+            holder.mJoinedPb.setProgress(1);
+        } else {
+            double divideResult = (double) categoriesQuizzesResponse.getPlayedparticipants() / (double) categoriesQuizzesResponse.getTotalparticipants();
+            double participant = divideResult * 100;
+            holder.mJoinedPb.setProgress((int) participant);
+        }
+
     }
 
     @Override

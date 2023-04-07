@@ -48,8 +48,19 @@ public class WordSearchSubMainAdapter extends RecyclerView.Adapter<WordSearchSub
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (mTrendingQuizList != null && !mTrendingQuizList.isEmpty()) {
             WordSearchTrendingQuizResponse trendingQuizResponse = mTrendingQuizList.get(position);
-            holder.mJoinedPb.setProgress(trendingQuizResponse.getPlayedparticipants());
-            holder.mJoinedPb.setMax(trendingQuizResponse.getTotalparticipants());
+//            holder.mJoinedPb.setProgress(trendingQuizResponse.getPlayedparticipants());
+//            holder.mJoinedPb.setMax(trendingQuizResponse.getTotalparticipants());
+
+            if (trendingQuizResponse.getPlayedparticipants() == trendingQuizResponse.getTotalparticipants()) {
+                holder.mJoinedPb.setProgress(100);
+            } else if (trendingQuizResponse.getPlayedparticipants() == 0) {
+                holder.mJoinedPb.setProgress(1);
+            } else {
+                double divideResult = (double) trendingQuizResponse.getPlayedparticipants() / (double) trendingQuizResponse.getTotalparticipants();
+                double participant = divideResult * 100;
+                holder.mJoinedPb.setProgress((int) participant);
+            }
+
             holder.mCategoriesTv.setText("Category: " + trendingQuizResponse.getCategory_name());
             holder.mTotalParticipants.setText("" + trendingQuizResponse.getPlayedparticipants() + "/" + trendingQuizResponse.getTotalparticipants());
             setupUiData(holder, trendingQuizResponse.getImage(), trendingQuizResponse.getName(), trendingQuizResponse.getPrizemoney(), trendingQuizResponse.getEntryFees());

@@ -108,7 +108,6 @@ import butterknife.BindView;
 public class AddWalletActivity extends BaseActivity implements IWalletView, PaytmPaymentTransactionCallback, CFCheckoutResponseCallback {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1001;
-
     @BindView(R.id.iv_back)
     ImageView mBackIV;
     @BindView(R.id.tv_activity_name)
@@ -164,9 +163,7 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
     NudgeView mNV;
     @BindView(R.id.tv_phonepe)
     TextView mPhonepeTV;
-
     private static final int PAYTM_REQUEST_CODE = 666;
-
     private String mCouponCode, mOrderId, mAmount, mCallbackURL, mPhonepeOrderId, mApexPayOrderId, mPaySharpOrderId;
     private IWalletPresenter mPresenter;
     private long mCoins;
@@ -181,7 +178,6 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PhonePe.init(this);
-
         try {
             CFPaymentGatewayService.getInstance().setCheckoutCallback(this);
         } catch (CFException e) {
@@ -957,8 +953,6 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
                     mGamerCashTV.setText(getString(R.string.gamercash));
                 }
             }
-        } else {
-            Snackbar.make(mAmountET, response.getMessage(), Snackbar.LENGTH_LONG).show();
         }
         hideProgress();
     }
@@ -966,7 +960,6 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
     @Override
     public void onGetGamerCashFailure(ApiError error) {
         hideProgress();
-        Toast.makeText(this, "" + error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -980,14 +973,6 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
     }
 
     private void startPaytmNew(String checksumHash) {
-//        String orderDetails = "MID: " + AppUtilityMethods.getURL(AppConstant.PaytmProductionMID) + ", OrderId: " + mOrderId + ", TxnToken: " + checksumHash + ", Amount: " + mAmount;
-//        String orderDetails = "MID: " + AppConstant.PaytmProductionMID + ", OrderId: " + mOrderId + ", TxnToken: " + checksumHash + ", Amount: " + mAmount;
-//        Toast.makeText(this, orderDetails, Toast.LENGTH_SHORT).show();
-//        Log.e("Paytm Order", "" + orderDetails);
-//        String host = "https://securegw-stage.paytm.in/";
-//        String callBackUrl = host + "theia/paytmCallback?ORDER_ID=" + mOrderId;
-//        String callBackUrl = AppConstant.PaytmProductionCallbackURL + mOrderId;
-//        PaytmOrder paytmOrder = new PaytmOrder(mOrderId, AppUtilityMethods.getURL(AppConstant.PaytmProductionMID), checksumHash, mAmount, callBackUrl);
         PaytmOrder paytmOrder = new PaytmOrder(mOrderId, AppUtilityMethods.getURL(AppConstant.PaytmProductionMID), checksumHash, mAmount, mCallbackURL);
         TransactionManager transactionManager = new TransactionManager(paytmOrder, this);
         transactionManager.startTransaction(this, PAYTM_REQUEST_CODE);

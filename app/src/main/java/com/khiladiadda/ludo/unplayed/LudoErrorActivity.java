@@ -159,16 +159,13 @@ public class LudoErrorActivity extends BaseActivity implements ILudoErrorView {
                     } else {
                         AppUtilityMethods.showStoragePermisisionMsg(this, "", false);
                     }
-
                 } else {
                     if (!PermissionUtils.hasStoragePermission(this)) {
                         Snackbar.make(mConfirmBTN, R.string.txt_allow_permission, Snackbar.LENGTH_SHORT).show();
                     } else {
                         choosePhotoFromGallery();
                     }
-
                 }
-
                 break;
             case R.id.btn_confirm:
                 if (mFrom.equalsIgnoreCase(AppConstant.LUDO_WON)) {
@@ -261,35 +258,13 @@ public class LudoErrorActivity extends BaseActivity implements ILudoErrorView {
     private void choosePhotoFromGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         galleryIntent.setType("image/*");
+        galleryIntent.putExtra("return-data", true);
         ludoResultActivityResultLauncher.launch(galleryIntent);
     }
 
-    ActivityResultLauncher<Intent> ludoResultActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-            Uri selectedImage = result.getData().getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            cursor.close();
-            try {
-                Bitmap bmp = getBitmapFromUri(selectedImage);
-                String extension = AppUtilityMethods.getMimeType(this, selectedImage);
-                mImagePath = AppConstant.APP_DIRECTORY_PATH + AppConstant.IMAGE_PATH + extension;
-                ImageUtils.saveLudoImageToFile(bmp, mImagePath);
-                mUploadIV.setImageBitmap(bmp);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    });
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode == RESULT_CANCELED) {
-//            return;
-//        }
-//        if (requestCode == REQUEST_GALLERY && resultCode == RESULT_OK && null != data) {
-//            Uri selectedImage = data.getData();
+//    ActivityResultLauncher<Intent> ludoResultActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+//        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+//            Uri selectedImage = result.getData().getData();
 //            String[] filePathColumn = {MediaStore.Images.Media.DATA};
 //            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
 //            cursor.moveToFirst();
@@ -304,9 +279,27 @@ public class LudoErrorActivity extends BaseActivity implements ILudoErrorView {
 //                e.printStackTrace();
 //            }
 //        }
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
+//    });
 
+    ActivityResultLauncher<Intent> ludoResultActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+            Uri selectedImage = result.getData().getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            cursor.close();
+            try {
+                Bitmap bmp = getBitmapFromUri(selectedImage);
+                String extension = AppUtilityMethods.getMimeType(this, selectedImage);
+                mImagePath = getExternalMediaDirs()[0].getAbsolutePath() + File.separator + AppConstant.IMAGE_PATH + extension;
+                ImageUtils.saveLudoImageToFile(bmp, mImagePath);
+                mUploadIV.setImageBitmap(bmp);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    });
+    
     public void wonAlert(final Activity activity) {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

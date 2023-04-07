@@ -49,8 +49,19 @@ public class WordSearchTrendingQuizAdapter extends RecyclerView.Adapter<WordSear
         holder.mEntryTV.setText("Entry: " + trendingQuizResponse.getEntryFees() + " Coins");
         holder.mCategoryName.setText("Category: " + categoryName);
         holder.mCategoryName.setVisibility(View.INVISIBLE);
-        holder.mJoinedPb.setProgress(trendingQuizResponse.getQuiz().get(0).getPlayedparticipants());
-        holder.mJoinedPb.setMax(trendingQuizResponse.getQuiz().get(0).getTotalparticipants());
+//        holder.mJoinedPb.setProgress(trendingQuizResponse.getQuiz().get(0).getPlayedparticipants());
+//        holder.mJoinedPb.setMax(trendingQuizResponse.getQuiz().get(0).getTotalparticipants());
+
+        if (trendingQuizResponse.getQuiz().get(0).getPlayedparticipants() == trendingQuizResponse.getQuiz().get(0).getTotalparticipants()) {
+            holder.mJoinedPb.setProgress(100);
+        } else if (trendingQuizResponse.getQuiz().get(0).getPlayedparticipants() == 0) {
+            holder.mJoinedPb.setProgress(1);
+        } else {
+            double divideResult = (double) trendingQuizResponse.getQuiz().get(0).getPlayedparticipants() / (double) trendingQuizResponse.getQuiz().get(0).getTotalparticipants();
+            double participant = divideResult * 100;
+            holder.mJoinedPb.setProgress((int) participant);
+        }
+
         if (trendingQuizResponse.getQuiz().get(0).getQuizStatus() == 1) {
             holder.mAttemptTV.setVisibility(View.GONE);
 //            holder.mAttemptMVC.setVisibility(View.GONE);
