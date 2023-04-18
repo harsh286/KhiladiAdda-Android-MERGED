@@ -22,6 +22,7 @@ import com.khiladiadda.rummy.interfaces.IRummyHistoryPresenter;
 import com.khiladiadda.rummy.interfaces.IRummyHistoryView;
 import com.khiladiadda.rummy.interfaces.IRummyPresenter;
 import com.khiladiadda.rummy.interfaces.IRummyView;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.wordsearch.listener.IOnClickListener;
 
@@ -38,11 +39,9 @@ public class RummyHistoryActivity extends BaseActivity implements IRummyHistoryV
     TextView mErrorTv;
     @BindView(R.id.tv_activity_name)
     TextView mActivityName;
-
     private IRummyHistoryPresenter mPresenter;
     private RummyHistoryAdapter rummyHistoryAdapter;
     private RummyHistoryMainResponse dataResponse;
-
 
     @Override
     protected int getContentView() {
@@ -66,7 +65,7 @@ public class RummyHistoryActivity extends BaseActivity implements IRummyHistoryV
 
     @Override
     public void onClick(View p0) {
-        if (p0.getId() == R.id.iv_back){
+        if (p0.getId() == R.id.iv_back) {
             finish();
         }
     }
@@ -83,11 +82,11 @@ public class RummyHistoryActivity extends BaseActivity implements IRummyHistoryV
     @Override
     public void onGetRummyHistorySuccess(RummyHistoryMainResponse responseModel) {
         hideProgress();
-        if (responseModel.isStatus()){
+        if (responseModel.isStatus()) {
             dataResponse = responseModel;
-            if (responseModel.getResponse().isEmpty()){
+            if (responseModel.getResponse().isEmpty()) {
                 mErrorTv.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 mErrorTv.setVisibility(View.GONE);
                 mRummyHistoryRv.setAdapter(new RummyHistoryAdapter(this, responseModel.getResponse(), this));
             }
@@ -105,4 +104,12 @@ public class RummyHistoryActivity extends BaseActivity implements IRummyHistoryV
         intent.putExtra("mid", dataResponse.getResponse().get(position).getTxnID());
         startActivity(intent);
     }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
+    }
+
 }

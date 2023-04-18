@@ -68,7 +68,6 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
     ImageView mTPlayerFiveEditIV;
     @BindView(R.id.iv_player6edit)
     ImageView mTPlayerSixEditIV;
-
     @BindView(R.id.tv_player1edit)
     TextView mTPlayerOneEditTV;
     @BindView(R.id.tv_player2edit)
@@ -81,10 +80,6 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
     TextView mTPlayerFiveEditTV;
     @BindView(R.id.tv_player6edit)
     TextView mTPlayerSixEditTV;
-
-//    @BindView(R.id.tv_player4edit)
-//    TextView mTPlayerFourEditTV;
-
     @BindView(R.id.iv_player1)
     ImageView mTPlayerOneIV;
     @BindView(R.id.iv_player2)
@@ -109,10 +104,6 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
     TextView mTPlayerFiveTV;
     @BindView(R.id.tv_player6)
     TextView mTPlayerSixTV;
-
-//    @BindView(R.id.tv_player4)
-//    TextView mTPlayerFourTV;
-
     @BindView(R.id.tv_points_oppents)
     TextView mPointsLosingTV;
     @BindView(R.id.tv_points)
@@ -139,14 +130,12 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
     SwipeRefreshLayout mSwipeRefreshL;
     @BindView(R.id.tv_substitute_msg)
     TextView mSubstituteTV;
-
     private HTHResponseDetails mMatchDetail;
     private BattlesDeatilsHTH mBattleList;
     private List<ResultList> mResultList = new ArrayList<>();
     private IHTHBattlePresenter mPresenter;
     private boolean mIsCaptain;
     private boolean mYouWin;
-    private int mMatch_Type;
 
     @Override
     protected int getContentView() {
@@ -170,7 +159,7 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
         mPresenter = new HTHPresenter(this);
         mMatchDetail = getIntent().getParcelableExtra(AppConstant.DATA);
         mBattleList = getIntent().getParcelableExtra(AppConstant.BATTLE_DATA);
-        mMatch_Type = getIntent().getIntExtra(AppConstant.MATCH_TYPE, 0);
+        int mMatch_Type = getIntent().getIntExtra(AppConstant.MATCH_TYPE, 0);
         mContestId.setText("Battle ID : " + mBattleList.getContestId());
         if (mBattleList.getBattle_status() == AppConstant.COMPLETED) {
             mStatus.setText("Completed");
@@ -185,7 +174,6 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
             mStatus.setText("Draw");
             mGIFIV.setVisibility(View.GONE);
         }
-
         TeamHTH homeTeam = mMatchDetail.getPlayers().getHomeTeam().getTeam();
         TeamHTH awayTeam = mMatchDetail.getPlayers().getAwayTeam().getTeam();
         mTeamOneTV.setText(homeTeam.getName());
@@ -595,7 +583,6 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
                 Glide.with(this).clear(mTPlayerFourIV);
                 mTPlayerFourIV.setImageResource(R.drawable.splash_logo);
             }
-
             if (!TextUtils.isEmpty(mBattleList.getCaptainTeam().get(4).getImg()) && mBattleList.getCaptainTeam().get(4).getImg().startsWith("https")) {
                 setCaptainImage(mBattleCaptainDetails, 5, mTPlayerFiveIV, mTPlayerFiveTV);
             } else {
@@ -679,7 +666,6 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
                 Glide.with(mTPlayerFourIV.getContext()).clear(mTPlayerFourIV);
                 mTPlayerFourIV.setImageResource(R.drawable.splash_logo);
             }
-
             if (!TextUtils.isEmpty(mBattleList.getOpponentTeam().get(4).getImg()) && mBattleList.getOpponentTeam().get(4).getImg().startsWith("https")) {
                 setOpponentImage(mBattleOpponentDetails, 5, mTPlayerFiveIV, mTPlayerFiveTV);
             } else {
@@ -692,7 +678,6 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
                 Glide.with(mTPlayerSixIV.getContext()).clear(mTPlayerSixIV);
                 mTPlayerSixIV.setImageResource(R.drawable.splash_logo);
             }
-
         }
     }
 
@@ -714,7 +699,7 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
             battleDetails = mBattleList.getOpponentTeam();
         }
         try {
-            if (battleDetails.get(0).isSubstitute() || battleDetails.get(1).isSubstitute() || battleDetails.get(2).isSubstitute() || battleDetails.get(3).isSubstitute()|| battleDetails.get(4).isSubstitute()|| battleDetails.get(5).isSubstitute()) {
+            if (battleDetails.get(0).isSubstitute() || battleDetails.get(1).isSubstitute() || battleDetails.get(2).isSubstitute() || battleDetails.get(3).isSubstitute() || battleDetails.get(4).isSubstitute() || battleDetails.get(5).isSubstitute()) {
                 mSubstituteTV.setVisibility(View.VISIBLE);
             } else {
                 mSubstituteTV.setVisibility(View.GONE);

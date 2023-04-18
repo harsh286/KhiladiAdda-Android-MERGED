@@ -95,12 +95,12 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
         mSoloBTN.setOnClickListener(this);
         mDuoBTN.setOnClickListener(this);
         mSquadBTN.setOnClickListener(this);
-        setData();
     }
 
     @Override
     protected void initVariables() {
         mPresenter = new LeagueListPresenter(this);
+        setData();
         mLeagueList = new ArrayList<>();
         mLeagueAdapter = new LeagueListAdapter(mLeagueList, mGameId);
         mRV.setLayoutManager(new LinearLayoutManager(this));
@@ -234,7 +234,6 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
     @Override
     public void onGameComplete(LeagueListReponse responseModel) {
         mLeagueList.clear();
-        hideProgress();
         if (responseModel.isStatus()) {
             if (responseModel.getResponse().size() > 0) {
                 mLeagueList.addAll(responseModel.getResponse());
@@ -242,13 +241,16 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
             } else {
                 mNoDataTV.setVisibility(View.VISIBLE);
             }
-            if (responseModel.getBanners() != null && responseModel.getBanners().size() > 0) {
-                setUpAdvertisementViewPager(responseModel.getBanners());
+            List<BannerDetails> banners = responseModel.getBanners();
+            if (banners != null && banners.size() > 0) {
+                setUpAdvertisementViewPager(banners);
             } else {
                 mBannerVP.setVisibility(GONE);
             }
             mLeagueAdapter.notifyDataSetChanged();
+            hideProgress();
         } else {
+            hideProgress();
             Snackbar.make(mDuoBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
     }
@@ -342,13 +344,13 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
         if (handler != null && runnable != null) {
             handler.removeCallbacks(runnable);
         }
+        AppUtilityMethods.deleteCache(this);
         if (mAppPreference.getIsDeepLinking()) {
             finish();
             startActivity(new Intent(this, MainActivity.class));
         } else {
             finish();
         }
-        // super.onBackPressed();
     }
 
     @Override

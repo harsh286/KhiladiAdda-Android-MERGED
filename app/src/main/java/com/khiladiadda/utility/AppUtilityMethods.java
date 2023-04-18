@@ -77,6 +77,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -578,6 +579,36 @@ public class AppUtilityMethods {
         });
         Button mNoBTN = dialog.findViewById(R.id.btn_no);
         mNoBTN.setText(R.string.cancel);
+        mNoBTN.setOnClickListener(arg0 -> dialog.dismiss());
+        dialog.show();
+    }
+
+    public static void openAppLinkToDownload(final Activity activity, String msg) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.logout);
+        TextView tv_msg = dialog.findViewById(R.id.tv_msg);
+        tv_msg.setText(msg);
+        Button mOkBTN = dialog.findViewById(R.id.btn_ok);
+        mOkBTN.setText(R.string.btn_continue);
+        mOkBTN.setOnClickListener(arg0 -> {
+            dialog.dismiss();
+            try {
+                boolean isAppInstall = AppUtilityMethods.isAppInstalled(activity, "org.altruist.BajajExperia");
+                if (isAppInstall) {
+                    Intent i = activity.getPackageManager().getLaunchIntentForPackage("org.altruist.BajajExperia");
+                    activity.startActivity(i);
+                } else {
+                    activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://bfl.onelink.me/857331112/ph6g6q1m")));
+                }
+            } catch (Exception e) {
+                activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://bfl.onelink.me/857331112/ph6g6q1m")));
+            }
+        });
+        Button mNoBTN = dialog.findViewById(R.id.btn_no);
+        mNoBTN.setText(R.string.text_cancel);
         mNoBTN.setOnClickListener(arg0 -> dialog.dismiss());
         dialog.show();
     }
@@ -1547,6 +1578,12 @@ public class AppUtilityMethods {
             mWindow.dismiss();
         });
         mWindow.showAsDropDown(mTV, (int) -(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, activity.getResources().getDisplayMetrics())), 0, Gravity.END);
+    }
+
+    public static long randomNumber() {
+        Random rand = new Random();
+        long merchantTxnId = (long) (rand.nextDouble() * 100000000000000L);
+        return merchantTxnId;
     }
 
 }

@@ -569,6 +569,7 @@ public class BattleGroupActivity extends BaseActivity implements IBattleView, IO
 
     @Override
     protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

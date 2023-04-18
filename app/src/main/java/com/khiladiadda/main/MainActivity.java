@@ -35,6 +35,7 @@ import com.khiladiadda.dialogs.AppDialog;
 import com.khiladiadda.dialogs.interfaces.IOnNetworkErrorListener;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.leaderboard.NewLeaderboardActivity;
+import com.khiladiadda.leaderboard.NewLeaderboardActivityTest;
 import com.khiladiadda.main.adapter.BannerPagerAdapter;
 import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.main.game.GameFragment;
@@ -116,20 +117,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (from == AppConstant.FROM_NOTIFICATION) {
             Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
             intent.putExtra(AppConstant.FROM, AppConstant.FROM_NOTIFICATION);
-//            startActivityForResult(intent, AppConstant.REQUEST_NOTIFICATION);
             notificationActivityResultLauncher.launch(intent);
         } else {
             setViewPagerPage();
         }
         mWalletRV.setOnClickListener(this);
         frameLayout.setOnClickListener(this);
+        mProfileLL.setOnClickListener(this);
         notification();
     }
 
     @Override
     protected void initVariables() {
         mPresenter = new MainPresenter(this);
-        mProfileLL.setOnClickListener(this);
     }
 
     @Override
@@ -266,19 +266,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 Glide.with(this).load(mAppPreference.getUrl()).thumbnail(Glide.with(this).load(mAppPreference.getUrl())).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mProfileURL);
             }
             setCoins();
-//            if (!mAppPreference.getBoolean(AppConstant.IS_FAVOURITE, false)) {
-//                mIsDataSync = false;
-//                favouriteActivityResultLauncher.launch(new Intent(this, FavouriteActivity.class));
-//            }
             getData();
         }
     }
 
     private void setCoins() {
-        Coins mCoins = mAppPreference.getProfileData().getCoins();
-        if (mCoins != null) {
-            double mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
-            mWalletBalanceTV.setText("₹" + AppUtilityMethods.roundUpNumber(mTotalWalletBal));
+        try {
+            Coins mCoins = mAppPreference.getProfileData().getCoins();
+            if (mCoins != null) {
+                double mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
+                mWalletBalanceTV.setText("₹" + AppUtilityMethods.roundUpNumber(mTotalWalletBal));
+            }
+        } catch (Exception ignored) {
+
         }
     }
 
@@ -377,7 +377,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onUpdateFavouriteFailure(ApiError error) {
         hideProgress();
-
     }
 
     ActivityResultLauncher<Intent> notificationActivityResultLauncher = registerForActivityResult(
@@ -415,4 +414,5 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     mPresenter.updateFavourite(request);
                 }
             });
+
 }

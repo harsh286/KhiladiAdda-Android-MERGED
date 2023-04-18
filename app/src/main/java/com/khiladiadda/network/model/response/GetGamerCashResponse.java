@@ -10,15 +10,12 @@ public class GetGamerCashResponse extends BaseResponse {
     @SerializedName("response")
     @Expose
     private ResponseFetchDetail response = null;
-
     @SerializedName("is_already_linked")
     @Expose
     private Boolean isAlreadyLinked;
     @SerializedName("is_linked")
     @Expose
     private Boolean isLinked;
-
-
     @SerializedName("remaining_add_limit")
     @Expose
     private long remainingAddLimit;

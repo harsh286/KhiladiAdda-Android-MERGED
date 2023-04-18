@@ -1,13 +1,10 @@
 package com.khiladiadda.splash;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -47,17 +44,6 @@ public class SplashActivity extends BaseActivity implements ISplashView {
 
     @Override
     protected void initViews() {
-        if (getIntent() != null) {
-            Intent intent = getIntent();
-            String a=intent.getStringExtra("LudoAddaIntent");
-            String b=intent.getStringExtra("WSIntent");
-            if (a!=null){
-                mAppPreference.setBoolean("LudoAddaRedirect",true);
-            }
-            if (b!=null){
-                mAppPreference.setBoolean("WSRedirect",true);
-            }
-        }
     }
 
     @Override
@@ -67,6 +53,17 @@ public class SplashActivity extends BaseActivity implements ISplashView {
         Window window = this.getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
         mPresenter = new SplashPresenter(this);
+        if (getIntent() != null) {
+            Intent intent = getIntent();
+            String a = intent.getStringExtra("LudoAddaIntent");
+            String b = intent.getStringExtra("WSIntent");
+            if (a != null) {
+                mAppPreference.setBoolean("LudoAddaRedirect", true);
+            }
+            if (b != null) {
+                mAppPreference.setBoolean("WSRedirect", true);
+            }
+        }
     }
 
     @Override
@@ -152,7 +149,7 @@ public class SplashActivity extends BaseActivity implements ISplashView {
     public void onVersionFailure(ApiError error) {
     }
 
-    private IOnNetworkErrorListener onNetworkErrorListener = () -> getData();
+    private IOnNetworkErrorListener onNetworkErrorListener = this::getData;
 
     private void getData() {
         if (new NetworkStatus(this).isInternetOn()) {

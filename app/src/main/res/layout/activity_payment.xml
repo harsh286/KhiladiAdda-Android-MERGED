@@ -1,0 +1,725 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".wallet.PaymentActivity">
+
+    <include
+        android:id="@+id/toolbar_pay_through"
+        layout="@layout/actionbar" />
+
+    <ScrollView
+        android:id="@+id/scroll_view_bajaj_pay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_pay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_pay_through">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <TextView
+                android:id="@+id/tv_upi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/text_12"
+                android:layout_marginTop="@dimen/card_corner_radius_6"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:text="@string/upi_choose_from_any_upi_option_below"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_12"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_upi_payment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/card_corner_radius_6"
+                android:layout_marginEnd="@dimen/card_corner_radius_6"
+                android:outlineAmbientShadowColor="#CA2236"
+                android:outlineSpotShadowColor="#CA2236"
+                android:visibility="visible"
+                app:cardCornerRadius="@dimen/text_16"
+                app:cardElevation="@dimen/card_corner_radius_4"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_upi"
+                app:strokeColor="@color/store_pack_border_color"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_upi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_5"
+                    android:padding="@dimen/padding_5">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_upi_phone_pe"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_60dp"
+                        android:layout_margin="@dimen/margin_5"
+                        android:background="@drawable/ic_selector_merchant"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/img_phonpe"
+                            android:layout_width="@dimen/pg_height"
+                            android:layout_height="@dimen/pg_height"
+                            android:layout_marginStart="@dimen/margin_10"
+                            android:src="@drawable/phonepe"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/text_16"
+                            android:text="PhonePe"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/img_phonpe"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="@dimen/arrow_black"
+                            android:layout_height="@dimen/arrow_black"
+                            android:layout_marginEnd="@dimen/text_12"
+                            android:background="@drawable/ic_arrow_right_black_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_bajajpe_upi"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_60dp"
+                        android:layout_margin="@dimen/margin_5"
+                        android:background="@drawable/ic_selector_merchant"
+                        app:layout_constraintTop_toBottomOf="@+id/cl_upi_phone_pe">
+
+                        <ImageView
+                            android:id="@+id/img_bajaj"
+                            android:layout_width="@dimen/pg_height"
+                            android:layout_height="@dimen/pg_height"
+                            android:layout_marginStart="@dimen/margin_10"
+                            android:layout_marginTop="@dimen/card_corner_radius_4"
+                            android:src="@drawable/iv_bajaj_pay"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/text_16"
+                            android:text="Bajaj Pay UPI"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/img_bajaj"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="@dimen/arrow_black"
+                            android:layout_height="@dimen/arrow_black"
+                            android:layout_marginEnd="@dimen/text_12"
+                            android:background="@drawable/ic_arrow_right_black_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/margin_1"
+                            android:layout_marginTop="@dimen/card_corner_radius_4"
+                            android:background="#EAEAEA"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_upi_google_pe"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_60dp"
+                        android:layout_margin="@dimen/margin_5"
+                        android:background="@drawable/ic_selector_merchant"
+                        app:layout_constraintTop_toBottomOf="@+id/cl_bajajpe_upi">
+
+                        <ImageView
+                            android:id="@+id/img_google_pe"
+                            android:layout_width="@dimen/pg_height"
+                            android:layout_height="@dimen/pg_height"
+                            android:layout_marginStart="@dimen/margin_10"
+                            android:layout_marginTop="@dimen/margin_8"
+                            android:src="@drawable/gpay"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/text_16"
+                            android:text="GooglePay"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/img_google_pe"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="@dimen/arrow_black"
+                            android:layout_height="@dimen/arrow_black"
+                            android:layout_marginEnd="@dimen/text_12"
+                            android:background="@drawable/ic_arrow_right_black_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/margin_1"
+                            android:layout_marginTop="@dimen/card_corner_radius_4"
+                            android:background="#EAEAEA"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/tv_upi_paytm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_5"
+                        android:background="@drawable/ic_selector_merchant"
+                        android:drawableStart="@drawable/paytm"
+                        android:drawableEnd="@drawable/ic_arrow_right_black_24"
+                        android:drawablePadding="@dimen/padding_15"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/padding_10"
+                        android:text="@string/paytm_upi_new"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_14"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@+id/cl_upi_google_pe">
+
+                    </TextView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tv_wallet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/text_12"
+                android:layout_marginEnd="@dimen/margin_8"
+                android:text="@string/wallet"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_12"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mcv_upi_payment" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_wallet_payment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/card_corner_radius_6"
+                android:layout_marginEnd="@dimen/card_corner_radius_6"
+                android:outlineAmbientShadowColor="#CA2236"
+                android:outlineSpotShadowColor="#CA2236"
+                android:visibility="visible"
+                app:cardCornerRadius="@dimen/text_16"
+                app:cardElevation="@dimen/card_corner_radius_4"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_wallet"
+                app:strokeColor="@color/store_pack_border_color"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_wallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_5"
+                    android:padding="@dimen/padding_5">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_paytm_wallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_60dp"
+                        android:layout_margin="@dimen/margin_5"
+                        android:background="@drawable/ic_selector_merchant"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/img_paytm"
+                            android:layout_width="@dimen/pg_height"
+                            android:layout_height="@dimen/pg_height"
+                            android:layout_marginStart="@dimen/margin_10"
+                            android:src="@drawable/paytm"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/text_16"
+                            android:text="Paytm Wallet"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/img_paytm"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="@dimen/arrow_black"
+                            android:layout_height="@dimen/arrow_black"
+                            android:layout_marginEnd="@dimen/text_12"
+                            android:background="@drawable/ic_arrow_right_black_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/margin_1"
+                            android:layout_marginStart="@dimen/margin_10"
+                            android:layout_marginTop="@dimen/card_corner_radius_4"
+                            android:background="#EAEAEA"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_bajajpe_wallet_wallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_60"
+                        android:layout_margin="@dimen/margin_5"
+                        android:background="@drawable/ic_selector_merchant"
+                        app:layout_constraintTop_toBottomOf="@+id/cl_paytm_wallet">
+
+                        <ImageView
+                            android:id="@+id/img_bajaj_wallet"
+                            android:layout_width="@dimen/pg_height"
+                            android:layout_height="@dimen/pg_height"
+                            android:layout_marginStart="@dimen/margin_10"
+                            android:layout_marginTop="@dimen/card_corner_radius_4"
+                            android:src="@drawable/iv_bajaj_pay"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_bajajpe_wallet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/text_16"
+                            android:text="Bajaj Pay Wallet"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/img_bajaj_wallet"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/img_bajaj_pay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|center"
+                            android:layout_marginEnd="@dimen/margin_20"
+                            android:contentDescription="@string/bajaj_pay"
+                            android:src="@drawable/gc_coin_img"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/img_bajaj_pay_delink"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|end"
+                            android:layout_marginEnd="@dimen/text_16"
+                            android:contentDescription="@string/bajaj_pay"
+                            android:src="@drawable/km_audio_delete"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="#323232" />
+
+                        <ImageView
+                            android:layout_width="@dimen/text_12"
+                            android:layout_height="@dimen/text_12"
+                            android:layout_marginEnd="@dimen/text_12"
+                            android:background="@drawable/ic_keyboard_arrow_white"
+                            android:backgroundTint="@color/black"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/tv_gamercash"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_60dp"
+                        android:background="@drawable/ic_selector_merchant"
+                        android:drawableEnd="@drawable/gc_coin_img"
+                        android:drawablePadding="@dimen/padding_15"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/padding_15"
+                        android:paddingEnd="@dimen/padding_15"
+                        android:text="@string/gamercash"
+                        android:textSize="@dimen/text_15"
+                        android:visibility="gone"
+                        app:drawableStartCompat="@drawable/gccc"
+                        app:layout_constraintTop_toBottomOf="@+id/cl_bajajpe_wallet_wallet" />
+
+                    <TextView
+                        android:id="@+id/tv_gamercash_verified"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_60dp"
+                        android:background="@drawable/ic_selector_merchant"
+                        android:drawablePadding="@dimen/padding_15"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/padding_15"
+                        android:paddingEnd="@dimen/padding_15"
+                        android:text="@string/gamercash"
+                        android:textSize="@dimen/text_15"
+                        android:visibility="gone"
+                        app:drawableStartCompat="@drawable/gccc"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_gamercash" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tv_others"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/text_12"
+                android:layout_marginEnd="@dimen/margin_8"
+                android:text="Others"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_12"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mcv_wallet_payment" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_others_pay"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/card_corner_radius_6"
+                android:layout_marginEnd="@dimen/card_corner_radius_6"
+                android:outlineAmbientShadowColor="#CA2236"
+                android:outlineSpotShadowColor="#CA2236"
+                app:cardCornerRadius="@dimen/text_16"
+                app:cardElevation="@dimen/card_corner_radius_4"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_others"
+                app:strokeColor="@color/store_pack_border_color"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_5"
+                    android:padding="@dimen/padding_5">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_net_banking"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_60dp"
+                        android:layout_margin="@dimen/margin_5"
+                        android:background="@drawable/ic_selector_merchant"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/img_netbanking"
+                            android:layout_width="@dimen/pg_height"
+                            android:layout_height="@dimen/pg_height"
+                            android:layout_marginStart="@dimen/margin_10"
+                            android:src="@drawable/ic_pwe_netbanking_01"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/text_16"
+                            android:text="Netbanking"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/img_netbanking"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="@dimen/arrow_black"
+                            android:layout_height="@dimen/arrow_black"
+                            android:layout_marginEnd="@dimen/text_12"
+                            android:background="@drawable/ic_arrow_right_black_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/margin_1"
+                            android:layout_marginStart="@dimen/margin_10"
+                            android:layout_marginTop="@dimen/card_corner_radius_4"
+                            android:background="#EAEAEA"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_bajajpe_netbanking"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_60dp"
+                        android:layout_margin="@dimen/margin_5"
+                        android:background="@drawable/ic_selector_merchant"
+                        app:layout_constraintTop_toBottomOf="@+id/cl_net_banking">
+
+                        <ImageView
+                            android:id="@+id/img_netbanking_bajaj_pay"
+                            android:layout_width="@dimen/pg_height"
+                            android:layout_height="@dimen/pg_height"
+                            android:layout_marginStart="@dimen/margin_10"
+                            android:src="@drawable/iv_bajaj_pay"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_net_bajaj_pay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/text_16"
+                            android:text="Bajaj Pay"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/img_netbanking_bajaj_pay"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/img_arrow_straight"
+                            android:layout_width="@dimen/arrow_black"
+                            android:layout_height="@dimen/arrow_black"
+                            android:layout_marginEnd="@dimen/text_12"
+                            android:background="@drawable/ic_arrow_right_black_24"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/img_arrow_down"
+                            android:layout_width="@dimen/text_12"
+                            android:layout_height="@dimen/text_12"
+                            android:layout_marginEnd="@dimen/text_12"
+                            android:background="@drawable/ic_arrow_down"
+                            android:backgroundTint="@color/black"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_bajajpe_netbanking_wallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_50"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_2"
+                        android:layout_marginEnd="@dimen/margin_10"
+                        android:background="@drawable/ic_selector_merchant"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@+id/cl_bajajpe_netbanking">
+
+                        <ImageView
+                            android:id="@+id/img_netbanking_bajaj"
+                            android:layout_width="@dimen/margin_30"
+                            android:layout_height="@dimen/margin_30"
+                            android:layout_marginStart="@dimen/margin_30"
+                            android:src="@drawable/iv_bajaj_pay"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_bajajpe_wallet_netbanking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/text_16"
+                            android:text="Bajaj Pay Wallet"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_12sp"
+                            android:textStyle="bold"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/img_netbanking_bajaj"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <ImageView
+                            android:id="@+id/img_net_banking_bajaj_pay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|center"
+                            android:layout_marginEnd="@dimen/margin_20"
+                            android:contentDescription="@string/bajaj_pay"
+                            android:src="@drawable/gc_coin_img"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/img_net_banking_bajaj_pay_delink"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|end"
+                            android:layout_marginEnd="@dimen/text_16"
+                            android:contentDescription="@string/bajaj_pay"
+                            android:src="@drawable/km_audio_delete"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="#323232" />
+
+
+                        <ImageView
+                            android:layout_width="@dimen/text_12"
+                            android:layout_height="@dimen/text_12"
+                            android:layout_marginEnd="@dimen/margin_30"
+                            android:background="@drawable/ic_keyboard_arrow_white"
+                            android:backgroundTint="@color/black"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_bajajpe_netbanking_upi"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_50"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_2"
+                        android:layout_marginEnd="@dimen/margin_10"
+                        android:background="@drawable/ic_selector_merchant"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@+id/cl_bajajpe_netbanking_wallet">
+
+                        <ImageView
+                            android:id="@+id/img_net_bajaj"
+                            android:layout_width="@dimen/margin_30"
+                            android:layout_height="@dimen/margin_30"
+                            android:layout_marginStart="@dimen/margin_30"
+                            android:src="@drawable/iv_bajaj_pay"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/text_16"
+                            android:text="Bajaj Pay UPI"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/img_net_bajaj"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="@dimen/text_12"
+                            android:layout_height="@dimen/text_12"
+                            android:layout_marginEnd="@dimen/margin_30"
+                            android:background="@drawable/ic_keyboard_arrow_white"
+                            android:backgroundTint="@color/black"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_pay"
+        style="@style/DialogButtonLudo"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:text="@string/txt_pay"
+        android:textAllCaps="false"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scroll_view_bajaj_pay" />
+
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/rowdies_regular"
+        android:gravity="center"
+        android:text="@string/you_are_not_a_user"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_16"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

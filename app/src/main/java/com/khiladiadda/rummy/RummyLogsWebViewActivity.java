@@ -1,8 +1,5 @@
 package com.khiladiadda.rummy;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -28,12 +25,10 @@ public class RummyLogsWebViewActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        Log.e("TAG", "initViews: =="+"https://mplay.reingames.com/replay?mid="+getIntent().getStringExtra("mid") );
-        mLogsMv.loadUrl("https://mplay.reingames.com/replay?mid="+getIntent().getStringExtra("mid"));
-
+        Log.e("TAG", "initViews: ==" + "https://mplay.reingames.com/replay?mid=" + getIntent().getStringExtra("mid"));
+        mLogsMv.loadUrl("https://mplay.reingames.com/replay?mid=" + getIntent().getStringExtra("mid"));
         // this will enable the javascript.
         mLogsMv.getSettings().setJavaScriptEnabled(true);
-
         // WebViewClient allows you to handle
         // onPageFinished and override Url loading.
         mLogsMv.setWebViewClient(new WebViewClient());
@@ -46,8 +41,9 @@ public class RummyLogsWebViewActivity extends BaseActivity {
 
     @Override
     public void onClick(View p0) {
-        if (p0.getId() == R.id.iv_close){
+        if (p0.getId() == R.id.iv_close) {
             finish();
         }
     }
+
 }

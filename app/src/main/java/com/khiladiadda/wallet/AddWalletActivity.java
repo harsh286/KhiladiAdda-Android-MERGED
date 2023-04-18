@@ -164,21 +164,18 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
     @BindView(R.id.tv_phonepe)
     TextView mPhonepeTV;
     private static final int PAYTM_REQUEST_CODE = 666;
-    private String mCouponCode, mOrderId, mAmount, mCallbackURL, mPhonepeOrderId, mApexPayOrderId, mPaySharpOrderId;
-    private IWalletPresenter mPresenter;
-    private long mCoins;
-    private int mPaymentFrom, mUpiPaymentType, coins, getmPaymentFrom = 0;
-    private boolean mApexPay, mPaySharp;
-    private final String mApiEndPoint = "/pg/v1/pay";
     private static final int B2B_PG_REQUEST_CODE = 777;
-    private boolean isGamerCashEnabled;
-    private long mRemainingAddLimit = 0;
+    private String mCouponCode, mOrderId, mAmount, mCallbackURL, mPhonepeOrderId, mApexPayOrderId, mPaySharpOrderId, mApiEndPoint = "/pg/v1/pay";
+    private int mPaymentFrom, mUpiPaymentType, coins, getmPaymentFrom = 0;
+    private boolean mApexPay, mPaySharp, isGamerCashEnabled;
+    private long mCoins, mRemainingAddLimit = 0;
+    private IWalletPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PhonePe.init(this);
         try {
+            PhonePe.init(this);
             CFPaymentGatewayService.getInstance().setCheckoutCallback(this);
         } catch (CFException e) {
             e.printStackTrace();
@@ -244,12 +241,12 @@ public class AddWalletActivity extends BaseActivity implements IWalletView, Payt
         Coins coins = mAppPreference.getProfileData().getCoins();
         double total = coins.getDeposit() + coins.getBonus() + coins.getWinning();
         if (String.valueOf(total).contains(".")) {
-            mTotalCoinsTV.setText("Total Balance\n" + "₹" + String.format("%.2f", total));
+            mTotalCoinsTV.setText("Total Balance : " + "₹" + String.format("%.2f", total));
         } else {
-            mTotalCoinsTV.setText("Total Balance\n" + "₹" + total);
+            mTotalCoinsTV.setText("Total Balance : " + "₹" + total);
         }
         SpannableString totalCoin = new SpannableString(mTotalCoinsTV.getText().toString());
-        totalCoin.setSpan(new RelativeSizeSpan(1.5f), 13, totalCoin.length(), 0); // set size
+//        totalCoin.setSpan(new RelativeSizeSpan(1.25f), 13, totalCoin.length(), 0); // set size
         mTotalCoinsTV.setText(totalCoin);
     }
 

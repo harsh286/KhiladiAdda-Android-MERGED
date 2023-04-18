@@ -170,7 +170,6 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
         NewDroidoAdapterViewPager newDroidoAdapterViewPager = new NewDroidoAdapterViewPager(this);
         viewPager.setAdapter(newDroidoAdapterViewPager);
         viewPager.setCurrentItem(newDroidoAdapterViewPager.getCount() - 1);
-
     }
 
     private void tabData() {
@@ -238,8 +237,6 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
             case R.id.tv_rules_droido:
                 startActivity(new Intent(this, RulesActivity.class));
                 break;
-            case R.id.btn_apply:
-                break;
         }
     }
 
@@ -269,7 +266,7 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
                 tvError.setVisibility(View.VISIBLE);
                 hideProgress();
             }
-        } else{
+        } else {
             AppUtilityMethods.showMsg(this, response.getMessage(), false);
         }
     }
@@ -288,7 +285,7 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
             gameMyTournamentList.clear();
             gameMyTournamentList.addAll(response.getTournamentList());
             myTournamentGameAdapter.notifyDataSetChanged();
-        }else {
+        } else {
             tvError.setVisibility(View.VISIBLE);
         }
     }
@@ -378,6 +375,13 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
             int currentItem = mBannerVP.getCurrentItem();
             moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
         }, 10000);
+    }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
     }
 
 }

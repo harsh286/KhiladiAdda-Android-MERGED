@@ -130,7 +130,6 @@ public class FootballBattleScoreActivity extends BaseActivity implements IHTHBat
     SwipeRefreshLayout mSwipeRefreshL;
     @BindView(R.id.tv_substitute_msg)
     TextView mSubstituteTV;
-
     private HTHResponseDetails mMatchDetail;
     private BattlesDeatilsHTH mBattleList;
     private List<ResultList> mResultList = new ArrayList<>();
@@ -138,7 +137,6 @@ public class FootballBattleScoreActivity extends BaseActivity implements IHTHBat
     private boolean mIsCaptain;
     private int mMatch_Type;
     private boolean mYouWin;
-
 
     @Override
     protected int getContentView() {
@@ -301,7 +299,6 @@ public class FootballBattleScoreActivity extends BaseActivity implements IHTHBat
                 mYouWin = true;
         }
 //        setCaptionOpponentClick();
-
         if (mResultList.get(0).getOpponentPoints() > mResultList.get(0).getCaptainPoints()) {
             if (mIsCaptain) {
                 mNameTV.setText(AppConstant.TEXT_OPPONENT_COMBO);

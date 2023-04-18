@@ -1,8 +1,6 @@
 package com.khiladiadda.ludo.unplayed;
 
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.os.Build.VERSION.SDK_INT;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -19,7 +17,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -34,7 +31,6 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -62,8 +58,6 @@ import java.io.IOException;
 
 import butterknife.BindView;
 
-import static com.khiladiadda.utility.AppConstant.REQUEST_GALLERY;
-
 public class LudoErrorActivity extends BaseActivity implements ILudoErrorView {
 
     @BindView(R.id.iv_back)
@@ -82,7 +76,6 @@ public class LudoErrorActivity extends BaseActivity implements ILudoErrorView {
     Button mConfirmBTN;
     @BindView(R.id.spn_reason)
     Spinner mReasonSPN;
-
     private String mImagePath, mId, mFrom, mReason;
     private ILudoErrorPresenter mPresenter;
 
@@ -122,7 +115,6 @@ public class LudoErrorActivity extends BaseActivity implements ILudoErrorView {
         ArrayAdapter<String> mArrayAdapterBrand = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, AppUtilityMethods.getLudoErrorReason());
         mArrayAdapterBrand.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mReasonSPN.setAdapter(mArrayAdapterBrand);
-
         mReasonSPN.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
@@ -299,7 +291,7 @@ public class LudoErrorActivity extends BaseActivity implements ILudoErrorView {
             }
         }
     });
-    
+
     public void wonAlert(final Activity activity) {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -381,6 +373,13 @@ public class LudoErrorActivity extends BaseActivity implements ILudoErrorView {
         Intent intent = new Intent();
         setResult(AppConstant.FROM_LUDO_LIST, intent);
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
     }
 
 }

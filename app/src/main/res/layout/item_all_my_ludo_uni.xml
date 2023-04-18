@@ -58,7 +58,9 @@
             android:src="@mipmap/ic_launcher"
             app:civ_border_color="@color/colorPrimary"
             app:civ_border_width="1dp"
-            app:civ_shadow_color="@color/colorPrimaryDark" />
+            app:civ_shadow="true"
+            app:civ_shadow_color="@color/colorPrimaryDark"
+            app:civ_shadow_radius="5" />
 
         <TextView
             android:id="@+id/tv_player_name"

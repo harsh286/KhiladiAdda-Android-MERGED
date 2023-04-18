@@ -57,7 +57,6 @@ public class MyAllLudoUniAdapter extends RecyclerView.Adapter<MyAllLudoUniAdapte
         String userId = AppSharedPreference.getInstance().getString(AppConstant.USER_ID, "");
         holder.mWinningAmountTV.setText(String.format("Winning: %s Coins", ludoContestBean.getWinningAmount()));
         holder.mContestNameTV.setText(ludoContestBean.getContestCode());
-
         if (ludoContestBean.getContestStatus() == 3) {
             if (userId.equalsIgnoreCase(ludoContestBean.getCaptainId())) {
                 if (ludoContestBean.getContestStatus() == 1) {
@@ -131,7 +130,7 @@ public class MyAllLudoUniAdapter extends RecyclerView.Adapter<MyAllLudoUniAdapte
     private void setCaptainData(LudoContest ludoContestBean, LudoContestHolder holder) {
         holder.mTitleTV.setText("You accepted challenge for \n" + ludoContestBean.getEntryFees() + " Coins");
         if (!TextUtils.isEmpty(ludoContestBean.getCaptain().getLudoDp())) {
-            Glide.with(mContext).load(ludoContestBean.getCaptain().getLudoDp()).placeholder(R.drawable.profile).into(holder.mProfileAccepterIV);
+            Glide.with(mContext).load(ludoContestBean.getCaptain().getLudoDp()).placeholder(R.mipmap.ic_launcher).into(holder.mProfileAccepterIV);
         } else {
             Glide.with(mContext).clear(holder.mProfileAccepterIV);
             holder.mProfileAccepterIV.setImageResource(R.mipmap.ic_launcher);
@@ -142,7 +141,7 @@ public class MyAllLudoUniAdapter extends RecyclerView.Adapter<MyAllLudoUniAdapte
     private void setOpponentData(LudoContest ludoContestBean, LudoContestHolder holder) {
         holder.mTitleTV.setText("Your challenge has been accepted\n" + ludoContestBean.getEntryFees() + " Coins");
         if (ludoContestBean.getOpponent() != null && ludoContestBean.getOpponent().getLudoDp() != null && !TextUtils.isEmpty(ludoContestBean.getOpponent().getLudoDp())) {
-            Glide.with(mContext).load(ludoContestBean.getOpponent().getLudoDp()).placeholder(R.drawable.profile).into(holder.mProfileAccepterIV);
+            Glide.with(mContext).load(ludoContestBean.getOpponent().getLudoDp()).placeholder(R.mipmap.ic_launcher).into(holder.mProfileAccepterIV);
         } else {
             Glide.with(mContext).clear(holder.mProfileAccepterIV);
             holder.mProfileAccepterIV.setImageResource(R.mipmap.ic_launcher);

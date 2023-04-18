@@ -17,33 +17,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-       >
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
             android:id="@+id/cl"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView11"
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/iv_participants"
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="14dp"
-                app:cardCornerRadius="360dp"
+                app:civ_border_color="@color/colorPrimary"
+                app:civ_border_width="1dp"
+                app:civ_shadow="true"
+                app:civ_shadow_color="@color/colorPrimaryDark"
+                app:civ_shadow_radius="5"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:strokeColor="#FF1717"
-                app:strokeWidth="1.5dp">
-
-                <ImageView
-                    android:id="@+id/iv_participants"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_ludo" />
-            </com.google.android.material.card.MaterialCardView>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_name"
@@ -56,8 +49,8 @@
                 android:textSize="@dimen/text_12"
                 app:layout_constraintBottom_toTopOf="@+id/tv_played"
                 app:layout_constraintEnd_toStartOf="@+id/tv_rank"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView11"
-                app:layout_constraintTop_toTopOf="@+id/materialCardView11"
+                app:layout_constraintStart_toEndOf="@+id/iv_participants"
+                app:layout_constraintTop_toTopOf="@+id/iv_participants"
                 tools:text="Kathryn Murphy" />
 
             <TextView
@@ -71,7 +64,7 @@
                 android:textSize="@dimen/text_12"
                 app:layout_constraintBottom_toTopOf="@+id/tv_won"
                 app:layout_constraintEnd_toStartOf="@+id/tv_rank"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView11"
+                app:layout_constraintStart_toEndOf="@+id/iv_participants"
                 app:layout_constraintTop_toBottomOf="@+id/tv_name"
                 tools:text="Kathryn Murphy" />
 
@@ -84,9 +77,9 @@
                 android:maxLines="1"
                 android:textColor="#4CAF50"
                 android:textSize="@dimen/text_12"
-                app:layout_constraintBottom_toBottomOf="@+id/materialCardView11"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_participants"
                 app:layout_constraintEnd_toEndOf="@+id/tv_played"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView11"
+                app:layout_constraintStart_toEndOf="@+id/iv_participants"
                 app:layout_constraintTop_toBottomOf="@+id/tv_played"
                 tools:text="Won: 401594 Coins" />
 
@@ -98,7 +91,7 @@
                 android:maxLines="1"
                 android:textColor="#4CAF50"
                 android:textSize="@dimen/text_12"
-                app:layout_constraintBottom_toBottomOf="@+id/materialCardView11"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_participants"
                 app:layout_constraintEnd_toEndOf="@+id/tv_rank"
                 app:layout_constraintTop_toBottomOf="@+id/tv_played"
                 tools:text="Won: 401594 Coins" />

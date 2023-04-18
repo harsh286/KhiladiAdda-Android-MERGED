@@ -3,8 +3,6 @@ package com.khiladiadda.wallet;
 import com.khiladiadda.network.ApiManager;
 import com.khiladiadda.network.ApiService;
 import com.khiladiadda.network.IApiListener;
-import com.khiladiadda.network.PaySharpApiManager;
-import com.khiladiadda.network.PaySharpSubscriberCallback;
 import com.khiladiadda.network.SubscriberCallback;
 import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.request.CashfreeChecksumRequest;
@@ -36,6 +34,7 @@ import com.khiladiadda.network.model.response.ProfileTransactionResponse;
 import com.khiladiadda.network.model.response.RazorpayOrderIdResponse;
 import com.khiladiadda.network.model.response.VersionResponse;
 import com.khiladiadda.network.model.response.ZaakpayChecksumResponse;
+
 import rx.Subscription;
 
 public class WalletInteractor {

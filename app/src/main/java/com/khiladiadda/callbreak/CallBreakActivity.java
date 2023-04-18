@@ -90,24 +90,20 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     private ICallBreakPresenter mPresenter;
     private Dialog mVersionDialog;
     private CallBreakResponse mainResponse;
-    private String mVersion, mLink, mFilePath, mCurrentVersion;
+    private String mVersion, mLink, mFilePath, mCurrentVersion, mEntryFee;
     private boolean mIsRequestingAppInstallPermission;
-    private int position = 0;
-    private int mFromUnity = 0;
+    private int position = 0, mFromUnity = 0, mDownUp = 1;
     private Intent launchIntent;
-    private Coins mCoins;
-    private double mTotalWalletBal;
+    private double mTotalWalletBal, mDepWinAmount;
     private CallBreakDialog callBreakDialog;
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
-    private String mEntryFee;
     @BindView(R.id.tv_history)
     TextView mHistoryTV;
     @BindView(R.id.tv_help_video)
     TextView mHelpVideoTV;
-    private int mDownUp = 1;
     private long mLastClickTime = 0;
 
     @Override
@@ -149,22 +145,26 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
         } else if (view.getId() == R.id.tv_history) {
             startActivity(new Intent(this, CBHistoryActivity.class));
         } else if (view.getId() == R.id.tv_help_video) {
-            AppUtilityMethods.openYoutubeCallbreak(this,"www.youtube.com/watch?v=BQXaInDe4m4", "https://www.youtube.com/watch?v=BQXaInDe4m4");
-
+            AppUtilityMethods.openYoutubeCallbreak(this, "www.youtube.com/watch?v=BQXaInDe4m4", "https://www.youtube.com/watch?v=BQXaInDe4m4");
         }
     }
 
     private void getData() {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
-            mCoins = mAppPreference.getProfileData().getCoins();
-            if (mCoins != null) {
-                mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
-                mWalletBalanceTV.setText("₹" + AppUtilityMethods.roundUpNumber(mTotalWalletBal));
-            }
+            getCoins();
             mPresenter.getCallBreak();
         } else {
             Snackbar.make(mActivityNameTV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    private void getCoins() {
+        Coins mCoins = mAppPreference.getProfileData().getCoins();
+        if (mCoins != null) {
+            mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
+            mDepWinAmount = mCoins.getDeposit() + mCoins.getWinning();
+            mWalletBalanceTV.setText("₹" + AppUtilityMethods.roundUpNumber(mTotalWalletBal));
         }
     }
 
@@ -440,9 +440,7 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     }
 
     private void openBottomDialog(int position) {
-        Coins mCoins = mAppPreference.getProfileData().getCoins();
-        double mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
-        double mDepWinAmount = mCoins.getDeposit() + mCoins.getWinning();
+        getCoins();
         mEntryFee = String.valueOf(mList.get(position).getEntryFees());
         callBreakDialog = new CallBreakDialog(this, mEntryFee, String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), mList.get(position).getPrizePoolBreakup(), mList.get(position), this, position);
         callBreakDialog.setCancelable(true);
@@ -461,11 +459,7 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
             if (mAppPreference.getProfileData().getId() != null || !mAppPreference.getProfileData().getId().isEmpty()) {
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.setComponent(new ComponentName(AppConstant.CallBreakPackageName, "com.unity3d.player.UnityPlayerActivity"));
-//                launchGameIntent.putExtra("userToken", mAppPreference.getSessionToken().toString());
-//                launchGameIntent.putExtra("playerId", mAppPreference.getProfileData().getId());
-//                launchGameIntent.putExtra("amount", mAmount);
-//                launchGameIntent.putExtra("prizePoolBreakUp", String.valueOf(myCustomArray));
-                intent.putExtra("userToken", mAppPreference.getSessionToken().toString());
+                intent.putExtra("userToken", mAppPreference.getSessionToken());
                 intent.putExtra("playerId", mAppPreference.getProfileData().getId());
                 intent.putExtra("amount", mAmount);
                 intent.putExtra("prizePoolBreakUp", String.valueOf(myCustomArray));
@@ -490,11 +484,6 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
         position = pos;
         getJoinData(pos);
         callBreakDialog.dismiss();
-//        int total = (int) (mCoins.getDeposit() + mCoins.getWinning());
-//        if (total >= Integer.parseInt(mEntryFee)) {
-//        } else {
-//            AppUtilityMethods.showRechargeMsg(this, "Your wallet balance is insufficient. Please recharge your wallet to play and earn.");
-//        }
     }
 
     private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
@@ -519,6 +508,13 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
             int currentItem = mBannerVP.getCurrentItem();
             moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
         }, 10000);
+    }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
     }
 
 }

@@ -117,6 +117,7 @@ public class LudoResultActivity extends BaseActivity implements ILudoResultView,
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mLudoNotificationReceiver);
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }
@@ -236,76 +237,45 @@ public class LudoResultActivity extends BaseActivity implements ILudoResultView,
             mUpdateRoomIdBTN.setVisibility(View.VISIBLE);
             mChatBTN.setVisibility(View.VISIBLE);
             setStatusButton(true);
-            Properties properties = new Properties();
-            properties
-                    // tracking integer
-                    .addAttribute("game", "LudoKing")
-                    // tracking string
-                    .addAttribute("current", getString(R.string.click_to_go_ludo_king))
-                    // tracking Date
-                    .addAttribute("gamecreatedDate", new Date());
-            MoEAnalyticsHelper.INSTANCE.trackEvent(this, "LudoKing", properties);
+            updateMoengage(getString(R.string.click_to_go_ludo_king));
         } else if (mIsCaptain && mLudoContest.isAccepted() && TextUtils.isEmpty(mLudoContest.getRoomId())) {
             mRoomIdTV.setText(getString(R.string.text_update_room_code_proceed));
             mCancelBTN.setVisibility(View.VISIBLE);
             mUpdateRoomIdBTN.setVisibility(View.VISIBLE);
             mChatBTN.setVisibility(View.VISIBLE);
             setStatusButton(false);
-            Properties properties = new Properties();
-            properties
-                    // tracking integer
-                    .addAttribute("game", "LudoKing")
-                    // tracking string
-                    .addAttribute("current", getString(R.string.text_update_room_code_proceed))
-                    // tracking Date
-                    .addAttribute("gamecreatedDate", new Date());
-            MoEAnalyticsHelper.INSTANCE.trackEvent(this, "LudoKing", properties);
+            updateMoengage(getString(R.string.text_update_room_code_proceed));
         } else if (mIsCaptain && !mLudoContest.isAccepted()) {
             mRoomIdTV.setText(getString(R.string.text_waiting_opponent));
             mCancelBTN.setVisibility(View.VISIBLE);
             mUpdateRoomIdBTN.setVisibility(View.VISIBLE);
             mChatBTN.setVisibility(View.GONE);
             setStatusButton(false);
-            Properties properties = new Properties();
-            properties
-                    // tracking integer
-                    .addAttribute("game", "LudoKing")
-                    // tracking string
-                    .addAttribute("current", getString(R.string.text_waiting_opponent))
-                    // tracking Date
-                    .addAttribute("gamecreatedDate", new Date());
-            MoEAnalyticsHelper.INSTANCE.trackEvent(this, "LudoKing", properties);
+            updateMoengage(getString(R.string.text_waiting_opponent));
         } else if (!mIsCaptain && !TextUtils.isEmpty(mLudoContest.getRoomId())) {
             mRoomIdTV.setText(String.format(res.getString(R.string.text_room_code_slash), mLudoContest.getRoomId()));
             mCancelBTN.setVisibility(View.VISIBLE);
             mCancelBTN.setText(R.string.click_to_go_ludo_king);
             mChatBTN.setVisibility(View.VISIBLE);
             setStatusButton(true);
-            Properties properties = new Properties();
-            properties
-                    // tracking integer
-                    .addAttribute("game", "LudoKing")
-                    // tracking string
-                    .addAttribute("current", getString(R.string.click_to_go_ludo_king))
-                    // tracking Date
-                    .addAttribute("gamecreatedDate", new Date());
-            MoEAnalyticsHelper.INSTANCE.trackEvent(this, "LudoKing", properties);
+            updateMoengage(getString(R.string.click_to_go_ludo_king));
         } else if (!mIsCaptain && TextUtils.isEmpty(mLudoContest.getRoomId())) {
             mRoomIdTV.setText(getString(R.string.text_waiting_room_code));
             mChatBTN.setVisibility(View.VISIBLE);
             mCancelBTN.setVisibility(View.VISIBLE);
             setStatusButton(false);
-            Properties properties = new Properties();
-            properties
-                    // tracking integer
-                    .addAttribute("game", "LudoKing")
-                    // tracking string
-                    .addAttribute("current", getString(R.string.text_waiting_room_code))
-                    // tracking Date
-                    .addAttribute("gamecreatedDate", new Date());
-            MoEAnalyticsHelper.INSTANCE.trackEvent(this, "LudoKing", properties);
+            updateMoengage(getString(R.string.text_waiting_room_code));
         }
         mAppPreference.setBoolean(AppConstant.IS_DATA_CHANGE, false);
+    }
+
+    private void updateMoengage(String status) {
+        Properties properties = new Properties();
+        properties
+                .addAttribute("game", "LudoKing")
+                .addAttribute("current", status)
+                .addAttribute("gamecreatedDate", new Date());
+        MoEAnalyticsHelper.INSTANCE.trackEvent(this, "LudoKing", properties);
     }
 
     private void showCaptainImage() {
@@ -394,10 +364,6 @@ public class LudoResultActivity extends BaseActivity implements ILudoResultView,
                     AppUtilityMethods.showMsg(this, getString(R.string.text_already_updated_ludo_result), false);
                 } else {
                     showAlert(this, AppConstant.FROM_ERROR);
-                    //                    if (AppUtilityMethods.getTimeDifference(mLudoContest.getRoom_id_updated_at())) {
-                    //                    } else {
-                    //                        AppUtilityMethods.showMsg(this, getString(R.string.text_error_time_extend), false);
-                    //                    }
                 }
                 break;
             case R.id.btn_cancel:
@@ -417,8 +383,6 @@ public class LudoResultActivity extends BaseActivity implements ILudoResultView,
                 i.putExtra(AppConstant.ROOM_ID, mLudoContest.getContestCode());
                 i.putExtra(AppConstant.RECEIVER_CHATID, AppConstant.FROM_WON);
                 if (mIsCaptain) {
-//                    i.putExtra(AppConstant.IMAGE_PATH, mLudoContest.getOpponent().getDp());
-//                    i.putExtra(AppConstant.USER_ID, mLudoContest.getOpponent().getName());
                     i.putExtra(AppConstant.IMAGE_PATH, mLudoContest.getOpponent().getLudoDp());
                     i.putExtra(AppConstant.USER_ID, mLudoContest.getOpponent().getLudoName());
                     i.putExtra(AppConstant.SENDER_ID, mLudoContest.getCaptainId());
@@ -428,8 +392,6 @@ public class LudoResultActivity extends BaseActivity implements ILudoResultView,
                         i.putExtra(AppConstant.RECEIVER_CHATID, mLudoContest.getOpponent().getFirebase_chat_id());
                     }
                 } else {
-//                    i.putExtra(AppConstant.IMAGE_PATH, mLudoContest.getCaptain().getDp());
-//                    i.putExtra(AppConstant.USER_ID, mLudoContest.getCaptain().getName());
                     i.putExtra(AppConstant.IMAGE_PATH, mLudoContest.getCaptain().getLudoDp());
                     i.putExtra(AppConstant.USER_ID, mLudoContest.getCaptain().getLudoName());
                     i.putExtra(AppConstant.SENDER_ID, mLudoContest.getOpponentId());

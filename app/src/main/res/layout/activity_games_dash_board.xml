@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/relative_toolabar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_60"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_10"
-            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
             android:src="@drawable/ic_baseline_arrow_back_24" />
 
         <TextView
@@ -28,15 +28,16 @@
             android:layout_marginStart="@dimen/margin_40"
             android:layout_marginTop="@dimen/text_14"
             android:text="ClashX"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_notification_clashx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_10"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/text_14"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_10"
             android:src="@drawable/ic_notifications_black" />
 
     </RelativeLayout>
@@ -45,16 +46,16 @@
         android:id="@+id/constraint_recyler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin_40"
+        android:layout_marginTop="@dimen/margin_20"
         app:layout_constraintTop_toBottomOf="@+id/relative_toolabar">
 
         <RelativeLayout
             android:id="@+id/rl_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vp_advertisement"
@@ -102,6 +103,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/card_red"

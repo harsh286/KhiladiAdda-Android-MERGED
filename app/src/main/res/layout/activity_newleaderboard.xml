@@ -100,14 +100,19 @@
                         android:layout_marginEnd="20dp"
                         android:src="@drawable/ic_arrow_down" />
 
-
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/gold_winner"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="@dimen/top_khiladi_image_height"
+                        android:layout_height="@dimen/top_khiladi_image_height"
                         android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/margin_65"
-                        android:src="@drawable/app_logo" />
+                        android:src="@mipmap/ic_launcher"
+                        app:civ_border_color="@color/colorPrimary"
+                        app:civ_border_width="1dp"
+                        app:civ_shadow="true"
+                        app:civ_shadow_color="@color/colorPrimaryDark"
+                        app:civ_shadow_radius="5" />
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/sliver_winner"
@@ -116,7 +121,12 @@
                         android:layout_below="@+id/gold_winner"
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="@dimen/margin_40"
-                        android:src="@drawable/app_logo" />
+                        android:src="@mipmap/ic_launcher"
+                        app:civ_border_color="@color/colorPrimary"
+                        app:civ_border_width="1dp"
+                        app:civ_shadow="true"
+                        app:civ_shadow_color="@color/colorPrimaryDark"
+                        app:civ_shadow_radius="5" />
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/bronze_winner"
@@ -125,7 +135,12 @@
                         android:layout_below="@+id/gold_winner"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="@dimen/margin_40"
-                        android:src="@drawable/app_logo" />
+                        android:src="@mipmap/ic_launcher"
+                        app:civ_border_color="@color/colorPrimary"
+                        app:civ_border_width="1dp"
+                        app:civ_shadow="true"
+                        app:civ_shadow_color="@color/colorPrimaryDark"
+                        app:civ_shadow_radius="5" />
 
                     <ImageView
                         android:id="@+id/gold_crown"
@@ -359,7 +374,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_40"
-        android:layout_marginBottom="@dimen/margin_40"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -18,14 +18,17 @@
             android:id="@+id/iv_profile"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:civ_border_color="@color/colorPrimary"
             android:layout_centerVertical="true"
-            android:layout_margin="@dimen/margin_3"
+            android:layout_marginStart="@dimen/margin_3"
+            android:layout_marginTop="@dimen/margin_3"
+            android:layout_marginEnd="@dimen/margin_3"
+            android:layout_marginBottom="@dimen/margin_3"
             android:src="@mipmap/ic_launcher"
+            app:civ_border_color="@color/colorPrimary"
             app:civ_border_width="1dp"
             app:civ_shadow="true"
-            app:civ_shadow_radius="5"
-            app:civ_shadow_color="@color/colorPrimaryDark"/>
+            app:civ_shadow_color="@color/colorPrimaryDark"
+            app:civ_shadow_radius="5" />
 
         <TextView
             android:id="@+id/tv_name"

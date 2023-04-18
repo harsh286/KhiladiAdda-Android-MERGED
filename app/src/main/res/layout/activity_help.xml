@@ -52,7 +52,6 @@
                     android:contentDescription="@string/text_free_fire"
                     android:src="@drawable/freefire_max_query" />
 
-
             </LinearLayout>
 
             <LinearLayout
@@ -64,7 +63,6 @@
                 android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:visibility="visible">
-
 
                 <ImageView
                     android:id="@+id/iv_ludo_universe"
@@ -90,14 +88,6 @@
                     android:contentDescription="@string/text_free_fire"
                     android:src="@drawable/ic_ludo_tournament_query" />
 
-                <!--                <ImageView-->
-                <!--                    android:id="@+id/cv_withdraw"-->
-                <!--                    android:layout_width="0dp"-->
-                <!--                    android:layout_height="match_parent"-->
-                <!--                    android:layout_weight="1"-->
-                <!--                    android:contentDescription="@string/room_id"-->
-                <!--                    android:src="@drawable/ic_withdraw" />-->
-
             </LinearLayout>
 
             <LinearLayout
@@ -109,7 +99,6 @@
                 android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:visibility="visible">
-
 
                 <ImageView
                     android:id="@+id/iv_wscoming"
@@ -134,7 +123,6 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/text_call_duty"
                     android:src="@drawable/rummy_help" />
-
 
             </LinearLayout>
 
@@ -172,7 +160,6 @@
                     android:contentDescription="@string/room_id"
                     android:src="@drawable/ic_withdraw_help" />
 
-
             </LinearLayout>
 
             <LinearLayout
@@ -184,7 +171,6 @@
                 android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:visibility="visible">
-
 
                 <ImageView
                     android:id="@+id/cv_other"
@@ -246,7 +232,6 @@
                     android:src="@drawable/iv_hthhelp" />
 
             </LinearLayout>
-
 
         </LinearLayout>
     </ScrollView>

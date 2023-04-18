@@ -279,7 +279,7 @@ public class BattleGroupAdapter extends RecyclerView.Adapter<BattleGroupAdapter.
                 case R.id.ll_item_group_3:
                 case R.id.ll_item_group_4:
                     int playerPosition = (int) v.getTag(R.id.tag_position);
-                    if (mOnItemChildClickListener != null) {
+                    if (mOnItemChildClickListener != null && playerPosition >= 0) {
                         mOnItemChildClickListener.onPlayerProfileClicked(mGroupList.get(position).getPlayers().get(playerPosition).getpId());
                     }
                     break;

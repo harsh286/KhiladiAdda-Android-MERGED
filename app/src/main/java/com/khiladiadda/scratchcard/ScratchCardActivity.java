@@ -68,17 +68,12 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
     ImageView mWSRl;
     @BindView(R.id.txt_nodata)
     TextView mNoDataTV;
-    @BindView(R.id.tv_categories)
-    TextView mGamecountTV;
-    //    @BindView(R.id.iv_pcesports)
-//    ImageView mPcEsports;
     @BindView(R.id.iv_courtpiece)
     ImageView mCourtPiece;
     @BindView(R.id.iv_rummy)
     ImageView mRummyIv;
     @BindView(R.id.nudge)
     NudgeView mNV;
-
     private IScratchPresenter mPresenter;
     private ScratchCardAdapter mAdapter;
     private List<ScratchCardResponseDettails> mScratchList;
@@ -88,7 +83,6 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
     protected int getContentView() {
         return R.layout.activity_scratch_card;
     }
-
 
     @Override
     protected void onStart() {
@@ -176,7 +170,6 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
         mLURL.setBackground(null);
         mWSRl.setBackground(null);
         mDroidRl.setBackground(null);
-//        mPcEsports.setBackground(null);
         mCourtPiece.setBackground(null);
         mRummyIv.setBackground(null);
         if (mFromCategory.equalsIgnoreCase(AppConstant.LUDO)) {

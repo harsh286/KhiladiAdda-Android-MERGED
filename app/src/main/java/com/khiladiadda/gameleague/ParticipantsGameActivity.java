@@ -117,4 +117,10 @@ public class ParticipantsGameActivity extends BaseActivity implements IParticipa
     public void onParticipantsFailure(ApiError error) {
         hideProgress();
     }
+
+    @Override
+    protected void onDestroy() {
+        mPresenter.destroy();
+        super.onDestroy();
+    }
 }

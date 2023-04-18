@@ -14,6 +14,7 @@ import com.khiladiadda.main.fragment.BannerFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.response.CxBannerMainResponse;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 
 import androidx.viewpager.widget.ViewPager;
@@ -57,7 +58,6 @@ public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerVi
     private ICxBannerPresenter mPresenter;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
-
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
 
@@ -197,4 +197,12 @@ public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerVi
         getData("41 42 43");
         viewPager.setCurrentItem(0);
     }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
+    }
+
 }

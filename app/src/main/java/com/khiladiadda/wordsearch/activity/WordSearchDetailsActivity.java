@@ -658,4 +658,10 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mStartPresenter.destroy();
+        super.onDestroy();
+    }
 }

@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".wallet.AddWalletActivity">
+
+    <include layout="@layout/actionbar" />
+
+    <TextView
+        android:id="@+id/tv_coins"
+        style="@style/WalletText"
+        android:layout_below="@+id/action_bar"
+        android:padding="@dimen/padding_10"
+        android:paddingStart="@dimen/padding_20" />
+
+    <RelativeLayout
+        android:id="@+id/rl_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_coins"
+        android:visibility="gone">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_advertisement"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/bgmi_banner" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_pay"
+        android:layout_below="@+id/rl_image"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:text="@string/text_select_amount"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginEnd="@dimen/margin_20"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_hundred"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:layout_marginEnd="@dimen/margin_3"
+                android:layout_weight="1"
+                android:background="@drawable/ic_selector_merchant"
+                android:gravity="center"
+                android:padding="@dimen/padding_5"
+                android:text="@string/text_hundred"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/text_20" />
+
+            <TextView
+                android:id="@+id/tv_two_hundred"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_weight="1"
+                android:background="@drawable/ic_selector_merchant"
+                android:gravity="center"
+                android:padding="@dimen/padding_5"
+                android:text="@string/text_two_hundred"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/text_20" />
+
+            <TextView
+                android:id="@+id/tv_five_hundred"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:layout_marginStart="@dimen/margin_8"
+                android:layout_weight="1"
+                android:background="@drawable/ic_selector_merchant"
+                android:gravity="center"
+                android:padding="@dimen/padding_5"
+                android:text="@string/text_five_hundred"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/text_20" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginEnd="@dimen/margin_20"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_thousand"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:layout_marginEnd="@dimen/margin_3"
+                android:layout_weight="1"
+                android:background="@drawable/ic_selector_merchant"
+                android:gravity="center"
+                android:padding="@dimen/padding_5"
+                android:text="@string/text_thousand"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_20" />
+
+            <TextView
+                android:id="@+id/tv_two_thousand"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_weight="1"
+                android:background="@drawable/ic_selector_merchant"
+                android:gravity="center"
+                android:padding="@dimen/padding_5"
+                android:text="@string/text_two_thousand"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_20" />
+
+            <TextView
+                android:id="@+id/tv_five_thousand"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:layout_marginStart="@dimen/margin_8"
+                android:layout_weight="1"
+                android:background="@drawable/ic_selector_merchant"
+                android:gravity="center"
+                android:padding="@dimen/padding_5"
+                android:text="@string/text_five_thousand"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_20" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
+            android:text="@string/text_or_enter_amount"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_amount"
+            style="@style/CustomEditTextLudo"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_20"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:autofillHints=""
+            android:gravity="center"
+            android:hint="@string/text_amount_rs"
+            android:inputType="number"
+            android:maxLength="5" />
+
+        <TextView
+            android:id="@+id/tv_coupon_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="@dimen/padding_5"
+            android:text="@string/text_any_coupon"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/text_11" />
+
+        <LinearLayout
+            android:id="@+id/ll_coupon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_3"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/et_coupon_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.7"
+                android:autofillHints=""
+                android:background="@drawable/gray_editext"
+                android:gravity="center"
+                android:hint="@string/text_coupon_code"
+                android:maxLength="12"
+                android:padding="@dimen/padding_10"
+                android:textColor="@color/colorBlack"
+                android:textColorHint="@color/colorBlack"
+                android:textSize="@dimen/text_13" />
+
+            <TextView
+                android:id="@+id/btn_confirm_coupon"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_weight="1.3"
+                android:background="@drawable/ludo_button"
+                android:gravity="center"
+                android:text="@string/txt_apply"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_12" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_coupon_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:padding="@dimen/padding_3"
+                android:text="@string/text_coupon_delete"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_11"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_coupon_applied"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/padding_3"
+                android:text="@string/text_coupon_applied"
+                android:textColor="@color/button_green"
+                android:textSize="@dimen/text_11"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_offer_benifits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_8"
+            android:text="@string/offers_benefits"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_apply_coupon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/category_btn_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_20"
+            android:background="@drawable/roundborder_black"
+            android:drawableEnd="@drawable/ic_arrow_drop_down_black_18dp"
+            android:gravity="start|center"
+            android:paddingStart="@dimen/text_16"
+            android:paddingEnd="@dimen/margin_20"
+            android:text="@string/apply_coupon"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_14sp"
+            android:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll_offers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_20"
+                android:background="@drawable/border_grey"
+                android:orientation="vertical"
+                android:padding="@dimen/padding_5"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:id="@+id/rl_bajaj_wallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:layout_marginBottom="@dimen/margin_5"
+                    android:background="@drawable/ic_selector_merchant">
+
+                    <ImageView
+                        android:id="@+id/iv_cashback"
+                        android:layout_width="35dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_cashback"
+                        android:gravity="center" />
+
+                    <ImageView
+                        android:id="@+id/img_off_wallet"
+                        android:layout_width="@dimen/margin_40"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:layout_toEndOf="@+id/iv_cashback"
+                        android:src="@drawable/iv_bajaj_pay" />
+
+                    <TextView
+                        android:id="@+id/tv_bajaj_upi_discount_wallet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_20"
+                        android:layout_toEndOf="@+id/img_off_wallet"
+                        android:text="Bajaj Pay Wallet"
+                        android:textColor="#2F3336"
+                        android:textSize="@dimen/dimen_14sp" />
+
+                    <TextView
+                        android:id="@+id/tv_apply_wallet_coupon_bajaj_pay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginEnd="@dimen/margin_20"
+                        android:text="APPLY"
+                        android:textColor="#8A8A8A"
+                        android:textSize="@dimen/dimen_16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/get_discount_tv_wallet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/img_off_wallet"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:layout_marginEnd="@dimen/margin_10"
+                        android:layout_toEndOf="@+id/iv_cashback"
+                        android:text="@string/get_discount_paying_bajaj_pay_wallet"
+                        android:textColor="#CA2236"
+                        android:textSize="@dimen/text_12" />
+
+                    <ImageView
+                        android:id="@+id/img_info_bajaj_pay_wallet"
+                        android:layout_width="@dimen/text_16"
+                        android:layout_height="@dimen/text_16"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="@dimen/text_12"
+                        android:layout_marginBottom="@dimen/margin_8"
+                        android:src="@drawable/ic_info" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_bajaj_upi"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:layout_marginBottom="@dimen/margin_5"
+                    android:background="@drawable/ic_selector_merchant">
+
+                    <ImageView
+                        android:id="@+id/iv_cashback_upi"
+                        android:layout_width="35dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_cashback"
+                        android:gravity="center" />
+
+                    <ImageView
+                        android:id="@+id/img_off_upi"
+                        android:layout_width="@dimen/margin_40"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:layout_toEndOf="@+id/iv_cashback_upi"
+                        android:src="@drawable/iv_bajaj_pay" />
+
+                    <TextView
+                        android:id="@+id/tv_bajaj_upi_discount_upi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_20"
+                        android:layout_toEndOf="@+id/img_off_upi"
+                        android:text="Bajaj Pay UPI"
+                        android:textColor="#2F3336"
+                        android:textSize="@dimen/dimen_14sp" />
+
+                    <TextView
+                        android:id="@+id/tv_apply_upi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginEnd="@dimen/margin_20"
+                        android:text="APPLY"
+                        android:textColor="#8A8A8A"
+                        android:textSize="@dimen/dimen_16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/get_discount_tv_upi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/img_off_upi"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:layout_marginEnd="@dimen/margin_10"
+                        android:layout_toStartOf="@+id/img_info_bajaj_pay_upi"
+                        android:layout_toEndOf="@+id/iv_cashback_upi"
+                        android:text="@string/get_20_discount_paying_bajaj_pay_upi"
+                        android:textColor="#CA2236"
+                        android:textSize="@dimen/text_12" />
+
+                    <ImageView
+                        android:id="@+id/img_info_bajaj_pay_upi"
+                        android:layout_width="@dimen/text_16"
+                        android:layout_height="@dimen/text_16"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="@dimen/text_12"
+                        android:layout_marginBottom="@dimen/margin_8"
+                        android:src="@drawable/ic_info" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_pay"
+        style="@style/DialogButtonLudo"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:text="@string/txt_add_amount"
+        android:textAllCaps="false" />
+
+    <include layout="@layout/bannermoengage" />
+
+</RelativeLayout>

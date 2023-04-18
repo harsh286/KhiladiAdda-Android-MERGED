@@ -68,7 +68,7 @@ public class KabaadiPlayerStatusAdapter extends RecyclerView.Adapter<KabaadiPlay
         personViewHolder.mTvSuccessRaidPoints.setText(String.valueOf(details.getKbPoints().getSuccessRaid()));
         personViewHolder.mTvSuccessTacklePoints.setText(String.valueOf(details.getKbPoints().getSuccessTackle()));
         personViewHolder.mTvRaidBonusPoints.setText(String.valueOf(details.getKbPoints().getRaidBonus()));
-        personViewHolder.mTvSuperTacklePoints.setText(String.valueOf(details.getKbScore().getSuperTackle()));
+        personViewHolder.mTvSuperTacklePoints.setText(String.valueOf(details.getKbPoints().getSuperTackle()));
         personViewHolder.mTvSuccessTacklePoints.setText(String.valueOf(details.getKbPoints().getSuccessTackle()));
         personViewHolder.mTvSuperRaidPoints.setText(String.valueOf(details.getKbPoints().getSuperRaid()));
         personViewHolder.mTvSuperTenRaidPoints.setText(String.valueOf(details.getKbPoints().getSuperTenRaid()));

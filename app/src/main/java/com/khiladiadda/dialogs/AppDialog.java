@@ -11,8 +11,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.provider.Settings;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -20,12 +23,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.gson.Gson;
 import com.khiladiadda.R;
 import com.khiladiadda.clashx2.main.activity.MyFanLeagueActivityHTH;
 import com.khiladiadda.clashx2.main.activity.SelectedPlayers;
@@ -41,16 +48,28 @@ import com.khiladiadda.dialogs.interfaces.IOnRedeemVoucherListener;
 import com.khiladiadda.dialogs.interfaces.IOnUpdateGameUsernameListener;
 import com.khiladiadda.dialogs.interfaces.IOnVesrionDownloadListener;
 import com.khiladiadda.gameleague.interfaces.IDialogFilter;
+import com.khiladiadda.interfaces.IBPDownloadListener;
+import com.khiladiadda.network.model.request.BajajPayDebitTransctionRequest;
+import com.khiladiadda.network.model.request.BajajPayEncryptedRequest;
+import com.khiladiadda.network.model.request.BajajPayGetOtpRequest;
+import com.khiladiadda.network.model.request.BajajPayVerifyOtpRequest;
+import com.khiladiadda.network.model.response.BajajPayResponse;
+import com.khiladiadda.network.model.response.BajajPayResponseDecrypt;
+import com.khiladiadda.network.model.response.BajajPaymentResponse;
 import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.terms.TermsActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.ImageActivity;
+import com.khiladiadda.utility.NewAESEncrypt;
 import com.khiladiadda.utility.PermissionUtils;
 import com.khiladiadda.wallet.AddWalletActivity;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
 import com.moengage.core.model.AppStatus;
+
+import java.text.DecimalFormat;
+import java.util.Random;
 
 public class AppDialog {
 
@@ -1080,7 +1099,7 @@ public class AppDialog {
     }
 
     //Match Live Dialog
-    public void showLiveDialog(Context context,String msg, boolean live) {
+    public void showLiveDialog(Context context, String msg, boolean live) {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -1093,8 +1112,497 @@ public class AppDialog {
         text.setText(msg);
         TextView okBTN = dialog.findViewById(R.id.btn_ok);
         okBTN.setOnClickListener(arg0 -> {
-                dialog.dismiss();
+            dialog.dismiss();
         });
         dialog.show();
     }
+
+    /**
+     * for new user to link khiladi adda with bajaj pay
+     */
+    public static Dialog linkWalletBajajPay(final Context activity, final IBPDownloadListener listener, String mobile) {
+        final Dialog dialog = new Dialog(activity, R.style.MyDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.bajajpay_link_wallet);
+        TextView tvExistNumber = dialog.findViewById(R.id.tv_link_exist_mobile);
+        tvExistNumber.setText(activity.getString(R.string.link_your_wallet_bajajpay) + mobile);
+        EditText et = dialog.findViewById(R.id.et_new_mobile);
+        et.setText(mobile);
+        AppCompatButton acbOkay = dialog.findViewById(R.id.acb_okay);
+        AppCompatButton acbCancel = dialog.findViewById(R.id.acb_cancel);
+        acbCancel.setOnClickListener(view -> {
+            dialog.dismiss();
+        });
+
+        acbOkay.setOnClickListener(view -> {
+            String number = et.getText().toString();
+            if (number.equals("")) {
+                Toast.makeText(activity, activity.getString(R.string.mobile_number_not_empty), Toast.LENGTH_SHORT).show();
+            } else if (number.length() < 10) {
+                Toast.makeText(activity, activity.getString(R.string.number_cannot_less_than_10), Toast.LENGTH_SHORT).show();
+            } else if (!AppUtilityMethods.isMobileValidator(number)) {
+                Toast.makeText(activity, activity.getString(R.string.enter_10_digit_number), Toast.LENGTH_SHORT).show();
+            } else {
+                listener.getOTPBajajPa(number);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        return dialog;
+    }
+
+    public static Dialog verifyOTPBajajPay(BajajPayResponseDecrypt bajajPayResponse, final Context activity, final IBPDownloadListener listener, String msg) {
+        final Dialog dialog = new Dialog(activity, R.style.MyDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.bajajpay_verify_otp);
+        TextView tvMsg = dialog.findViewById(R.id.tv_enter_otp);
+        tvMsg.setText(msg);
+        TextView tvResendOTP = dialog.findViewById(R.id.tv_resend_otp);
+        tvResendOTP.setOnClickListener(new View.OnClickListener() {
+            int countResendOTP = 0;
+            long lastClickTime = 0;
+
+            @Override
+            public void onClick(View view) {
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+                    return;
+                }
+                lastClickTime = SystemClock.elapsedRealtime();
+                countResendOTP++;
+                if (countResendOTP == 3) {
+                    Toast.makeText(activity, activity.getString(R.string.maximum_limit_reached), Toast.LENGTH_SHORT).show();
+                    tvResendOTP.setTextColor(activity.getResources().getColor(R.color.amount_color));
+                    tvResendOTP.setEnabled(false);
+                } else {
+                    BajajPayGetOtpRequest otpRequest = new BajajPayGetOtpRequest(bajajPayResponse.getMobileNumber(), bajajPayResponse.getMerchantId(), AppConstant.subMerchantId, bajajPayResponse.getSubMerchantName());
+                    String otpEncString = new Gson().toJson(otpRequest);
+                    String otpEncRequest = NewAESEncrypt.encrypt(otpEncString.trim());
+                    BajajPayEncryptedRequest resendOtpEncRequest = new BajajPayEncryptedRequest(otpEncRequest);
+                    listener.resendOTPDialog(resendOtpEncRequest, activity, listener);
+                }
+            }
+        });
+        EditText et1 = dialog.findViewById(R.id.et_one);
+        EditText et2 = dialog.findViewById(R.id.et_two);
+        EditText et3 = dialog.findViewById(R.id.et_three);
+        EditText et4 = dialog.findViewById(R.id.et_four);
+        EditText et5 = dialog.findViewById(R.id.et_five);
+        EditText et6 = dialog.findViewById(R.id.et_six);
+        et1.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et1.getText().toString().length() > 0) {
+                    et2.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+
+            }
+
+        });
+        et2.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et2.getText().toString().length() > 0)     //size as per your requirement
+                {
+                    et3.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et2.getText().toString().equals("")) {
+                    et1.requestFocus();
+                }
+            }
+
+        });
+        et3.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et3.getText().toString().length() > 0)     //size as per your requirement
+                {
+                    et4.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et3.getText().toString().equals("")) {
+                    et2.requestFocus();
+                }
+            }
+
+        });
+        et4.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et4.getText().toString().length() > 0)     //size as per your requirement
+                {
+                    et5.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et4.getText().toString().equals("")) {
+                    et3.requestFocus();
+                }
+            }
+
+        });
+        et5.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et5.getText().toString().length() > 0)     //size as per your requirement
+                {
+                    et6.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et5.getText().toString().equals("")) {
+                    et4.requestFocus();
+                }
+            }
+        });
+        et6.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et6.getText().toString().equals("")) {
+                    et5.requestFocus();
+                }
+            }
+        });
+        AppCompatButton acbVerifyOtp = dialog.findViewById(R.id.acb_verify);
+        AppCompatButton acbCancel = dialog.findViewById(R.id.acb_cancel);
+        acbCancel.setOnClickListener(view -> dialog.dismiss());
+        acbVerifyOtp.setOnClickListener(view -> {
+            String mOTP = et1.getText().toString().trim() + et2.getText().toString().trim() + et3.getText().toString().trim() + et4.getText().toString().trim() + et5.getText().toString().trim() + et6.getText().toString().trim();
+            if (mOTP.trim().length() < 6) {
+                Toast.makeText(activity, activity.getString(R.string.otp_less_10), Toast.LENGTH_SHORT).show();
+                dialog.show();
+            } else {
+                BajajPayVerifyOtpRequest bajajPayVerifyOtpRequest = new BajajPayVerifyOtpRequest(bajajPayResponse.getMobileNumber(), bajajPayResponse.getMerchantId(), bajajPayResponse.getSubMerchantId(), bajajPayResponse.getAccessToken(), mOTP, bajajPayResponse.getSubMerchantName());
+                String jsonDataRequest = new Gson().toJson(bajajPayVerifyOtpRequest);
+                String encryptRequest = NewAESEncrypt.encrypt(jsonDataRequest.trim());
+                BajajPayEncryptedRequest bajajPayEncryptedRequest = new BajajPayEncryptedRequest(encryptRequest);
+                listener.verifyOTPDialog(bajajPayEncryptedRequest, activity, listener);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        return dialog;
+    }
+
+    /**
+     * on Payment through Bajaj Pay
+     */
+    public static Dialog payBajajPay(String amount, final Context activity, final IBPDownloadListener listener, BajajPayResponse response, String msg) {
+        final Dialog dialog = new Dialog(activity, R.style.MyDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.bajajpay_verify_otp);
+        String decryptData = NewAESEncrypt.decrypt(response.encResponse);
+        BajajPaymentResponse bajajPaymentResponse = new Gson().fromJson(decryptData, BajajPaymentResponse.class);
+        String authMobileNumber = bajajPaymentResponse.getMobileNumber();
+        String authOtpFlag = bajajPaymentResponse.getOtpFlag();
+        String authAccessToken = bajajPaymentResponse.getAccessToken();
+        String authMerchantId = bajajPaymentResponse.getMerchantId();
+        String authUserToken = bajajPaymentResponse.getUserToken();
+        /** TODO Later */
+        Random rand = new Random();
+        /**Random Number should be generated for merchantTxnId and it should be greater than 10*/
+        long merchantTxnId = (long) (rand.nextDouble() * 100000000000000L);
+        String checksum = bajajPaymentResponse.getMobileNumber() + "|" + merchantTxnId + "|" + amount + "|" + authUserToken + authMerchantId + AppConstant.authSalt;
+        NewAESEncrypt newAESEncrypt = new NewAESEncrypt();
+        String encryptCheckSum = newAESEncrypt.checkSum(checksum);
+        TextView tvMsg = dialog.findViewById(R.id.tv_enter_otp);
+        tvMsg.setText(msg);
+        TextView tvResendOTP = dialog.findViewById(R.id.tv_resend_otp);
+        /**TODO changes here*/
+        tvResendOTP.setVisibility(View.VISIBLE);
+        tvResendOTP.setOnClickListener(new View.OnClickListener() {
+            int countResendOTP = 0;
+            long lastClickTime = 0;
+
+            @Override
+            public void onClick(View view) {
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+                    return;
+                }
+                lastClickTime = SystemClock.elapsedRealtime();
+                countResendOTP++;
+                if (countResendOTP == 3) {
+                    Toast.makeText(activity, activity.getString(R.string.maximum_limit_reached), Toast.LENGTH_SHORT).show();
+                    tvResendOTP.setTextColor(activity.getResources().getColor(R.color.amount_color));
+                    tvResendOTP.setEnabled(false);
+                } else {
+                    BajajPayGetOtpRequest otpRequest = new BajajPayGetOtpRequest(authMobileNumber, AppConstant.merchantId, AppConstant.subMerchantId, AppConstant.subMerchantName);
+                    String otpEncString = new Gson().toJson(otpRequest);
+                    String otpEncRequest = NewAESEncrypt.encrypt(otpEncString.trim());
+                    BajajPayEncryptedRequest resendOtpEncRequest = new BajajPayEncryptedRequest(otpEncRequest);
+                    listener.resendOTPDialog(resendOtpEncRequest, activity, listener);
+                }
+            }
+        });
+        EditText et1 = dialog.findViewById(R.id.et_one);
+        EditText et2 = dialog.findViewById(R.id.et_two);
+        EditText et3 = dialog.findViewById(R.id.et_three);
+        EditText et4 = dialog.findViewById(R.id.et_four);
+        EditText et5 = dialog.findViewById(R.id.et_five);
+        EditText et6 = dialog.findViewById(R.id.et_six);
+        et1.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et1.getText().toString().length() > 0) {
+                    et2.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+
+            }
+
+        });
+        et2.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et2.getText().toString().length() > 0)     //size as per your requirement
+                {
+                    et3.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et2.getText().toString().equals("")) {
+                    et1.requestFocus();
+                }
+            }
+
+        });
+        et3.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et3.getText().toString().length() > 0)     //size as per your requirement
+                {
+                    et4.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et3.getText().toString().equals("")) {
+                    et2.requestFocus();
+                }
+            }
+
+        });
+        et4.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et4.getText().toString().length() > 0)     //size as per your requirement
+                {
+                    et5.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et4.getText().toString().equals("")) {
+                    et3.requestFocus();
+                }
+            }
+
+        });
+        et5.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et5.getText().toString().length() > 0)     //size as per your requirement
+                {
+                    et6.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et5.getText().toString().equals("")) {
+                    et4.requestFocus();
+                }
+            }
+        });
+        et6.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et6.getText().toString().equals("")) {
+                    et5.requestFocus();
+                }
+            }
+        });
+        AppCompatButton acbVerifyOtp = dialog.findViewById(R.id.acb_verify);
+        acbVerifyOtp.setText("Pay");
+        AppCompatButton acbCancel = dialog.findViewById(R.id.acb_cancel);
+        acbCancel.setOnClickListener(view -> dialog.dismiss());
+        acbVerifyOtp.setOnClickListener(view -> {
+            String mOTP = et1.getText().toString().trim() + et2.getText().toString().trim() + et3.getText().toString().trim() + et4.getText().toString().trim() + et5.getText().toString().trim() + et6.getText().toString().trim();
+            if (mOTP.trim().length() < 6) {
+                Toast.makeText(activity, activity.getString(R.string.otp_less_10), Toast.LENGTH_SHORT).show();
+            } else {
+                BajajPayDebitTransctionRequest bajajPayDebitTransctionRequest = new BajajPayDebitTransctionRequest(AppConstant.merchantId, authMobileNumber, authUserToken, amount, merchantTxnId, encryptCheckSum, authOtpFlag, mOTP, authAccessToken, response.getMerchantId(), AppConstant.subMerchantName);
+                String jsonDataDebitTransactionRequest = new Gson().toJson(bajajPayDebitTransctionRequest);
+                String encryptDebitTransactionRequest = NewAESEncrypt.encrypt(jsonDataDebitTransactionRequest.trim());
+                BajajPayEncryptedRequest bajajPayEncryptedDebitTransactionRequest = new BajajPayEncryptedRequest(encryptDebitTransactionRequest);
+                listener.callDebit(bajajPayEncryptedDebitTransactionRequest);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        return dialog;
+    }
+
+    /**
+     * on Insuffiecient Balance show dialog BajajPay
+     */
+    public static Dialog showBajajPaySuccessDialog(Activity activity, String addBalance, final IBPDownloadListener listener) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.setContentView(R.layout.dialog_bajajpay_status_success);
+        Button btnCancel = dialog.findViewById(R.id.btn_cancel);
+        Button btnAdd = dialog.findViewById(R.id.btn_add);
+        TextView msgTv = dialog.findViewById(R.id.tv_amt_bajajPay);
+        Double value = Double.valueOf(addBalance);
+        DecimalFormat df = new DecimalFormat("#.##");
+        Double valueOf = Double.valueOf(df.format(value));
+        String finalBalance = String.valueOf(valueOf);
+        msgTv.setText(activity.getString(R.string.balalnce_low_please_add_amount) + finalBalance + activity.getString(R.string.to_continue));
+        btnCancel.setOnClickListener(view -> dialog.dismiss());
+        btnAdd.setOnClickListener(v -> {
+            listener.insufficientBalance(finalBalance);
+            dialog.dismiss();
+        });
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        return dialog;
+    }
+
+    /**
+     * on successful verify otp show this dialog Bajaj Pay
+     */
+    public static Dialog showStatusSuccessBajajPayDialog(Activity activity, String msg, IBPDownloadListener listener) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.setContentView(R.layout.dialog_status_success_bajajpay);
+        Button btnOkay = dialog.findViewById(R.id.btn_okay_dialog_bajajpay);
+        TextView msgTv = dialog.findViewById(R.id.tv_amt);
+        msgTv.setText(msg);
+        btnOkay.setOnClickListener(v -> {
+            listener.balanceBajajPay();
+            dialog.dismiss();
+        });
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        return dialog;
+    }
+
+    /**
+     * on failed to show this dialog Bajaj Pay
+     */
+    public static Dialog showBajajPayFailureDialog(String from, String msgStatus, Activity activity, String msg, IBPDownloadListener listener) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.setContentView(R.layout.dialog_bajaj_pay_failure);
+        TextView tvStatus = dialog.findViewById(R.id.tv_ps_bajaj_pay);
+        tvStatus.setText(msgStatus);
+        MaterialButton btnOkay = dialog.findViewById(R.id.btn_okay_failure);
+        TextView msgTv = dialog.findViewById(R.id.tv_amt_failed);
+        msgTv.setText(msg);
+        ImageView imgCancel = dialog.findViewById(R.id.img_cancel);
+        if (from.equals(activity.getString(R.string.bajaj_create_wallet))) {
+            btnOkay.setText(activity.getString(R.string.bajaj_create_wallet));
+            imgCancel.setVisibility(View.VISIBLE);
+            imgCancel.setOnClickListener(view -> dialog.dismiss());
+            btnOkay.getText().equals(((activity.getString(R.string.bajaj_create_wallet))));
+            btnOkay.setOnClickListener(view -> {
+                final String appPackageName = "org.altruist.BajajExperia"; // getPackageName() from Context or Activity object
+                try {
+                    activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException activityNotFoundException) {
+                    activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+                dialog.dismiss();
+            });
+        } else if (msg.equals(activity.getString(R.string.bajajpay_delink_wallet))) {
+            btnOkay.setText(activity.getString(R.string.delink_wallet));
+            btnOkay.setOnClickListener(view -> {
+                listener.deLinkWallet();
+                dialog.dismiss();
+            });
+        } else {
+            btnOkay.equals(activity.getString(R.string.okay));
+            btnOkay.setOnClickListener(v -> {
+                dialog.dismiss();
+            });
+        }
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        return dialog;
+    }
+
+    /**
+     * BajajPay UPI and Wallet Discount
+     */
+    public static Dialog bajajPayUPIDiscountOffer(Activity activity, String msg, String header) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.setContentView(R.layout.dialog_bajajpay_discount);
+        TextView tvHeader = dialog.findViewById(R.id.tv_ps);
+        Button btnOkay = dialog.findViewById(R.id.btn_add);
+        TextView tvOffer = dialog.findViewById(R.id.tv_amt_bajajPay);
+        tvHeader.setText("BAJAJ PAY UPI OFFER");
+        tvOffer.setText(msg);
+        tvHeader.setText(header);
+        btnOkay.setOnClickListener(view -> dialog.dismiss());
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        return dialog;
+    }
+
 }

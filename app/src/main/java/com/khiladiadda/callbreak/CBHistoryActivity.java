@@ -150,4 +150,12 @@ public class CBHistoryActivity extends BaseActivity implements ICallBreakView, I
         startActivity(i);
         finish();
     }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
+    }
+
 }

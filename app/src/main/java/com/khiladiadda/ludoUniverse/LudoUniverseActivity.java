@@ -497,6 +497,7 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mLudoNotificationReceiver);
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }
@@ -852,7 +853,6 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         }
     }
 
-
     private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
         mAdvertisementsList.clear();
         mAdvertisementsList.addAll(advertisementDetails);
@@ -876,4 +876,5 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
             moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
         }, 10000);
     }
+
 }

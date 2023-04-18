@@ -121,6 +121,7 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
 
     @Override
     protected void initVariables() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter = new RummyPresenter(this);
         mProfilePresenter = new ProfilePresenter(this);
         mList = new ArrayList<>();
@@ -182,15 +183,8 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
                     setMode(34);
                 break;
             case R.id.tv_how_to_play:
-//                try {
-//                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + "www.youtube.com/playlist?list=PLIvWNKDITNJA-lKa_RUj6L1mJvfy8McSG"));
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    startActivity(intent);
-//                } catch (ActivityNotFoundException e) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/jP2AP1z_m6c")));
-//                }
                 break;
-
             case R.id.tv_history:
                 startActivity(new Intent(this, RummyHistoryActivity.class));
         }
@@ -378,7 +372,6 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
                 return;
             }
             mLastClickTime = SystemClock.elapsedRealtime();
-
             openBottomDialog(pos, 1);
         } else {
             if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
@@ -449,7 +442,7 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     @Override
     protected void onResume() {
         super.onResume();
-        if (isPlayed){
+        if (isPlayed) {
             getProfile();
         }
     }
@@ -459,7 +452,6 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
             showProgress(getString(R.string.txt_progress_authentication));
             mProfilePresenter.getProfile();
         } else {
-//            setProfileData();
             Snackbar.make(mBackIV, getString(R.string.error_internet), Snackbar.LENGTH_LONG).show();
         }
     }
@@ -536,4 +528,11 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     public void onUpdateEmailFailure(ApiError error) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        mPresenter.destroy();
+        super.onDestroy();
+    }
+
 }

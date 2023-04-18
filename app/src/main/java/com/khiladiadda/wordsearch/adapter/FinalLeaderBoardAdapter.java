@@ -1,6 +1,7 @@
 package com.khiladiadda.wordsearch.adapter;
 
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,6 @@ public class FinalLeaderBoardAdapter extends RecyclerView.Adapter<FinalLeaderBoa
                 wordSearchLiveLeaderBoardlbResponse.getUser().getDp());
         holder.mRankTV.setVisibility(View.VISIBLE);
         holder.mRankTV.setText("#" + wordSearchLiveLeaderBoardlbResponse.getRank());
-
     }
 
     private void setupUi(@NonNull ViewHolder holder, int position, String name, String played, String won, String wons, String dp) {
@@ -65,7 +65,13 @@ public class FinalLeaderBoardAdapter extends RecyclerView.Adapter<FinalLeaderBoa
         holder.mPlayedTV.setText(played);
         holder.mWonTV.setText(won);
         holder.mWonsTV.setText(wons);
-        Glide.with(holder.itemView.getContext()).load(dp).placeholder(R.drawable.profile).into(holder.mParticipantsIV);
+//        Glide.with(holder.itemView.getContext()).load(dp).placeholder(R.drawable.profile).into(holder.mParticipantsIV);
+        if (!TextUtils.isEmpty(dp)) {
+            Glide.with(holder.mParticipantsIV.getContext()).load(dp).placeholder(R.mipmap.ic_launcher).into(holder.mParticipantsIV);
+        } else {
+            Glide.with(holder.mParticipantsIV.getContext()).clear(holder.mParticipantsIV);
+            holder.mParticipantsIV.setImageResource(R.mipmap.ic_launcher);
+        }
     }
 
     @Override

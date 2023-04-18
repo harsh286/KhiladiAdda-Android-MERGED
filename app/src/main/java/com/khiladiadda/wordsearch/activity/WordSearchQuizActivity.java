@@ -20,6 +20,7 @@ import com.khiladiadda.network.model.response.WordSearchCategoriesQuizzesRespons
 import com.khiladiadda.network.model.response.WordSearchMyQuizzesMainResponse;
 import com.khiladiadda.network.model.response.WordSearchMyQuizzesResponse;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.wordsearch.adapter.WordSearchQuizAdapter;
 import com.khiladiadda.wordsearch.adapter.WordSearchTrendingQuizAdapter;
@@ -205,6 +206,13 @@ public class WordSearchQuizActivity extends BaseActivity implements IOnClickList
     @Override
     public void onWordSearchMyQuizzesFailure(ApiError error) {
         hideProgress();
+    }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mMyQuizzesPresenter.destroy();
+        super.onDestroy();
     }
 
 }

@@ -1,6 +1,5 @@
 package com.khiladiadda.gameleague;
 
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -87,24 +86,15 @@ public class TournamenetDetailActivity extends BaseActivity implements ITourname
     MaterialCardView mcvRules;
     @BindView(R.id.tv_ends_in)
     TextView tvEndsIn;
-    private String mDayLeft;
-    private String mEndTime;
+
     private PrizePoolAdapter mPrizePoolAdapter;
     private ArrayList<PrizePool> prizePoolArrayList = new ArrayList<>();
-    private String id;
     private Shimmer mShimmer;
     private long mLastClickTime = 0;
     private ITournamentDetailPresenter mPresenter;
-    private String userID;
-    private String tournamentid;
-    private String refNo;
-    private String playedParticipant;
-    private String totalParticipants;
-    private String nAttempts;
-    private String entryPrize;
-    private String winPrize;
+    private String mDayLeft, mEndTime, id, playedParticipant, totalParticipants, nAttempts, entryPrize, winPrize;
     private double mTotalWalletBal, mDepositWinWallet, mBonusBal, mBonusPayable, mWalletPayable;
-    private int mType, mBonusCode = 0, mParticipants, mAttempt = 3, mQuizStatus;
+    private int mBonusCode = 0, mAttempt = 3;
     private boolean mLowBalance;
 
     @Override
@@ -247,7 +237,6 @@ public class TournamenetDetailActivity extends BaseActivity implements ITourname
         mProperties.addAttribute("Bonus", response.getWalletObj().getBonus());
         mProperties.addAttribute("EntryFee", entryPrize);
         MoEAnalyticsHelper.INSTANCE.trackEvent(this, "Droid_DO", mProperties);
-
     }
 
     private void loadGamelinks(String gameurl, TournamentDetailResponse response) {
@@ -346,6 +335,13 @@ public class TournamenetDetailActivity extends BaseActivity implements ITourname
     public void onBackPressed() {
         super.onBackPressed();
         slideToActView.resetSlider();
-
     }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
+    }
+
 }

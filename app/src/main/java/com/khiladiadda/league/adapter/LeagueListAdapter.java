@@ -77,23 +77,27 @@ public class LeagueListAdapter extends RecyclerView.Adapter<LeagueListAdapter.Pe
             holder.mParticipatedTV.setText("Filling Fast " + details.getPlayedParticipants() + "/" + details.getTotalParticipants());
             holder.mProgressPB.setProgress((int) participant);
         }
-        if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_ID, ""))) {
-            holder.mIV.setImageResource(R.drawable.tdm);
-        } else if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_LITE_ID, ""))) {
-            holder.mIV.setImageResource(R.drawable.ic_bgmi);
-        } else if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FREEFIRE_ID, ""))) {
-            holder.mIV.setImageResource(R.drawable.ic_ff);
-        } else if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FF_CLASH_ID, ""))) {
-            holder.mIV.setImageResource(R.drawable.ff_clashs);
-        } else if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FF_MAX_ID, ""))) {
-            holder.mIV.setImageResource(R.drawable.freefire_max);
-        } else if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_GLOBAL_ID, ""))) {
-            holder.mIV.setImageResource(R.drawable.pubg_gobal_lite);
-        } else if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PREMIUM_ESPORTS_ID, ""))) {
-//            holder.mIV.setImageResource(R.drawable.esports_per);
-            holder.mIV.setImageResource(R.drawable.esports_per);
-        } else if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_NEWSTATE_ID, ""))) {
-            holder.mIV.setImageResource(R.drawable.pubg_ns);
+        AppSharedPreference preference = AppSharedPreference.getInstance();
+        if (preference != null && mGameId != null) {
+            if (mGameId.equalsIgnoreCase(preference.getString(AppConstant.PUBG_ID, ""))) {
+                holder.mIV.setImageResource(R.drawable.tdm);
+            } else if (mGameId.equalsIgnoreCase(preference.getString(AppConstant.PUBG_LITE_ID, ""))) {
+                holder.mIV.setImageResource(R.drawable.ic_bgmi);
+            } else if (mGameId.equalsIgnoreCase(preference.getString(AppConstant.FREEFIRE_ID, ""))) {
+                holder.mIV.setImageResource(R.drawable.ic_ff);
+            } else if (mGameId.equalsIgnoreCase(preference.getString(AppConstant.FF_CLASH_ID, ""))) {
+                holder.mIV.setImageResource(R.drawable.ff_clashs);
+            } else if (mGameId.equalsIgnoreCase(preference.getString(AppConstant.FF_MAX_ID, ""))) {
+                holder.mIV.setImageResource(R.drawable.freefire_max);
+            } else if (mGameId.equalsIgnoreCase(preference.getString(AppConstant.PUBG_GLOBAL_ID, ""))) {
+                holder.mIV.setImageResource(R.drawable.pubg_gobal_lite);
+            } else if (mGameId.equalsIgnoreCase(preference.getString(AppConstant.PREMIUM_ESPORTS_ID, ""))) {
+                holder.mIV.setImageResource(R.drawable.esports_per);
+            } else if (mGameId.equalsIgnoreCase(preference.getString(AppConstant.PUBG_NEWSTATE_ID, ""))) {
+                holder.mIV.setImageResource(R.drawable.pubg_ns);
+            }
+        } else {
+            holder.mIV.setImageResource(R.mipmap.ic_launcher);
         }
     }
 

@@ -72,7 +72,7 @@ public class LudoChallengeAdapter extends RecyclerView.Adapter<LudoChallengeAdap
                 holder.mAcceptTV.setEnabled(false);
                 holder.mAcceptTV.setBackgroundResource(R.color.button_green);
                 if (!TextUtils.isEmpty(ludoContestBean.getCaptain().getDp())) {
-                    Glide.with(mContext).load(ludoContestBean.getCaptain().getDp()).placeholder(R.drawable.profile).into(holder.mProfileIV);
+                    Glide.with(mContext).load(ludoContestBean.getCaptain().getDp()).placeholder(R.mipmap.ic_launcher).into(holder.mProfileIV);
                 } else {
                     Glide.with(mContext).clear(holder.mProfileIV);
                     holder.mProfileIV.setImageResource(R.mipmap.ic_launcher);
@@ -84,7 +84,7 @@ public class LudoChallengeAdapter extends RecyclerView.Adapter<LudoChallengeAdap
                 holder.mAcceptTV.setEnabled(true);
                 holder.mAcceptTV.setBackgroundResource(R.color.active_state_submit_button);
                 if (!TextUtils.isEmpty(ludoContestBean.getCaptain().getLudoDp())) {
-                    Glide.with(mContext).load(ludoContestBean.getCaptain().getLudoDp()).placeholder(R.drawable.profile).into(holder.mProfileIV);
+                    Glide.with(mContext).load(ludoContestBean.getCaptain().getLudoDp()).placeholder(R.mipmap.ic_launcher).into(holder.mProfileIV);
                 } else {
                     Glide.with(mContext).clear(holder.mProfileIV);
                     holder.mProfileIV.setImageResource(R.mipmap.ic_launcher);
@@ -118,7 +118,7 @@ public class LudoChallengeAdapter extends RecyclerView.Adapter<LudoChallengeAdap
 
     private void setCaptainImage(LudoContest ludoContestBean, LudoContestHolder holder) {
         if (ludoContestBean.getCaptain() != null && ludoContestBean.getCaptain().getDp() != null && !TextUtils.isEmpty(ludoContestBean.getCaptain().getDp())) {
-            Glide.with(mContext).load(ludoContestBean.getCaptain().getDp()).placeholder(R.drawable.profile).into(holder.mProfileAccepterIV);
+            Glide.with(mContext).load(ludoContestBean.getCaptain().getDp()).placeholder(R.mipmap.ic_launcher).into(holder.mProfileAccepterIV);
         } else {
             Glide.with(mContext).clear(holder.mProfileAccepterIV);
             holder.mProfileIV.setImageResource(R.mipmap.ic_launcher);
@@ -127,7 +127,7 @@ public class LudoChallengeAdapter extends RecyclerView.Adapter<LudoChallengeAdap
 
     private void setCaptainDummyImage(LudoContest ludoContestBean, LudoContestHolder holder) {
         if (ludoContestBean.getCaptain() != null && ludoContestBean.getCaptain().getLudoDp() != null && !TextUtils.isEmpty(ludoContestBean.getCaptain().getDp())) {
-            Glide.with(mContext).load(ludoContestBean.getCaptain().getLudoDp()).placeholder(R.drawable.profile).into(holder.mProfileAccepterIV);
+            Glide.with(mContext).load(ludoContestBean.getCaptain().getLudoDp()).placeholder(R.mipmap.ic_launcher).into(holder.mProfileAccepterIV);
         } else {
             Glide.with(mContext).clear(holder.mProfileAccepterIV);
             holder.mProfileIV.setImageResource(R.mipmap.ic_launcher);
@@ -136,7 +136,7 @@ public class LudoChallengeAdapter extends RecyclerView.Adapter<LudoChallengeAdap
 
     private void setOpponentImage(LudoContest ludoContestBean, LudoContestHolder holder) {
         if (ludoContestBean.getOpponent() != null && ludoContestBean.getOpponent().getDp() != null && !TextUtils.isEmpty(ludoContestBean.getOpponent().getDp())) {
-            Glide.with(mContext).load(ludoContestBean.getOpponent().getDp()).placeholder(R.drawable.profile).into(holder.mProfileIV);
+            Glide.with(mContext).load(ludoContestBean.getOpponent().getDp()).placeholder(R.mipmap.ic_launcher).into(holder.mProfileIV);
         } else {
             Glide.with(mContext).clear(holder.mProfileIV);
             holder.mProfileIV.setImageResource(R.mipmap.ic_launcher);
@@ -145,7 +145,7 @@ public class LudoChallengeAdapter extends RecyclerView.Adapter<LudoChallengeAdap
 
     private void setOpponentDummyImage(LudoContest ludoContestBean, LudoContestHolder holder) {
         if (ludoContestBean.getOpponent() != null && ludoContestBean.getOpponent().getLudoDp() != null && !TextUtils.isEmpty(ludoContestBean.getOpponent().getDp())) {
-            Glide.with(mContext).load(ludoContestBean.getOpponent().getLudoDp()).placeholder(R.drawable.profile).into(holder.mProfileIV);
+            Glide.with(mContext).load(ludoContestBean.getOpponent().getLudoDp()).placeholder(R.mipmap.ic_launcher).into(holder.mProfileIV);
         } else {
             Glide.with(mContext).clear(holder.mProfileIV);
             holder.mProfileIV.setImageResource(R.mipmap.ic_launcher);

@@ -163,7 +163,7 @@ public class MyChallengeAdapter extends RecyclerView.Adapter<MyChallengeAdapter.
                 if (!getRoomAutoGenerate) {
                     holder.mCancelTV.setVisibility(View.VISIBLE);
                     holder.mPlayTV.setText(R.string.text_update_room_code);
-                }else {
+                } else {
                     holder.mCancelTV.setVisibility(View.GONE);
                     holder.mPlayTV.setText("Show room code");
                 }
@@ -195,24 +195,24 @@ public class MyChallengeAdapter extends RecyclerView.Adapter<MyChallengeAdapter.
 
     private void setCaptainData(LudoContest ludoContestBean, LudoContestHolder holder) {
         holder.mTitleTV.setText("You accepted challenge for \n" + ludoContestBean.getEntryFees() + " Coins");
+        holder.mPlayerNameTV.setText(ludoContestBean.getCaptain().getLudoName());
         if (!TextUtils.isEmpty(ludoContestBean.getCaptain().getLudoDp())) {
-            Glide.with(mContext).load(ludoContestBean.getCaptain().getLudoDp()).placeholder(R.drawable.profile).into(holder.mProfileAccepterIV);
+            Glide.with(mContext).load(ludoContestBean.getCaptain().getLudoDp()).placeholder(R.mipmap.ic_launcher).into(holder.mProfileAccepterIV);
         } else {
             Glide.with(mContext).clear(holder.mProfileAccepterIV);
             holder.mProfileAccepterIV.setImageResource(R.mipmap.ic_launcher);
         }
-        holder.mPlayerNameTV.setText(ludoContestBean.getCaptain().getLudoName());
     }
 
     private void setOpponentData(LudoContest ludoContestBean, LudoContestHolder holder) {
         holder.mTitleTV.setText("Your challenge has been accepted\n" + ludoContestBean.getEntryFees() + " Coins");
+        holder.mPlayerNameTV.setText(ludoContestBean.getOpponent().getLudoName());
         if (ludoContestBean.getOpponent() != null && ludoContestBean.getOpponent().getLudoDp() != null && !TextUtils.isEmpty(ludoContestBean.getOpponent().getLudoDp())) {
-            Glide.with(mContext).load(ludoContestBean.getOpponent().getLudoDp()).placeholder(R.drawable.profile).into(holder.mProfileAccepterIV);
+            Glide.with(mContext).load(ludoContestBean.getOpponent().getLudoDp()).placeholder(R.mipmap.ic_launcher).into(holder.mProfileAccepterIV);
         } else {
             Glide.with(mContext).clear(holder.mProfileAccepterIV);
             holder.mProfileAccepterIV.setImageResource(R.mipmap.ic_launcher);
         }
-        holder.mPlayerNameTV.setText(ludoContestBean.getOpponent().getLudoName());
     }
 
     @Override

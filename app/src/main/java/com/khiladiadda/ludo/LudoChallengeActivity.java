@@ -432,6 +432,7 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mLudoNotificationReceiver);
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

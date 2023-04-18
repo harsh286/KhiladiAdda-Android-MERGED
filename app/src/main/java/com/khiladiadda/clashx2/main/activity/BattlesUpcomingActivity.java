@@ -459,6 +459,7 @@ public class BattlesUpcomingActivity extends BaseActivity implements ICreateBatt
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mHTHNotificationReceiverLiveMatches);
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

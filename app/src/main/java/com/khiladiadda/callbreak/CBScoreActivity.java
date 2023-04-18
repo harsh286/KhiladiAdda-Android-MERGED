@@ -1,47 +1,33 @@
 package com.khiladiadda.callbreak;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
-import com.khiladiadda.callbreak.adapter.CallBreakHistoryAdapter;
 import com.khiladiadda.callbreak.adapter.CallBreakScoreAdapter;
 import com.khiladiadda.callbreak.interfaces.ICallBreakPresenter;
 import com.khiladiadda.callbreak.interfaces.ICallBreakView;
-import com.khiladiadda.dialogs.AppDialog;
-import com.khiladiadda.interfaces.IOnItemClickListener;
 import com.khiladiadda.network.model.ApiError;
-import com.khiladiadda.network.model.response.CallBreakDetails;
 import com.khiladiadda.network.model.response.CallBreakHistoryPlayerResponse;
 import com.khiladiadda.network.model.response.CallBreakJoinMainResponse;
 import com.khiladiadda.network.model.response.CallBreakResponse;
 import com.khiladiadda.network.model.response.CbHistoryRankMainResponse;
-import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CBScoreActivity extends BaseActivity implements ICallBreakView {
 
@@ -56,11 +42,8 @@ public class CBScoreActivity extends BaseActivity implements ICallBreakView {
     @BindView(R.id.mcv_play)
     MaterialCardView mPlayAGainMcv;
     private CallBreakScoreAdapter mAdapter;
-    private List<CallBreakDetails> mList;
     private List<CallBreakHistoryPlayerResponse> playersValue;
-    private List<CallBreakHistoryPlayerResponse> mNewPlayersValue;
     private ICallBreakPresenter mPresenter;
-    private String id;
 
     @Override
     protected int getContentView() {
@@ -79,11 +62,7 @@ public class CBScoreActivity extends BaseActivity implements ICallBreakView {
     @Override
     protected void initVariables() {
         playersValue = new ArrayList<>();
-//        playersValue = getIntent().getParcelableArrayListExtra("player_list");
-        id = getIntent().getStringExtra(AppConstant.ID);
-//        playersValue.sort();
-        setData(id);
-
+        setData(getIntent().getStringExtra(AppConstant.ID));
     }
 
     private void setData(String id) {
@@ -147,24 +126,13 @@ public class CBScoreActivity extends BaseActivity implements ICallBreakView {
 
     @Override
     public void onGetHistoryRankSuccess(CbHistoryRankMainResponse responseModel) {
-        hideProgress();
         if (responseModel.isStatus()) {
             playersValue = responseModel.getResponse().getPlayers();
-//            for (int i = 0; i < responseModel.getResponse().getPlayers().size(); i++) {
-//                if (Objects.equals(AppSharedPreference.getInstance().getMasterData().getResponse().getProfile().getId(),
-//                        responseModel.getResponse().getPlayers().get(i).getUserId())) {
-//                    mNumberingTv.setText("#" + responseModel.getResponse().getPlayers().get(i).getRank());
-//                    mNameTv.setText(responseModel.getResponse().getPlayers().get(i).getName());
-//                    mPointsTv.setText("" + responseModel.getResponse().getPlayers().get(i).getScore());
-//                    mWonTv.setText("" + responseModel.getResponse().getPlayers().get(i).getWinningAmount());
-//                    Glide.with(this).load(responseModel.getResponse().getPlayers().get(i).getDp()).placeholder(R.drawable.splash_logo).into(mProfileCiv);
-//                    mNewPlayersValue.remove(i);
-//                }
-//            }
             mAdapter = new CallBreakScoreAdapter(this, playersValue);
             mCallBreakRV.setLayoutManager(new LinearLayoutManager(this));
             mCallBreakRV.setAdapter(mAdapter);
         }
+        hideProgress();
     }
 
     public static int compareThem(CallBreakHistoryPlayerResponse a, CallBreakHistoryPlayerResponse b) {
@@ -174,7 +142,6 @@ public class CBScoreActivity extends BaseActivity implements ICallBreakView {
     @Override
     public void onGetHistoryRankFailure(ApiError error) {
         hideProgress();
-
     }
 
     @Override
@@ -182,4 +149,12 @@ public class CBScoreActivity extends BaseActivity implements ICallBreakView {
         super.onResume();
 
     }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
+    }
+
 }

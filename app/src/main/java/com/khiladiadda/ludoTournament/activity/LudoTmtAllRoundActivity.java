@@ -37,7 +37,6 @@ public class LudoTmtAllRoundActivity extends BaseActivity implements ILudoTmtPas
     RecyclerView allPastRoundRv;
     @BindView(R.id.tv_no_data)
     TextView noDataTv;
-
     private LudoTmtPastRoundsPresenter mPresenter;
     private LudoTmtAllTournamentResponse matchDetailsResponse;
     private LudoTmtMyMatchResponse ludoTmtMyMatchResponse;
@@ -89,13 +88,13 @@ public class LudoTmtAllRoundActivity extends BaseActivity implements ILudoTmtPas
     public void onGetPastRoundsTournamentComplete(LudoTmtAllPastRoundsMainResponse response) {
         hideProgress();
         if (response.isStatus()) {
-            if(response.getResponse().size() != 0) {
+            if (response.getResponse().size() != 0) {
                 noDataTv.setVisibility(View.GONE);
                 if (matchDetailsResponse != null)
                     allPastRoundRv.setAdapter(new LudoTmtPastAllRoundAdapter(this, this, response.getResponse(), false, matchDetailsResponse.getStartDate()));
                 else
                     allPastRoundRv.setAdapter(new LudoTmtPastAllRoundAdapter(this, this, response.getResponse(), false, ludoTmtMyMatchResponse.getStartDate()));
-            }else {
+            } else {
                 noDataTv.setVisibility(View.VISIBLE);
             }
         }
@@ -126,4 +125,12 @@ public class LudoTmtAllRoundActivity extends BaseActivity implements ILudoTmtPas
     public void onRefresh() {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
+    }
+
 }

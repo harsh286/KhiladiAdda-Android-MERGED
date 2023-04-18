@@ -14,6 +14,7 @@ import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.response.wordsearch_new.WordSearchCategoryMainResponse;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.wordsearch.adapter.WordSearchCategoriesAdapter;
 import com.khiladiadda.wordsearch.ip.WordSearchTournamentCategoriesPresenter;
@@ -103,6 +104,13 @@ public class WordSearchCategoriesActivity extends BaseActivity implements IWordS
         intent.putExtra(AppConstant.WORD_SEARCH_CATEGORY_NAME, mainResponse.getResponse().get(pos).getName());
         intent.putExtra(AppConstant.WORD_SEARCH_QUIZ_ID, mainResponse.getResponse().get(pos).getId());
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
     }
 
 }

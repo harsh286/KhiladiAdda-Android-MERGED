@@ -311,11 +311,11 @@ public class HelpActivity extends BaseActivity implements IHelpView {
 
     @Override
     public void onGetCategoryComplete(FaqCategoryResponse responseModel) {
-        hideProgress();
         if (responseModel.isStatus()) {
             mSupportVia = responseModel.getSupportVia() != 0;
             mAppPreference.setFAQCategoryData(responseModel);
         }
+        hideProgress();
     }
 
     @Override

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_bajaj_pay"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/margin_50"
+        android:background="@color/bajajpay_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/productsansregular"
+            android:lineSpacingExtra="@dimen/margin_8"
+            android:text="Link your wallet"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_link_exist_mobile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginTop="@dimen/text_16"
+        android:layout_marginEnd="@dimen/margin_8"
+        android:fontFamily="@font/productsansregular"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/margin_8"
+        android:padding="@dimen/card_corner_radius_4"
+        android:text="@string/link_your_wallet_with_existing_number"
+        android:textColor="@color/amount_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraint_bajaj_pay" />
+
+    <TextView
+        android:id="@+id/tv_or_bj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_8"
+        android:fontFamily="@font/productsansregular"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/card_corner_radius_4"
+        android:text="@string/or"
+        android:textAllCaps="false"
+        android:textColor="@color/amount_color"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_link_exist_mobile" />
+
+    <TextView
+        android:id="@+id/tv_new_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_8"
+        android:fontFamily="@font/productsansregular"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/margin_8"
+        android:padding="@dimen/card_corner_radius_4"
+        android:text="@string/enter_new_mobile_number"
+        android:textColor="@color/amount_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_or_bj" />
+
+    <EditText
+        android:id="@+id/et_new_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginTop="@dimen/text_16"
+        android:layout_marginEnd="@dimen/margin_8"
+        android:background="@drawable/ic_rectangle_bg"
+        android:digits="0123456789"
+        android:drawableStart="@drawable/ic_mobile"
+        android:drawablePadding="@dimen/margin_10"
+        android:hint="+91"
+        android:inputType="number"
+        android:maxLength="10"
+        android:padding="@dimen/card_corner_radius_4"
+        android:paddingStart="@dimen/text_12"
+        app:layout_constraintTop_toBottomOf="@+id/tv_new_mobile" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_15"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_new_mobile">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/acb_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_40"
+            android:layout_marginEnd="@dimen/margin_3"
+            android:layout_weight="1"
+            android:background="@drawable/shape_button_red"
+            android:text="@string/text_cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/acb_okay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_40"
+            android:layout_marginStart="@dimen/margin_3"
+            android:layout_weight="1"
+            android:background="@drawable/shape_button_red"
+            android:text="@string/txt_continue"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

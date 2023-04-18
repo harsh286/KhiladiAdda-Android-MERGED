@@ -240,6 +240,7 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mLudoNotificationReceiver);
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

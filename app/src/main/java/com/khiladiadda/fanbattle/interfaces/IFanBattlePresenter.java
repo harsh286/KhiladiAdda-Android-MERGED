@@ -6,4 +6,6 @@ public interface IFanBattlePresenter extends IBasePresenter {
 
     void getMatchList(String id);
 
+    void getMasterData();
+
 }

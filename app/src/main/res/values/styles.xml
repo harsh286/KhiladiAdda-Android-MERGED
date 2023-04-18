@@ -183,7 +183,7 @@
     <style name="LeagueCardAppearance" parent="CardView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-<!--        <item name="cardUseCompatPadding">true</item>-->
+        <!--        <item name="cardUseCompatPadding">true</item>-->
         <item name="cardCornerRadius">@dimen/card_corner_radius_10</item>
         <item name="cardElevation">@dimen/card_elevation_5</item>
         <item name="android:layout_marginStart">@dimen/margin_5</item>
@@ -400,8 +400,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textSize">@dimen/text_11</item>
+        <item name="android:textSize">@dimen/text_12</item>
         <item name="android:padding">@dimen/padding_5</item>
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 
     <style name="ButtonBottom">
@@ -871,6 +872,7 @@
         <item name="android:textSize">@dimen/text_13</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
+
     <style name="DialogButtonWordSearch">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -930,6 +932,15 @@
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:drawablePadding">@dimen/padding_5</item>
         <item name="android:paddingStart">@dimen/padding_8</item>
+    </style>
+
+    <style name="CustomEditTextWallet">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/group_height_width</item>
+        <item name="android:textSize">@dimen/text_17</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@drawable/roundborder_black</item>
+        <item name="android:textColor">@color/colorBlack</item>
     </style>
 
     <style name="NewDialogHeadText">
@@ -1003,9 +1014,9 @@
         <item name="fontFamily">@font/montserrat</item>
     </style>
 
-<!--    <style name="MyBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">-->
-<!--        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>-->
-<!--    </style>   -->
+    <!--    <style name="MyBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">-->
+    <!--        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>-->
+    <!--    </style>   -->
 
     <style name="MyBottomSheetDialogTheme" parent="Widget.Design.BottomNavigationView">
         <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
@@ -1034,6 +1045,47 @@
         <item name="android:background">@drawable/ic_rummy_btn</item>
         <item name="android:textSize">@dimen/text_13</item>
         <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="DashboardLudoImageView">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">140dp</item>
+        <item name="android:layout_marginStart">@dimen/margin_5</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:contentDescription">@string/menu_ludo</item>
+    </style>
+
+    <style name="DashboardGameImageView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">140dp</item>
+        <item name="android:layout_marginStart">@dimen/margin_5</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:contentDescription">@string/menu_ludo</item>
+    </style>
+
+    <style name="DashboardFantasyImageView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin_5</item>
+        <item name="android:layout_marginEnd">@dimen/margin_5</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:contentDescription">@string/menu_ludo</item>
+    </style>
+
+    <style name="DashboardLeagueVerticalImageView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/margin_5</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:contentDescription">@string/menu_ludo</item>
+    </style>
+
+    <style name="DashboardLeagueImageView">
+        <item name="contentDescription">@string/menu_ludo</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/margin_5</item>
+        <item name="android:layout_weight">1</item>
     </style>
 
 </resources>

@@ -2,6 +2,7 @@ package com.khiladiadda.fanbattle;
 
 import com.khiladiadda.fanbattle.interfaces.IFanBattlePresenter;
 import com.khiladiadda.fanbattle.interfaces.IFanBattleView;
+import com.khiladiadda.network.model.response.MasterResponse;
 import com.khiladiadda.network.model.response.MatchResponse;
 import com.khiladiadda.network.IApiListener;
 import com.khiladiadda.network.model.ApiError;
@@ -30,6 +31,20 @@ public class FanBattlePresenter implements IFanBattlePresenter {
 
         @Override public void onError(ApiError error) {
             mView.onGetMatchListFailure(error);
+        }
+    };
+
+    @Override public void getMasterData() {
+        mSubscription = mInteractor.getMaster(mMasterApiListener);
+    }
+
+    private IApiListener<MasterResponse> mMasterApiListener = new IApiListener<MasterResponse>() {
+        @Override public void onSuccess(MasterResponse response) {
+            mView.onMasterComplete(response);
+        }
+
+        @Override public void onError(ApiError error) {
+            mView.onMasterFailure(error);
         }
     };
 

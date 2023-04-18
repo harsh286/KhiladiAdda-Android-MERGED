@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 
@@ -59,8 +60,7 @@ public class GameWebActivity extends BaseActivity {
         webViewGame.getSettings().setDomStorageEnabled(true);
         webViewGame.getSettings().setBuiltInZoomControls(false);
         String gameurl_new = "https://prod.freakx.in/khiladi-adda/droid-o/v4/index.html";
-        webViewGame.loadUrl(gameurl_new + "?" + "userid" + "=" + iD + "&" + "tournamentid" + "=" + tournamentid + "&" + "refno" + "=" + refNo+"&stage=prod&env=prod&partnerName=khiladiAdda&gameName=droid-o-online&adChannelId=khiladiaddauat");
-
+        webViewGame.loadUrl(gameurl_new + "?" + "userid" + "=" + iD + "&" + "tournamentid" + "=" + tournamentid + "&" + "refno" + "=" + refNo + "&stage=prod&env=prod&partnerName=khiladiAdda&gameName=droid-o-online&adChannelId=khiladiaddauat");
 //        webViewGame.loadUrl(gameurl + "?" + "userid" + "=" + iD + "&" + "tournamentid" + "=" + tournamentid + "&" + "refno" + "=" + refNo);
     }
 
@@ -86,4 +86,5 @@ public class GameWebActivity extends BaseActivity {
     @Override
     public void onClick(View view) {
     }
+
 }

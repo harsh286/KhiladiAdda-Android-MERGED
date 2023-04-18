@@ -9,16 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.khiladiadda.R;
-import com.khiladiadda.interfaces.IOnItemClickListener;
-import com.khiladiadda.network.model.response.QuizListDetails;
 import com.khiladiadda.network.model.response.TopUsersDetails;
-import com.khiladiadda.utility.AppConstant;
 
 import java.util.List;
 
@@ -52,17 +48,17 @@ public class TopKhiladiAdapter extends RecyclerView.Adapter<TopKhiladiAdapter.Ev
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.mImageIV);
         } else {
-            holder.mImageIV.setImageResource(R.drawable.splash_logo);
+            holder.mImageIV.setImageResource(R.drawable.app_logo);
         }
         holder.mNameTV.setText(details.getName());
         holder.mPrizeTV.setText("Won \n Rs." + (details.getWinningAmount()));
-        if(details.getLeaderboardType() == 1){
+        if (details.getLeaderboardType() == 1) {
             holder.mModeTV.setText("By Playing Ludo");
-        } else  if(details.getLeaderboardType() == 2){
+        } else if (details.getLeaderboardType() == 2) {
             holder.mModeTV.setText("By Playing Fan Battle");
-        } else  if(details.getLeaderboardType() == 3){
+        } else if (details.getLeaderboardType() == 3) {
             holder.mModeTV.setText("By Playing League");
-        } else  if(details.getLeaderboardType() == 4){
+        } else if (details.getLeaderboardType() == 4) {
             holder.mModeTV.setText("By Playing Quiz");
         }
     }
@@ -87,6 +83,7 @@ public class TopKhiladiAdapter extends RecyclerView.Adapter<TopKhiladiAdapter.Ev
             super(view);
             ButterKnife.bind(this, itemView);
         }
+
         @Override
         public void onClick(View v) {
         }

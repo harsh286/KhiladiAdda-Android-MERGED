@@ -60,7 +60,7 @@ public class RummyGameWebActivity extends BaseActivity {
         Intent intLeaderboard = getIntent();
         info = intLeaderboard.getStringExtra("info");
 //        gameurl = "https://playmagicrummy.com/build/webbuild/khiladiAdda/debug/web-mobile/index.html?info=" + info;
-        gameurl = AppSharedPreference.initialize(this).getVersion().getResponse().getRummyLink() + "?info=" + info;
+        gameurl = mAppPreference.getVersion().getResponse().getRummyLink() + "?info=" + info;
 //        gameurl = "https://playmagicrummy.com/build/webbuild/khiladiAdda/debug/web-mobile/index.html?info=" + info + ",pb=ka";
         webViewGame.loadUrl(gameurl);
     }
@@ -107,7 +107,6 @@ public class RummyGameWebActivity extends BaseActivity {
                 Intent intLeaderboard = new Intent(RummyGameWebActivity.this, RummyGameWebActivity.class);
                 intLeaderboard.putExtra("info", info);
                 startActivity(intLeaderboard);
-
             } else if (filteredData.getRedirectionType().equals("exit") || filteredData.getRedirectionType().equals("EXIT")) {
                 finish();
             }

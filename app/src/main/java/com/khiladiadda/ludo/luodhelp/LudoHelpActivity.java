@@ -12,6 +12,7 @@ import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.ludo.LudoChallengeActivity;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 
 import butterknife.BindView;
 
@@ -48,6 +49,7 @@ public class LudoHelpActivity extends BaseActivity {
     @Override
     protected void initVariables() {
         mLuodHelpIV.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ludo_help_one));
+        AppUtilityMethods.deleteCache(this);
         mPreviousRL.setVisibility(View.GONE);
     }
 

@@ -1,6 +1,5 @@
 package com.khiladiadda.ludo;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,13 +15,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -30,15 +26,12 @@ import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.interfaces.IOnItemClickListener;
-import com.khiladiadda.ludo.adapter.MyAllLudoChallengeAdapter;
 import com.khiladiadda.ludo.adapter.MyAllNewChallengeAdapter;
-import com.khiladiadda.ludo.adapter.MyChallengeAdapter;
 import com.khiladiadda.ludo.interfaces.ILudoChallengePresenter;
 import com.khiladiadda.ludo.interfaces.ILudoChallengeView;
 import com.khiladiadda.ludo.result.LudoResultActivity;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
-import com.khiladiadda.network.model.request.OpponentLudoRequest;
 import com.khiladiadda.network.model.response.LudoContest;
 import com.khiladiadda.network.model.response.LudoContestResponse;
 import com.khiladiadda.utility.AppConstant;
@@ -49,8 +42,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-
-import static com.khiladiadda.utility.AppConstant.PAGE_SIZE;
 
 public class MyAllChallengesActivity extends BaseActivity implements ILudoChallengeView, IOnItemClickListener, MyAllNewChallengeAdapter.IOnItemChildClickListener {
 
@@ -162,6 +153,7 @@ public class MyAllChallengesActivity extends BaseActivity implements ILudoChalle
 
     @Override protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mLudoNotificationReceiver);
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

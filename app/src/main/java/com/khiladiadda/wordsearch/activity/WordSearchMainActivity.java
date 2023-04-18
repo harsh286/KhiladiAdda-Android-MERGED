@@ -40,6 +40,7 @@ import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.WordSearchTrendingMainResponse;
 import com.khiladiadda.network.model.response.WordSearchTrendingResponse;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.DownloadApk;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.utility.providers.GenericFileProvider;
@@ -366,6 +367,13 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
             int currentItem = mBannerVP.getCurrentItem();
             moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
         }, 10000);
+    }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
     }
 
 }

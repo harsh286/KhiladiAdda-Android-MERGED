@@ -119,7 +119,6 @@ public class MyLudoUniAdapter extends RecyclerView.Adapter<MyLudoUniAdapter.Ludo
                 holder.mPlayerNameTV.setText(R.string.text_waiting_dot);
                 holder.mCancelTV.setText(R.string.text_cancel);
                 holder.mCancelTV.setBackgroundColor(Color.parseColor("#DA0000"));
-
             }
             holder.mCancelTV.setVisibility(View.VISIBLE);
             holder.mCancelTV.setEnabled(true);
@@ -128,7 +127,6 @@ public class MyLudoUniAdapter extends RecyclerView.Adapter<MyLudoUniAdapter.Ludo
             if (ludoContestBean.getContestStatus() == 1) {
                 holder.mCancelTV.setText(R.string.text_play_now);
                 holder.mCancelTV.setBackgroundColor(Color.parseColor("#6C56EF"));
-
             } else {
                 holder.mCancelTV.setText(R.string.text_cancel);
                 holder.mCancelTV.setBackgroundColor(Color.parseColor("#DA0000"));
@@ -141,7 +139,7 @@ public class MyLudoUniAdapter extends RecyclerView.Adapter<MyLudoUniAdapter.Ludo
     private void setCaptainData(LudoContest ludoContestBean, LudoContestHolder holder) {
         holder.mTitleTV.setText("You accepted challenge for \n" + ludoContestBean.getEntryFees() + " Coins");
         if (!TextUtils.isEmpty(ludoContestBean.getCaptain().getLudoDp())) {
-            Glide.with(mContext).load(ludoContestBean.getCaptain().getLudoDp()).placeholder(R.drawable.profile).into(holder.mProfileAccepterIV);
+            Glide.with(mContext).load(ludoContestBean.getCaptain().getLudoDp()).placeholder(R.mipmap.ic_launcher).into(holder.mProfileAccepterIV);
         } else {
             Glide.with(mContext).clear(holder.mProfileAccepterIV);
             holder.mProfileAccepterIV.setImageResource(R.mipmap.ic_launcher);
@@ -152,7 +150,7 @@ public class MyLudoUniAdapter extends RecyclerView.Adapter<MyLudoUniAdapter.Ludo
     private void setOpponentData(LudoContest ludoContestBean, LudoContestHolder holder) {
         holder.mTitleTV.setText("Your challenge has been accepted\n" + ludoContestBean.getEntryFees() + " Coins");
         if (ludoContestBean.getOpponent() != null && ludoContestBean.getOpponent().getLudoDp() != null && !TextUtils.isEmpty(ludoContestBean.getOpponent().getLudoDp())) {
-            Glide.with(mContext).load(ludoContestBean.getOpponent().getLudoDp()).placeholder(R.drawable.profile).into(holder.mProfileAccepterIV);
+            Glide.with(mContext).load(ludoContestBean.getOpponent().getLudoDp()).placeholder(R.mipmap.ic_launcher).into(holder.mProfileAccepterIV);
         } else {
             Glide.with(mContext).clear(holder.mProfileAccepterIV);
             holder.mProfileAccepterIV.setImageResource(R.mipmap.ic_launcher);

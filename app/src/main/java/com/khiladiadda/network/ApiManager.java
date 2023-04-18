@@ -144,7 +144,7 @@ public class ApiManager {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         initSSL(KhiladiAddaApp.getInstance(), httpClient);
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.addInterceptor(chain -> {
             Request original = chain.request();
             Request.Builder request = null;
@@ -174,12 +174,9 @@ public class ApiManager {
     private void initSSL(Context context, OkHttpClient.Builder httpClientBuilder) {
         SSLContext sslContext = null;
         try {
-//            sslContext = createCertificate(context.getResources().openRawResource(R.raw.uat_api_khiladiadda_com));
             sslContext = createCertificate(context.getResources().openRawResource(R.raw.prod_new));
-//            sslContext = createCertificate(context.getResources().openRawResource(R.raw.qa_api_khiladiadda_com));
-//            sslContext = createCertificate(context.getResources().openRawResource(R.raw.khiladi_troopx_io));
-
-        } catch (CertificateException | IOException | KeyStoreException | KeyManagementException | NoSuchAlgorithmException e) {
+        } catch (CertificateException | IOException | KeyStoreException | KeyManagementException |
+                 NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         if (sslContext != null) {

@@ -540,4 +540,32 @@ public class    AppSharedPreference {
         editor.putBoolean("isLinked", isGamerCashLinked);
         editor.commit();
     }
+
+    public void setMobileNumberBP(String mobileNumberBP) {
+        editor.putString("mobileNumberBP", mobileNumberBP);
+        editor.commit();
+    }
+
+    public String getMobileNumberBP() {
+        return sharedPreferences.getString("mobileNumberBP", null);
+    }
+
+    public void setUserTokenBP(String acTokenBP) {
+        editor.putString("acTokenBP", acTokenBP);
+        editor.commit();
+    }
+
+    public String getUserTokenBP() {
+        return sharedPreferences.getString("acTokenBP", null);
+    }
+
+    public String getInSufficientBalanceBP() {
+        return sharedPreferences.getString("balanceBP", null);
+    }
+
+    public void setInSufficientBalanceBP(String balanceBajajPay) {
+        editor.putString("balanceBP", balanceBajajPay);
+        editor.commit();
+    }
+
 }

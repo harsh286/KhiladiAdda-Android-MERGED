@@ -1,6 +1,5 @@
 package com.khiladiadda.leaderboard;
 
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -26,12 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
-import com.khiladiadda.leaderboard.adapter.AllLeaderBoardRVAdapter;
+import com.khiladiadda.leaderboard.adapter.LeagueLeaderBoardRVAdapter;
 import com.khiladiadda.leaderboard.adapter.AllLeaderboardNewAdapter;
 import com.khiladiadda.leaderboard.adapter.FbLeadBoardAdapter;
 import com.khiladiadda.leaderboard.adapter.LudoAddaLeaderBoardRVAdapter;
@@ -74,7 +71,7 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
     @BindView(R.id.btn_freefire)
     Button mFreeFireBTN;
     @BindView(R.id.rv_leaderboard)
-    RecyclerView mLeaderBoardRV;
+    RecyclerView mLeagueLeaderBoardRV;
     @BindView(R.id.rv_ludo_leaderboard)
     RecyclerView mLudoLeaderBoardRV;
     @BindView(R.id.tv_no_data)
@@ -83,8 +80,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
     AppCompatTextView mTitleToolbarTV;
     @BindView(R.id.tv_leaderboard)
     TextView mTitleTV;
-    @BindView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout mCollapsingToolbar;
     @BindView(R.id.app_bar_layout)
     AppBarLayout mAppBarLayout;
     @BindView(R.id.gold_winner)
@@ -115,14 +110,10 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
     Button mFanBattleBTN;
     @BindView(R.id.rv_fanbattle_leaderboard)
     RecyclerView mFanBattledRV;
-    @BindView(R.id.leaderboard)
-    RelativeLayout mLeaderBoradRL;
     @BindView(R.id.iv_back_toolbar)
     ImageView mToolbarBackIV;
     @BindView(R.id.sm_leaderboard)
     SwitchMaterial mALLMonthSW;
-    @BindView(R.id.ll_bottom)
-    LinearLayout mBottomLL;
     @BindView(R.id.ll_more)
     LinearLayout mMoreLL;
     @BindView(R.id.rv_hth_leaderboard)
@@ -139,21 +130,17 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
     private String mGameId;
     private boolean mIsLoading, mIsLastPage;
     private int mCurrentPage = 0, mItemCount, mContestType, mListingType = AppConstant.LEADERBOARD_LISTING_ALL, mType = AppConstant.LEADERBOARD_TYPE_GAME;
-    private LinearLayoutManager mLeagueLayoutManager;
-    private LinearLayoutManager mLudoLayoutManager;
-    private LinearLayoutManager mFanBattleManager;
-    private LinearLayoutManager mLudoAddaManger;
-    private LinearLayoutManager mHTHBattleManager;
+    private LinearLayoutManager mLeagueLayoutManager, mLudoLayoutManager, mFanBattleManager, mLudoAddaManger, mHTHBattleManager, mAllLeaderboardManager;
     private List<AllLederBoardDetails> mLeagueList;
-    private AllLeaderBoardRVAdapter mAdapter;
     private List<OverallLeadBoardList> mFBLists;
-    private FbLeadBoardAdapter mFBAdapter;
     private List<LudoLeaderboardDetails> mLudoList;
-    private LudoLeaderBoardRVAdapter mLudoAdapter;
+    private List<LeaderboardSubResponse> mAllLeaderboardSubResponsesList;
     private List<LeaderBoardHthResponseDetails> mHTHLists;
-    private List<LeaderboardSubResponse> mLeaderboardSubResponsesList;
-    private HTHLeadBoardAdapter mHthAdapter;
     private List<LudoAddaResponseDetails> mLudoAddaLists;
+    private LeagueLeaderBoardRVAdapter mLeagueAdapter;
+    private FbLeadBoardAdapter mFBAdapter;
+    private LudoLeaderBoardRVAdapter mLudoAdapter;
+    private HTHLeadBoardAdapter mHthAdapter;
     private LudoAddaLeaderBoardRVAdapter mLudoAddaAdapter;
     private AllLeaderboardNewAdapter mAllLeaderboardNewAdapter;
     private long mLastClickTime = 0;
@@ -194,11 +181,11 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         mSpinner.setOnItemSelectedListener(this);
 
         mLeagueList = new ArrayList<>();
-        mAdapter = new AllLeaderBoardRVAdapter(mLeagueList, AppConstant.LEADERBOARD_FROM_LEADERBOARD);
+        mLeagueAdapter = new LeagueLeaderBoardRVAdapter(mLeagueList, AppConstant.LEADERBOARD_FROM_LEADERBOARD);
         mLeagueLayoutManager = new LinearLayoutManager(this);
-        mLeaderBoardRV.setLayoutManager(mLeagueLayoutManager);
-        mLeaderBoardRV.setAdapter(mAdapter);
-        mLeaderBoardRV.addOnScrollListener(mRecyclerViewOnScrollListener);
+        mLeagueLeaderBoardRV.setLayoutManager(mLeagueLayoutManager);
+        mLeagueLeaderBoardRV.setAdapter(mLeagueAdapter);
+        mLeagueLeaderBoardRV.addOnScrollListener(mRecyclerViewOnScrollListener);
 
         mLudoList = new ArrayList<>();
         mLudoAdapter = new LudoLeaderBoardRVAdapter(mLudoList, AppConstant.LEADERBOARD_FROM_LEADERBOARD);
@@ -228,17 +215,17 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         mLudoAddaRV.setAdapter(mLudoAddaAdapter);
         mLudoAddaRV.addOnScrollListener(mLudoAddaRecyclerViewOnScrollListener);
 
-        mLeaderboardSubResponsesList = new ArrayList<>();
-        mAllLeaderboardNewAdapter = new AllLeaderboardNewAdapter(mLeaderboardSubResponsesList);
-        mLudoAddaManger = new LinearLayoutManager(this);
-        mAllLeaderboardRv.setLayoutManager(mLudoAddaManger);
+        mAllLeaderboardSubResponsesList = new ArrayList<>();
+        mAllLeaderboardNewAdapter = new AllLeaderboardNewAdapter(mAllLeaderboardSubResponsesList);
+        mAllLeaderboardManager = new LinearLayoutManager(this);
+        mAllLeaderboardRv.setLayoutManager(mAllLeaderboardManager);
         mAllLeaderboardRv.setAdapter(mAllLeaderboardNewAdapter);
-        mAllLeaderboardRv.addOnScrollListener(mLudoAddaRecyclerViewOnScrollListener);
+        mAllLeaderboardRv.addOnScrollListener(mAllLeaderboardRecyclerViewOnScrollListener);
 
         mGameId = mAppPreference.getString(AppConstant.FREEFIRE_ID, "");
         mALLMonthSW.setChecked(false);
         mFreeFireBTN.setSelected(true);
-
+        AppUtilityMethods.deleteCache(this);
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;
@@ -270,10 +257,10 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         });
     }
 
-
     private void getData() {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
+            AppUtilityMethods.deleteCache(this);
             //QUIZ
             if (mListingType == AppConstant.LEADERBOARD_LISTING_ALL && (mType == AppConstant.LEADERBOARD_TYPE_QUIZ)) {
                 mPresenter.getQuizAll(mCurrentPage, AppConstant.PAGE_SIZE);
@@ -434,6 +421,7 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
     }
 
     private void setSelectedBackground() {
+        AppUtilityMethods.deleteCache(this);
         mLudoBTN.setTextColor(Color.RED);
         mFreeFireBTN.setTextColor(Color.RED);
         mFanBattleBTN.setTextColor(Color.RED);
@@ -492,9 +480,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         } else if (mType == AppConstant.LEADERBOARD_TYPE_DROID_DO) {
             mTitleToolbarTV.setText(getString(R.string.text_droid_leaderboard));
             mTitleTV.setText(getString(R.string.text_droid_leaderboard));
-        } else if (mType == AppConstant.LEADERBOARD_TYPE_DROID_DO) {
-            mTitleToolbarTV.setText(getString(R.string.text_droid_leaderboard));
-            mTitleTV.setText(getString(R.string.text_droid_leaderboard));
         } else if (mType == AppConstant.LEADERBOARD_TYPE_LUDO_TOURNAMENT) {
             mTitleToolbarTV.setText(getString(R.string.text_ludo_tournament_leaderboard));
             mTitleTV.setText(getString(R.string.text_ludo_tournament_leaderboard));
@@ -510,11 +495,17 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
 
     private void resetListVariables() {
         mLeagueList.clear();
+        mLeagueAdapter.notifyDataSetChanged();
         mLudoList.clear();
+        mLudoAdapter.notifyDataSetChanged();
         mFBLists.clear();
+        mFBAdapter.notifyDataSetChanged();
         mHTHLists.clear();
+        mHthAdapter.notifyDataSetChanged();
         mLudoAddaLists.clear();
-        mLeaderboardSubResponsesList.clear();
+        mLudoAddaAdapter.notifyDataSetChanged();
+        mAllLeaderboardSubResponsesList.clear();
+        mAllLeaderboardNewAdapter.notifyDataSetChanged();
         mCurrentPage = 0;
         mItemCount = 0;
         mIsLastPage = false;
@@ -523,13 +514,13 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
     private void resetLeaderBoardView(int type) {
         mNoDataTV.setVisibility(View.GONE);
         mLudoLeaderBoardRV.setVisibility(View.GONE);
-        mLeaderBoardRV.setVisibility(View.GONE);
+        mLeagueLeaderBoardRV.setVisibility(View.GONE);
         mFanBattledRV.setVisibility(View.GONE);
         mHTHRV.setVisibility(View.GONE);
         mLudoAddaRV.setVisibility(View.GONE);
         mAllLeaderboardRv.setVisibility(View.GONE);
         if ((type == AppConstant.LEADERBOARD_TYPE_GAME) || (type == AppConstant.LEADERBOARD_TYPE_QUIZ) || (type == AppConstant.LEADERBOARD_TYPE_DROID_DO) || (type == AppConstant.LEADERBOARD_TYPE_WS)) {
-            mLeaderBoardRV.setVisibility(View.VISIBLE);
+            mLeagueLeaderBoardRV.setVisibility(View.VISIBLE);
         } else if (type == AppConstant.LEADERBOARD_TYPE_LUDO) {
             mLudoLeaderBoardRV.setVisibility(View.VISIBLE);
         } else if (type == AppConstant.LEADERBOARD_TYPE_FAN_BATTLE) {
@@ -551,32 +542,26 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             mItemCount = leaderboardList.size();
             if (mCurrentPage == 0) {
                 mLeagueList.clear();
-            }
-            if (mCurrentPage == 0 && mItemCount <= 0) {
-                mLeagueList.clear();
-                mAppBarLayout.setExpanded(false);
-                mNoDataTV.setVisibility(View.VISIBLE);
-            }
-            if (mItemCount > 3) {
-                if (mCurrentPage == 0) {
-                    mLeagueList.clear();
+                if (mItemCount > 3) {
                     mLeagueList.addAll(leaderboardList.subList(3, mItemCount));
-                    setLeaderData(leaderboardList, mItemCount);
-                } else {
-                    mLeagueList.addAll(leaderboardList);
                 }
-                mIsLoading = false;
-                mCurrentPage++;
-                if (mItemCount < AppConstant.PAGE_SIZE) {
-                    mIsLastPage = true;
-                }
-            } else if (mItemCount >= 1) {
                 setLeaderData(leaderboardList, mItemCount);
+                if (mItemCount == 0) {
+                    mAppBarLayout.setExpanded(false);
+                    mNoDataTV.setVisibility(View.VISIBLE);
+                }
+            } else {
+                mLeagueList.addAll(leaderboardList);
+            }
+            mIsLoading = false;
+            mCurrentPage++;
+            if (mItemCount < AppConstant.PAGE_SIZE) {
+                mIsLastPage = true;
             }
         } else {
             mNoDataTV.setVisibility(View.VISIBLE);
         }
-        mAdapter.notifyDataSetChanged();
+        mLeagueAdapter.notifyDataSetChanged();
         hideProgress();
     }
 
@@ -591,26 +576,23 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         if (responseModel.isStatus()) {
             List<LudoLeaderboardDetails> ludoLeaderboardList = responseModel.getResponse();
             mItemCount = ludoLeaderboardList.size();
-            if (mCurrentPage == 0 && mItemCount <= 0) {
+            if (mCurrentPage == 0) {
                 mLudoList.clear();
-                mNoDataTV.setVisibility(View.VISIBLE);
-                mAppBarLayout.setExpanded(false);
-            }
-            if (mItemCount > 3) {
-                if (mCurrentPage == 0) {
-                    mLudoList.clear();
+                if (mItemCount > 3) {
                     mLudoList.addAll(ludoLeaderboardList.subList(3, mItemCount));
-                    setLudoLeaderData(ludoLeaderboardList, mItemCount);
-                } else {
-                    mLudoList.addAll(ludoLeaderboardList);
                 }
-                mIsLoading = false;
-                mCurrentPage++;
-                if (mItemCount < AppConstant.PAGE_SIZE) {
-                    mIsLastPage = true;
-                }
-            } else if (mItemCount >= 1) {
                 setLudoLeaderData(ludoLeaderboardList, mItemCount);
+                if (mItemCount == 0) {
+                    mAppBarLayout.setExpanded(false);
+                    mNoDataTV.setVisibility(View.VISIBLE);
+                }
+            } else {
+                mLudoList.addAll(ludoLeaderboardList);
+            }
+            mIsLoading = false;
+            mCurrentPage++;
+            if (mItemCount < AppConstant.PAGE_SIZE) {
+                mIsLastPage = true;
             }
         } else {
             mNoDataTV.setVisibility(View.VISIBLE);
@@ -630,26 +612,23 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         if (responseModel.isStatus()) {
             List<OverallLeadBoardList> fbLeaderboardList = responseModel.getOverallLeadBoardLists();
             mItemCount = fbLeaderboardList.size();
-            if (mCurrentPage == 0 && mItemCount <= 0) {
+            if (mCurrentPage == 0) {
                 mFBLists.clear();
-                mNoDataTV.setVisibility(View.VISIBLE);
-                mAppBarLayout.setExpanded(false);
-            }
-            if (mItemCount > 3) {
-                if (mCurrentPage == 0) {
-                    mFBLists.clear();
+                if (mItemCount > 3) {
                     mFBLists.addAll(fbLeaderboardList.subList(3, mItemCount));
-                    setFanBattleData(fbLeaderboardList, mItemCount);
-                } else {
-                    mFBLists.addAll(fbLeaderboardList);
                 }
-                mIsLoading = false;
-                mCurrentPage++;
-                if (mItemCount < AppConstant.PAGE_SIZE) {
-                    mIsLastPage = true;
-                }
-            } else if (mItemCount >= 1) {
                 setFanBattleData(fbLeaderboardList, mItemCount);
+                if (mItemCount == 0) {
+                    mAppBarLayout.setExpanded(false);
+                    mNoDataTV.setVisibility(View.VISIBLE);
+                }
+            } else {
+                mFBLists.addAll(fbLeaderboardList);
+            }
+            mIsLoading = false;
+            mCurrentPage++;
+            if (mItemCount < AppConstant.PAGE_SIZE) {
+                mIsLastPage = true;
             }
         } else {
             mNoDataTV.setVisibility(View.VISIBLE);
@@ -669,118 +648,29 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         if (responseModel.isStatus()) {
             List<LeaderBoardHthResponseDetails> hthLeaderboardList = responseModel.getResponse();
             mItemCount = hthLeaderboardList.size();
-            if (mCurrentPage == 0 && mItemCount <= 0) {
+            if (mCurrentPage == 0) {
                 mHTHLists.clear();
-                mNoDataTV.setVisibility(View.VISIBLE);
-                mAppBarLayout.setExpanded(false);
-            }
-            if (mItemCount > 3) {
-                if (mCurrentPage == 0) {
-                    mHTHLists.clear();
+                if (mItemCount > 3) {
                     mHTHLists.addAll(hthLeaderboardList.subList(3, mItemCount));
-                    setHTHBattleData(hthLeaderboardList, mItemCount);
-                } else {
-                    mHTHLists.addAll(hthLeaderboardList);
                 }
-                mIsLoading = false;
-                mCurrentPage++;
-                if (mItemCount < AppConstant.PAGE_SIZE) {
-                    mIsLastPage = true;
-                }
-            } else if (mItemCount >= 1) {
                 setHTHBattleData(hthLeaderboardList, mItemCount);
+                if (mItemCount == 0) {
+                    mAppBarLayout.setExpanded(false);
+                    mNoDataTV.setVisibility(View.VISIBLE);
+                }
+            } else {
+                mHTHLists.addAll(hthLeaderboardList);
+            }
+            mIsLoading = false;
+            mCurrentPage++;
+            if (mItemCount < AppConstant.PAGE_SIZE) {
+                mIsLastPage = true;
             }
         } else {
             mNoDataTV.setVisibility(View.VISIBLE);
         }
         mHthAdapter.notifyDataSetChanged();
         hideProgress();
-    }
-
-    private void setHTHBattleData(List<LeaderBoardHthResponseDetails> overallLeadBoardLists, int size) {
-        mAppBarLayout.setExpanded(true);
-        mBrownWinnerNameTV.setText("");
-        mBrownWinnerCoinsTV.setText("");
-        mSilverWinerNameTV.setText("");
-        mSilverWinerCoinsTV.setText("");
-        mGoldWinerNameTV.setText("");
-        mGoldCoinsTV.setText("");
-        if (size >= 3) {
-            mGoldWinerNameTV.setText("1." + overallLeadBoardLists.get(0).getName());
-            if ((overallLeadBoardLists.get(0).getnCof().getWon()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(0).getTotal()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(overallLeadBoardLists.get(0).getDp())) {
-                Glide.with(this).load(overallLeadBoardLists.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            } else {
-                Glide.with(this).clear(mGoldWinnerIV);
-                mGoldWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mSilverWinerNameTV.setText("2." + overallLeadBoardLists.get(1).getName());
-            if ((overallLeadBoardLists.get(1).getnCof().getWon()) != 0.00) {
-                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(1).getTotal()));
-            } else {
-                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(overallLeadBoardLists.get(1).getDp())) {
-                Glide.with(this).load(overallLeadBoardLists.get(1).getDp()).thumbnail(Glide.with(this).load(overallLeadBoardLists.get(1).getDp())).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mSliverWinerIV);
-            } else {
-                Glide.with(this).clear(mSliverWinerIV);
-                mSliverWinerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mBrownWinnerNameTV.setText("3." + overallLeadBoardLists.get(2).getName());
-            if ((overallLeadBoardLists.get(2).getnCof().getWon()) != 0.00) {
-                mBrownWinnerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(2).getTotal()));
-            } else {
-                mBrownWinnerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(overallLeadBoardLists.get(2).getDp())) {
-                Glide.with(this).load(overallLeadBoardLists.get(2).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mBronzeWinnerIV);
-            } else {
-                Glide.with(this).clear(mBronzeWinnerIV);
-                mBronzeWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            showTopLeaderVisible(3);
-        } else if (size == 2) {
-            mGoldWinerNameTV.setText("1." + overallLeadBoardLists.get(0).getName());
-            if ((overallLeadBoardLists.get(0).getnCof().getWon()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(0).getTotal()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(overallLeadBoardLists.get(0).getDp())) {
-                Glide.with(this).load(overallLeadBoardLists.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            } else {
-                Glide.with(this).clear(mGoldWinnerIV);
-                mGoldWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mSilverWinerNameTV.setText("2." + overallLeadBoardLists.get(1).getName());
-            if ((overallLeadBoardLists.get(1).getnCof().getWon()) != 0.00) {
-                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(1).getTotal()));
-            } else {
-                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(overallLeadBoardLists.get(1).getDp())) {
-                Glide.with(this).load(overallLeadBoardLists.get(1).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mSliverWinerIV);
-            } else {
-                Glide.with(this).clear(mSliverWinerIV);
-                mSliverWinerIV.setImageResource(R.drawable.splash_logo);
-            }
-            showTopLeaderVisible(2);
-        } else if (size == 1) {
-            mGoldWinerNameTV.setText("1." + overallLeadBoardLists.get(0).getName());
-            if ((overallLeadBoardLists.get(0).getnCof().getWon()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(0).getTotal()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(overallLeadBoardLists.get(0).getDp())) {
-                Glide.with(this).load(overallLeadBoardLists.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            }
-            showTopLeaderVisible(1);
-        }
     }
 
     @Override
@@ -794,26 +684,23 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         if (responseModel.isStatus()) {
             List<LudoAddaResponseDetails> ludoLeaderboardList = responseModel.getResponse();
             mItemCount = ludoLeaderboardList.size();
-            if (mCurrentPage == 0 && mItemCount <= 0) {
+            if (mCurrentPage == 0) {
                 mLudoAddaLists.clear();
-                mNoDataTV.setVisibility(View.VISIBLE);
-                mAppBarLayout.setExpanded(false);
-            }
-            if (mItemCount > 3) {
-                if (mCurrentPage == 0) {
-                    mLudoAddaLists.clear();
+                if (mItemCount > 3) {
                     mLudoAddaLists.addAll(ludoLeaderboardList.subList(3, mItemCount));
-                    setLudoAddaLeaderData(ludoLeaderboardList, mItemCount);
-                } else {
-                    mLudoAddaLists.addAll(ludoLeaderboardList);
                 }
-                mIsLoading = false;
-                mCurrentPage++;
-                if (mItemCount < AppConstant.PAGE_SIZE) {
-                    mIsLastPage = true;
-                }
-            } else if (mItemCount >= 1) {
                 setLudoAddaLeaderData(ludoLeaderboardList, mItemCount);
+                if (mItemCount == 0) {
+                    mAppBarLayout.setExpanded(false);
+                    mNoDataTV.setVisibility(View.VISIBLE);
+                }
+            } else {
+                mLudoAddaLists.addAll(ludoLeaderboardList);
+            }
+            mIsLoading = false;
+            mCurrentPage++;
+            if (mItemCount < AppConstant.PAGE_SIZE) {
+                mIsLastPage = true;
             }
         } else {
             mNoDataTV.setVisibility(View.VISIBLE);
@@ -835,38 +722,32 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             mItemCount = leaderboardList.size();
             if (mCurrentPage == 0) {
                 mLeagueList.clear();
-            }
-            if (mCurrentPage == 0 && mItemCount <= 0) {
-                mAppBarLayout.setExpanded(false);
-                mNoDataTV.setVisibility(View.VISIBLE);
-            }
-            if (mItemCount > 3) {
-                if (mCurrentPage == 0) {
-                    mLeagueList.clear();
+                if (mItemCount > 3) {
                     mLeagueList.addAll(leaderboardList.subList(3, mItemCount));
-                    setLeaderData(leaderboardList, mItemCount);
-                } else {
-                    mLeagueList.addAll(leaderboardList);
                 }
-                mIsLoading = false;
-                mCurrentPage++;
-                if (mItemCount < AppConstant.PAGE_SIZE) {
-                    mIsLastPage = true;
-                }
-            } else if (mItemCount >= 1) {
                 setLeaderData(leaderboardList, mItemCount);
+                if (mItemCount == 0) {
+                    mAppBarLayout.setExpanded(false);
+                    mNoDataTV.setVisibility(View.VISIBLE);
+                }
+            } else {
+                mLeagueList.addAll(leaderboardList);
+            }
+            mIsLoading = false;
+            mCurrentPage++;
+            if (mItemCount < AppConstant.PAGE_SIZE) {
+                mIsLastPage = true;
             }
         } else {
             mNoDataTV.setVisibility(View.VISIBLE);
         }
-        mAdapter.notifyDataSetChanged();
+        mLeagueAdapter.notifyDataSetChanged();
         hideProgress();
     }
 
     @Override
     public void onLeaderWS(ApiError error) {
         hideProgress();
-
     }
 
     @Override
@@ -877,33 +758,27 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             mItemCount = leaderboardList.size();
             if (mCurrentPage == 0) {
                 mLeagueList.clear();
-            }
-            if (mCurrentPage == 0 && mItemCount <= 0) {
-                mAppBarLayout.setExpanded(false);
-                mNoDataTV.setVisibility(View.VISIBLE);
-            }
-            if (mItemCount > 3) {
-                if (mCurrentPage == 0) {
-                    mLeagueList.clear();
+                if (mItemCount > 3) {
                     mLeagueList.addAll(leaderboardList.subList(3, mItemCount));
-                    setLeaderData(leaderboardList, mItemCount);
-                } else {
-                    mLeagueList.addAll(leaderboardList);
                 }
-                mIsLoading = false;
-                mCurrentPage++;
-                if (mItemCount < AppConstant.PAGE_SIZE) {
-                    mIsLastPage = true;
-                }
-            } else if (mItemCount >= 1) {
                 setLeaderData(leaderboardList, mItemCount);
+                if (mItemCount == 0) {
+                    mAppBarLayout.setExpanded(false);
+                    mNoDataTV.setVisibility(View.VISIBLE);
+                }
+            } else {
+                mLeagueList.addAll(leaderboardList);
+            }
+            mIsLoading = false;
+            mCurrentPage++;
+            if (mItemCount < AppConstant.PAGE_SIZE) {
+                mIsLastPage = true;
             }
         } else {
             mNoDataTV.setVisibility(View.VISIBLE);
         }
-        mAdapter.notifyDataSetChanged();
+        mLeagueAdapter.notifyDataSetChanged();
         hideProgress();
-
     }
 
     @Override
@@ -917,31 +792,28 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         if (responseModel.isStatus()) {
             List<LeaderboardSubResponse> LeaderboardList = responseModel.getResponse();
             mItemCount = LeaderboardList.size();
-            if (mCurrentPage == 0 && mItemCount <= 0) {
-                mLeaderboardSubResponsesList.clear();
-                mNoDataTV.setVisibility(View.VISIBLE);
-                mAppBarLayout.setExpanded(false);
-            }
-            if (mItemCount > 3) {
-                if (mCurrentPage == 0) {
-                    mLeaderboardSubResponsesList.clear();
-                    mLeaderboardSubResponsesList.addAll(LeaderboardList.subList(3, mItemCount));
-                    setLeaderDataNew(LeaderboardList, mItemCount);
-                } else {
-                    mLeaderboardSubResponsesList.addAll(LeaderboardList);
+            if (mCurrentPage == 0) {
+                mAllLeaderboardSubResponsesList.clear();
+                if (mItemCount > 3) {
+                    mAllLeaderboardSubResponsesList.addAll(LeaderboardList.subList(3, mItemCount));
                 }
-                mIsLoading = false;
-                mCurrentPage++;
-                if (mItemCount < AppConstant.PAGE_SIZE) {
-                    mIsLastPage = true;
-                }
-            } else if (mItemCount >= 1) {
                 setLeaderDataNew(LeaderboardList, mItemCount);
+                if (mItemCount == 0) {
+                    mAppBarLayout.setExpanded(false);
+                    mNoDataTV.setVisibility(View.VISIBLE);
+                }
+            } else {
+                mAllLeaderboardSubResponsesList.addAll(LeaderboardList);
+            }
+            mIsLoading = false;
+            mCurrentPage++;
+            if (mItemCount < AppConstant.PAGE_SIZE) {
+                mIsLastPage = true;
             }
         } else {
             mNoDataTV.setVisibility(View.VISIBLE);
         }
-        mHthAdapter.notifyDataSetChanged();
+        mAllLeaderboardNewAdapter.notifyDataSetChanged();
         hideProgress();
     }
 
@@ -950,93 +822,109 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         hideProgress();
     }
 
+    private void setHTHBattleData(List<LeaderBoardHthResponseDetails> overallLeadBoardLists, int size) {
+        clearData();
+        if (size >= 3) {
+            setOne(overallLeadBoardLists.get(0).getName(), overallLeadBoardLists.get(0).getTotal(), overallLeadBoardLists.get(0).getDp(), overallLeadBoardLists.get(0).getnCof().getWon());
+            setTwo(overallLeadBoardLists.get(1).getName(), overallLeadBoardLists.get(1).getTotal(), overallLeadBoardLists.get(1).getDp(), overallLeadBoardLists.get(1).getnCof().getWon());
+            setThree(overallLeadBoardLists.get(2).getName(), overallLeadBoardLists.get(2).getTotal(), overallLeadBoardLists.get(2).getDp(), overallLeadBoardLists.get(2).getnCof().getWon());
+            showTopLeaderVisible(3);
+        } else if (size == 2) {
+            setOne(overallLeadBoardLists.get(0).getName(), overallLeadBoardLists.get(0).getTotal(), overallLeadBoardLists.get(0).getDp(), overallLeadBoardLists.get(0).getnCof().getWon());
+            setTwo(overallLeadBoardLists.get(1).getName(), overallLeadBoardLists.get(1).getTotal(), overallLeadBoardLists.get(1).getDp(), overallLeadBoardLists.get(1).getnCof().getWon());
+            showTopLeaderVisible(2);
+        } else if (size == 1) {
+            setOne(overallLeadBoardLists.get(0).getName(), overallLeadBoardLists.get(0).getTotal(), overallLeadBoardLists.get(0).getDp(), overallLeadBoardLists.get(0).getnCof().getWon());
+            showTopLeaderVisible(1);
+        }
+    }
+
     private void setLudoAddaLeaderData(List<LudoAddaResponseDetails> ludoAddaLeaderboardList, int mItemCount) {
-        mAppBarLayout.setExpanded(true);
-        mBrownWinnerNameTV.setText("");
-        mBrownWinnerCoinsTV.setText("");
-        mSilverWinerNameTV.setText("");
-        mSilverWinerCoinsTV.setText("");
-        mGoldWinerNameTV.setText("");
-        mGoldCoinsTV.setText("");
+        clearData();
         if (mItemCount >= 3) {
-            mGoldWinerNameTV.setText("1." + ludoAddaLeaderboardList.get(0).getName());
-            if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotal()))) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(0).getTotal()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(0).getDp())) {
-                Glide.with(this).load(ludoAddaLeaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            } else {
-                Glide.with(this).clear(mGoldWinnerIV);
-                mGoldWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mSilverWinerNameTV.setText("2." + ludoAddaLeaderboardList.get(1).getName());
-            if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(1).getTotal()))) {
-                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(1).getTotal()));
-            } else {
-                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(1).getDp())) {
-                Glide.with(this).load(ludoAddaLeaderboardList.get(1).getDp()).thumbnail(Glide.with(this).load(ludoAddaLeaderboardList.get(1).getDp())).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mSliverWinerIV);
-            } else {
-                Glide.with(this).clear(mSliverWinerIV);
-                mSliverWinerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mBrownWinnerNameTV.setText("3." + ludoAddaLeaderboardList.get(2).getName());
-            if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotal()))) {
-                mBrownWinnerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(2).getTotal()));
-            } else {
-                mBrownWinnerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(2).getDp())) {
-                Glide.with(this).load(ludoAddaLeaderboardList.get(2).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mBronzeWinnerIV);
-            } else {
-                Glide.with(this).clear(mBronzeWinnerIV);
-                mBronzeWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
+            setOne(ludoAddaLeaderboardList.get(0).getName(), ludoAddaLeaderboardList.get(0).getTotal(), ludoAddaLeaderboardList.get(0).getDp(), ludoAddaLeaderboardList.get(0).getTotal());
+            setTwo(ludoAddaLeaderboardList.get(1).getName(), ludoAddaLeaderboardList.get(1).getTotal(), ludoAddaLeaderboardList.get(1).getDp(), ludoAddaLeaderboardList.get(1).getTotal());
+            setThree(ludoAddaLeaderboardList.get(2).getName(), ludoAddaLeaderboardList.get(2).getTotal(), ludoAddaLeaderboardList.get(2).getDp(), ludoAddaLeaderboardList.get(2).getTotal());
             showTopLeaderVisible(3);
         } else if (mItemCount == 2) {
-            mGoldWinerNameTV.setText("1." + ludoAddaLeaderboardList.get(0).getName());
-            if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotal()))) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(0).getTotal()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(0).getDp())) {
-                Glide.with(this).load(ludoAddaLeaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            } else {
-                Glide.with(this).clear(mGoldWinnerIV);
-                mGoldWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mSilverWinerNameTV.setText("2." + ludoAddaLeaderboardList.get(1).getName());
-            if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(1).getTotal()))) {
-                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(1).getTotal()));
-            } else {
-                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(1).getDp())) {
-                Glide.with(this).load(ludoAddaLeaderboardList.get(1).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mSliverWinerIV);
-            } else {
-                Glide.with(this).clear(mSliverWinerIV);
-                mSliverWinerIV.setImageResource(R.drawable.splash_logo);
-            }
+            setOne(ludoAddaLeaderboardList.get(0).getName(), ludoAddaLeaderboardList.get(0).getTotal(), ludoAddaLeaderboardList.get(0).getDp(), ludoAddaLeaderboardList.get(0).getTotal());
+            setTwo(ludoAddaLeaderboardList.get(1).getName(), ludoAddaLeaderboardList.get(1).getTotal(), ludoAddaLeaderboardList.get(1).getDp(), ludoAddaLeaderboardList.get(1).getTotal());
             showTopLeaderVisible(2);
         } else if (mItemCount == 1) {
-            mGoldWinerNameTV.setText("1." + ludoAddaLeaderboardList.get(0).getName());
-            if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotal()))) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(0).getTotal()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(0).getDp())) {
-                Glide.with(this).load(ludoAddaLeaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            }
+            setThree(ludoAddaLeaderboardList.get(2).getName(), ludoAddaLeaderboardList.get(2).getTotal(), ludoAddaLeaderboardList.get(2).getDp(), ludoAddaLeaderboardList.get(2).getTotal());
             showTopLeaderVisible(1);
         }
     }
 
     private void setLeaderDataNew(List<LeaderboardSubResponse> ludoAddaLeaderboardList, int mItemCount) {
+        clearData();
+        if (mItemCount >= 3) {
+            setOne(ludoAddaLeaderboardList.get(0).getFullDetails().getName(), ludoAddaLeaderboardList.get(0).getTotalAmount(), ludoAddaLeaderboardList.get(0).getFullDetails().getDp(), ludoAddaLeaderboardList.get(0).getTotalAmount());
+            setTwo(ludoAddaLeaderboardList.get(1).getFullDetails().getName(), ludoAddaLeaderboardList.get(1).getTotalAmount(), ludoAddaLeaderboardList.get(1).getFullDetails().getDp(), ludoAddaLeaderboardList.get(1).getTotalAmount());
+            setThree(ludoAddaLeaderboardList.get(2).getFullDetails().getName(), ludoAddaLeaderboardList.get(2).getTotalAmount(), ludoAddaLeaderboardList.get(2).getFullDetails().getDp(), ludoAddaLeaderboardList.get(2).getTotalAmount());
+            showTopLeaderVisible(3);
+        } else if (mItemCount == 2) {
+            setOne(ludoAddaLeaderboardList.get(0).getFullDetails().getName(), ludoAddaLeaderboardList.get(0).getTotalAmount(), ludoAddaLeaderboardList.get(0).getFullDetails().getDp(), ludoAddaLeaderboardList.get(0).getTotalAmount());
+            setTwo(ludoAddaLeaderboardList.get(1).getFullDetails().getName(), ludoAddaLeaderboardList.get(1).getTotalAmount(), ludoAddaLeaderboardList.get(1).getFullDetails().getDp(), ludoAddaLeaderboardList.get(1).getTotalAmount());
+            showTopLeaderVisible(2);
+        } else if (mItemCount == 1) {
+            setOne(ludoAddaLeaderboardList.get(0).getFullDetails().getName(), ludoAddaLeaderboardList.get(0).getTotalAmount(), ludoAddaLeaderboardList.get(0).getFullDetails().getDp(), ludoAddaLeaderboardList.get(0).getTotalAmount());
+            showTopLeaderVisible(1);
+        }
+    }
+
+    private void setLudoLeaderData(List<LudoLeaderboardDetails> leaderboardList, int size) {
+        clearData();
+        if (size >= 3) {
+            setOne(leaderboardList.get(0).getName(), leaderboardList.get(0).getTotal(), leaderboardList.get(0).getDp(), leaderboardList.get(0).getTotal());
+            setTwo(leaderboardList.get(1).getName(), leaderboardList.get(1).getTotal(), leaderboardList.get(1).getDp(), leaderboardList.get(1).getTotal());
+            setThree(leaderboardList.get(2).getName(), leaderboardList.get(2).getTotal(), leaderboardList.get(2).getDp(), leaderboardList.get(2).getTotal());
+            showTopLeaderVisible(3);
+        } else if (size == 2) {
+            setOne(leaderboardList.get(0).getName(), leaderboardList.get(0).getTotal(), leaderboardList.get(0).getDp(), leaderboardList.get(0).getTotal());
+            setTwo(leaderboardList.get(1).getName(), leaderboardList.get(1).getTotal(), leaderboardList.get(1).getDp(), leaderboardList.get(1).getTotal());
+            showTopLeaderVisible(2);
+        } else if (size == 1) {
+            setOne(leaderboardList.get(0).getName(), leaderboardList.get(0).getTotal(), leaderboardList.get(0).getDp(), leaderboardList.get(0).getTotal());
+            showTopLeaderVisible(1);
+        }
+    }
+
+    private void setFanBattleData(List<OverallLeadBoardList> leaderboardList, int size) {
+        clearData();
+        if (size >= 3) {
+            setOne(leaderboardList.get(0).getName(), leaderboardList.get(0).getWinningAmount(), leaderboardList.get(0).getDp(), leaderboardList.get(0).getWinningAmount());
+            setTwo(leaderboardList.get(1).getName(), leaderboardList.get(1).getWinningAmount(), leaderboardList.get(1).getDp(), leaderboardList.get(1).getWinningAmount());
+            setThree(leaderboardList.get(2).getName(), leaderboardList.get(2).getWinningAmount(), leaderboardList.get(2).getDp(), leaderboardList.get(2).getWinningAmount());
+            showTopLeaderVisible(3);
+        } else if (size == 2) {
+            setOne(leaderboardList.get(0).getName(), leaderboardList.get(0).getWinningAmount(), leaderboardList.get(0).getDp(), leaderboardList.get(0).getWinningAmount());
+            setTwo(leaderboardList.get(1).getName(), leaderboardList.get(1).getWinningAmount(), leaderboardList.get(1).getDp(), leaderboardList.get(1).getWinningAmount());
+            showTopLeaderVisible(2);
+        } else if (size == 1) {
+            setOne(leaderboardList.get(0).getName(), leaderboardList.get(0).getWinningAmount(), leaderboardList.get(0).getDp(), leaderboardList.get(0).getWinningAmount());
+            showTopLeaderVisible(1);
+        }
+    }
+
+    private void setLeaderData(List<AllLederBoardDetails> leaderboardList, int size) {
+        clearData();
+        if (size >= 3) {
+            setOne(leaderboardList.get(0).getName(), leaderboardList.get(0).getWinningAmount(), leaderboardList.get(0).getDp(), leaderboardList.get(0).getWinningAmount());
+            setTwo(leaderboardList.get(1).getName(), leaderboardList.get(1).getWinningAmount(), leaderboardList.get(1).getDp(), leaderboardList.get(1).getWinningAmount());
+            setThree(leaderboardList.get(2).getName(), leaderboardList.get(2).getWinningAmount(), leaderboardList.get(2).getDp(), leaderboardList.get(2).getWinningAmount());
+            showTopLeaderVisible(3);
+        } else if (size == 2) {
+            setOne(leaderboardList.get(0).getName(), leaderboardList.get(0).getWinningAmount(), leaderboardList.get(0).getDp(), leaderboardList.get(0).getWinningAmount());
+            setTwo(leaderboardList.get(1).getName(), leaderboardList.get(1).getWinningAmount(), leaderboardList.get(1).getDp(), leaderboardList.get(1).getWinningAmount());
+            showTopLeaderVisible(2);
+        } else if (size == 1) {
+            setOne(leaderboardList.get(0).getName(), leaderboardList.get(0).getWinningAmount(), leaderboardList.get(0).getDp(), leaderboardList.get(0).getWinningAmount());
+            showTopLeaderVisible(1);
+        }
+    }
+
+    private void clearData() {
         mAppBarLayout.setExpanded(true);
         mBrownWinnerNameTV.setText("");
         mBrownWinnerCoinsTV.setText("");
@@ -1044,89 +932,89 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         mSilverWinerCoinsTV.setText("");
         mGoldWinerNameTV.setText("");
         mGoldCoinsTV.setText("");
-        if (mItemCount >= 3) {
-            mGoldWinerNameTV.setText("1." + ludoAddaLeaderboardList.get(0).getFullDetails().getName());
-            if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotalAmount()))) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(0).getTotalAmount()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(0).getFullDetails().getDp())) {
-                Glide.with(this).load(ludoAddaLeaderboardList.get(0).getFullDetails().getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            } else {
-                Glide.with(this).clear(mGoldWinnerIV);
-                mGoldWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mSilverWinerNameTV.setText("2." + ludoAddaLeaderboardList.get(1).getFullDetails().getName());
-            if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(1).getTotalAmount()))) {
-                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(1).getTotalAmount()));
-            } else {
-                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(1).getFullDetails().getDp())) {
-                Glide.with(this).load(ludoAddaLeaderboardList.get(1).getFullDetails().getDp()).thumbnail(Glide.with(this).load(ludoAddaLeaderboardList.get(1).getFullDetails().getDp())).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mSliverWinerIV);
-            } else {
-                Glide.with(this).clear(mSliverWinerIV);
-                mSliverWinerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mBrownWinnerNameTV.setText("3." + ludoAddaLeaderboardList.get(2).getFullDetails().getName());
-            if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotalAmount()))) {
-                mBrownWinnerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(2).getTotalAmount()));
-            } else {
-                mBrownWinnerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(2).getFullDetails().getDp())) {
-                Glide.with(this).load(ludoAddaLeaderboardList.get(2).getFullDetails().getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mBronzeWinnerIV);
-            } else {
-                Glide.with(this).clear(mBronzeWinnerIV);
-                mBronzeWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            showTopLeaderVisible(3);
-        } else if (mItemCount == 2) {
-            mGoldWinerNameTV.setText("1." + ludoAddaLeaderboardList.get(0).getFullDetails().getName());
-            if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotalAmount()))) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(0).getTotalAmount()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(0).getFullDetails().getDp())) {
-                Glide.with(this).load(ludoAddaLeaderboardList.get(0).getFullDetails().getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            } else {
-                Glide.with(this).clear(mGoldWinnerIV);
-                mGoldWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mSilverWinerNameTV.setText("2." + ludoAddaLeaderboardList.get(1).getFullDetails().getName());
-            if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(1).getTotalAmount()))) {
-                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(1).getTotalAmount()));
-            } else {
-                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(1).getFullDetails().getDp())) {
-                Glide.with(this).load(ludoAddaLeaderboardList.get(1).getFullDetails().getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mSliverWinerIV);
-            } else {
-                Glide.with(this).clear(mSliverWinerIV);
-                mSliverWinerIV.setImageResource(R.drawable.splash_logo);
-            }
-            showTopLeaderVisible(2);
-        } else if (mItemCount == 1) {
-            mGoldWinerNameTV.setText("1." + ludoAddaLeaderboardList.get(0).getFullDetails().getName());
-            if (!TextUtils.isEmpty(String.valueOf(ludoAddaLeaderboardList.get(0).getTotalAmount()))) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(ludoAddaLeaderboardList.get(0).getTotalAmount()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(ludoAddaLeaderboardList.get(0).getFullDetails().getDp())) {
-                Glide.with(this).load(ludoAddaLeaderboardList.get(0).getFullDetails().getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            }
-            showTopLeaderVisible(1);
+    }
+
+    private void setOne(String name, double total, String dp, double won) {
+        mGoldWinerNameTV.setText("1." + name);
+        if ((won) != 0.00) {
+            mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(total));
+        } else {
+            mGoldCoinsTV.setText("Won: \u20B9 0");
+        }
+        if (!TextUtils.isEmpty(dp)) {
+            Glide.with(this).load(dp).placeholder(R.mipmap.ic_launcher).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
+        } else {
+            Glide.with(this).clear(mGoldWinnerIV);
+            mGoldWinnerIV.setImageResource(R.mipmap.ic_launcher);
+        }
+    }
+
+    private void setTwo(String name, double total, String dp, double won) {
+        mSilverWinerNameTV.setText("2." + name);
+        if ((won) != 0.00) {
+            mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(total));
+        } else {
+            mSilverWinerCoinsTV.setText("Won: \u20B9 0");
+        }
+        if (!TextUtils.isEmpty(dp)) {
+            Glide.with(this).load(dp).placeholder(R.mipmap.ic_launcher).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mSliverWinerIV);
+        } else {
+            Glide.with(this).clear(mSliverWinerIV);
+            mSliverWinerIV.setImageResource(R.mipmap.ic_launcher);
+        }
+    }
+
+    private void setThree(String name, double total, String dp, double won) {
+        mBrownWinnerNameTV.setText("3." + name);
+        if ((won) != 0.00) {
+            mBrownWinnerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(total));
+        } else {
+            mBrownWinnerCoinsTV.setText("Won: \u20B9 0");
+        }
+        if (!TextUtils.isEmpty(dp)) {
+            Glide.with(this).load(dp).placeholder(R.mipmap.ic_launcher).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mBronzeWinnerIV);
+        } else {
+            Glide.with(this).clear(mBronzeWinnerIV);
+            mBronzeWinnerIV.setImageResource(R.mipmap.ic_launcher);
+        }
+    }
+
+    private void showTopLeaderVisible(int i) {
+        mGoldWinerNameTV.setVisibility(View.VISIBLE);
+        mGoldCoinsTV.setVisibility(View.VISIBLE);
+        mGoldWinnerIV.setVisibility(View.VISIBLE);
+        mGoldWinnerIV.setVisibility(View.VISIBLE);
+        mSliverWinerIV.setVisibility(View.VISIBLE);
+        mSilverWinerCoinsTV.setVisibility(View.VISIBLE);
+        mSilverWinerNameTV.setVisibility(View.VISIBLE);
+        mSilverCrownIV.setVisibility(View.VISIBLE);
+        if (i == 3) {
+            mBronzeWinnerIV.setVisibility(View.VISIBLE);
+            mBrownWinnerCoinsTV.setVisibility(View.VISIBLE);
+            mBrownWinnerNameTV.setVisibility(View.VISIBLE);
+            mBronzeCrownIV.setVisibility(View.VISIBLE);
+        } else if (i == 2) {
+            mBrownWinnerNameTV.setVisibility(View.GONE);
+            mBrownWinnerCoinsTV.setVisibility(View.GONE);
+            mBronzeWinnerIV.setVisibility(View.GONE);
+            mBronzeCrownIV.setVisibility(View.GONE);
+        } else if (i == 1) {
+            mSilverWinerNameTV.setVisibility(View.GONE);
+            mSilverWinerCoinsTV.setVisibility(View.GONE);
+            mSliverWinerIV.setVisibility(View.GONE);
+            mSilverCrownIV.setVisibility(View.GONE);
+            mBrownWinnerNameTV.setVisibility(View.GONE);
+            mBrownWinnerCoinsTV.setVisibility(View.GONE);
+            mBronzeWinnerIV.setVisibility(View.GONE);
+            mBronzeCrownIV.setVisibility(View.GONE);
         }
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         mPresenter.destroy();
         AppUtilityMethods.deleteCache(this);
+        super.onDestroy();
     }
 
     private final RecyclerView.OnScrollListener mRecyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -1141,7 +1029,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             int visibleItemCount = mLeagueLayoutManager.getChildCount();
             int totalItemCount = mLeagueLayoutManager.getItemCount();
             int firstVisibleItemPosition = mLeagueLayoutManager.findFirstVisibleItemPosition();
-
             if (!mIsLoading && !mIsLastPage) {
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && mItemCount >= AppConstant.PAGE_SIZE) {
                     loadMoreItems();
@@ -1162,7 +1049,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             int visibleItemCount = mLudoLayoutManager.getChildCount();
             int totalItemCount = mLudoLayoutManager.getItemCount();
             int firstVisibleItemPosition = mLudoLayoutManager.findFirstVisibleItemPosition();
-
             if (!mIsLoading && !mIsLastPage) {
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && mItemCount >= AppConstant.PAGE_SIZE) {
                     loadMoreItems();
@@ -1183,7 +1069,6 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
             int visibleItemCount = mFanBattleManager.getChildCount();
             int totalItemCount = mFanBattleManager.getItemCount();
             int firstVisibleItemPosition = mFanBattleManager.findFirstVisibleItemPosition();
-
             if (!mIsLoading && !mIsLastPage) {
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && mItemCount >= AppConstant.PAGE_SIZE) {
                     loadMoreItems();
@@ -1232,299 +1117,30 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
         }
     };
 
+    private final RecyclerView.OnScrollListener mAllLeaderboardRecyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            int visibleItemCount = mAllLeaderboardManager.getChildCount();
+            int totalItemCount = mAllLeaderboardManager.getItemCount();
+            int firstVisibleItemPosition = mAllLeaderboardManager.findFirstVisibleItemPosition();
+            if (!mIsLoading && !mIsLastPage) {
+                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && mItemCount >= AppConstant.PAGE_SIZE) {
+                    loadMoreItems();
+                }
+            }
+        }
+    };
+
     private void loadMoreItems() {
         //show bottom progress bar
         mIsLoading = true;
         getData();
-    }
-
-    private void setLudoLeaderData(List<LudoLeaderboardDetails> leaderboardList, int size) {
-        mAppBarLayout.setExpanded(true);
-        mBrownWinnerNameTV.setText("");
-        mBrownWinnerCoinsTV.setText("");
-        mSilverWinerNameTV.setText("");
-        mSilverWinerCoinsTV.setText("");
-        mGoldWinerNameTV.setText("");
-        mGoldCoinsTV.setText("");
-        if (size >= 3) {
-            mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
-            if (!TextUtils.isEmpty(String.valueOf(leaderboardList.get(0).getTotal()))) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(0).getTotal()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(leaderboardList.get(0).getDp())) {
-                Glide.with(this).load(leaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            } else {
-                Glide.with(this).clear(mGoldWinnerIV);
-                mGoldWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mSilverWinerNameTV.setText("2." + leaderboardList.get(1).getName());
-            if (!TextUtils.isEmpty(String.valueOf(leaderboardList.get(1).getTotal()))) {
-                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(1).getTotal()));
-            } else {
-                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(leaderboardList.get(1).getDp())) {
-                Glide.with(this).load(leaderboardList.get(1).getDp()).thumbnail(Glide.with(this).load(leaderboardList.get(1).getDp())).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mSliverWinerIV);
-            } else {
-                Glide.with(this).clear(mSliverWinerIV);
-                mSliverWinerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mBrownWinnerNameTV.setText("3." + leaderboardList.get(2).getName());
-            if (!TextUtils.isEmpty(String.valueOf(leaderboardList.get(0).getTotal()))) {
-                mBrownWinnerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(2).getTotal()));
-            } else {
-                mBrownWinnerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(leaderboardList.get(2).getDp())) {
-                Glide.with(this).load(leaderboardList.get(2).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mBronzeWinnerIV);
-            } else {
-                Glide.with(this).clear(mBronzeWinnerIV);
-                mBronzeWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            showTopLeaderVisible(3);
-        } else if (size == 2) {
-            mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
-            if (!TextUtils.isEmpty(String.valueOf(leaderboardList.get(0).getTotal()))) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(0).getTotal()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(leaderboardList.get(0).getDp())) {
-                Glide.with(this).load(leaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            } else {
-                Glide.with(this).clear(mGoldWinnerIV);
-                mGoldWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mSilverWinerNameTV.setText("2." + leaderboardList.get(1).getName());
-            if (!TextUtils.isEmpty(String.valueOf(leaderboardList.get(1).getTotal()))) {
-                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(1).getTotal()));
-            } else {
-                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(leaderboardList.get(1).getDp())) {
-                Glide.with(this).load(leaderboardList.get(1).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mSliverWinerIV);
-            } else {
-                Glide.with(this).clear(mSliverWinerIV);
-                mSliverWinerIV.setImageResource(R.drawable.splash_logo);
-            }
-            showTopLeaderVisible(2);
-        } else if (size == 1) {
-            mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
-            if (!TextUtils.isEmpty(String.valueOf(leaderboardList.get(0).getTotal()))) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(0).getTotal()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(leaderboardList.get(0).getDp())) {
-                Glide.with(this).load(leaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            }
-            showTopLeaderVisible(1);
-        }
-    }
-
-    private void setFanBattleData(List<OverallLeadBoardList> overallLeadBoardLists, int size) {
-        mAppBarLayout.setExpanded(true);
-        mBrownWinnerNameTV.setText("");
-        mBrownWinnerCoinsTV.setText("");
-        mSilverWinerNameTV.setText("");
-        mSilverWinerCoinsTV.setText("");
-        mGoldWinerNameTV.setText("");
-        mGoldCoinsTV.setText("");
-        if (size >= 3) {
-            mGoldWinerNameTV.setText("1." + overallLeadBoardLists.get(0).getName());
-            if ((overallLeadBoardLists.get(0).getWinningAmount()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(0).getWinningAmount()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(overallLeadBoardLists.get(0).getDp())) {
-                Glide.with(this).load(overallLeadBoardLists.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            } else {
-                Glide.with(this).clear(mGoldWinnerIV);
-                mGoldWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mSilverWinerNameTV.setText("2." + overallLeadBoardLists.get(1).getName());
-            if ((overallLeadBoardLists.get(1).getWinningAmount()) != 0.00) {
-                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(1).getWinningAmount()));
-            } else {
-                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(overallLeadBoardLists.get(1).getDp())) {
-                Glide.with(this).load(overallLeadBoardLists.get(1).getDp()).thumbnail(Glide.with(this).load(overallLeadBoardLists.get(1).getDp())).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mSliverWinerIV);
-            } else {
-                Glide.with(this).clear(mSliverWinerIV);
-                mSliverWinerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mBrownWinnerNameTV.setText("3." + overallLeadBoardLists.get(2).getName());
-            if ((overallLeadBoardLists.get(2).getWinningAmount()) != 0.00) {
-                mBrownWinnerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(2).getWinningAmount()));
-            } else {
-                mBrownWinnerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(overallLeadBoardLists.get(2).getDp())) {
-                Glide.with(this).load(overallLeadBoardLists.get(2).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mBronzeWinnerIV);
-            } else {
-                Glide.with(this).clear(mBronzeWinnerIV);
-                mBronzeWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            showTopLeaderVisible(3);
-        } else if (size == 2) {
-            mGoldWinerNameTV.setText("1." + overallLeadBoardLists.get(0).getName());
-            if ((overallLeadBoardLists.get(0).getWinningAmount()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(0).getWinningAmount()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(overallLeadBoardLists.get(0).getDp())) {
-                Glide.with(this).load(overallLeadBoardLists.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            } else {
-                Glide.with(this).clear(mGoldWinnerIV);
-                mGoldWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mSilverWinerNameTV.setText("2." + overallLeadBoardLists.get(1).getName());
-            if ((overallLeadBoardLists.get(1).getWinningAmount()) != 0.00) {
-                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(1).getWinningAmount()));
-            } else {
-                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(overallLeadBoardLists.get(1).getDp())) {
-                Glide.with(this).load(overallLeadBoardLists.get(1).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mSliverWinerIV);
-            } else {
-                Glide.with(this).clear(mSliverWinerIV);
-                mSliverWinerIV.setImageResource(R.drawable.splash_logo);
-            }
-            showTopLeaderVisible(2);
-        } else if (size == 1) {
-            mGoldWinerNameTV.setText("1." + overallLeadBoardLists.get(0).getName());
-            if ((overallLeadBoardLists.get(0).getWinningAmount()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(overallLeadBoardLists.get(0).getWinningAmount()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(overallLeadBoardLists.get(0).getDp())) {
-                Glide.with(this).load(overallLeadBoardLists.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            }
-            showTopLeaderVisible(1);
-        }
-    }
-
-    private void setLeaderData(List<AllLederBoardDetails> leaderboardList, int size) {
-        mAppBarLayout.setExpanded(true);
-        mBrownWinnerNameTV.setText("");
-        mBrownWinnerCoinsTV.setText("");
-        mSilverWinerNameTV.setText("");
-        mSilverWinerCoinsTV.setText("");
-        mGoldWinerNameTV.setText("");
-        mGoldCoinsTV.setText("");
-        if (size >= 3) {
-            mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
-            if ((leaderboardList.get(0).getWinningAmount()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(0).getWinningAmount()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(leaderboardList.get(0).getDp())) {
-                Glide.with(this).load(leaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            } else {
-                Glide.with(this).clear(mGoldWinnerIV);
-                mGoldWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mSilverWinerNameTV.setText("2." + leaderboardList.get(1).getName());
-            if ((leaderboardList.get(1).getWinningAmount()) != 0.00) {
-                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(1).getWinningAmount()));
-            } else {
-                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(leaderboardList.get(1).getDp())) {
-                Glide.with(this).load(leaderboardList.get(1).getDp()).thumbnail(Glide.with(this).load(leaderboardList.get(1).getDp())).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mSliverWinerIV);
-            } else {
-                Glide.with(this).clear(mSliverWinerIV);
-                mSliverWinerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mBrownWinnerNameTV.setText("3." + leaderboardList.get(2).getName());
-            if ((leaderboardList.get(2).getWinningAmount()) != 0.00) {
-                mBrownWinnerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(2).getWinningAmount()));
-            } else {
-                mBrownWinnerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(leaderboardList.get(2).getDp())) {
-                Glide.with(this).load(leaderboardList.get(2).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mBronzeWinnerIV);
-            } else {
-                Glide.with(this).clear(mBronzeWinnerIV);
-                mBronzeWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            showTopLeaderVisible(3);
-        } else if (size == 2) {
-            mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
-            if ((leaderboardList.get(0).getWinningAmount()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(0).getWinningAmount()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(leaderboardList.get(0).getDp())) {
-                Glide.with(this).load(leaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            } else {
-                Glide.with(this).clear(mGoldWinnerIV);
-                mGoldWinnerIV.setImageResource(R.drawable.splash_logo);
-            }
-            mSilverWinerNameTV.setText("2." + leaderboardList.get(1).getName());
-            if ((leaderboardList.get(1).getWinningAmount()) != 0.00) {
-                mSilverWinerCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(1).getWinningAmount()));
-            } else {
-                mSilverWinerCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(leaderboardList.get(1).getDp())) {
-                Glide.with(this).load(leaderboardList.get(1).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mSliverWinerIV);
-            } else {
-                Glide.with(this).clear(mSliverWinerIV);
-                mSliverWinerIV.setImageResource(R.drawable.splash_logo);
-            }
-            showTopLeaderVisible(2);
-        } else if (size == 1) {
-            mGoldWinerNameTV.setText("1." + leaderboardList.get(0).getName());
-            if ((leaderboardList.get(0).getWinningAmount()) != 0.00) {
-                mGoldCoinsTV.setText("Won: " + "\u20B9" + new DecimalFormat("##.##").format(leaderboardList.get(0).getWinningAmount()));
-            } else {
-                mGoldCoinsTV.setText("Won: \u20B9 0");
-            }
-            if (!TextUtils.isEmpty(leaderboardList.get(0).getDp())) {
-                Glide.with(this).load(leaderboardList.get(0).getDp()).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(true).into(mGoldWinnerIV);
-            }
-            showTopLeaderVisible(1);
-        }
-    }
-
-    private void showTopLeaderVisible(int i) {
-        mGoldWinerNameTV.setVisibility(View.VISIBLE);
-        mGoldCoinsTV.setVisibility(View.VISIBLE);
-        mGoldWinnerIV.setVisibility(View.VISIBLE);
-        mGoldWinnerIV.setVisibility(View.VISIBLE);
-        mSliverWinerIV.setVisibility(View.VISIBLE);
-        mSilverWinerCoinsTV.setVisibility(View.VISIBLE);
-        mSilverWinerNameTV.setVisibility(View.VISIBLE);
-        mSilverCrownIV.setVisibility(View.VISIBLE);
-        if (i == 3) {
-            mBronzeWinnerIV.setVisibility(View.VISIBLE);
-            mBrownWinnerCoinsTV.setVisibility(View.VISIBLE);
-            mBrownWinnerNameTV.setVisibility(View.VISIBLE);
-            mBronzeCrownIV.setVisibility(View.VISIBLE);
-        } else if (i == 2) {
-            mBrownWinnerNameTV.setVisibility(View.GONE);
-            mBrownWinnerCoinsTV.setVisibility(View.GONE);
-            mBronzeWinnerIV.setVisibility(View.GONE);
-            mBronzeCrownIV.setVisibility(View.GONE);
-        } else if (i == 1) {
-            mSilverWinerNameTV.setVisibility(View.GONE);
-            mSilverWinerCoinsTV.setVisibility(View.GONE);
-            mSliverWinerIV.setVisibility(View.GONE);
-            mSilverCrownIV.setVisibility(View.GONE);
-            mBrownWinnerNameTV.setVisibility(View.GONE);
-            mBrownWinnerCoinsTV.setVisibility(View.GONE);
-            mBronzeWinnerIV.setVisibility(View.GONE);
-            mBronzeCrownIV.setVisibility(View.GONE);
-        }
     }
 
     @Override
@@ -1542,12 +1158,10 @@ public class NewLeaderboardActivity extends BaseActivity implements ILeaderboard
 
     @Override
     public void onBackPressed() {
+        AppUtilityMethods.deleteCache(this);
+        finish();
         if (mAppPreference.getIsDeepLinking()) {
-            finish();
             startActivity(new Intent(this, MainActivity.class));
-        } else {
-            AppUtilityMethods.deleteCache(this);
-            finish();
         }
     }
 

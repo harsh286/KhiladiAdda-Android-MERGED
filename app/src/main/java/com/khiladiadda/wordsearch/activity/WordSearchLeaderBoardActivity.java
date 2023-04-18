@@ -16,6 +16,7 @@ import com.khiladiadda.network.model.response.WordSearchLeaderBoardMainResponse;
 import com.khiladiadda.network.model.response.WordSearchLiveLeaderBoardMainResponse;
 import com.khiladiadda.network.model.response.WordSearchLiveLeaderBoardlbResponse;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.wordsearch.adapter.LeaderBoardAdapter;
 import com.khiladiadda.wordsearch.ip.WordSearchLiveLeaderboardPresenter;
@@ -155,6 +156,14 @@ public class WordSearchLeaderBoardActivity extends BaseActivity implements IOnCl
     @Override
     public void onWordSearchLiveLeaderboardFailure(ApiError error) {
         hideProgress();
+    }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mParticipantsPresenter.destroy();
+        mWordSearchLiveLeaderboardPresenter.destroy();
+        super.onDestroy();
     }
 
 }

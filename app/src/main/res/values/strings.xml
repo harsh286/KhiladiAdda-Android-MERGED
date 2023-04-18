@@ -192,7 +192,7 @@
     <string name="text_fifty">50</string>
     <string name="text_rs_per_coin">Rs.1 = 1 Coin</string>
     <string name="text_payment_coming_soon">Hi, This feature is coming soon</string>
-<!--    <string name="text_credential_pending">RoomId &amp; Password will be updated 15 minutes before the league start</string>-->
+    <!--    <string name="text_credential_pending">RoomId &amp; Password will be updated 15 minutes before the league start</string>-->
     <string name="text_credential_pending">RoomId &amp; Password will be updated in few seconds, Please refresh the page.</string>
     <string name="text_squd_league_joined">You have successfully joined in your friend team. \n \n 1. You can share TeamId with your friend if any one is left. \n 2. Now you can see your joined leagues in MyLeagues->Upcoming. \n 3. You can see your team details in MyLeagues->Upcoming->Click on View My Team. \n 4. You can view your RoomId and Password before 15 minutes of league start time. \n 5. Your joined league will be moved from upcoming to Live and there is button for View RoomId and Password.</string>
     <string name="text_participant">Participant</string>
@@ -828,7 +828,7 @@
     <string name="text_my_tournaments">Tournaments</string>
     <string name="text_view_all">View all</string>
     <string name="text_upi">UPI</string>
-<!--    <string name="truecaller_partnerKey">d0LUD5cc589983d9d48d1ac66614d7895b186</string>-->
+    <!--    <string name="truecaller_partnerKey">d0LUD5cc589983d9d48d1ac66614d7895b186</string>-->
     <string name="truecaller_partnerKey">J733C4964f16ed71e4bd1aa8a80cff81a6c6e</string>
     <string name="not_allowed">You are not allowed! Sorry!!</string>
     <string name="text_age_terms">I\'m 18 years old and I understand that under-age use of this app may be illegal. I agree to complete my KYC before the first cash withdrawal on the app.</string>
@@ -951,4 +951,62 @@
     <string name="ludo_tmt_disclamier_one">Please Join your tournament by clicking on below <b>Play Now</b> button.</string>
     <string name="ludo_tmt_disclamier_two">If you not Click on <b>Play Now</b> button in 5 minutes then you will lost the tournament.</string>
     <string name="text_tds_fee">TDS</string>
+    <string name="txt_add_amount">Add</string>
+    <string name="text_select_amount">Select Amount</string>
+    <string name="text_or_enter_amount">or enter a different amount</string>
+
+    <string name="offers_benefits">Offers and Benefits</string>
+    <string name="apply_coupon">Apply Coupon</string>
+
+    <!--    <string name="get_20_discount_paying_bajaj_pay_upi">Get assured cashback upto Rs. 100 per transaction on adding money via Bajaj Pay UPI</string>-->
+    <string name="get_20_discount_paying_bajaj_pay_upi">Get upto Rs. 100 cashback via Bajaj Pay UPI</string>
+    <string name="get_discount_paying_bajaj_pay_wallet">Get flat 10% Cashback using Bajaj Pay Wallet</string>
+    <string name="tooltip_bajajPay_Wallet">"1. Get flat 10% Cashback up to ₹25 on adding money via Bajaj Pay Wallet.\n2. No minimum order value.\n3. Maximum cashback amount will be ₹25.\n4. Cashback will get credited within 7 days to users Bajaj pay Wallet.\n5. Valid till 31st May 2023"</string>
+    <string name="tooltip_bajajPay_UPI">"1. Get assured cashback upto Rs. 100 per transaction on adding money via Bajaj Pay UPI.\n2. Cashback will be given for 1st five transaction.\n3. Minimum order value will be Rs. 10.\n4. Cashback will get credited within 7 days to users Bajaj Pay Wallet"</string>
+    <string name="upi_choose_from_any_upi_option_below">UPI: Choose from any UPI option below</string>
+    <string name="credit_and_debit_card">Credit &amp; Debit card</string>
+    <string name="you_are_not_a_user">You are not a user</string>
+    <string name="text_payment">Payment Via</string>
+
+    <string name="bajaj_pay">Bajaj Pay\nLink your Bajaj pay wallet</string>
+    <!--    <string name="bajaj_pay">Bajaj Pay\nBalance :\u20B9 10001</string>-->
+    <string name="it_seems_like_you_do_not_have_account_on_bajaj_pay_wallet_in_order_to_add_amount_you_have_create_an_account_on_bajaj_pay_wallet">It seems like you do not have account on Bajaj pay wallet. In order to add amount, you have create an account on Bajaj Pay wallet.</string>
+    <string name="link_your_wallet_with_existing_number">Link your wallet with existing number\n 9717188366</string>
+    <string name="enter_new_mobile_number">Enter a new mobile number</string>
+    <string name="enter_the_6_digit_otp_sent">Enter the 6 digit otp sent to your mobile number.</string>
+    <string name="verify_text">VERIFY</string>
+    <string name="mobile_number_not_empty">Mobile number cannot be empty</string>
+    <string name="number_cannot_less_than_10">Mobile number cannot be less than 10 digits.</string>
+    <string name="enter_10_digit_number">Please enter valid 10 digit phone number</string>
+    <string name="otp_less_10">Otp cannot be less than 6 digit</string>
+    <string name="bajaj_pay_balance">"Bajaj Pay \n""Balance : \u20B9 "</string>
+    <string name="insufficient_balance">Insufficient Balance</string>
+    <string name="bajaj_pay_insufficient_balance">Your balance is low.Please Add money to continue.</string>
+    <string name="your_balance_is_low_please_add_money_to_continue">Your balance is low.\nPlease Add money to continue.</string>
+    <string name="enter_payment_otp">Enter OTP to complete payment</string>
+    <string name="bajaj_pay_balance_status">Balance Status </string>
+    <string name="mobile_not_bajajpay">Mobile Number doesn\'t have\n BajajPay wallet.</string>
+    <string name="bajaj_payment_status">Payment Status</string>
+    <string name="bajaj_pay_verification_status">Verification Status</string>
+    <string name="verification_otp_status">Verification OTP Status</string>
+    <string name="enter_otp_to_complete_verification">Enter OTP to complete your verification.</string>
+    <string name="enter_the_otp_complete_payment">Enter the OTP to complete payment</string>
+    <string name="otp_limit_exceed_bajajpay">OTP limit exceeded, try again after 30 minutes</string>
+    <string name="linked_to_khiladiadda_successfully">Your number has been linked to KhiladiAdda Successfully.</string>
+    <string name="otp_is_invalid">OTP is invalid.Please try again</string>
+    <string name="number_linking_process_failed">Number linking process has been failed.Please try again.</string>
+    <string name="otp_send_successfully">OTP send Successfully.</string>
+    <string name="updated_balance_successfully">Updated Balance Successfully.</string>
+    <string name="payment_bajajpay_failed">Payment processing has failed.Please try again.</string>
+    <string name="succesfully_delink_bajajpay">SuccessFully Delinked</string>
+    <string name="delink_dailed_bajajpay">Delinking Failed.</string>
+    <string name="bajajpay_delink_wallet">Do you want to delink the BajajPay wallet From Khiladi Adda</string>
+    <string name="link_your_wallet_bajajpay">Link your wallet with existing number-</string>
+    <string name="maximum_limit_reached">Maximum Limit reached</string>
+    <string name="balalnce_low_please_add_amount">Your balance is low.\nPlease Add Rs </string>
+    <string name="to_continue"> to continue.</string>
+    <string name="delink_wallet">DeLink Wallet</string>
+    <string name="link_status">Link Status</string>
+    <string name="payment_successful">Payment Successful.</string>
+    <string name="bajaj_create_wallet">Create Bajaj Pay Wallet</string>
 </resources>

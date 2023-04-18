@@ -101,6 +101,15 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
     protected void initViews() {
         Window window = this.getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
+        mRegisterBTN.setOnClickListener(this);
+        mResendTV.setOnClickListener(this);
+        mChangeNumberTV.setOnClickListener(this);
+        mNeedSupportLL.setOnClickListener(this);
+    }
+
+    @Override
+    protected void initVariables() {
+        mPresenter = new OtpPresenter(this);
         mEditTexts = Arrays.asList(mOneET, mTwoET, mThreeET, mFourET, mFiveET, mSixET);
         mFrom = getIntent().getIntExtra(AppConstant.FROM, 0);
         mMobileNumber = getIntent().getStringExtra(AppConstant.MobileNumber);
@@ -114,16 +123,6 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
         if (mFrom == AppConstant.FROM_LOGIN) {
             mRegisterBTN.setText(R.string.text_verify_login);
         }
-//        PermissionUtils.hasSMSReadPermission(this);
-    }
-
-    @Override
-    protected void initVariables() {
-        mPresenter = new OtpPresenter(this);
-        mRegisterBTN.setOnClickListener(this);
-        mResendTV.setOnClickListener(this);
-        mChangeNumberTV.setOnClickListener(this);
-        mNeedSupportLL.setOnClickListener(this);
         for (int i = 0; i < mEditTexts.size(); i++) {
             EditText editText = mEditTexts.get(i);
             editText.addTextChangedListener(new OtpTextWatcher(i));
@@ -242,14 +241,10 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
             AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AFInAppEventType.LOGIN, null, new AppsFlyerRequestListener() {
                 @Override
                 public void onSuccess() {
-                    //Log.d("APPS", "Event sent successfully");
                 }
 
                 @Override
                 public void onError(int i, @NonNull String s) {
-//                    Log.d("APPS", "Event failed to be sent:\n" +
-//                            "Error code: " + i + "\n"
-//                            + "Error description: " + s);
                 }
             });
         } else {
@@ -268,16 +263,19 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
 
     @Override
     public void onMasterComplete(MasterResponse responseModel) {
-        AppUtilityMethods.saveMasterData(responseModel);
-        appsFlyer("direct", AppSharedPreference.getInstance().getMobile());
-        hideProgress();
-        startActivity(new Intent(this, MainActivity.class));
-        MoEAnalyticsHelper.INSTANCE.setUniqueId(this, mAppPreference.getProfileData().getId());
-        MoEAnalyticsHelper.INSTANCE.setFirstName(this, mAppPreference.getProfileData().getName());
-        MoEAnalyticsHelper.INSTANCE.setUserName(this, mAppPreference.getProfileData().getUsername());
-        MoEAnalyticsHelper.INSTANCE.setMobileNumber(this, String.valueOf(mAppPreference.getProfileData().getMobile()));
-        MoEAnalyticsHelper.INSTANCE.setEmailId(this, mAppPreference.getProfileData().getEmail());
-        finish();
+        try {
+            AppUtilityMethods.saveMasterData(responseModel);
+            appsFlyer("direct", AppSharedPreference.getInstance().getMobile());
+            MoEAnalyticsHelper.INSTANCE.setUniqueId(this, mAppPreference.getProfileData().getId());
+            MoEAnalyticsHelper.INSTANCE.setFirstName(this, mAppPreference.getProfileData().getName());
+            MoEAnalyticsHelper.INSTANCE.setUserName(this, mAppPreference.getProfileData().getUsername());
+            MoEAnalyticsHelper.INSTANCE.setMobileNumber(this, String.valueOf(mAppPreference.getProfileData().getMobile()));
+            MoEAnalyticsHelper.INSTANCE.setEmailId(this, mAppPreference.getProfileData().getEmail());
+        } finally {
+            hideProgress();
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
     }
 
     @Override

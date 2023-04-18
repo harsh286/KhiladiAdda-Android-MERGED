@@ -39,10 +39,12 @@ import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.response.Active;
 import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.GameDetails;
+import com.khiladiadda.network.model.response.MasterResponse;
 import com.khiladiadda.network.model.response.MatchDetails;
 import com.khiladiadda.network.model.response.MatchResponse;
 import com.khiladiadda.utility.AllHelpActivity;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
@@ -71,8 +73,6 @@ public class FanBattleActivity extends BaseActivity implements IFanBattleView, I
     SwipeRefreshLayout mSwipeRefreshL;
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
-    private int mPostion;
-
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
     private FanBattleAdapter mMatchAdapter;
@@ -98,8 +98,8 @@ public class FanBattleActivity extends BaseActivity implements IFanBattleView, I
 
     @Override
     protected void initVariables() {
-        Bundle intent=getIntent().getExtras();
-        if (intent!=null){
+        Bundle intent = getIntent().getExtras();
+        if (intent != null) {
             String redirect = intent.getString(AppConstant.PushFrom);
             if (redirect.equalsIgnoreCase(AppConstant.MoEngage)) {
                 mAppPreference.setIsDeepLinking(true);
@@ -119,16 +119,26 @@ public class FanBattleActivity extends BaseActivity implements IFanBattleView, I
     private void getData() {
         mMatchList.clear();
         mMatchAdapter.notifyDataSetChanged();
+        AppUtilityMethods.deleteCache(this);
         if (new NetworkStatus(this).isInternetOn()) {
             mSwipeRefreshL.setRefreshing(true);
             List<Active> games = mAppPreference.getMasterData().getResponse().getGames();
-            for (int i = 0; i < games.size(); i++) {
-                if (games.get(i).getTitle().equalsIgnoreCase(AppConstant.FAN_BATTLE)) {
-                    mPresenter.getMatchList(games.get(i).getId());
-                }
+            if (games != null && games.size() > 0) {
+                getMatchList(games);
+            } else {
+                showProgress("Fetching data. Please wait...");
+                mPresenter.getMasterData();
             }
         } else {
             Snackbar.make(mBackIV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    private void getMatchList(List<Active> games) {
+        for (int i = 0; i < games.size(); i++) {
+            if (games.get(i).getTitle().equalsIgnoreCase(AppConstant.FAN_BATTLE)) {
+                mPresenter.getMatchList(games.get(i).getId());
+            }
         }
     }
 
@@ -175,6 +185,20 @@ public class FanBattleActivity extends BaseActivity implements IFanBattleView, I
     @Override
     public void onGetMatchListFailure(ApiError error) {
         mSwipeRefreshL.setRefreshing(false);
+    }
+
+    @Override
+    public void onMasterComplete(MasterResponse responseModel) {
+        if (responseModel.isStatus()) {
+            AppUtilityMethods.saveMasterData(responseModel);
+        }
+        getMatchList(responseModel.getResponse().getGames());
+        hideProgress();
+    }
+
+    @Override
+    public void onMasterFailure(ApiError error) {
+        hideProgress();
     }
 
     @Override
@@ -271,8 +295,5 @@ public class FanBattleActivity extends BaseActivity implements IFanBattleView, I
             finish();
         }
     }
-
-
-
 
 }

@@ -182,24 +182,34 @@ public class UpdateProfileActivity extends BaseActivity implements IUpdateProfil
                 startActivity(new Intent(this, NotificationActivity.class));
                 break;
             case R.id.iv_profile:
+//                if (SDK_INT >= Build.VERSION_CODES.R) {
+//                    if (Environment.isExternalStorageManager()) {
+//                        choosePhotoFromGallery();
+//                    } else {
+//                        Snackbar.make(mBackIV, R.string.txt_allow_permission, Snackbar.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+//                        Uri uri = Uri.fromParts("package", getPackageName(), null);
+//                        intent.setData(uri);
+//                        startActivity(intent);
+//                    }
+//                } else {
+//                    choosePhotoFromGallery();
+//                    ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE}, 101);
+//                }
                 if (SDK_INT >= Build.VERSION_CODES.R) {
-                    if (Environment.isExternalStorageManager()){
+                    if (Environment.isExternalStorageManager()) {
                         choosePhotoFromGallery();
-                    }else {
-                        Snackbar.make(mBackIV, R.string.txt_allow_permission, Snackbar.LENGTH_SHORT).show();
-                        Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                        Uri uri = Uri.fromParts("package", getPackageName(), null);
-                        intent.setData(uri);
-                        startActivity(intent);
+                    } else {
+                        AppUtilityMethods.showStoragePermisisionMsg(this, "", false);
                     }
-
-                } else  {
-                    choosePhotoFromGallery();
-                    ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE}, 101);
-
+                } else {
+                    if (!PermissionUtils.hasStoragePermission(this)) {
+                        Snackbar.make(mUpdateBTN, R.string.txt_allow_permission, Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        choosePhotoFromGallery();
+                    }
                 }
                 break;
-
             case R.id.btn_upload:
                 if (mImagePath != null) {
                     Uri organizerImageUri = getImageUri(mImagePath);
@@ -220,10 +230,11 @@ public class UpdateProfileActivity extends BaseActivity implements IUpdateProfil
     private void choosePhotoFromGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         galleryIntent.setType("image/*");
+        galleryIntent.putExtra("return-data", true);
         launcher.launch(galleryIntent);
     }
 
-    //    @Override
+//    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
 //        if (requestCode == REQUEST_GALLERY && resultCode == RESULT_OK && null != data) {
@@ -246,28 +257,46 @@ public class UpdateProfileActivity extends BaseActivity implements IUpdateProfil
 //            }
 //        }
 //    }
-    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK
-                        && result.getData() != null) {
-                    Uri photoUri = result.getData().getData();
-                    //use photoUri here
-                    Bitmap bmp;
-                    try {
-                        bmp = getBitmapFromUri(photoUri);
-                        String extension = AppUtilityMethods.getMimeType(this, photoUri);
-                        mImagePath = AppConstant.APP_DIRECTORY_PATH + AppConstant.IMAGE_PATH + extension;
-                        ImageUtils.saveLudoImageToFile(bmp, mImagePath);
-                        Glide.with(this).load(photoUri).error(R.drawable.ic_profile).into(mProfileIV);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
-                }
+//    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+//            new ActivityResultContracts.StartActivityForResult(),
+//            result -> {
+//                if (result.getResultCode() == Activity.RESULT_OK
+//                        && result.getData() != null) {
+//                    Uri photoUri = result.getData().getData();
+//                    //use photoUri here
+//                    Bitmap bmp;
+//                    try {
+//                        bmp = getBitmapFromUri(photoUri);
+//                        String extension = AppUtilityMethods.getMimeType(this, photoUri);
+//                        mImagePath = AppConstant.APP_DIRECTORY_PATH + AppConstant.IMAGE_PATH + extension;
+//                        ImageUtils.saveLudoImageToFile(bmp, mImagePath);
+//                        Glide.with(this).load(photoUri).error(R.drawable.ic_profile).into(mProfileIV);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//    );
+
+    ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+            Uri selectedImage = result.getData().getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            cursor.close();
+            try {
+                Bitmap bmp = getBitmapFromUri(selectedImage);
+                String extension = AppUtilityMethods.getMimeType(this, selectedImage);
+                mImagePath = getExternalMediaDirs()[0].getAbsolutePath() + File.separator + AppConstant.IMAGE_PATH + extension;
+                ImageUtils.saveLudoImageToFile(bmp, mImagePath);
+                Glide.with(this).load(bmp).error(R.drawable.ic_profile).into(mProfileIV);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-    );
-
+        }
+    });
 
     private Bitmap getBitmapFromUri(Uri uri) throws IOException {
         ParcelFileDescriptor parcelFileDescriptor = getContentResolver().openFileDescriptor(uri, "r");

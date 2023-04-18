@@ -19,6 +19,7 @@ import com.khiladiadda.network.model.response.droid_doresponse.LeaderBoardPresen
 import com.khiladiadda.network.model.response.droid_doresponse.MyRankDroidoLeaderboard;
 import com.khiladiadda.network.model.response.droid_doresponse.ResponseLeaderBoardSub;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 
 import java.util.ArrayList;
@@ -82,13 +83,11 @@ public class GamesFinalResultActivity extends BaseActivity implements ILeaderBoa
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_back_arroww:
-                Intent intent = new Intent(this, NewDroidoActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-                break;
+        if (view.getId() == R.id.iv_back_arroww) {
+            Intent intent = new Intent(this, NewDroidoActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         }
     }
 
@@ -120,9 +119,6 @@ public class GamesFinalResultActivity extends BaseActivity implements ILeaderBoa
             tvTimeTaken.setText(setTimeWithSecond(response.getResponseLeaderBoard().getMyRank().getTimeTaken() * 1000));
             tvTitle.setText(response.getResponseLeaderBoard().getMyRank().getGameName());
         }
-        {
-
-        }
         final Handler handler = new Handler();
         handler.postDelayed(() -> goToLeaderBoard(leaderboard, myRankDroidoLeaderboard), 2000);
     }
@@ -134,7 +130,13 @@ public class GamesFinalResultActivity extends BaseActivity implements ILeaderBoa
     @Override
     public void onParticipantsFailure(ApiError error) {
         hideProgress();
-
-
     }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
+    }
+
 }

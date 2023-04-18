@@ -639,4 +639,11 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
         dialog.show();
     }
 
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
+    }
+
 }

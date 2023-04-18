@@ -17,6 +17,7 @@ import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.response.droid_doresponse.DridoHistoryPresenter;
 import com.khiladiadda.network.model.response.droid_doresponse.DroidoHistoryGameList;
 import com.khiladiadda.network.model.response.droid_doresponse.GameHistoryDroido;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 
 import java.util.ArrayList;
@@ -36,9 +37,6 @@ public class GameDroidoHistoryActivity extends BaseActivity implements IDridoHis
     private DridoHistoryPresenter mPresenter;
     private List<GameHistoryDroido> mGameHistoryDroidoList;
     private GameDroidoHistoryAdapter mGameDroidoHistoryAdapter;
-    private boolean isLoading, isLastPage;
-    private int mCurrentPage = 0;
-    private LinearLayoutManager mLayoutManger;
 
     @Override
     protected int getContentView() {
@@ -56,10 +54,9 @@ public class GameDroidoHistoryActivity extends BaseActivity implements IDridoHis
         mPresenter = new DridoHistoryPresenter(this);
         mGameHistoryDroidoList = new ArrayList<>();
         mGameDroidoHistoryAdapter = new GameDroidoHistoryAdapter(mGameHistoryDroidoList, this, this);
-        mLayoutManger = new LinearLayoutManager(this);
+        LinearLayoutManager mLayoutManger = new LinearLayoutManager(this);
         rvDroidoHistory.setLayoutManager(mLayoutManger);
         rvDroidoHistory.setAdapter(mGameDroidoHistoryAdapter);
-        // rvDroidoHistory.addOnScrollListener(mRecyclerViewOnScrollListener);
         getDroidoHistoryGameList();
     }
 
@@ -86,62 +83,22 @@ public class GameDroidoHistoryActivity extends BaseActivity implements IDridoHis
 
     @Override
     public void onDroidoHistoryListSuccess(DroidoHistoryGameList response) {
-        hideProgress();
-//        if (response.getGameHistoryDroidoList().size() > 0) {
-//            hideProgress();
-//            if (response.getGameHistoryDroidoList().size() > 0) {
-//                if (mCurrentPage == 0) {
-//                    mGameHistoryDroidoList.clear();
-//                }
-//                if (mCurrentPage == 0 && response.getGameHistoryDroidoList().size() <= 0) {
-//                    tvErrorHistory.setVisibility(View.VISIBLE);
-//                } else if (response.getGameHistoryDroidoList().size() > 0) {
-//                    mGameHistoryDroidoList.addAll(response.getGameHistoryDroidoList());
-//                    mGameDroidoHistoryAdapter.notifyDataSetChanged();
-//                }
-//                isLoading = false;
-//                mCurrentPage++;
-//                if (response.getGameHistoryDroidoList().size() < PAGE_SIZE) {
-//                    isLastPage = true;
-//                }
-//            }
-//        } else {
-//            tvErrorHistory.setVisibility(View.VISIBLE);
-//        }
         mGameHistoryDroidoList.clear();
         mGameHistoryDroidoList.addAll(response.getGameHistoryDroidoList());
         mGameDroidoHistoryAdapter.notifyDataSetChanged();
+        hideProgress();
     }
-
 
     @Override
     public void onItemClick(int position) {
 
     }
 
-//    private void loadMoreItems() {
-//        //show bottom progress bar
-//        isLoading = true;
-//        getDroidoHistoryGameList();
-//    }
-//    private final RecyclerView.OnScrollListener mRecyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
-//        @Override
-//        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//            super.onScrollStateChanged(recyclerView, newState);
-//        }
-//
-//        @Override
-//        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//            super.onScrolled(recyclerView, dx, dy);
-//            int visibleItemCount = mLayoutManger.getChildCount();
-//            int totalItemCount = mLayoutManger.getItemCount();
-//            int firstVisibleItemPosition = mLayoutManger.findFirstVisibleItemPosition();
-//
-//            if (!isLoading && !isLastPage) {
-//                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= AppConstant.PAGE_SIZE) {
-//                    loadMoreItems();
-//                }
-//            }
-//        }
-//    };
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
+    }
+
 }

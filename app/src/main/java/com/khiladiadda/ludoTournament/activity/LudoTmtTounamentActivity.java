@@ -891,4 +891,11 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
         mRefreshIv.startAnimation(rotate);
     }
 
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        mRoundPresenter.destroy();
+        super.onDestroy();
+    }
 }

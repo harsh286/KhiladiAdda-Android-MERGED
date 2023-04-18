@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.khiladiadda.R;
+import com.khiladiadda.network.model.response.WordSearchMyQuizzesQuizResponse;
 import com.khiladiadda.network.model.response.WordSearchMyQuizzesResponse;
 import com.khiladiadda.wordsearch.listener.IOnClickListener;
 
@@ -24,13 +25,11 @@ import butterknife.ButterKnife;
 public class WordSearchTrendingQuizAdapter extends RecyclerView.Adapter<WordSearchTrendingQuizAdapter.ViewHolder> {
     private IOnClickListener mIOnClickListener;
     private List<WordSearchMyQuizzesResponse> mTrendingQuizList;
-    private String mColorName;
     private String categoryName;
 
     public WordSearchTrendingQuizAdapter(IOnClickListener mIOnClickListener, List<WordSearchMyQuizzesResponse> mTrendingQuizList, String mColorName, String categoryName) {
         this.mIOnClickListener = mIOnClickListener;
         this.mTrendingQuizList = mTrendingQuizList;
-        this.mColorName = mColorName;
         this.categoryName = categoryName;
     }
 
@@ -44,27 +43,23 @@ public class WordSearchTrendingQuizAdapter extends RecyclerView.Adapter<WordSear
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         WordSearchMyQuizzesResponse trendingQuizResponse = mTrendingQuizList.get(position);
-        Glide.with(holder.itemView.getContext()).load(trendingQuizResponse.getQuiz().get(0).getImage()).placeholder(R.drawable.wordsearch_placeholder).into(holder.mQuizIV);
-        holder.mQuizNameTV.setText(trendingQuizResponse.getQuiz().get(0).getName());
+        WordSearchMyQuizzesQuizResponse quizResponse = trendingQuizResponse.getQuiz().get(0);
+        Glide.with(holder.itemView.getContext()).load(quizResponse.getImage()).placeholder(R.drawable.wordsearch_placeholder).into(holder.mQuizIV);
+        holder.mQuizNameTV.setText(quizResponse.getName());
         holder.mEntryTV.setText("Entry: " + trendingQuizResponse.getEntryFees() + " Coins");
         holder.mCategoryName.setText("Category: " + categoryName);
         holder.mCategoryName.setVisibility(View.INVISIBLE);
-//        holder.mJoinedPb.setProgress(trendingQuizResponse.getQuiz().get(0).getPlayedparticipants());
-//        holder.mJoinedPb.setMax(trendingQuizResponse.getQuiz().get(0).getTotalparticipants());
-
-        if (trendingQuizResponse.getQuiz().get(0).getPlayedparticipants() == trendingQuizResponse.getQuiz().get(0).getTotalparticipants()) {
+        if (quizResponse.getPlayedparticipants() == quizResponse.getTotalparticipants()) {
             holder.mJoinedPb.setProgress(100);
-        } else if (trendingQuizResponse.getQuiz().get(0).getPlayedparticipants() == 0) {
+        } else if (quizResponse.getPlayedparticipants() == 0) {
             holder.mJoinedPb.setProgress(1);
         } else {
-            double divideResult = (double) trendingQuizResponse.getQuiz().get(0).getPlayedparticipants() / (double) trendingQuizResponse.getQuiz().get(0).getTotalparticipants();
+            double divideResult = (double) quizResponse.getPlayedparticipants() / (double) quizResponse.getTotalparticipants();
             double participant = divideResult * 100;
             holder.mJoinedPb.setProgress((int) participant);
         }
-
-        if (trendingQuizResponse.getQuiz().get(0).getQuizStatus() == 1) {
+        if (quizResponse.getQuizStatus() == 1) {
             holder.mAttemptTV.setVisibility(View.GONE);
-//            holder.mAttemptMVC.setVisibility(View.GONE);
             holder.mViewBtn.setText("View");
             holder.mEntryTV.setVisibility(View.VISIBLE);
             if (trendingQuizResponse.getWinningAmount() == 0)
@@ -73,9 +68,8 @@ public class WordSearchTrendingQuizAdapter extends RecyclerView.Adapter<WordSear
                 holder.mEntryTV.setText("Won: " + trendingQuizResponse.getWinningAmount() + " Coins");
             holder.mViewBtn.setClickable(true);
             holder.itemView.setClickable(true);
-        } else if (trendingQuizResponse.getQuiz().get(0).getQuizStatus() == 2) {
+        } else if (quizResponse.getQuizStatus() == 2) {
             holder.mAttemptTV.setVisibility(View.GONE);
-//            holder.mAttemptMVC.setVisibility(View.GONE);
             holder.mViewBtn.setText("Tournament Cancelled!");
             holder.mEntryTV.setVisibility(View.GONE);
             holder.mViewBtn.setClickable(false);
@@ -84,25 +78,25 @@ public class WordSearchTrendingQuizAdapter extends RecyclerView.Adapter<WordSear
             holder.mViewBtn.setClickable(true);
             holder.itemView.setClickable(true);
             holder.mEntryTV.setVisibility(View.VISIBLE);
-            holder.mAttemptTV.setText("Attempts: " + trendingQuizResponse.getQuiz().get(0).getAttemptedQuiz() + "/3");
+            holder.mAttemptTV.setText("Attempts: " + quizResponse.getAttemptedQuiz() + "/3");
         }
-        holder.mWinTv.setText(" " + trendingQuizResponse.getQuiz().get(0).getPrizePoolBreakthrough().get(0).getPrizeMoney() + " Coins");
-        holder.mTotalPoints.setText("" + trendingQuizResponse.getQuiz().get(0).getPlayedparticipants() + "/" + trendingQuizResponse.getQuiz().get(0).getTotalparticipants());
-
+        if (quizResponse.getPrizePoolBreakthrough() != null && quizResponse.getPrizePoolBreakthrough().size() > 0) {
+            holder.mWinTv.setText(" " + quizResponse.getPrizePoolBreakthrough().get(0).getPrizeMoney() + " Coins");
+        } else {
+            holder.mWinTv.setText("0 Coins");
+        }
+        holder.mTotalPoints.setText("" + quizResponse.getPlayedparticipants() + "/" + quizResponse.getTotalparticipants());
     }
 
     @Override
     public int getItemCount() {
         return mTrendingQuizList.size();
-//        return 20;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private IOnClickListener mOnItemClickListener;
         @BindView(R.id.tv_name)
         TextView mQuizNameTV;
-        //        @BindView(R.id.tv_win_prize)
-//        TextView mWinPrizeTV;
         @BindView(R.id.tv_entry)
         TextView mEntryTV;
         @BindView(R.id.tv_total_participants)
@@ -115,13 +109,10 @@ public class WordSearchTrendingQuizAdapter extends RecyclerView.Adapter<WordSear
         TextView mWinTv;
         @BindView(R.id.tv_categories)
         TextView mCategoryName;
-        //        @BindView(R.id.mcv_attempt)
-//        MaterialCardView mAttemptMVC;
         @BindView(R.id.iv_quiz_image)
         ImageView mQuizIV;
         @BindView(R.id.pb_joined)
         ProgressBar mJoinedPb;
-
 
         public ViewHolder(View view, IOnClickListener onItemClickListener) {
             super(view);
@@ -139,4 +130,5 @@ public class WordSearchTrendingQuizAdapter extends RecyclerView.Adapter<WordSear
             }
         }
     }
+
 }

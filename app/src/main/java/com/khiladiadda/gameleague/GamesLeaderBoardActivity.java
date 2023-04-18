@@ -22,6 +22,7 @@ import com.khiladiadda.network.model.response.droid_doresponse.LeaderBoardPresen
 import com.khiladiadda.network.model.response.droid_doresponse.MyRankDroidoLeaderboard;
 import com.khiladiadda.network.model.response.droid_doresponse.ResponseLeaderBoardSub;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 
 import java.util.ArrayList;
@@ -67,20 +68,14 @@ public class GamesLeaderBoardActivity extends BaseActivity implements ILeaderBoa
 
     @Override
     protected void initViews() {
-//        toolbarTitle.setText(R.string.text_leaderboard_live);
         toolbarTitle.setText(R.string.text_leaderboard);
-
         mIvBack.setOnClickListener(this);
         tvRules.setOnClickListener(this);
         tvRules.setOnClickListener(this);
-//        toolbarTitle.setText(getString(R.string.live_leaderboard));
-
         toolbarTitle.setText(R.string.text_leaderboard);
-
         tvRules.setVisibility(View.VISIBLE);
         mcvRules.setVisibility(View.VISIBLE);
         tvRules.setVisibility(View.VISIBLE);
-
     }
 
     @Override
@@ -107,11 +102,8 @@ public class GamesLeaderBoardActivity extends BaseActivity implements ILeaderBoa
         rvLaederBoardDroido.setAdapter(mLeaderBoardAdapter);
         if (tournamentStatus == 1) {
             toolbarTitle.setText(R.string.text_leaderboard);
-
         } else {
             toolbarTitle.setText(R.string.text_leaderboard);
-
-//            toolbarTitle.setText(R.string.text_leaderboard_live);
         }
     }
 
@@ -156,7 +148,6 @@ public class GamesLeaderBoardActivity extends BaseActivity implements ILeaderBoa
     @Override
     public void onParticipantsSuccess(LeaderBoardDroidoResponse response) {
         if (!response.getResponseLeaderBoard().getLeaderboard().isEmpty()) {
-            hideProgress();
             mLeaderBoardList.clear();
             mMyRankDroidoLeaderboard = response.getResponseLeaderBoard().getMyRank();
             tvtimeTaken.setText(setTimeWithSecond(mMyRankDroidoLeaderboard.getTimeTaken() * 1000));
@@ -170,6 +161,7 @@ public class GamesLeaderBoardActivity extends BaseActivity implements ILeaderBoa
             } else {
                 rlLiveLeaderboardHints.setVisibility(View.VISIBLE);
             }
+            hideProgress();
         } else {
             hideProgress();
             tvError.setVisibility(View.VISIBLE);
@@ -180,4 +172,12 @@ public class GamesLeaderBoardActivity extends BaseActivity implements ILeaderBoa
     public void onParticipantsFailure(ApiError error) {
         hideProgress();
     }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
+    }
+
 }

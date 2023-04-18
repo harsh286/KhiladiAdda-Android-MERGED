@@ -13,13 +13,16 @@ public class AppConstant {
     public static final long SUREPASS_TIME_OUT = 120;
     //PRODUCTION SERVER
     public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29t";
-//     public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8="; //uat
+//    public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8="; //uat
 
 //    public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";//QA
 
 //    public static final String URL = "aHR0cHM6Ly9raGlsYWRpLnRyb29weC5pby8=";// https://khiladi.troopx.io/
 
     //     public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";
+
+    public static final String BASE_BJAZ_URL = "https://pay-api-uat.bajajfinserv.in/bajaj-common-wrapper-service/";
+
     public static final String URL_HOME = "https://www.khiladiadda.com/";
     public static final String PAN_URL = "https://sandbox.veri5digital.com/service/api/1.0/";
     public static final String VERIFY_PAN = "verifyUserIdDoc";
@@ -1006,6 +1009,7 @@ public class AppConstant {
     public static final int FROM_PHONEPE_PhonePePAY = 91;
     public static final int FROM_PHONEPE_GPAY = 92;
     public static final int FROM_PHONEPE_PaytmPAY = 93;
+    public static final int FROM_PHONEPE_BAJAJPAY = 94;
     public static final int FROM_PHONEPE = 90;
     public static final String API_GAMER_CASH_VERFIYUSER = "/user/gamercash/link-wallet";
     public static final String API_FETCH_GAMER_CASH = "/user/gamercash/fethc-gc";
@@ -1015,6 +1019,7 @@ public class AppConstant {
     public static final int FROM_GPAY_UPI = 501;
     public static final int FROM_PAYTM_UPI = 502;
     public static final int FROM_PHONEPAY_UPI = 503;
+    public static final int FROM_BAJAJYPAY_UPI = 504;
 
     //Cashfree Status
     public static final String API_CASHFREE_STATUS = "/cashfree/getOrder/{orderId}";
@@ -1127,4 +1132,31 @@ public class AppConstant {
     public static String LUDO_TOURNAMENT_DISCLAMIER = "Please Join your tournament by clicking on below Play Now button.\n" +
             "\n" +
             "If you not Click on Play Now button in 5 minutes then you will lost the tournament.";
+
+    /**
+     * New added for BajajPay
+     */
+    public static final String CONTENT_TYPE_BAJAJ_PAY = "application/json";
+    public static final String CHANNEL_BAJAJ_PAY = "BFL_1";
+    public static final String OCP_BAJAJ_APIM_SUBSCRIPTION_KEY = "7876fd0195174596b1d11b456a935e9e";
+    public static final String requestNumber = "1234567";
+    public static final String merchantId = "BFLT000000046709";
+    public static final String subMerchantId = "BFLT000000046709";
+    public static final String subMerchantName = "Khiladi Adda ";
+    public static final String authSalt = "BPAY70VN@PPv";
+    public static final String callBackURl = "https://qa.api.khiladiadda.com/bajaj/addPayment";
+    public static final String BAJAJ_PAY_PACKAGE_MANAGER = "https://bfl.onelink.me/857331112/ph6g6q1m";
+    public static final String webUrl = "webUrlPayment";
+    public static final String UPDATE_BALANCE = "bajaj/topup";
+    public static final String GAMERCASH = "GAMERCASH";
+    public static final String CASHFREE = "CASHFREE";
+    public static final String PAYTM = "PAYTM";
+    public static final String EASEBUZZ = "EASEBUZZ";
+    public static final String PAYSHARP = "PAYSHARP";
+    public static final String PHONEPE = "PHONEPE";
+    public static final String APEXPAY = "APEXPAY";
+    public static final String NEOKRED = "NEOKRED";
+
+    public static final String COUPON = "COUPON";
+
 }

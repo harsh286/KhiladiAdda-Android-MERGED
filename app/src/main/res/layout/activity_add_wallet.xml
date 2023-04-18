@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".wallet.AddWalletActivity">
 
     <include layout="@layout/actionbar" />
@@ -12,16 +11,19 @@
     <TextView
         android:id="@+id/tv_coins"
         style="@style/WalletText"
-        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_below="@+id/action_bar"
         android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
         android:padding="@dimen/padding_10"
         android:paddingStart="@dimen/padding_20"
         android:text="@string/text_total_coins"
-        android:textSize="@dimen/text_15" />
+        android:textSize="@dimen/text_20" />
 
     <LinearLayout
+        android:id="@+id/ll_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_coins"
         android:layout_marginStart="@dimen/margin_20"
         android:layout_marginEnd="@dimen/margin_20"
         android:orientation="vertical"
@@ -30,22 +32,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:text="@string/text_min_amount_help"
-            android:textColor="@color/colorPrimaryDark" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10"
-            android:text="@string/hint_amount"
-            android:textColor="@color/lighter_black"
-            android:textSize="@dimen/text_15" />
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/text_12" />
 
         <EditText
             android:id="@+id/et_amount"
-            style="@style/CustomEditTextLudo"
+            style="@style/CustomEditTextWallet"
             android:layout_marginTop="@dimen/margin_3"
-            android:layout_marginBottom="@dimen/margin_10"
+            android:layout_marginBottom="@dimen/margin_8"
             android:autofillHints=""
             android:gravity="center"
             android:hint="@string/text_amount_rs"
@@ -57,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/margin_5"
+            android:layout_margin="@dimen/margin_3"
             android:padding="@dimen/padding_5"
             android:text="@string/text_any_coupon"
             android:textColor="@color/colorPrimaryDark"
@@ -68,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_10"
-            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_3"
             android:layout_marginEnd="@dimen/margin_10"
             android:orientation="horizontal"
             android:visibility="gone">
@@ -139,9 +135,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_pay"
+        android:layout_below="@+id/ll_amount">
 
         <LinearLayout
+            android:id="@+id/ll_pg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_20"
@@ -152,7 +151,7 @@
                 android:id="@+id/tv_upi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/padding_5"
+                android:layout_marginStart="@dimen/margin_5"
                 android:text="@string/text_upi_wallet"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_12"
@@ -167,7 +166,7 @@
                 <ImageView
                     android:id="@+id/iv_gpay"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
+                    android:layout_height="@dimen/pg_height"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
@@ -177,7 +176,7 @@
                 <ImageView
                     android:id="@+id/iv_apay"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
+                    android:layout_height="@dimen/pg_height"
                     android:layout_marginStart="@dimen/margin_5"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
@@ -188,7 +187,7 @@
                 <ImageView
                     android:id="@+id/iv_phonepe"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
+                    android:layout_height="@dimen/pg_height"
                     android:layout_marginStart="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
@@ -201,7 +200,7 @@
                 android:id="@+id/tv_pg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_8"
                 android:padding="@dimen/padding_5"
                 android:text="@string/text_netbanking_card"
                 android:textColor="@color/colorBlack"
@@ -217,7 +216,7 @@
                 <TextView
                     android:id="@+id/tv_paytm"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
+                    android:layout_height="@dimen/pg_height"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
@@ -233,8 +232,8 @@
                 <TextView
                     android:id="@+id/tv_cashfree"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_height="@dimen/pg_height"
+                    android:layout_marginTop="@dimen/margin_8"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
@@ -250,8 +249,8 @@
                 <TextView
                     android:id="@+id/tv_paysharp"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_height="@dimen/pg_height"
+                    android:layout_marginTop="@dimen/margin_8"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
@@ -267,8 +266,8 @@
                 <TextView
                     android:id="@+id/tv_apexpay"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_height="@dimen/pg_height"
+                    android:layout_marginTop="@dimen/margin_8"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
@@ -284,8 +283,8 @@
                 <TextView
                     android:id="@+id/tv_easebuzz"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_height="@dimen/pg_height"
+                    android:layout_marginTop="@dimen/margin_8"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
@@ -301,8 +300,8 @@
                 <TextView
                     android:id="@+id/tv_neokred"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_height="@dimen/pg_height"
+                    android:layout_marginTop="@dimen/margin_8"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
@@ -318,8 +317,8 @@
                 <TextView
                     android:id="@+id/tv_phonepe"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_height="@dimen/pg_height"
+                    android:layout_marginTop="@dimen/margin_8"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
@@ -335,8 +334,8 @@
                 <TextView
                     android:id="@+id/tv_gamercash"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_height="@dimen/pg_height"
+                    android:layout_marginTop="@dimen/margin_8"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
@@ -353,8 +352,8 @@
                 <TextView
                     android:id="@+id/tv_gamercash_verified"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_height="@dimen/pg_height"
+                    android:layout_marginTop="@dimen/margin_8"
                     android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@drawable/ic_selector_merchant"
@@ -369,16 +368,17 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_pay"
-                style="@style/DialogButtonLudo"
-                android:layout_margin="@dimen/margin_25"
-                android:text="@string/txt_pay"
-                android:visibility="gone" />
-
         </LinearLayout>
 
     </ScrollView>
 
+    <Button
+        android:id="@+id/btn_pay"
+        style="@style/DialogButtonLudo"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:text="@string/txt_pay"
+        android:visibility="gone" />
+
     <include layout="@layout/bannermoengage" />
-</LinearLayout>
+</RelativeLayout>

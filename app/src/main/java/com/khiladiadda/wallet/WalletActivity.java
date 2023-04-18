@@ -163,12 +163,12 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
                 startActivity(new Intent(this, NotificationActivity.class));
                 break;
             case R.id.btn_add_coins:
-//                i = new Intent(this, AddWalletOldActivity.class);
                 if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
                     if (LocationCheckUtils.getInstance().hasLocationPermission()) {
                         LocationCheckUtils.getInstance().requestNewLocationData();
                         if (isAllowed) {
-                            i = new Intent(this, AddWalletActivity.class);
+//                            i = new Intent(this, AddWalletActivity.class);
+                            i = new Intent(this, WalletCashbackActivity.class);
                             walletActivityResultLauncher.launch(i);
                         } else
                             Snackbar.make(mAddCoinsBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
@@ -177,7 +177,8 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
                         AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
                     }
                 } else {
-                    i = new Intent(this, AddWalletActivity.class);
+//                    i = new Intent(this, AddWalletActivity.class);
+                    i = new Intent(this, WalletCashbackActivity.class);
                     walletActivityResultLauncher.launch(i);
                 }
                 break;

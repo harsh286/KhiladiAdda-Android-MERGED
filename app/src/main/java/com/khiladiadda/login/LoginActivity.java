@@ -23,6 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
@@ -68,6 +70,8 @@ import com.truecaller.android.sdk.TrueError;
 import com.truecaller.android.sdk.TrueProfile;
 import com.truecaller.android.sdk.TruecallerSDK;
 import com.truecaller.android.sdk.TruecallerSdkScope;
+
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -129,6 +133,12 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
         mGoogleIV.setOnClickListener(this);
         mNeedSupportLL.setOnClickListener(this);
         mTruecaller.setOnClickListener(this);
+    }
+
+    @Override
+    protected void initVariables() {
+        mPresenter = new LoginPresenter(this);
+        mPresenterTrueCaller = new TrueCallerPresenter(this);
         LocationCheckUtils.initialize(this, this, this);
         SpannableString loginviaString = new SpannableString(mLoginViaTV.getText().toString());
         loginviaString.setSpan(new UnderlineSpan(), 0, 12, 0);
@@ -136,21 +146,16 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
         SpannableString signupString = new SpannableString(mSignUpTV.getText().toString());
         signupString.setSpan(new UnderlineSpan(), 0, mSignUpTV.length(), 0);
         mSignUpTV.setText(signupString);
-        if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
-            if (!LocationCheckUtils.getInstance().hasLocationPermission()) {
-                LocationCheckUtils.getInstance().statusCheck();
-            } else {
-                LocationCheckUtils.getInstance().requestNewLocationData();
-            }
-        }
-    }
-
-    @Override
-    protected void initVariables() {
-        mPresenter = new LoginPresenter(this);
-        mPresenterTrueCaller = new TrueCallerPresenter(this);
         if (mAppPreference.getIsVersionUpdated()) {
             showVersionDialog();
+        } else {
+            if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
+                if (!LocationCheckUtils.getInstance().hasLocationPermission()) {
+                    LocationCheckUtils.getInstance().statusCheck();
+                } else {
+                    LocationCheckUtils.getInstance().requestNewLocationData();
+                }
+            }
         }
     }
 
@@ -346,9 +351,22 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
     //Google SignIn
     private void googleSignIn() {
         Intent signInIntent = GoogleSignIn.getClient(this, setUpGoogle()).getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-//        gmailActivityResultLauncher.launch(signInIntent);
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
+        gmailActivityResultLauncher.launch(signInIntent);
     }
+
+    ActivityResultLauncher<Intent> gmailActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getData() != null) {
+                    try {
+                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+                        GoogleSignInAccount account = task.getResult(ApiException.class);
+                        handleGoogleSignInResult(task);
+                    } catch (Exception ignored) {
+                    }
+                }
+            });
 
     private void handleGoogleSignInResult(Task<GoogleSignInAccount> task) {
         try {
@@ -406,17 +424,17 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
         if (requestCode == TruecallerSDK.SHARE_PROFILE_REQUEST_CODE) {
             TruecallerSDK.getInstance().onActivityResultObtained(this, requestCode, resultCode, data);
         }
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            try {
-                // The Task returned from this call is always completed, no need to attach a listener.
-                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                handleGoogleSignInResult(task);
-            } catch (ApiException e) {
-                e.printStackTrace();
-            }
-        }
+//        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+//        if (requestCode == RC_SIGN_IN) {
+//            try {
+//                // The Task returned from this call is always completed, no need to attach a listener.
+//                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+//                GoogleSignInAccount account = task.getResult(ApiException.class);
+//                handleGoogleSignInResult(task);
+//            } catch (ApiException e) {
+//                e.printStackTrace();
+//            }
+//        }
         // Result returned from launching the Intent from Facebook;
         else if (mCallbackManager.onActivityResult(requestCode, resultCode, data)) {
         }
@@ -598,30 +616,20 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
     @Override
     public void onTrueCallerFailure(ApiError errorMsg) {
         hideProgress();
-//        Toast.makeText(this, "Failed Truecaller Api" + errorMsg.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     private void showErrorDialog(String msg) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        // Set the message show for the Alert time
         builder.setMessage(msg);
-        // Set Alert Title
         builder.setTitle("Alert !");
-        // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
         builder.setCancelable(false);
-        // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
         builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
-            // When the user click yes button then app will close
             finish();
         });
-        // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
         builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
-            // If user click no then dialog box is canceled.
             dialog.cancel();
         });
-        // Create the Alert dialog
         AlertDialog alertDialog = builder.create();
-        // Show the Alert Dialog box
         alertDialog.show();
     }
 
@@ -633,7 +641,6 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
     @Override
     public void iOnAddressFailure() {
         isAllowed = false;
-//        LocationCheckUtils.getInstance().DialogNotAllowed(this, "You are not allowed to play skill-based real money gaming in your state.");
     }
 
     private void appsFlyer(String socialName, String mMobileNumber) {
@@ -694,21 +701,13 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
 
     private void signOut() {
         mGoogleSignInClient.signOut()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // ...
-                    }
+                .addOnCompleteListener(this, task -> {
                 });
     }
 
     private void revokeAccess() {
         mGoogleSignInClient.revokeAccess()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // ...
-                    }
+                .addOnCompleteListener(this, task -> {
                 });
     }
 

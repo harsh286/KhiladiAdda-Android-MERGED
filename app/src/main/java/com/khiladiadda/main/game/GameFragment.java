@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -18,19 +17,16 @@ import com.khiladiadda.callbreak.CallBreakActivity;
 import com.khiladiadda.clashx2.main.activity.ClashXDashBoardActivity;
 import com.khiladiadda.fanbattle.FanBattleActivity;
 import com.khiladiadda.gameleague.NewDroidoActivity;
-import com.khiladiadda.gameleague.TrendingTournamentActivity;
 import com.khiladiadda.help.HelpActivity;
 import com.khiladiadda.leaderboard.NewLeaderboardActivity;
 import com.khiladiadda.league.LeagueActivity;
 import com.khiladiadda.ludo.LudoChallengeActivity;
 import com.khiladiadda.ludo.luodhelp.LudoHelpActivity;
 import com.khiladiadda.ludoTournament.activity.LudoTmtDashboardActivity;
-import com.khiladiadda.ludoUniverse.LudoUniverseActivity;
 import com.khiladiadda.ludoUniverse.ModeActivity;
 import com.khiladiadda.main.fragment.HomeFragment;
 import com.khiladiadda.main.game.adapter.TopKhiladiAdapter;
 import com.khiladiadda.network.model.response.DashboardDetailResponse;
-import com.khiladiadda.network.model.response.ModeConfig;
 import com.khiladiadda.quiz.all.AllQuizListActivity;
 import com.khiladiadda.rummy.RummyActivity;
 import com.khiladiadda.scratchcard.ScratchCardActivity;
@@ -88,9 +84,6 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
     ImageView mCallBreakIv;
     @BindView(R.id.iv_quiz)
     ImageView mQuizIv;
-    @BindView(R.id.sv_main)
-    ScrollView mMainSv;
-
     private Handler handler;
 
     public static Fragment getInstance() {
@@ -125,7 +118,6 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
         mRummyIv.setOnClickListener(this);
         mCallBreakIv.setOnClickListener(this);
         mQuizIv.setOnClickListener(this);
-
     }
 
     @Override
@@ -141,40 +133,23 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
     @Override
     public void onClick(View v) {
         Intent i = null;
-        Properties properties = new Properties();
         switch (v.getId()) {
             case R.id.tv_gift:
                 i = new Intent(getActivity(), ScratchCardActivity.class);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "ScratchCard")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("ScratchCard");
                 break;
             case R.id.iv_quiz:
             case R.id.tv_quiz:
                 i = new Intent(getActivity(), AllQuizListActivity.class);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "Quiz")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("Quiz");
                 break;
             case R.id.tv_winner:
                 i = new Intent(getActivity(), NewLeaderboardActivity.class);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "OverAllLeaderBoard")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("OverAllLeaderBoard");
                 break;
             case R.id.tv_help:
                 i = new Intent(getActivity(), HelpActivity.class);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "Help")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("Help");
                 break;
             case R.id.iv_ludo:
                 i = new Intent(getActivity(), LudoChallengeActivity.class);
@@ -182,132 +157,90 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
                 if (!mPreference.getBoolean(AppConstant.LUDO_VIDEO_SEEN, false)) {
                     i = new Intent(getActivity(), LudoHelpActivity.class);
                 }
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "LudoKing")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("LudoKing");
                 break;
             case R.id.iv_bgmi:
                 i = new Intent(getActivity(), LeagueActivity.class);
                 i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_BGMI);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "LeaguesBGMI")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("LeaguesBGMI");
                 break;
             case R.id.iv_tdm:
                 i = new Intent(getActivity(), LeagueActivity.class);
                 i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_TDM);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "LeaguesTDM")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("LeaguesTDM");
                 break;
             case R.id.iv_freefire:
                 i = new Intent(getActivity(), LeagueActivity.class);
                 i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_FREEFIRE);
                 i.putExtra(AppConstant.FROM_TYPE, AppConstant.FREEFIRE_SOLO);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "LeaguesFF")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("LeaguesFF");
                 break;
             case R.id.iv_ff_clash:
                 i = new Intent(getActivity(), LeagueActivity.class);
                 i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_FF_CLASH);
                 i.putExtra(AppConstant.FROM_TYPE, AppConstant.FF_CLASH_SOLO);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "LeaguesFFCLash")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("LeaguesFFCLash");
                 break;
             case R.id.iv_fanbattle:
                 i = new Intent(getActivity(), FanBattleActivity.class);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "FanBattle")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("FanBattle");
                 break;
             case R.id.iv_ff_max:
                 i = new Intent(getActivity(), LeagueActivity.class);
                 i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_FF_MAX);
                 i.putExtra(AppConstant.FROM_TYPE, AppConstant.FF_MAX_SOLO);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "FreeFireMax")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("FreeFireMax");
                 break;
             case R.id.iv_clashx:
                 i = new Intent(getActivity(), ClashXDashBoardActivity.class);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "ClashX")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("ClashX");
                 break;
             case R.id.iv_pubg_gobal_lite:
                 i = new Intent(getActivity(), LeagueActivity.class);
                 i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_PUBG_GLOBAL);
                 i.putExtra(AppConstant.FROM_TYPE, AppConstant.PUBG_GLOBAL_SOLO);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "PubgGlobal")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("PubgGlobal");
                 break;
             case R.id.iv_esportsperimum:
                 i = new Intent(getActivity(), LeagueActivity.class);
                 i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_PREMIUM_ESPORTS);
                 i.putExtra(AppConstant.FROM_TYPE, AppConstant.PREMIUM_ESPORTS_SOLO);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "EsportsPerimum")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("EsportsPerimum");
                 break;
             case R.id.iv_wordsearch:
                 i = new Intent(getActivity(), WordSearchMainActivity.class);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "Word Seacrh")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("Word Seacrh");
                 break;
             case R.id.iv_droido:
                 i = new Intent(getActivity(), NewDroidoActivity.class);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "Droid-Do")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("Droid-Do");
                 break;
             case R.id.iv_ludo_universe:
                 i = new Intent(getActivity(), ModeActivity.class);
-                properties
-                        // tracking click
-                        .addAttribute(AppConstant.ScreenName, "Ludo Adda")
-                        .addAttribute(AppConstant.ClickedDate, new Date());
-                MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
+                updateMoengage("Ludo Adda");
                 break;
             case R.id.iv_ludotournament:
                 i = new Intent(getActivity(), LudoTmtDashboardActivity.class);
+                updateMoengage("Ludo Tournament");
                 break;
             case R.id.iv_rummy:
                 i = new Intent(getActivity(), RummyActivity.class);
+                updateMoengage("Rummy");
                 break;
             case R.id.iv_codepieces:
                 i = new Intent(getActivity(), CallBreakActivity.class);
+                updateMoengage("CallBreak");
                 break;
-
         }
         startActivity(i);
+    }
+
+    private void updateMoengage(String screenName) {
+        Properties properties = new Properties();
+        properties
+                .addAttribute(AppConstant.ScreenName, screenName)
+                .addAttribute(AppConstant.ClickedDate, new Date());
+        MoEAnalyticsHelper.INSTANCE.trackEvent(getContext(), "ScreenOpened", properties);
     }
 
     public void setUpAdvertisement() {

@@ -62,7 +62,6 @@ public class MyFanLeagueActivityHTH extends BaseActivity implements ICreateBattl
     TextView mNoDataTV;
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
-
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
     private ArrayList<HTHResponseDetails> mMatchList = new ArrayList<>();
@@ -331,6 +330,7 @@ public class MyFanLeagueActivityHTH extends BaseActivity implements ICreateBattl
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mHTHNotificationReceiverLiveMatches);
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

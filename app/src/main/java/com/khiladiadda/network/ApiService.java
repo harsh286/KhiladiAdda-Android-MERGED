@@ -5,10 +5,15 @@ import com.khiladiadda.battle.model.BattleGroupResponse;
 import com.khiladiadda.battle.model.BattleResponse;
 import com.khiladiadda.login.TrueCallerRequest;
 import com.khiladiadda.login.TrueCallerResponse;
+import com.khiladiadda.network.model.request.BajajPayEncryptedRequest;
 import com.khiladiadda.network.model.request.PhonepeCheckPaymentRequest;
 import com.khiladiadda.network.model.request.PhonepeRequest;
 import com.khiladiadda.network.model.request.RaceConditionPayoutRequest;
+import com.khiladiadda.network.model.request.UpdateBalanceRequest;
 import com.khiladiadda.network.model.request.deposite.DepositLimitRequest;
+import com.khiladiadda.network.model.response.BajajPayGetBalanceResponse;
+import com.khiladiadda.network.model.response.BajajPayResponse;
+import com.khiladiadda.network.model.response.BajajPayVerifyOtpResponse;
 import com.khiladiadda.network.model.response.CallBreakJoinMainResponse;
 import com.khiladiadda.network.model.response.CallBreakResponse;
 import com.khiladiadda.network.model.response.CbHistoryRankMainResponse;
@@ -25,6 +30,7 @@ import com.khiladiadda.network.model.response.RummyHistoryMainResponse;
 import com.khiladiadda.network.model.response.RummyRefreshTokenMainResponse;
 import com.khiladiadda.network.model.response.RummyResponse;
 import com.khiladiadda.network.model.response.TdsResponse;
+import com.khiladiadda.network.model.response.UpdateBalanceResponse;
 import com.khiladiadda.network.model.response.deposite.DepositLimitMainResponse;
 import com.khiladiadda.network.model.response.deposite.FetchDepositLimitMainResponse;
 import com.khiladiadda.network.model.response.droid_doresponse.DroidoHistoryGameList;
@@ -189,6 +195,7 @@ import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -999,5 +1006,32 @@ public interface ApiService {
 
     @GET(AppConstant.API_CHECK_TDS)
     Observable<TdsResponse> onCheckTDS(@Query("amount") int amount);
+
+    @POST("v1/wrapper/generate/otp")
+    Observable<BajajPayResponse> forBajajPayOTP(@Header("Content-Type") String content_type, @Header("channel") String channel, @Header("Ocp-Apim-Subscription-Key") String Ocp_Api_sub_key, @Header("Ocp-Apim-Trace") boolean Ocp_api_trace, @Body BajajPayEncryptedRequest req);
+
+    @POST("v1/wrapper/resend/otp")
+    Observable<BajajPayResponse> forBajajPayResendOTP(@Header("Content-Type") String content_type, @Header("channel") String channel, @Header("Ocp-Apim-Subscription-Key") String Ocp_Api_sub_key, @Header("Ocp-Apim-Trace") boolean Ocp_api_trace, @Body BajajPayEncryptedRequest bajajPayEncryptedRequest);
+
+    @POST("v1/wrapper/verify/otp")
+    Observable<BajajPayVerifyOtpResponse> forBajajPayVerifyOTP(@Header("Content-Type") String content_type, @Header("channel") String channel, @Header("Ocp-Apim-Subscription-Key") String Ocp_Api_sub_key, @Header("Ocp-Apim-Trace") boolean Ocp_api_trace, @Body BajajPayEncryptedRequest payEncryptedRequest);
+
+    @POST("v1/wrapper/wallet/balance")
+    Observable<BajajPayGetBalanceResponse> getBajajBalance(@Header("Content-Type") String content_type, @Header("channel") String channel, @Header("Ocp-Apim-Subscription-Key") String Ocp_Api_sub_key, @Header("Ocp-Apim-Trace") boolean Ocp_api_trace, @Body BajajPayEncryptedRequest payEncryptedRequest);
+
+    @POST("v1/wrapper/payment/auth")
+    Observable<BajajPayResponse> getPayment(@Header("Content-Type") String content_type, @Header("channel") String channel, @Header("Ocp-Apim-Subscription-Key") String Ocp_Api_sub_key, @Header("Ocp-Apim-Trace") boolean Ocp_api_trace, @Body BajajPayEncryptedRequest payEncryptedRequest);
+
+    @POST("v1/wrapper/debit/transaction")
+    Observable<BajajPayResponse> getBajajPayDebitPayment(@Header("Content-Type") String content_type, @Header("channel") String channel, @Header("Ocp-Apim-Subscription-Key") String Ocp_Api_sub_key, @Header("Ocp-Apim-Trace") boolean Ocp_api_trace, @Body BajajPayEncryptedRequest bajajPayDebitTransactionRequest);
+
+    @POST("v1/wrapper/payment/add-money")
+    Observable<BajajPayResponse> getBajajPayAddMoneyBalance(@Header("Content-Type") String content_type, @Header("channel") String channel, @Header("Ocp-Apim-Subscription-Key") String Ocp_Api_sub_key, @Header("Ocp-Apim-Trace") boolean Ocp_api_trace, @Body BajajPayEncryptedRequest mBajajPayInsufficientBalanceDebitListener);
+
+    @POST("v1/wrapper/user/delink")
+    Observable<BajajPayResponse> delinkWallet(@Header("Content-Type") String content_type, @Header("channel") String channel, @Header("Ocp-Apim-Subscription-Key") String Ocp_Api_sub_key, @Header("Ocp-Apim-Trace") boolean Ocp_api_trace, @Body BajajPayEncryptedRequest bajajPayDeLinkWalletRequest);
+
+    @POST(AppConstant.UPDATE_BALANCE)
+    Observable<UpdateBalanceResponse> getUpdateBalance(@Body UpdateBalanceRequest updateBalanceRequest);
 
 }

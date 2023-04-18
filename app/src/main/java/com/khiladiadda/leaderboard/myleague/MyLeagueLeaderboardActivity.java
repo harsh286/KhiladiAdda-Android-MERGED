@@ -13,7 +13,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.leaderboard.LeaderboardPresenter;
-import com.khiladiadda.leaderboard.adapter.AllLeaderBoardRVAdapter;
+import com.khiladiadda.leaderboard.adapter.LeagueLeaderBoardRVAdapter;
 import com.khiladiadda.leaderboard.interfaces.ILeaderboardPresenter;
 import com.khiladiadda.leaderboard.interfaces.ILeaderboardView;
 import com.khiladiadda.network.model.ApiError;
@@ -42,7 +42,7 @@ public class MyLeagueLeaderboardActivity extends BaseActivity implements ILeader
 
     private LinearLayoutManager mLayoutManager;
     private ILeaderboardPresenter mPresenter;
-    private AllLeaderBoardRVAdapter mAdapter;
+    private LeagueLeaderBoardRVAdapter mAdapter;
     private List<AllLederBoardDetails> mList = null;
     private String mGameId;
     private boolean isLoading, isLastPage;
@@ -62,7 +62,7 @@ public class MyLeagueLeaderboardActivity extends BaseActivity implements ILeader
         mPresenter = new LeaderboardPresenter(this);
         mGameId = getIntent().getStringExtra(AppConstant.ID);
         mList = new ArrayList<>();
-        mAdapter = new AllLeaderBoardRVAdapter(mList, 2);
+        mAdapter = new LeagueLeaderBoardRVAdapter(mList, 2);
         mLayoutManager = new LinearLayoutManager(this);
         mLeaderBoardRV.setLayoutManager(mLayoutManager);
         mLeaderBoardRV.setAdapter(mAdapter);

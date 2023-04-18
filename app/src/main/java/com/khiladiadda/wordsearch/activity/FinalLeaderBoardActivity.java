@@ -15,6 +15,7 @@ import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.response.WordSearchLiveLeaderBoardMainResponse;
 import com.khiladiadda.network.model.response.WordSearchLiveLeaderBoardlbResponse;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.wordsearch.adapter.FinalLeaderBoardAdapter;
 import com.khiladiadda.wordsearch.ip.WordSearchLiveLeaderboardPresenter;
@@ -136,4 +137,10 @@ public class FinalLeaderBoardActivity extends BaseActivity implements IWordSearc
         hideProgress();
     }
 
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mWordSearchLiveLeaderboardPresenter.destroy();
+        super.onDestroy();
+    }
 }
