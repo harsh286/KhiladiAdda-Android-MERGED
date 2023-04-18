@@ -11,7 +11,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class NewAESEncrypt {
 
-    private static String encryptKeyFromBP = "NCgmmzTRSbnGDgEUFDkhxRvsYgKVbkmi";//For Testing
+//    private static String encryptKeyFromBP = "NCgmmzTRSbnGDgEUFDkhxRvsYgKVbkmi";//For Testing
+    private static String encryptKeyFromBP = "KPWOWtTFKOdQMtLuMyMvXNawzHFZlzRF";//For Prod
 
     public static String encrypt(String value) {
         try {

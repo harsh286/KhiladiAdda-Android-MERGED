@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/droido_bg">
 
     <include
@@ -54,30 +54,22 @@
                     android:layout_height="match_parent"
                     android:background="#262626">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cv_game_logo"
-                        android:layout_width="47dp"
-                        android:layout_height="47dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        app:cardCornerRadius="@dimen/margin_40"
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/image_tournament_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/black"
+                        android:src="@mipmap/ic_launcher"
+                        app:civ_border_color="@color/colorPrimary"
+                        app:civ_border_width="1dp"
+                        app:civ_shadow="true"
+                        app:civ_shadow_color="@color/colorPrimaryDark"
+                        app:civ_shadow_radius="5"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:strokeColor="@color/white"
-                        app:strokeWidth="1dp">
-
-                        <ImageView
-                            android:id="@+id/image_tournament_detail"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/black"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/km_ic_person_white" />
-                    </com.google.android.material.card.MaterialCardView>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -154,13 +146,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_8"
                 android:layout_marginTop="@dimen/margin_8"
-                tools:text="Ends in: 3 days"
                 android:textColor="#FFFFFF"
                 android:textFontWeight="500"
                 android:textSize="@dimen/margin_10"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mcv_top" />
+                app:layout_constraintTop_toBottomOf="@id/mcv_top"
+                tools:text="Ends in: 3 days" />
 
             <TextView
                 android:id="@+id/tv_entry_fee"
@@ -225,9 +217,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="2dp"
+            android:fontFamily="@font/rowdies_regular"
             android:gravity="center_vertical"
             android:text="@string/text_prize_pool"
-            android:fontFamily="@font/rowdies_regular"
             android:textColor="#262626"
             android:textSize="@dimen/text_12"
             android:textStyle="bold" />
@@ -296,31 +288,22 @@
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView3"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/acb_view_leaderboard"
         android:layout_width="170dp"
         android:layout_height="@dimen/margin_40"
+        android:layout_gravity="center"
         android:layout_marginBottom="16dp"
-        app:cardBackgroundColor="#F6DB6F"
-        app:cardCornerRadius="90dp"
-        android:visibility="visible"
+        android:background="@drawable/bg_droido_view_leaderboard"
+        android:fontFamily="@font/rowdies_regular"
+        android:maxLines="1"
+        android:text="@string/view_live_leaderboard"
+        android:textAllCaps="false"
+        android:textSize="@dimen/text_12"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/rl_play_quiz"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/acb_view_leaderboard"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="#F6DB6F"
-            android:maxLines="1"
-            android:fontFamily="@font/rowdies_regular"
-            android:text="@string/view_live_leaderboard"
-            android:textAllCaps="false"
-            android:textSize="@dimen/text_12"
-            android:textStyle="bold" />
-    </com.google.android.material.card.MaterialCardView>
+        app:layout_constraintRight_toRightOf="parent" />
 
     <RelativeLayout
         android:id="@+id/rl_play_quiz"

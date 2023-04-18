@@ -420,7 +420,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                     String finalBalance = String.valueOf(addBalance);
                     AppDialog.showBajajPaySuccessDialog(this, finalBalance, this);
                 } else {
-                    BajajAuthOtPPaymentRequest bajajAuthOtPPaymentRequest = new BajajAuthOtPPaymentRequest(AppConstant.merchantId, mAppPreference.getMobileNumberBP(), mAppPreference.getUserTokenBP(), mAmount, AppConstant.subMerchantId, AppConstant.subMerchantName);
+                    BajajAuthOtPPaymentRequest bajajAuthOtPPaymentRequest = new BajajAuthOtPPaymentRequest(AppConstant.merchantId, mAppPreference.getMobileNumberBP(), mAppPreference.getUserTokenBP(), mAmount, AppConstant.BAJAJPAY_subMerchantId, AppConstant.subMerchantName);
                     String otpAuthBP = new Gson().toJson(bajajAuthOtPPaymentRequest);
                     String otpAuthEncryptRequest = NewAESEncrypt.encrypt(otpAuthBP.trim());
                     BajajPayEncryptedRequest authOtpEncRequest = new BajajPayEncryptedRequest(otpAuthEncryptRequest);
@@ -445,7 +445,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
             /**  Request to send data to BajajPay for Getting Balance  */
-            BajajPayGetBalanceRequest bajajPayGetBalanceRequest = new BajajPayGetBalanceRequest(AppConstant.merchantId, mAppPreference.getMobileNumberBP(), mAppPreference.getUserTokenBP(), AppConstant.subMerchantId, AppConstant.subMerchantName);
+            BajajPayGetBalanceRequest bajajPayGetBalanceRequest = new BajajPayGetBalanceRequest(AppConstant.merchantId, mAppPreference.getMobileNumberBP(), mAppPreference.getUserTokenBP(), AppConstant.BAJAJPAY_subMerchantId, AppConstant.subMerchantName);
             String jsonData = new Gson().toJson(bajajPayGetBalanceRequest);
             String encryptData = NewAESEncrypt.encrypt(jsonData.trim());
             BajajPayEncryptedRequest bajajPayEncryptedRequest = new BajajPayEncryptedRequest(encryptData);
@@ -1004,7 +1004,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     public void getOTPBajajPa(String number) {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
-            BajajPayGetOtpRequest bajajPayGetOtpRequest = new BajajPayGetOtpRequest(number, AppConstant.merchantId, AppConstant.subMerchantId, AppConstant.subMerchantName);
+            BajajPayGetOtpRequest bajajPayGetOtpRequest = new BajajPayGetOtpRequest(number, AppConstant.merchantId, AppConstant.BAJAJPAY_subMerchantId, AppConstant.subMerchantName);
             String jsonData = new Gson().toJson(bajajPayGetOtpRequest);
             String encryptData = NewAESEncrypt.encrypt(jsonData.trim());
             BajajPayEncryptedRequest bajajPayEncryptedRequest = new BajajPayEncryptedRequest(encryptData);
@@ -1090,7 +1090,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             showProgress(getString(R.string.txt_progress_authentication));
             /**Random Number should be generated for merchantTxnId and it should be greater than 10*/
             long merchantTxnId = AppUtilityMethods.randomNumber();
-            BajajPayInsuffiencientBalanceRequest bajajPayInsuffiencientBalanceRequest = new BajajPayInsuffiencientBalanceRequest(AppConstant.merchantId, mAppPreference.getMobileNumberBP(), merchantTxnId, mAppPreference.getUserTokenBP(), balance, AppConstant.callBackURl, AppConstant.requestNumber, AppConstant.subMerchantId);
+            BajajPayInsuffiencientBalanceRequest bajajPayInsuffiencientBalanceRequest = new BajajPayInsuffiencientBalanceRequest(AppConstant.merchantId, mAppPreference.getMobileNumberBP(), merchantTxnId, mAppPreference.getUserTokenBP(), balance, AppConstant.callBackURl, AppConstant.requestNumber, AppConstant.BAJAJPAY_subMerchantId);
             String jsonData = new Gson().toJson(bajajPayInsuffiencientBalanceRequest);
             String encryptDataResendOtp = NewAESEncrypt.encrypt(jsonData.trim());
             BajajPayEncryptedRequest bajajPayInSufficientBalanceEncryptedRequest = new BajajPayEncryptedRequest(encryptDataResendOtp);

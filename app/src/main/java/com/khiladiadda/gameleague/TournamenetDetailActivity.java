@@ -167,7 +167,7 @@ public class TournamenetDetailActivity extends BaseActivity implements ITourname
         winPrize = intent.getStringExtra(AppConstant.DROIDO_WIN_PRIZE);
         nAttempts = intent.getStringExtra(AppConstant.DROIDO_N_ATTEMPTS);
         if (nAttempts.equals("0")) {
-            materialCardViewLeaderboard.setVisibility(View.GONE);
+            acbLeaderBoard.setVisibility(View.GONE);
         }
         String endsIn = intent.getStringExtra(AppConstant.DROIDO_ENDS_IN);
         if (endsIn != null) {

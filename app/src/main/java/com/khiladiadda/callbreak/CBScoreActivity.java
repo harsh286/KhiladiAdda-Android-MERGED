@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,7 +41,7 @@ public class CBScoreActivity extends BaseActivity implements ICallBreakView {
     @BindView(R.id.rv_callbreak)
     RecyclerView mCallBreakRV;
     @BindView(R.id.mcv_play)
-    MaterialCardView mPlayAGainMcv;
+    AppCompatButton mPlayAGainMcv;
     private CallBreakScoreAdapter mAdapter;
     private List<CallBreakHistoryPlayerResponse> playersValue;
     private ICallBreakPresenter mPresenter;

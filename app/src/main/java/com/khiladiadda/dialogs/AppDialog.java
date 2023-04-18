@@ -34,8 +34,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.gson.Gson;
 import com.khiladiadda.R;
-import com.khiladiadda.clashx2.main.activity.MyFanLeagueActivityHTH;
-import com.khiladiadda.clashx2.main.activity.SelectedPlayers;
 import com.khiladiadda.dialogs.interfaces.IOnAddCallDutyCredentialListener;
 import com.khiladiadda.dialogs.interfaces.IOnAddChallengeListener;
 import com.khiladiadda.dialogs.interfaces.IOnAddGameCredentialListener;
@@ -1178,7 +1176,7 @@ public class AppDialog {
                     tvResendOTP.setTextColor(activity.getResources().getColor(R.color.amount_color));
                     tvResendOTP.setEnabled(false);
                 } else {
-                    BajajPayGetOtpRequest otpRequest = new BajajPayGetOtpRequest(bajajPayResponse.getMobileNumber(), bajajPayResponse.getMerchantId(), AppConstant.subMerchantId, bajajPayResponse.getSubMerchantName());
+                    BajajPayGetOtpRequest otpRequest = new BajajPayGetOtpRequest(bajajPayResponse.getMobileNumber(), bajajPayResponse.getMerchantId(), AppConstant.BAJAJPAY_subMerchantId, bajajPayResponse.getSubMerchantName());
                     String otpEncString = new Gson().toJson(otpRequest);
                     String otpEncRequest = NewAESEncrypt.encrypt(otpEncString.trim());
                     BajajPayEncryptedRequest resendOtpEncRequest = new BajajPayEncryptedRequest(otpEncRequest);
@@ -1336,7 +1334,7 @@ public class AppDialog {
         Random rand = new Random();
         /**Random Number should be generated for merchantTxnId and it should be greater than 10*/
         long merchantTxnId = (long) (rand.nextDouble() * 100000000000000L);
-        String checksum = bajajPaymentResponse.getMobileNumber() + "|" + merchantTxnId + "|" + amount + "|" + authUserToken + authMerchantId + AppConstant.authSalt;
+        String checksum = bajajPaymentResponse.getMobileNumber() + "|" + merchantTxnId + "|" + amount + "|" + authUserToken + authMerchantId + AppConstant.BAJAJPAY_authSalt;
         NewAESEncrypt newAESEncrypt = new NewAESEncrypt();
         String encryptCheckSum = newAESEncrypt.checkSum(checksum);
         TextView tvMsg = dialog.findViewById(R.id.tv_enter_otp);
@@ -1360,7 +1358,7 @@ public class AppDialog {
                     tvResendOTP.setTextColor(activity.getResources().getColor(R.color.amount_color));
                     tvResendOTP.setEnabled(false);
                 } else {
-                    BajajPayGetOtpRequest otpRequest = new BajajPayGetOtpRequest(authMobileNumber, AppConstant.merchantId, AppConstant.subMerchantId, AppConstant.subMerchantName);
+                    BajajPayGetOtpRequest otpRequest = new BajajPayGetOtpRequest(authMobileNumber, AppConstant.merchantId, AppConstant.BAJAJPAY_subMerchantId, AppConstant.subMerchantName);
                     String otpEncString = new Gson().toJson(otpRequest);
                     String otpEncRequest = NewAESEncrypt.encrypt(otpEncString.trim());
                     BajajPayEncryptedRequest resendOtpEncRequest = new BajajPayEncryptedRequest(otpEncRequest);
