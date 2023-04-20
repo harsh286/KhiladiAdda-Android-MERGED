@@ -11,6 +11,7 @@ import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.battle.adapter.PlayerPointsAdapter;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 
 import butterknife.BindView;
 
@@ -32,6 +33,7 @@ public class PlayerPointsActivity extends BaseActivity {
     }
 
     @Override protected void initVariables() {
+        AppUtilityMethods.deleteCache(this);
         PlayerPointsAdapter mPointsAdapter = new PlayerPointsAdapter(getIntent().getParcelableArrayListExtra(AppConstant.DATA));
         mPointsRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mPointsRV.setAdapter(mPointsAdapter);

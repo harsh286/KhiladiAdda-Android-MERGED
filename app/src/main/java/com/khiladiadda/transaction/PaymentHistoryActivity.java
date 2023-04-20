@@ -308,6 +308,7 @@ public class PaymentHistoryActivity extends BaseActivity implements ITransaction
     };
 
     @Override protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

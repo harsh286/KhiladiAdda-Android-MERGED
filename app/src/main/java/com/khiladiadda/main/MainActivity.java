@@ -35,7 +35,6 @@ import com.khiladiadda.dialogs.AppDialog;
 import com.khiladiadda.dialogs.interfaces.IOnNetworkErrorListener;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.leaderboard.NewLeaderboardActivity;
-import com.khiladiadda.leaderboard.NewLeaderboardActivityTest;
 import com.khiladiadda.main.adapter.BannerPagerAdapter;
 import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.main.game.GameFragment;

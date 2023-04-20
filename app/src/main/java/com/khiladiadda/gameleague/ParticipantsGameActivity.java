@@ -20,6 +20,7 @@ import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.response.droid_doresponse.GameParticipantsDataResponse;
 import com.khiladiadda.network.model.response.droid_doresponse.ParticipantsPresenter;
 import com.khiladiadda.network.model.response.droid_doresponse.ResponseItem;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 
 import java.util.ArrayList;
@@ -120,6 +121,7 @@ public class ParticipantsGameActivity extends BaseActivity implements IParticipa
 
     @Override
     protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

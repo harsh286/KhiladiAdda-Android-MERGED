@@ -24,6 +24,7 @@ import com.khiladiadda.quiz.interfaces.IQuizSubmitPresenter;
 import com.khiladiadda.quiz.interfaces.IQuizSubmitView;
 import com.khiladiadda.quiz.result.QuizResultActivity;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.ImageUtils;
 import com.khiladiadda.utility.NetworkStatus;
 
@@ -40,7 +41,6 @@ public class QuizQuestionActivity extends BaseActivity implements IQuizSubmitVie
     @BindView(R.id.tv_quiz_next) TextView mNextTV;
     @BindView(R.id.tv_quiz_timer) TextView mQuizTimerTV;
     @BindView(R.id.iv_sound) ImageView mSoundIV;
-
     private List<Fragment> mFragmentList;
     private List<QuestionDetails> mQuestionDetails;
     private IQuizSubmitPresenter mQuizSubmitPresenter;
@@ -179,6 +179,7 @@ public class QuizQuestionActivity extends BaseActivity implements IQuizSubmitVie
     }
 
     @Override protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mQuizSubmitPresenter.destroy();
         super.onDestroy();
     }

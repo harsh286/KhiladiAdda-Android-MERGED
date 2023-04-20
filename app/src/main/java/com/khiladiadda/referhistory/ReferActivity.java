@@ -99,8 +99,9 @@ public class ReferActivity extends BaseActivity implements IReferView {
     }
 
     @Override protected void onDestroy() {
-        super.onDestroy();
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
+        super.onDestroy();
     }
 
 }

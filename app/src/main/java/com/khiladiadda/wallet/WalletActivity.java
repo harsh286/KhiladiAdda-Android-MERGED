@@ -561,8 +561,9 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
+        super.onDestroy();
     }
 
     @Override

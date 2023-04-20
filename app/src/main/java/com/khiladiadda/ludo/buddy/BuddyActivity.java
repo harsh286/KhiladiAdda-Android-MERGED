@@ -158,9 +158,9 @@ public class BuddyActivity extends BaseActivity implements ILudoBuddyView, LudoB
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
+        super.onDestroy();
     }
 
 }

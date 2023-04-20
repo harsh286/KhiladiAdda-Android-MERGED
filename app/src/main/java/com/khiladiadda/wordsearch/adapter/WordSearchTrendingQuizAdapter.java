@@ -52,7 +52,7 @@ public class WordSearchTrendingQuizAdapter extends RecyclerView.Adapter<WordSear
         if (quizResponse.getPlayedparticipants() == quizResponse.getTotalparticipants()) {
             holder.mJoinedPb.setProgress(100);
         } else if (quizResponse.getPlayedparticipants() == 0) {
-            holder.mJoinedPb.setProgress(1);
+            holder.mJoinedPb.setProgress(0);
         } else {
             double divideResult = (double) quizResponse.getPlayedparticipants() / (double) quizResponse.getTotalparticipants();
             double participant = divideResult * 100;

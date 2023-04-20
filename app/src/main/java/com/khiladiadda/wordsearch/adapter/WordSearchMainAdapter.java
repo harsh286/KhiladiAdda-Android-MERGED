@@ -125,4 +125,5 @@ public class WordSearchMainAdapter extends RecyclerView.Adapter<WordSearchMainAd
             }
         }
     }
+
 }

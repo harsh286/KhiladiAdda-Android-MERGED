@@ -22,6 +22,7 @@ import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class BattlePointsActivity extends BaseActivity implements IBattleView {
 
     @Override
     protected void initVariables() {
+        AppUtilityMethods.deleteCache(this);
         int mFrom = getIntent().getIntExtra(AppConstant.FROM, 0);
         mPresenter = new BattlePresenter(this);
         if (new NetworkStatus(this).isInternetOn()) {
@@ -154,6 +156,7 @@ public class BattlePointsActivity extends BaseActivity implements IBattleView {
 
     @Override
     protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

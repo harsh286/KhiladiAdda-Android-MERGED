@@ -245,6 +245,7 @@ public class QuizDetailsActivity extends BaseActivity implements IQuizListView {
 
     @Override
     protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

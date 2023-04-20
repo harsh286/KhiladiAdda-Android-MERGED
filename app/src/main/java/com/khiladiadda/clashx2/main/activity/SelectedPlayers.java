@@ -851,6 +851,7 @@ public class SelectedPlayers extends BaseActivity implements IHTHBattleView, ICr
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mHTHNotificationReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mHTHNotificationReceiverMatches);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mHTHNotificationReceiverLiveMatches);
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         mPresenterB.destroy();
         super.onDestroy();

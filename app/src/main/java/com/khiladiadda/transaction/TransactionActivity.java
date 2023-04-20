@@ -293,4 +293,10 @@ public class TransactionActivity extends BaseActivity implements ITransactionVie
         mPresenter.getInvoice(mList.get(position).getId());
     }
 
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
+    }
 }

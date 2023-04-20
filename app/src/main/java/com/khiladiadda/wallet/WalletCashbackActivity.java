@@ -430,6 +430,7 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
 
     @Override
     protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

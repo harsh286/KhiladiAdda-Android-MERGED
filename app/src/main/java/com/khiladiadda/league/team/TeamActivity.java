@@ -22,6 +22,7 @@ import com.khiladiadda.network.model.response.QuizParticipantResponse;
 import com.khiladiadda.network.model.response.TeamName;
 import com.khiladiadda.network.model.response.TeamResponse;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,6 +132,7 @@ public class TeamActivity extends BaseActivity implements IParticipantView {
     }
 
     @Override protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

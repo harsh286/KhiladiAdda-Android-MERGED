@@ -27,6 +27,7 @@ import com.khiladiadda.network.model.response.QuizParticipantResponse;
 import com.khiladiadda.network.model.response.TeamResponse;
 import com.khiladiadda.quiz.adapters.QuizParticipantAdapter;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -282,8 +283,9 @@ public class ParticipantActivity extends BaseActivity implements IParticipantVie
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
+        super.onDestroy();
     }
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {

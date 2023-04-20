@@ -56,8 +56,11 @@
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/image_tournament_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:background="@color/black"
                         android:src="@mipmap/ic_launcher"
                         app:civ_border_color="@color/colorPrimary"
@@ -72,6 +75,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/tv_tournament_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -81,8 +85,8 @@
                         android:textColor="@color/white"
                         android:visibility="invisible"
                         app:layout_constraintBottom_toTopOf="@+id/tv_win_prize"
-                        app:layout_constraintStart_toEndOf="@+id/cv_game_logo"
-                        app:layout_constraintTop_toTopOf="@+id/cv_game_logo" />
+                        app:layout_constraintStart_toEndOf="@+id/image_tournament_detail"
+                        app:layout_constraintTop_toTopOf="@+id/image_tournament_detail" />
 
                     <TextView
                         android:id="@+id/tv_player_counttt"
@@ -98,17 +102,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/tv_tournament_name" />
 
-                    <!--                    <View-->
-                    <!--                        android:id="@+id/view7"-->
-                    <!--                        android:layout_width="0dp"-->
-                    <!--                        android:layout_height="0.8dp"-->
-                    <!--                        android:layout_marginTop="-1dp"-->
-                    <!--                        android:background="@color/white"-->
-                    <!--                        app:layout_constraintEnd_toEndOf="@+id/tv_player_count"-->
-                    <!--                        app:layout_constraintHorizontal_bias="1.0"-->
-                    <!--                        app:layout_constraintStart_toStartOf="@+id/tv_player_count"-->
-                    <!--                        app:layout_constraintTop_toBottomOf="@+id/tv_player_count" />-->
-
                     <TextView
                         android:id="@+id/tv_win_prize"
                         android:layout_width="wrap_content"
@@ -120,8 +113,8 @@
                         android:textColor="#F8D160"
                         android:textFontWeight="700"
                         android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/cv_game_logo"
-                        app:layout_constraintStart_toEndOf="@+id/cv_game_logo"
+                        app:layout_constraintBottom_toBottomOf="@+id/image_tournament_detail"
+                        app:layout_constraintStart_toEndOf="@+id/image_tournament_detail"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -133,8 +126,8 @@
                         android:layout_marginBottom="@dimen/text_12"
                         android:text="Head to Head"
                         android:textColor="#FFFFFF"
-                        app:layout_constraintBottom_toBottomOf="@+id/cv_game_logo"
-                        app:layout_constraintStart_toEndOf="@+id/cv_game_logo"
+                        app:layout_constraintBottom_toBottomOf="@+id/image_tournament_detail"
+                        app:layout_constraintStart_toEndOf="@+id/image_tournament_detail"
                         app:layout_constraintTop_toBottomOf="@id/tv_win_prize" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -233,7 +226,7 @@
         android:layout_marginBottom="16dp"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/materialCardView3"
+        app:layout_constraintBottom_toTopOf="@+id/acb_view_leaderboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView2">

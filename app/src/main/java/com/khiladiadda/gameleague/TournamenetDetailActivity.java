@@ -78,15 +78,12 @@ public class TournamenetDetailActivity extends BaseActivity implements ITourname
     SlideToActView slideToActView;
     @BindView(R.id.rv_prize_pool)
     RecyclerView mRecyclerViewPrizePool;
-    @BindView(R.id.materialCardView3)
-    MaterialCardView materialCardViewLeaderboard;
     @BindView(R.id.acb_view_leaderboard)
     AppCompatButton acbLeaderBoard;
     @BindView(R.id.mcv_rules)
     MaterialCardView mcvRules;
     @BindView(R.id.tv_ends_in)
     TextView tvEndsIn;
-
     private PrizePoolAdapter mPrizePoolAdapter;
     private ArrayList<PrizePool> prizePoolArrayList = new ArrayList<>();
     private Shimmer mShimmer;

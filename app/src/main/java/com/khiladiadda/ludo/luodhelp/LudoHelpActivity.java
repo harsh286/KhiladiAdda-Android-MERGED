@@ -90,4 +90,10 @@ public class LudoHelpActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        super.onDestroy();
+    }
+
 }

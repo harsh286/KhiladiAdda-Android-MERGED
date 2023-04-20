@@ -1087,4 +1087,10 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         }, 10000);
     }
 
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
+    }
 }

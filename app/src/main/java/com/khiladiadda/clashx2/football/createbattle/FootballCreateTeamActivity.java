@@ -715,6 +715,7 @@ public class FootballCreateTeamActivity extends BaseActivity implements IFootbal
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mHTHNotificationReceiverLiveMatches);
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }
@@ -753,5 +754,6 @@ public class FootballCreateTeamActivity extends BaseActivity implements IFootbal
             }
         }
     };
+
 
 }

@@ -531,6 +531,7 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
 
     @Override
     protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

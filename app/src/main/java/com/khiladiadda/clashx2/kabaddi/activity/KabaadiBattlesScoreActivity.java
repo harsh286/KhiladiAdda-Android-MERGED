@@ -37,6 +37,7 @@ import com.khiladiadda.network.model.response.hth.Result;
 import com.khiladiadda.network.model.response.hth.ResultList;
 import com.khiladiadda.network.model.response.hth.TeamHTH;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -264,6 +265,7 @@ public class KabaadiBattlesScoreActivity extends BaseActivity implements IHTHBat
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mHTHNotificationReceiverPastMatches);
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

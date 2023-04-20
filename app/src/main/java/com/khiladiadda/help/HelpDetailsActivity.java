@@ -165,8 +165,8 @@ public class HelpDetailsActivity extends BaseActivity implements IHelpView, Help
     }
 
     @Override protected void onDestroy() {
-        super.onDestroy();
         mPresenter.destroy();
+        super.onDestroy();
     }
 
 }

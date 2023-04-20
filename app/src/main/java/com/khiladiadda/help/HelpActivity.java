@@ -25,6 +25,7 @@ import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.response.FaqCategoryResponse;
 import com.khiladiadda.network.model.response.HelpResponse;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.ImageActivity;
 import com.khiladiadda.utility.NetworkStatus;
 import com.moengage.inapp.MoEInAppHelper;
@@ -333,6 +334,7 @@ public class HelpActivity extends BaseActivity implements IHelpView {
 
     @Override
     protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

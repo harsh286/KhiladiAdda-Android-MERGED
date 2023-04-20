@@ -17,7 +17,6 @@ import com.khiladiadda.fanbattle.FanBattleActivity;
 import com.khiladiadda.fcm.PushMessageListener;
 import com.khiladiadda.help.HelpActivity;
 import com.khiladiadda.leaderboard.NewLeaderboardActivity;
-import com.khiladiadda.leaderboard.NewLeaderboardActivityTest;
 import com.khiladiadda.league.LeagueActivity;
 import com.khiladiadda.league.myleague.MyLeagueActivity;
 import com.khiladiadda.ludo.LudoChallengeActivity;

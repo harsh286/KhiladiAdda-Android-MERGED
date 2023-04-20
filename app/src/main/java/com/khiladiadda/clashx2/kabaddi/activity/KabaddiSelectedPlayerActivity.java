@@ -964,6 +964,7 @@ public class KabaddiSelectedPlayerActivity extends BaseActivity implements IHTHB
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mHTHNotificationReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mHTHNotificationReceiverMatches);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mHTHNotificationReceiverLiveMatches);
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         mPresenterB.destroy();
         super.onDestroy();
@@ -974,4 +975,5 @@ public class KabaddiSelectedPlayerActivity extends BaseActivity implements IHTHB
         super.onBackPressed();
         mAppPreference.setBoolean(AppConstant.MATCH_LIVE, false);
     }
+
 }

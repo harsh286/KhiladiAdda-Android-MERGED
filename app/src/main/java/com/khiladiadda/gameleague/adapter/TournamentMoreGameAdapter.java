@@ -66,7 +66,7 @@ public class TournamentMoreGameAdapter extends RecyclerView.Adapter<TournamentMo
         if (tournamentTrendingModel.getPlayedparticipants() == tournamentTrendingModel.getTotalparticipants()) {
             holder.pbDroido.setProgress(100);
         } else if (tournamentTrendingModel.getPlayedparticipants() == 0) {
-            holder.pbDroido.setProgress(1);
+            holder.pbDroido.setProgress(0);
         } else {
             double divideResult = (double) tournamentTrendingModel.getPlayedparticipants() / (double) tournamentTrendingModel.getTotalparticipants();
             double participant = divideResult * 100;

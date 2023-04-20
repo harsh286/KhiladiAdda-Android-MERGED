@@ -48,6 +48,7 @@ import butterknife.BindView;
 import java.util.ArrayList;
 
 import com.khiladiadda.R;
+import com.khiladiadda.utility.AppUtilityMethods;
 
 import android.view.View;
 import android.os.Bundle;
@@ -302,6 +303,7 @@ public class BattlesScoreActivity extends BaseActivity implements IHTHBattleView
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mHTHNotificationReceiverPastMatches);
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

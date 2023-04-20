@@ -1569,4 +1569,10 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
+    }
 }

@@ -355,6 +355,7 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
 
     @Override
     protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

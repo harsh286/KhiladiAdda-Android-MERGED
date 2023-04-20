@@ -694,6 +694,7 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
 
     @Override
     protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

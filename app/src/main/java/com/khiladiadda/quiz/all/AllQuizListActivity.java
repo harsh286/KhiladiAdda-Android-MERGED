@@ -332,8 +332,9 @@ public class AllQuizListActivity extends BaseActivity implements ICategoryView, 
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
+        super.onDestroy();
     }
 
     @Override

@@ -16,7 +16,6 @@ import com.khiladiadda.R;
 import com.khiladiadda.base.BaseFragment;
 import com.khiladiadda.help.HelpActivity;
 import com.khiladiadda.leaderboard.NewLeaderboardActivity;
-import com.khiladiadda.leaderboard.NewLeaderboardActivityTest;
 import com.khiladiadda.league.LeagueActivity;
 import com.khiladiadda.ludo.LudoChallengeActivity;
 import com.khiladiadda.network.model.response.BannerDetails;

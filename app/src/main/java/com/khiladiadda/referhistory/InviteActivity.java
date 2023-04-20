@@ -75,10 +75,7 @@ public class InviteActivity extends BaseActivity {
         ss1.setSpan(new RelativeSizeSpan(2f), 24, ss1.length(), 0); // set size
         ss1.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary)), 24, ss1.length(), 0);// set color
         mReferCoinsTV.setText(ss1);
-
     }
-
-
 
     @Override public void onClick(View v) {
         switch (v.getId()) {

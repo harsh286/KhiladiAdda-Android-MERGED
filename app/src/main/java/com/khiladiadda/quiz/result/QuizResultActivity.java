@@ -201,6 +201,7 @@ public class QuizResultActivity extends BaseActivity implements IQuizResultView 
     }
 
     @Override protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

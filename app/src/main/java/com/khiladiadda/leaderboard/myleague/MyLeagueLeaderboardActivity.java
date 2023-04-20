@@ -25,6 +25,7 @@ import com.khiladiadda.network.model.response.LudoLeaderboardResponse;
 import com.khiladiadda.network.model.response.OverallLeadBoardResponse;
 import com.khiladiadda.network.model.response.hth.LeaderBoardHthResponse;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 
 import java.util.ArrayList;
@@ -211,4 +212,10 @@ public class MyLeagueLeaderboardActivity extends BaseActivity implements ILeader
         getData();
     }
 
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        mPresenter.destroy();
+        super.onDestroy();
+    }
 }

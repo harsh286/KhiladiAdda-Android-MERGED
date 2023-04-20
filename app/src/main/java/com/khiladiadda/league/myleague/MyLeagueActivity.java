@@ -273,8 +273,9 @@ public class MyLeagueActivity extends BaseActivity implements IMyLeagueView, IOn
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
+        super.onDestroy();
     }
 
     @Override

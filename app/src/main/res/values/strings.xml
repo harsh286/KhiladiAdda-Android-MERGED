@@ -959,10 +959,10 @@
     <string name="apply_coupon">Apply Coupon</string>
 
     <!--    <string name="get_20_discount_paying_bajaj_pay_upi">Get assured cashback upto Rs. 100 per transaction on adding money via Bajaj Pay UPI</string>-->
-    <string name="get_20_discount_paying_bajaj_pay_upi">Get upto Rs. 100 cashback via Bajaj Pay UPI</string>
-    <string name="get_discount_paying_bajaj_pay_wallet">Get flat 10% Cashback using Bajaj Pay Wallet</string>
-    <string name="tooltip_bajajPay_Wallet">"1. Get flat 10% Cashback up to ₹25 on adding money via Bajaj Pay Wallet.\n2. No minimum order value.\n3. Maximum cashback amount will be ₹25.\n4. Cashback will get credited within 7 days to users Bajaj pay Wallet.\n5. Valid till 31st May 2023"</string>
-    <string name="tooltip_bajajPay_UPI">"1. Get assured cashback upto Rs. 100 per transaction on adding money via Bajaj Pay UPI.\n2. Cashback will be given for 1st five transaction.\n3. Minimum order value will be Rs. 10.\n4. Cashback will get credited within 7 days to users Bajaj Pay Wallet"</string>
+    <string name="get_20_discount_paying_bajaj_pay_upi">Get flat 10% Cashback up to ₹50</string>
+    <string name="get_discount_paying_bajaj_pay_wallet">Get flat 10% Cashback up to ₹50</string>
+    <string name="tooltip_bajajPay_Wallet">"1. Get flat 10% Cashback up to ₹50 on adding money via Bajaj Pay Wallet.\n2. Minimum order value will be ₹10.\n3. Maximum cashback amount will be ₹50.\n4. Cashback will get credited within 7 days to users Bajaj pay Wallet.\n5. Applicable thrice per user for a month.\n6. Valid till 30th June, 2023"</string>
+    <string name="tooltip_bajajPay_UPI">"1. Get flat 10% Cashback up to ₹50 on adding money via Bajaj Pay UPI.\n2. Minimum order value will be ₹10.\n3. Maximum cashback amount will be ₹50.\n4. Cashback will get credited within 7 days to users Bajaj pay Wallet.\n5. Applicable thrice per user for a month.\n6. Valid till 31st May, 2023"</string>
     <string name="upi_choose_from_any_upi_option_below">UPI: Choose from any UPI option below</string>
     <string name="credit_and_debit_card">Credit &amp; Debit card</string>
     <string name="you_are_not_a_user">You are not a user</string>

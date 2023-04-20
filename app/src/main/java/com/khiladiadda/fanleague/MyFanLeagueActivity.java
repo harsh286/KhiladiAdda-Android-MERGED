@@ -25,6 +25,7 @@ import com.khiladiadda.network.model.response.CricScorce;
 import com.khiladiadda.network.model.response.MatchDetails;
 import com.khiladiadda.network.model.response.MatchResponse;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 
 import java.util.ArrayList;
@@ -208,6 +209,7 @@ public class MyFanLeagueActivity extends BaseActivity implements IMyFanLeagueVie
 
     @Override
     protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

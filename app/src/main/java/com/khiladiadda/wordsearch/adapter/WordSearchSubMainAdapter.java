@@ -54,7 +54,7 @@ public class WordSearchSubMainAdapter extends RecyclerView.Adapter<WordSearchSub
             if (trendingQuizResponse.getPlayedparticipants() == trendingQuizResponse.getTotalparticipants()) {
                 holder.mJoinedPb.setProgress(100);
             } else if (trendingQuizResponse.getPlayedparticipants() == 0) {
-                holder.mJoinedPb.setProgress(1);
+                holder.mJoinedPb.setProgress(0);
             } else {
                 double divideResult = (double) trendingQuizResponse.getPlayedparticipants() / (double) trendingQuizResponse.getTotalparticipants();
                 double participant = divideResult * 100;

@@ -52,6 +52,7 @@ public class BattleHelpActivity extends BaseActivity {
 
     @Override
     protected void initVariables() {
+        AppUtilityMethods.deleteCache(this);
         mHowToPLay = getIntent().getIntExtra(AppConstant.FROM, 0);
         if (mHowToPLay == 1) {
             mLuodHelpIV.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.fb_help_one));

@@ -232,6 +232,7 @@ public class FanBattleActivity extends BaseActivity implements IFanBattleView, I
 
     @Override
     protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }

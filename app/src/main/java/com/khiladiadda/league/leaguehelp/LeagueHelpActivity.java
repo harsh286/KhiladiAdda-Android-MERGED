@@ -13,26 +13,34 @@ import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.league.details.LeagueDetailsActivity;
 import com.khiladiadda.network.model.response.LeagueListDetails;
 import com.khiladiadda.utility.AppConstant;
+import com.khiladiadda.utility.AppUtilityMethods;
 
 import butterknife.BindView;
 
 public class LeagueHelpActivity extends BaseActivity {
 
-    @BindView(R.id.iv_ludo_help) ImageView mLuodHelpIV;
-    @BindView(R.id.rl_next) RelativeLayout mNextRL;
-    @BindView(R.id.rl_previous) RelativeLayout mPreviousRL;
-    @BindView(R.id.iv_next) ImageView mNextIV;
-    @BindView(R.id.btn_next) TextView mNextBTN;
+    @BindView(R.id.iv_ludo_help)
+    ImageView mLuodHelpIV;
+    @BindView(R.id.rl_next)
+    RelativeLayout mNextRL;
+    @BindView(R.id.rl_previous)
+    RelativeLayout mPreviousRL;
+    @BindView(R.id.iv_next)
+    ImageView mNextIV;
+    @BindView(R.id.btn_next)
+    TextView mNextBTN;
     private int mNextCount;
     private int[] mDrawables = {R.drawable.l_one, R.drawable.l_two, R.drawable.l_three};
     private LeagueListDetails mLeagueDetails;
     private String mGameType, mGame;
 
-    @Override protected int getContentView() {
+    @Override
+    protected int getContentView() {
         return R.layout.activity_challenge_help;
     }
 
-    @Override protected void initViews() {
+    @Override
+    protected void initViews() {
         mNextRL.setOnClickListener(this);
         mPreviousRL.setOnClickListener(this);
         mLeagueDetails = getIntent().getParcelableExtra(AppConstant.DATA);
@@ -40,7 +48,8 @@ public class LeagueHelpActivity extends BaseActivity {
         mGame = getIntent().getStringExtra("game");
     }
 
-    @Override protected void initVariables() {
+    @Override
+    protected void initVariables() {
         mLuodHelpIV.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.l_one));
         mPreviousRL.setVisibility(View.GONE);
     }
@@ -73,7 +82,8 @@ public class LeagueHelpActivity extends BaseActivity {
         mLuodHelpIV.setImageResource(helpResourceArray[mNextCount]);
     }
 
-    @Override public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
         if (v.getId() == R.id.rl_next) {
             mNextCount = mNextCount + 1;
             mPreviousRL.setVisibility(View.VISIBLE);
@@ -83,4 +93,11 @@ public class LeagueHelpActivity extends BaseActivity {
             updateOnPrevious(mDrawables);
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
+        super.onDestroy();
+    }
+
 }

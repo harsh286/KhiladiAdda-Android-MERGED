@@ -386,6 +386,7 @@ public class ScratchCardActivity extends BaseActivity implements IScratchView, I
 
     @Override
     protected void onDestroy() {
+        AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }
