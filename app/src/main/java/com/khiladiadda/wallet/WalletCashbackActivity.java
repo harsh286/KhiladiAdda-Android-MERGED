@@ -118,7 +118,6 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
         mViewCouponTV.setOnClickListener(this);
         mBajajWalletRL.setOnClickListener(this);
         mBajajUpiRL.setOnClickListener(this);
-
         mInfoBajajPayWalletIV.setOnClickListener(this);
         mInfoBajajPayUPIIV.setOnClickListener(this);
 
@@ -247,12 +246,7 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     }
 
     private void setAmount(int i) {
-        mHundredTV.setSelected(false);
-        mTwoHundredTV.setSelected(false);
-        mFiveHundredTV.setSelected(false);
-        mThousandTV.setSelected(false);
-        mTwoThousandTV.setSelected(false);
-        mFiveThousandTV.setSelected(false);
+        setAmountSelection();
         if (i == 100) {
             mHundredTV.setSelected(true);
         } else if (i == 200) {
@@ -269,6 +263,15 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
         mAmountET.setText(String.valueOf(i));
         mPayBTN.setText("Add ₹ " + i);
         mAmountET.setSelection(mAmountET.getText().length());
+    }
+
+    private void setAmountSelection() {
+        mHundredTV.setSelected(false);
+        mTwoHundredTV.setSelected(false);
+        mFiveHundredTV.setSelected(false);
+        mThousandTV.setSelected(false);
+        mTwoThousandTV.setSelected(false);
+        mFiveThousandTV.setSelected(false);
     }
 
     @Override
@@ -293,8 +296,6 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
                 i.putExtra(AppConstant.EASEBUZZ, mIsEasebuzz);
                 i.putExtra(AppConstant.PAYSHARP, mIsPaysharp);
                 i.putExtra(AppConstant.PHONEPE, mIsPhonepe);
-                i.putExtra(AppConstant.APEXPAY, mIsApexPay);
-                i.putExtra(AppConstant.NEOKRED, mIsNeokred);
                 startActivity(i);
             }
         } else {

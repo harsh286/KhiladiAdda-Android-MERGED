@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +33,7 @@ import com.cashfree.pg.ui.api.CFPaymentComponent;
 import com.cashfree.pg.ui.api.upi.intent.CFUPIIntentCheckout;
 import com.cashfree.pg.ui.api.upi.intent.CFUPIIntentCheckoutPayment;
 import com.easebuzz.payment.kit.PWECouponsActivity;
+import com.google.android.gms.common.images.WebImage;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.khiladiadda.R;
@@ -97,6 +99,7 @@ import com.phonepe.intent.sdk.api.UPIApplicationInfo;
 
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -164,7 +167,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     private String mCouponCode, mOrderId, mAmount, mCallbackURL, mPhonepeOrderId, mApexPayOrderId, mPaySharpOrderId, mApiEndPoint = "/pg/v1/pay";
     private int mPaymentFrom, mUpiPaymentType, getmPaymentFrom = 0;
     private boolean mApexPay, mPaySharp, mIsGamerCashEnabled;
-    private boolean mIsCashfree, mIsEasebuzz, mIsBajajWallet, mIsBajajPayBanking, mIsPaysharp, mIsPhonepe, mIsPaytm, mIsApexPay, mIsNeokred;
+    private boolean mIsCashfree, mIsEasebuzz, mIsBajajWallet, mIsBajajPayBanking, mIsPaysharp, mIsPhonepe, mIsPaytm;
     private IPaymentPresenter mPresenter;
     public String mAmountET;
     private long mGamerCash;
@@ -229,8 +232,12 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         mIsPaysharp = getIntent().getBooleanExtra(AppConstant.PAYSHARP, false);
         mIsPhonepe = getIntent().getBooleanExtra(AppConstant.PHONEPE, false);
         mIsPaytm = getIntent().getBooleanExtra(AppConstant.PAYTM, false);
-        mIsApexPay = getIntent().getBooleanExtra(AppConstant.APEXPAY, false);
-        mIsNeokred = getIntent().getBooleanExtra(AppConstant.NEOKRED, false);
+        if (!mIsPaytm) {
+            mPaytmWalletCL.setVisibility(View.GONE);
+        }
+        if (!mIsCashfree && !mIsEasebuzz && !mIsPaytm) {
+            mNetBankingCL.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -962,8 +969,21 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                     showProgress(getString(R.string.txt_progress_authentication));
                     UpdateBalanceRequest updateBalanceRequest = new UpdateBalanceRequest();
                     int amountAdded = Integer.parseInt(bajajPayDebitTransactionDecryptResponse.getPaymentAmount());
-                    updateBalanceRequest.setApp_version("2.1.4");
+                    updateBalanceRequest.setApp_version(AppUtilityMethods.getVersion());
                     updateBalanceRequest.setAmount(amountAdded);
+                    String base64;
+                    //Base64 of request body
+                    Gson gson = new Gson();
+                    String json = gson.toJson(updateBalanceRequest);
+                    try {
+                        base64 = Base64.encodeToString(json.getBytes("UTF-8"), Base64.DEFAULT);
+                    } catch (UnsupportedEncodingException e) {
+                        throw new RuntimeException(e);
+                    }
+                    //sha256 hash
+                    String hash = AppUtilityMethods.encryptSHA256(base64);
+                    hash = hash + "###" + 7;
+                    //send key hash with hash value
                     mPresenter.updateBalance(updateBalanceRequest);
                 } else {
                     Snackbar.make(tvError, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
@@ -1332,7 +1352,6 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                         phonepeRequest.setTargetApp(3);
                     }
                     phonepeRequest.setCoupon(mCouponCode);
-                    phonepeRequest.setTargetApp(mPaymentFrom);
                     mPresenter.getPaymentUrlData(phonepeRequest);
                 } else Toast.makeText(this, "Please enter amount", Toast.LENGTH_SHORT).show();
             } else Toast.makeText(this, "Please enter amount", Toast.LENGTH_SHORT).show();
