@@ -47,8 +47,6 @@ public class PushMessageListener implements NonMoEngagePushListener {
         onNewToken();
     }
 
-
-
     @Override
     public void onPushReceived(@NonNull RemoteMessage remoteMessage) {
         if (Kommunicate.isKmNotification(context, remoteMessage.getData())) {
@@ -188,7 +186,4 @@ public class PushMessageListener implements NonMoEngagePushListener {
         realm.executeTransaction(realm1 -> realm1.copyToRealmOrUpdate(model));
     }
 
-
-
 }
-

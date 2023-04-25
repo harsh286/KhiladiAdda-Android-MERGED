@@ -232,12 +232,21 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         mIsPaysharp = getIntent().getBooleanExtra(AppConstant.PAYSHARP, false);
         mIsPhonepe = getIntent().getBooleanExtra(AppConstant.PHONEPE, false);
         mIsPaytm = getIntent().getBooleanExtra(AppConstant.PAYTM, false);
-        if (!mIsPaytm) {
-            mPaytmWalletCL.setVisibility(View.GONE);
+        if (mIsPaytm) {
+            mPaytmWalletCL.setVisibility(View.VISIBLE);
         }
-        if (!mIsCashfree && !mIsEasebuzz && !mIsPaytm) {
-            mNetBankingCL.setVisibility(View.GONE);
+        if (mIsCashfree || mIsEasebuzz) {
+            mNetBankingCL.setVisibility(View.VISIBLE);
         }
+        if (mIsGamerCashEnabled) {
+            mGamerCashTV.setVisibility(View.VISIBLE);
+            mGamerCashVerifiedTV.setVisibility(View.VISIBLE);
+            payGamerCashVerifyAPI();
+        } else {
+            mGamerCashTV.setVisibility(View.GONE);
+            mGamerCashVerifiedTV.setVisibility(View.GONE);
+        }
+        mAppPreference.setBoolean(AppConstant.FROM_WALLET, false);
     }
 
     @Override
@@ -748,7 +757,6 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
 
     @Override
     public void onGetGamerCashSuccess(GetGamerCashResponse response) {
-        long mRemainingAddLimit = response.getRemainingAddLimit();
         if (response.isStatus()) {
             mAppPreference.setIsGamerCashLinked(response.getAlreadyLinked() || response.getLinked());
             if (mIsGamerCashEnabled) {
@@ -1470,6 +1478,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     private final IOnPaymentListener onPaymentListener = result -> {
         if (result) {
             Intent intent = new Intent();
+            mAppPreference.setBoolean(AppConstant.FROM_WALLET, true);
             setResult(AppConstant.REQUEST_ADD_WALLET, intent);
             finish();
         }

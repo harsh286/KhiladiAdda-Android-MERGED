@@ -1,19 +1,25 @@
 package com.khiladiadda.wallet;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
@@ -81,18 +87,16 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     RelativeLayout mBajajWalletRL;
     @BindView(R.id.rl_bajaj_upi)
     RelativeLayout mBajajUpiRL;
-
     @BindView(R.id.img_info_bajaj_pay_upi)
     ImageView mInfoBajajPayUPIIV;
     @BindView(R.id.img_info_bajaj_pay_wallet)
     ImageView mInfoBajajPayWalletIV;
-
     private String mCouponCode;
     private boolean mIsOfferClicked, mIsGamerCashEnabled;
     private IWalletCashbackPresenter mPresenter;
     private long mCoins, mRemainingAddLimit = 5000;
     private int mUpiPaymentType;
-    private boolean mIsCashfree, mIsEasebuzz, mIsPaytm, mIsPaysharp, mIsPhonepe, mIsApexPay, mIsNeokred;
+    private boolean mIsCashfree, mIsEasebuzz, mIsPaytm, mIsPaysharp, mIsPhonepe;
 
     @Override
     protected int getContentView() {
@@ -120,6 +124,7 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
         mBajajUpiRL.setOnClickListener(this);
         mInfoBajajPayWalletIV.setOnClickListener(this);
         mInfoBajajPayUPIIV.setOnClickListener(this);
+        mAmountET.setOnClickListener(this);
 
         mAmountET.addTextChangedListener(new TextWatcher() {
             @Override
@@ -128,8 +133,12 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() != 0)
+                if (charSequence.length() != 0) {
                     mPayBTN.setText("Add ₹ " + charSequence.toString().trim());
+                } else {
+                    mPayBTN.setText("Add");
+                    setAmountSelection();
+                }
             }
 
             @Override
@@ -137,7 +146,17 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
 
             }
         });
+        mAmountET.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
 
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
@@ -241,6 +260,9 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
                 break;
             case R.id.img_info_bajaj_pay_wallet:
                 AppDialog.bajajPayUPIDiscountOffer(this, getString(R.string.tooltip_bajajPay_Wallet), "BAJAJ PAY WALLET OFFER");
+                break;
+            case R.id.et_amount:
+                setAmountSelection();
                 break;
         }
     }
@@ -363,14 +385,8 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
             if (response.getVersion().isRazorpayEnable()) {
                 mIsPaysharp = true;
             }
-            if (response.getVersion().isPaykunEnable()) {
-                mIsApexPay = true;
-            }
             if (response.getVersion().isEasebuzzEnable()) {
                 mIsEasebuzz = true;
-            }
-            if (response.getVersion().isNeokredEnable()) {
-                mIsNeokred = true;
             }
             if (response.getVersion().isPhonepeEnabled()) {
                 mIsPhonepe = true;
@@ -434,6 +450,15 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
         AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        if (mAppPreference.getBoolean(AppConstant.FROM_WALLET, false)) {
+            mAppPreference.setBoolean(AppConstant.FROM_WALLET, false);
+            finish();
+        }
+        super.onResume();
     }
 
 }

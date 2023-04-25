@@ -60,7 +60,6 @@ public interface IPaymentPresenter extends IBasePresenter {
     void getGamerCashUserData();
     void getCashfreeStatus(String orderId);
 
-
     void getBajajPayBalance(BajajPayEncryptedRequest bajajPayRequest);
 
     void getBajajPayData(BajajPayEncryptedRequest bajajPayRequest);

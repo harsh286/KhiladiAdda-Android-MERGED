@@ -12,8 +12,8 @@ public class AppConstant {
     public static final long TIME_OUT = 30;
     public static final long SUREPASS_TIME_OUT = 120;
     //PRODUCTION SERVER
-//    public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29t";
-    public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8="; //uat
+    public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29t";
+//    public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8="; //uat
 
 //    public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";//QA
 
@@ -21,7 +21,10 @@ public class AppConstant {
 
     //     public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";
 
-    public static final String BASE_BJAZ_URL = "https://pay-api-uat.bajajfinserv.in/bajaj-common-wrapper-service/";
+    //    Stag-UAT
+//    public static final String BASE_BJAZ_URL = "https://pay-api-uat.bajajfinserv.in/bajaj-common-wrapper-service/";
+    //Prod
+    public static final String BASE_BJAZ_URL = "https://pay-api.bajajfinserv.in/bajaj-common-wrapper-service/";
 
     public static final String URL_HOME = "https://www.khiladiadda.com/";
     public static final String PAN_URL = "https://sandbox.veri5digital.com/service/api/1.0/";
@@ -143,7 +146,7 @@ public class AppConstant {
     public static final String RUMMY = "Rummy";
     public static final String LUDO_TOURNAMENT = "LUDO TOURNAMENT";
 
-//    public static String API_PAYU_UPI_CHECKSUM = "payumoney/generate/hash-checksum";
+    //    public static String API_PAYU_UPI_CHECKSUM = "payumoney/generate/hash-checksum";
     public static final String API_PAYU_PAYMENT = "payumoney/verifychecksum";
     public static final String API_CASHFREE_CHECKHSUM = "cashfree/getchecksum";
     public static final String API_CASHFREE_PAYMENT = "cashfree/verify/getchecksum";
@@ -184,7 +187,7 @@ public class AppConstant {
     public static final String API_ADD_CASHFREE_BENEFICIARY = "cashfree/add/beneficiary";
     public static final String TEXT_KEY_TYPE = "type";
     public static final String API_FIREBASE = "user/firebase";
-//    public static final String API_MATE_DATA = "user-detail/mobile/{id}";
+    //    public static final String API_MATE_DATA = "user-detail/mobile/{id}";
     public static final String API_REFER_HISTORY = "user/reference";
     public static final String API_BOOKMARK_FACT = "user/bookmark/Fact/{id}";
     public static final String API_BOOKMARK_FACT_LIST = "user/bookmarked-facts";
@@ -215,7 +218,7 @@ public class AppConstant {
     public static final String API_HTH_MATHCES = "/user/fantasy/fetch-fantasy-matches";
     public static final String API_HTH_LEGUES = "user/fantasy/fetch-clash-matches";
     public static final String API_HTH_CANCELBATTLE = "user/fantasy/cancel-battle-group/{id}";
-//    public static final String API_GAME_ID = "user/game";
+    //    public static final String API_GAME_ID = "user/game";
     public static final String API_GAME_CATEGORY = "user/game/{id}";
     public static final String API_CR_LEAGUE = "user/game-league/{id}";
     public static final String API_LEAGUE_PARTICIPANT = "user/league/{id}";
@@ -310,7 +313,7 @@ public class AppConstant {
     public static final String SENDER_NAME = "SENDER_NAME";
     public static final String RECEIVER_CHATID = "RECEIVER_CHATID";
     public static final String QUIZ_TYPE = "QUIZ_TYPE";
-//    public static final String VERSION_UPDATE = "VERSION_UPDATE";
+    //    public static final String VERSION_UPDATE = "VERSION_UPDATE";
     public static final String VERSION = "VERSION";
     public static final String VERSION_DESC = "VERSION_DESC";
     public static final String VERSION_LINK = "VERSION_LINK";
@@ -349,17 +352,17 @@ public class AppConstant {
     public static final int FROM_LOGOUT = 666;
     public static final String GROUP_JOINED = "GROUP_JOINED";
     public static final String REVIEW = "REVIEW";
-//    public static final String CASHFREE_TEST = "TEST";
+    //    public static final String CASHFREE_TEST = "TEST";
 //    public static final String CASHFREE_PROD = "PROD";
     public static final int FROM_CASHFREE_GPAY = 11;
     public static final int FROM_CASHFREE_PPAY = 12;
     public static final int FROM_CASHFREE_APAY = 13;
     public static final int FROM_CASHFREE_UPI = 14;
-//    public static final String FB_VIDEO_SEEN = "FB_VIDEO_SEEN";
+    //    public static final String FB_VIDEO_SEEN = "FB_VIDEO_SEEN";
     public static final String VPA = "vpa";
     public static final String BANK_ACCOUNT = "bank_account";
     public static final String INR = "INR";
-//    public static final String COMPANY_NAME = "Techbeliever Technologies Pvt Ltd";
+    //    public static final String COMPANY_NAME = "Techbeliever Technologies Pvt Ltd";
 //    public static final String APP_NAME = "KhiladiAdda";
     public static final int FROM_PAYKUN = 5;
     public static final String FROM_FB_GROUP = "FAN_BATTLE_GROUP";
@@ -373,11 +376,11 @@ public class AppConstant {
     public static final String FB_CLASSIC_VIEWED = "FB_CLASSIC_VIEWED";
     public static final String FB_CLASSIC = "CLASSIC";
     public static final String FB_RUMBLE = "REVERSE";
-//    public static final String FB_HEAD = "HeadToHead";
+    //    public static final String FB_HEAD = "HeadToHead";
     public static final String FB_RUMBLE_VIEWED = "FB_RUMBLE_VIEWED";
     public static final String FB_CLASSIC_WORK = "FB_CLASSIC_WORK";
 
-//    public static final String FB_HEAD_VIEWED = "FB_HEAD_VIEWED";
+    //    public static final String FB_HEAD_VIEWED = "FB_HEAD_VIEWED";
 //
 //    public static final String FROM_PAN = "PAN";
     public static final String FROM_AADHAR = "AADHAR";
@@ -422,14 +425,14 @@ public class AppConstant {
     //Paytm
 //    public static final String PaytmStagingCallbackURL = "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=";
     public static final String PaytmProductionCallbackURL = "https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=";
-//    public static final String PaytmStagingMID = "V01meWNUNTQwMzQ3NDU5NjIwOTU=";
+    //    public static final String PaytmStagingMID = "V01meWNUNTQwMzQ3NDU5NjIwOTU=";
     public static final String PaytmProductionMID = "c2NuWEJXMTcxMjEwMDY3MDk0MTk=";
     //Cashfree
 //    public static final String CASHFREE_STAGING_APP_ID = "MTI0ODliMWIyZDIxYzUwMGMzYTk4OGJhNTk4NDIx";
 //    public static final String CASHFREE_PRODUCTION_APP_ID = "MzgxOTkzMDc3NzY5MWY1YzhmZGEwYzNmYTk5MTgz";
 
 
-//    public static final String TXN_FAILED = "FAILED";
+    //    public static final String TXN_FAILED = "FAILED";
 //    public static final String TXN_SUCCESS = "SUCCESS";
 //    public static final String TXN_PENDING = "PENDING";
     public static final String STATUS = "STATUS";
@@ -472,11 +475,11 @@ public class AppConstant {
 
     public static final String FROM_MAIN = "FROM_MAIN";
     public static final String FROM_MYLEAGUE = "MYLEAGUE";
-//    public static final String DEPOSIT = "DEPOSIT";
+    //    public static final String DEPOSIT = "DEPOSIT";
     public static final String LEAGUE = "LEAGUE";
     public static final String FROM_VIEW_FF_CLASH = "FF_CLASH";
     public static final String FROM_VIEW_FREEFIRE = "FREEFIRE";
-//    public static final String FROM_VIEW_CLASHROYALE = "CLASHROYALE";
+    //    public static final String FROM_VIEW_CLASHROYALE = "CLASHROYALE";
     public static final String FROM_VIEW_LUDO = "LUDO";
     public static final String FROM_VIEW_LUDO_UNIVERSE = "LUDO_UNIVERSE";
     public static final String UPI = "UPI";
@@ -484,7 +487,7 @@ public class AppConstant {
     public static final String PATYMWALLTERUPI = ".wallet@paytm";
     public static final String PATYMUPI = "PAYTMUPI";
     public static final String BANK_TRANSFER = "BANKTRANSFER";
-//    public static final String AMAZON_PAY = "AMAZONPAY";
+    //    public static final String AMAZON_PAY = "AMAZONPAY";
     public static final String FROM_HOW_JOINING = "HOWTOJOIN";
     public static final String FROM_HOW_JOINING_PCESPORT = "HOWTOJOINPCESPORT";
     public static final String DATA_QUIZ = "DATA_QUIZ";
@@ -788,7 +791,7 @@ public class AppConstant {
     public static final String MYLEAGUEPG = "MYLEAGUEPGLOBAL";
     public static final String MYLEAGUEPN = "MYLEAGUEPNEWSTATE";
 
-//    public static final int FROM_FANBATTLE_APPFLYER = 10;
+    //    public static final int FROM_FANBATTLE_APPFLYER = 10;
     public static final int FROM_APPFLYER_FORMYLEGUESTDM = 1001;
     public static final int FROM_APPFLYER_FORMYLEGUESBGMI = 1002;
     public static final int FROM_APPFLYER_FORMYLEGUESFCS = 1003;
@@ -798,7 +801,7 @@ public class AppConstant {
     public static final int FROM_APPFLYER_FORMYLEGUESFF = 1007;
     public static final int FROM_APPFLYER_FORMYLEGUEPGNS = 1008;
 
-//    public static final String GAMEBANNER = "5";
+    //    public static final String GAMEBANNER = "5";
     public static final String APP_ID = "21f543146324b1d2bf25cc721aac4d1ee";
     public static final String LUDO_KOMMUNI_CATEGORY = "Ludo";
     public static final String FANBATTLE_KOMMUNI_CATEGORY = "Fan Battle";
@@ -834,7 +837,7 @@ public class AppConstant {
     public static final String IS_COURTPIECE = "IS_COURTPIECE";
     public static final String IS_RUMMY = "IS_RUMMY";
     public static final String API_PAYU_HASH = "payumoney/hash/{hash}/{txnid}";
-//    public static final String API_PAYSHARP = "order/intent";
+    //    public static final String API_PAYSHARP = "order/intent";
     public static final String API_PAYSHARP_STATUS = "paysharp/check-payment-processed";
     public static final String API_PAYSHARP_HASH = "paysharp/start-payment/{amount}";
     public static final String API_ZAAKPAY_CHECKSUM = "zaakpay/start-payment";
@@ -900,7 +903,7 @@ public class AppConstant {
     //Word Search
     public static final String ALL_QUIZZES = "all_quizzes";
     public static final String WORD_SEARCH_QUIZ_ID = "word_search_quiz_id";
-//    public static final String WORD_SEARCH_TRENDING_QUIZZES = "trending_quizes";
+    //    public static final String WORD_SEARCH_TRENDING_QUIZZES = "trending_quizes";
     public static final String WORD_SEARCH_CATEGORY_QUIZZES = "category_quizzes";
     public static final String WORD_SEARCH_MY_QUIZZES = "category_quizzes";
     public static final String WORD_SEARCH_TYPE = "wordsearch_type";
@@ -931,7 +934,7 @@ public class AppConstant {
     public static final String LUDOTMT_OPP_JOINED = "OPPONENT_JOINED";
     public static final String LUDOTMT_OPP_ROOM_JOINED = "OPPONENT_JOINED_ROOM";
     public static final String LUDOTMT_MATCH_LIVE = "LUDOTMT_MATCH_LIVE";
-//    public static final String LUDOTMT_GO_LOBBY = "LUDOTMT_GO_LOBBY";
+    //    public static final String LUDOTMT_GO_LOBBY = "LUDOTMT_GO_LOBBY";
     public static final String LUDOTMT_LOBBY_FULL = "LUDOTMT_LOBBY_FULL";
     public static final String WS_VERSION = "WS_VERSION";
     public static final String WS_LINK = "WS_LINK";
@@ -1097,24 +1100,24 @@ public class AppConstant {
      * New added for BajajPay
      */
 //prod
-//    public static final String merchantId = "BFL0000001738593";
-//    public static final String BAJAJPAY_subMerchantId = "BFL0000001738593";
-//    public static final String subMerchantName = "Khiladi Adda";
-//    public static final String BAJAJPAY_authSalt = "BPAY44DZ@zNc";
-//    public static final String CHANNEL_BAJAJ_PAY = "KHILADI";
-//    public static final String OCP_BAJAJ_APIM_SUBSCRIPTION_KEY = "a65cf2700a884f85bd9297c613732d5f";
+    public static final String merchantId = "BFL0000001738593";
+    public static final String BAJAJPAY_subMerchantId = "BFL0000001738593";
+    public static final String subMerchantName = "Khiladi Adda";
+    public static final String BAJAJPAY_authSalt = "BPAY44DZ@zNc";
+    public static final String CHANNEL_BAJAJ_PAY = "KHILADI";
+    public static final String OCP_BAJAJ_APIM_SUBSCRIPTION_KEY = "a65cf2700a884f85bd9297c613732d5f";
     public static final String requestNumber = "1234567";
     public static final String CONTENT_TYPE_BAJAJ_PAY = "application/json";
-
     //Stag
-        public static final String CHANNEL_BAJAJ_PAY = "BFL_1";
-        public static final String OCP_BAJAJ_APIM_SUBSCRIPTION_KEY = "7876fd0195174596b1d11b456a935e9e";
-    public static final String merchantId = "BFLT000000046709";
-    public static final String BAJAJPAY_subMerchantId = "BFLT000000046709";
-    public static final String subMerchantName = "Khiladi Adda ";
-    public static final String BAJAJPAY_authSalt = "BPAY70VN@PPv";
-    public static final String callBackURl = "https://qa.api.khiladiadda.com/bajaj/addPayment";
-//    public static final String BAJAJ_PAY_PACKAGE_MANAGER = "https://bfl.onelink.me/857331112/ph6g6q1m";
+//    public static final String CHANNEL_BAJAJ_PAY = "BFL_1";
+//    public static final String OCP_BAJAJ_APIM_SUBSCRIPTION_KEY = "7876fd0195174596b1d11b456a935e9e";
+//    public static final String merchantId = "BFLT000000046709";
+//    public static final String BAJAJPAY_subMerchantId = "BFLT000000046709";
+//    public static final String subMerchantName = "Khiladi Adda ";
+//    public static final String BAJAJPAY_authSalt = "BPAY70VN@PPv";
+//    public static final String callBackURl = "https://qa.api.khiladiadda.com/bajaj/addPayment";
+    public static final String callBackURl = AppUtilityMethods.getURL(URL) + "bajaj/addPayment";
+    //    public static final String BAJAJ_PAY_PACKAGE_MANAGER = "https://bfl.onelink.me/857331112/ph6g6q1m";
     public static final String webUrl = "webUrlPayment";
     public static final String UPDATE_BALANCE = "bajaj/topup";
     public static final String GAMERCASH = "GAMERCASH";
