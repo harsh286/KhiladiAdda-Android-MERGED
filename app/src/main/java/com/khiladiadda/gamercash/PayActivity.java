@@ -37,9 +37,8 @@ public class PayActivity extends BaseActivity implements ISwitchGamerCashView {
     @BindView(R.id.iv_back_arrow)
     ImageView imgBack;
     private ISwitchGamerCashPresenter mPresenter;
-    private SwitchGamerCashRequest switchGamerCashRequest;
-    int coins = 0;
-    String mCouponCode = "";
+    private long coins = 0;
+    private String mCouponCode = "";
 
     @Override
     protected int getContentView() {
@@ -56,7 +55,7 @@ public class PayActivity extends BaseActivity implements ISwitchGamerCashView {
 
     private void getData() {
         String amount = getIntent().getExtras().getString("enter_amount");
-        coins = getIntent().getExtras().getInt("coins");
+        coins = getIntent().getExtras().getLong("coins");
         if (getIntent().getExtras().getString("coupon") != null)
             mCouponCode = getIntent().getExtras().getString("coupon");
         tvAmount.setText("Rs." + amount);

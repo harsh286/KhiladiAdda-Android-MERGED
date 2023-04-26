@@ -98,36 +98,28 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/mcv_download"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginEnd="20dp"
-            android:visibility="gone"
-            app:cardBackgroundColor="@color/ka_word_search_toolbar_quizes"
-            app:cardCornerRadius="@dimen/dimen_60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="@color/white"
-            app:strokeWidth="1dp">
-
             <TextView
                 android:id="@+id/tv_download"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:paddingStart="@dimen/text_12"
+                android:paddingEnd="@dimen/text_12"
                 android:layout_gravity="center"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginEnd="12dp"
+                android:visibility="gone"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="2dp"
                 android:fontFamily="@font/productsansregular"
                 android:gravity="center"
                 android:text="@string/text_download"
+                android:background="@drawable/wordsearch_btn_bg"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_14" />
+                android:textSize="@dimen/text_14"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

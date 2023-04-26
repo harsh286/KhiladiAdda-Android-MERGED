@@ -71,8 +71,6 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
     ImageView mBackIv;
     @BindView(R.id.tv_no_data)
     TextView mNoDataTv;
-    @BindView(R.id.mcv_download)
-    MaterialCardView mDownloadMVC;
     @BindView(R.id.cl_toolbars)
     ConstraintLayout mToolbar;
     @BindView(R.id.tv_download)
@@ -117,7 +115,7 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
     protected void initVariables() {
         mQuizzesMcv.setVisibility(View.GONE);
         mBackIv.setOnClickListener(this);
-        mDownloadMVC.setOnClickListener(this);
+        mDownloadTV.setOnClickListener(this);
         mTournamentsTv.setOnClickListener(this);
         mCategoriesTv.setOnClickListener(this);
         getData();
@@ -144,7 +142,7 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.mcv_download:
+            case R.id.tv_download:
                 mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
                 break;
             case R.id.tv_tournaments:
@@ -185,7 +183,7 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
         mTrendingQuiz.setAdapter(new WordSearchMainAdapter(this, this, responseModel.getResponse().getTrendingQuiz(), null));
         if (launchIntent != null) {
             if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
-                mDownloadMVC.setVisibility(View.GONE);
+                mDownloadTV.setVisibility(View.GONE);
                 Properties properties = new Properties();
                 properties.addAttribute("WordSearchVersion", mCurrentVersion);
                 MoEAnalyticsHelper.INSTANCE.trackEvent(this, "WordSearch", properties);
@@ -193,10 +191,10 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
                 mDownloadTV.setText("Update");
                 mDownUp = 2;
                 mQuizzesMcv.setVisibility(View.GONE);
-                mDownloadMVC.setVisibility(View.VISIBLE);
+                mDownloadTV.setVisibility(View.VISIBLE);
             }
         } else {
-            mDownloadMVC.setVisibility(View.VISIBLE);
+            mDownloadTV.setVisibility(View.VISIBLE);
         }
     }
 
@@ -224,14 +222,14 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
                 Intent launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.WordSearchPackageName);
                 if (launchIntent != null) {
                     if (mVersion.equalsIgnoreCase(mCurrentVersion)) {
-                        mDownloadMVC.setVisibility(View.GONE);
+                        mDownloadTV.setVisibility(View.GONE);
                         finish();
                         startActivity(new Intent(this, WordSearchMainActivity.class));
                     } else {
                         mDownloadTV.setText("Update");
                         mDownUp = 2;
                         mQuizzesMcv.setVisibility(View.GONE);
-                        mDownloadMVC.setVisibility(View.VISIBLE);
+                        mDownloadTV.setVisibility(View.VISIBLE);
                     }
                 }
             } catch (Exception e) {

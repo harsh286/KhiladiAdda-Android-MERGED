@@ -1591,6 +1591,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
 
     private void payGamerCashVerifyAPI() {
         if (new NetworkStatus(this).isInternetOn()) {
+            showProgress("");
             mPresenter.getGamerCashUserData();
         } else {
             Snackbar.make(mPayBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
@@ -1603,4 +1604,5 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         mPresenter.destroy();
         super.onDestroy();
     }
+
 }
