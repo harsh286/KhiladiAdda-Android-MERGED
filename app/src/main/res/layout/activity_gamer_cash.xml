@@ -110,14 +110,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/text_12"
+        android:layout_marginTop="@dimen/margin_5"
         app:layout_constraintTop_toBottomOf="@id/cl_top">
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/gif_img_gamercash"
             android:layout_width="250dp"
             android:layout_height="250dp"
-            android:layout_marginTop="@dimen/margin_30"
+            android:layout_marginTop="@dimen/margin_15"
             android:background="#fff"
             android:src="@drawable/gcmint"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -129,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_20"
-            android:layout_marginTop="@dimen/text_16"
+            android:layout_marginTop="@dimen/margin_10"
             android:text="@string/verifying_user"
             android:textColor="@color/black"
             android:textSize="@dimen/text_24"

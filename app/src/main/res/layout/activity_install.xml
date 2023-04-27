@@ -114,8 +114,8 @@
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/gif_img_gamercash"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_marginTop="@dimen/margin_30"
             android:background="#fff"
             android:src="@drawable/downloadimg"
@@ -129,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_20"
-            android:layout_marginTop="@dimen/margin_60"
+            android:layout_marginTop="@dimen/margin_40"
             android:text="@string/install_gamerpe"
             android:textColor="@color/black"
             android:textSize="@dimen/text_24"
@@ -142,7 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_20"
-            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_10"
             android:layout_marginEnd="@dimen/text_12"
             android:text="@string/no_gamer_pe"
             android:textColor="@color/amount_color"

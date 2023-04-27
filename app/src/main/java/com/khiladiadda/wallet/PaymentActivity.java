@@ -1017,7 +1017,9 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     @Override
     public void onUpdateBalanceKhiladiAdda(UpdateBalanceResponse response) {
         hideProgress();
+        mAppPreference.setBoolean(AppConstant.FROM_WALLET, true);
         Toast.makeText(this, getString(R.string.updated_balance_successfully), Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override
