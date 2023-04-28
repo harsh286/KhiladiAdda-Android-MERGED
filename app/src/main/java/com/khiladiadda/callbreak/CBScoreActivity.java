@@ -8,8 +8,6 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
@@ -42,7 +40,6 @@ public class CBScoreActivity extends BaseActivity implements ICallBreakView {
     RecyclerView mCallBreakRV;
     @BindView(R.id.mcv_play)
     AppCompatButton mPlayAGainMcv;
-    private CallBreakScoreAdapter mAdapter;
     private List<CallBreakHistoryPlayerResponse> playersValue;
     private ICallBreakPresenter mPresenter;
 
@@ -129,7 +126,7 @@ public class CBScoreActivity extends BaseActivity implements ICallBreakView {
     public void onGetHistoryRankSuccess(CbHistoryRankMainResponse responseModel) {
         if (responseModel.isStatus()) {
             playersValue = responseModel.getResponse().getPlayers();
-            mAdapter = new CallBreakScoreAdapter(this, playersValue);
+            CallBreakScoreAdapter mAdapter = new CallBreakScoreAdapter(this, playersValue);
             mCallBreakRV.setLayoutManager(new LinearLayoutManager(this));
             mCallBreakRV.setAdapter(mAdapter);
         }

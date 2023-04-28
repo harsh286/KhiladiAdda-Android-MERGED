@@ -14,13 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
-import com.khiladiadda.callbreak.adapter.CallBreakAdapter;
 import com.khiladiadda.callbreak.adapter.CallBreakHistoryAdapter;
 import com.khiladiadda.callbreak.interfaces.ICallBreakPresenter;
 import com.khiladiadda.callbreak.interfaces.ICallBreakView;
 import com.khiladiadda.interfaces.IOnItemClickListener;
 import com.khiladiadda.network.model.ApiError;
-import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.CallBreakDetails;
 import com.khiladiadda.network.model.response.CallBreakHistoryPlayerResponse;
 import com.khiladiadda.network.model.response.CallBreakJoinMainResponse;
@@ -29,8 +27,6 @@ import com.khiladiadda.network.model.response.CbHistoryRankMainResponse;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +48,6 @@ public class CBHistoryActivity extends BaseActivity implements ICallBreakView, I
     private CallBreakHistoryAdapter mAdapter;
     private List<CallBreakDetails> mList;
     private ICallBreakPresenter mPresenter;
-    private List<CallBreakHistoryPlayerResponse> playersValue;
 
     @Override
     protected int getContentView() {
@@ -144,7 +139,7 @@ public class CBHistoryActivity extends BaseActivity implements ICallBreakView, I
     @Override
     public void onItemClick(View view, int position, int tag) {
         Intent i = new Intent(this, CBScoreActivity.class);
-        playersValue = mList.get(position).getPlayers();
+        List<CallBreakHistoryPlayerResponse> playersValue = mList.get(position).getPlayers();
         i.putExtra(AppConstant.ID, mList.get(position).getId());
         i.putParcelableArrayListExtra("player_list", (ArrayList<? extends Parcelable>) playersValue);
         startActivity(i);

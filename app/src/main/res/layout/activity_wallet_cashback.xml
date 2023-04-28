@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".wallet.AddWalletActivity">
+    android:layout_height="match_parent">
 
     <include layout="@layout/actionbar" />
 
@@ -339,7 +338,6 @@
                         android:layout_marginStart="@dimen/margin_10"
                         android:layout_marginTop="@dimen/margin_10"
                         android:layout_marginEnd="@dimen/margin_20"
-                        android:text="APPLY"
                         android:textColor="#8A8A8A"
                         android:textSize="@dimen/dimen_16sp"
                         android:textStyle="bold" />
@@ -412,7 +410,6 @@
                         android:layout_marginStart="@dimen/margin_10"
                         android:layout_marginTop="@dimen/margin_10"
                         android:layout_marginEnd="@dimen/margin_20"
-                        android:text="APPLY"
                         android:textColor="#8A8A8A"
                         android:textSize="@dimen/dimen_16sp"
                         android:textStyle="bold" />

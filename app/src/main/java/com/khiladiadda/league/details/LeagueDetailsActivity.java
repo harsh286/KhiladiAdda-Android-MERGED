@@ -50,7 +50,7 @@ import com.khiladiadda.rule.QuizRuleActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
-import com.khiladiadda.wallet.AddWalletActivity;
+import com.khiladiadda.wallet.WalletCashbackActivity;
 import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
 
@@ -633,7 +633,7 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
         okBTN.setOnClickListener(view -> {
             dialog.dismiss();
             if (mLowBalance) {
-                startActivity(new Intent(LeagueDetailsActivity.this, AddWalletActivity.class));
+                startActivity(new Intent(LeagueDetailsActivity.this, WalletCashbackActivity.class));
             } else {
                 getDataFromServer(userId, characterId, teamName, from);
             }

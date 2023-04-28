@@ -2,13 +2,10 @@ package com.khiladiadda.wallet;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -18,8 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
@@ -94,9 +89,9 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     private String mCouponCode;
     private boolean mIsOfferClicked, mIsGamerCashEnabled;
     private IWalletCashbackPresenter mPresenter;
-    private long mCoins, mRemainingAddLimit = 5000;
+    private long mRemainingAddLimit = 5000;
     private int mUpiPaymentType;
-    private boolean mIsCashfree, mIsEasebuzz, mIsPaytm, mIsPaysharp, mIsPhonepe;
+    private boolean mIsCashfree, mIsEasebuzz, mIsPaytm, mIsPaysharp, mIsPhonepe, mIsBajajWallet;
 
     @Override
     protected int getContentView() {
@@ -303,7 +298,7 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
 
     @Override
     public void onValidationComplete() {
-        mCoins = Long.parseLong(mAmountET.getText().toString().trim());
+        long mCoins = Long.parseLong(mAmountET.getText().toString().trim());
         if (mCoins <= mRemainingAddLimit) {
             if (mCoins > 5000 && mAppPreference.getProfileData().getAadharUpdated() != 3) {
                 checkPanStatus();
@@ -318,6 +313,7 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
                 i.putExtra(AppConstant.EASEBUZZ, mIsEasebuzz);
                 i.putExtra(AppConstant.PAYSHARP, mIsPaysharp);
                 i.putExtra(AppConstant.PHONEPE, mIsPhonepe);
+                i.putExtra(AppConstant.BAJAJWALLET, mIsBajajWallet);
                 startActivity(i);
             }
         } else {
@@ -390,6 +386,9 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
             }
             if (response.getVersion().isPhonepeEnabled()) {
                 mIsPhonepe = true;
+            }
+            if (response.getVersion().isBajajWallet()) {
+                mIsBajajWallet = true;
             }
         }
         hideProgress();

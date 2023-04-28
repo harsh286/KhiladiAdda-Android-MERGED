@@ -62,7 +62,7 @@ import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.ImageActivity;
 import com.khiladiadda.utility.NewAESEncrypt;
 import com.khiladiadda.utility.PermissionUtils;
-import com.khiladiadda.wallet.AddWalletActivity;
+import com.khiladiadda.wallet.WalletCashbackActivity;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
 import com.moengage.core.model.AppStatus;
 
@@ -1077,7 +1077,7 @@ public class AppDialog {
         Button mOkBTN = dialog.findViewById(R.id.btn_ok);
         mOkBTN.setOnClickListener(arg0 -> {
             dialog.dismiss();
-            activity.startActivity(new Intent(activity, AddWalletActivity.class));
+            activity.startActivity(new Intent(activity, WalletCashbackActivity.class));
             activity.finish();
         });
         Button mNoBTN = dialog.findViewById(R.id.btn_no);

@@ -26,8 +26,8 @@ import com.khiladiadda.profile.ProfileActivity;
 import com.khiladiadda.quiz.QuizDetailsActivity;
 import com.khiladiadda.referhistory.ReferHelpActivity;
 import com.khiladiadda.utility.AppConstant;
-import com.khiladiadda.wallet.AddWalletActivity;
 import com.khiladiadda.wallet.WalletActivity;
+import com.khiladiadda.wallet.WalletCashbackActivity;
 import com.moengage.core.DataCenter;
 import com.moengage.core.LogLevel;
 import com.moengage.core.MoEngage;
@@ -237,7 +237,7 @@ public class KhiladiAddaApp extends Application {
                 setBool(true, HelpActivity.class, 0, null, null);
                 break;
             case AppConstant.ADDCOINS:
-                setBool(true, AddWalletActivity.class, 0, null, null);
+                setBool(true, WalletCashbackActivity.class, 0, null, null);
                 break;
             case AppConstant.WALLET:
                 setBool(true, WalletActivity.class, 0, null, null);

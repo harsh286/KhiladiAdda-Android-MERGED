@@ -26,8 +26,8 @@ import com.khiladiadda.referhistory.ReferActivity;
 import com.khiladiadda.referhistory.ReferHelpActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
-import com.khiladiadda.wallet.AddWalletActivity;
 import com.khiladiadda.wallet.WalletActivity;
+import com.khiladiadda.wallet.WalletCashbackActivity;
 
 import butterknife.BindView;
 
@@ -129,7 +129,7 @@ public class BannerFragment extends BaseFragment {
             } else if (mAdvertisement.getTitle().equalsIgnoreCase("Wallet")) {
                 startActivity(new Intent(getActivity(), WalletActivity.class));
             } else if (mAdvertisement.getTitle().equalsIgnoreCase("Add_Wallet")) {
-                startActivity(new Intent(getActivity(), AddWalletActivity.class));
+                startActivity(new Intent(getActivity(), WalletCashbackActivity.class));
             } else if (mAdvertisement.getTitle().equalsIgnoreCase("Leaderboard")) {
                 startActivity(new Intent(getActivity(), NewLeaderboardActivity.class));
             } else if (mAdvertisement.getTitle().equalsIgnoreCase("Refer")) {

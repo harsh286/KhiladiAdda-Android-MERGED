@@ -167,7 +167,13 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     private String mCouponCode, mOrderId, mAmount, mCallbackURL, mPhonepeOrderId, mApexPayOrderId, mPaySharpOrderId, mApiEndPoint = "/pg/v1/pay";
     private int mPaymentFrom, mUpiPaymentType, getmPaymentFrom = 0;
     private boolean mApexPay, mPaySharp, mIsGamerCashEnabled;
-    private boolean mIsCashfree, mIsEasebuzz, mIsBajajWallet, mIsBajajPayBanking, mIsPaysharp, mIsPhonepe, mIsPaytm;
+    private boolean mIsCashfree;
+    private boolean mIsEasebuzz;
+    private boolean mIsBajajWallet;
+    private boolean mIsBajajPayBanking;
+    private boolean mIsPaysharp;
+    private boolean mIsPhonepe;
+    private boolean mBajajWalletActive;
     private IPaymentPresenter mPresenter;
     public String mAmountET;
     private long mGamerCash;
@@ -231,12 +237,17 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         mIsEasebuzz = getIntent().getBooleanExtra(AppConstant.EASEBUZZ, false);
         mIsPaysharp = getIntent().getBooleanExtra(AppConstant.PAYSHARP, false);
         mIsPhonepe = getIntent().getBooleanExtra(AppConstant.PHONEPE, false);
-        mIsPaytm = getIntent().getBooleanExtra(AppConstant.PAYTM, false);
+        boolean mIsPaytm = getIntent().getBooleanExtra(AppConstant.PAYTM, false);
+        mBajajWalletActive = getIntent().getBooleanExtra(AppConstant.BAJAJWALLET, false);
         if (mIsPaytm) {
             mPaytmWalletCL.setVisibility(View.VISIBLE);
         }
         if (mIsCashfree || mIsEasebuzz) {
             mNetBankingCL.setVisibility(View.VISIBLE);
+        }
+        if (mBajajWalletActive) {
+            mBajajPayLL.setVisibility(View.VISIBLE);
+            mNetBankingBajajPayWalletCL.setVisibility(View.VISIBLE);
         }
         if (mIsGamerCashEnabled) {
             mGamerCashTV.setVisibility(View.VISIBLE);
@@ -291,7 +302,9 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                     mIsBajajPayBanking = true;
                     imgArrowStraight.setVisibility(View.GONE);
                     imgArrowDown.setVisibility(View.VISIBLE);
-                    mNetBankingBajajPayWalletCL.setVisibility(View.VISIBLE);
+                    if (mBajajWalletActive) {
+                        mNetBankingBajajPayWalletCL.setVisibility(View.VISIBLE);
+                    }
                     mNetBankingBajajPayUpiCL.setVisibility(View.VISIBLE);
                 }
                 mPayBTN.setEnabled(false);
@@ -812,10 +825,8 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                     mAppPreference.setInSufficientBalanceBP(balance);
                     mBajajPayTV.setText(getString(R.string.bajaj_pay_balance) + balance);
                     mBajajPayTVNetBankingWallet.setText(getString(R.string.bajaj_pay_balance) + balance);
-                    hideProgress();
                 }
             } else {
-                hideProgress();
                 mBajajPayIV.setVisibility(View.INVISIBLE);
                 imgNetBankingBajajPayLink.setVisibility(View.INVISIBLE);
                 mBajajPayTV.setVisibility(View.VISIBLE);
@@ -826,7 +837,6 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 mBajajPayTVNetBankingWallet.setText(getString(R.string.bajaj_pay));
             }
         } else if (response.statusCode.equals("E1145")) {
-            hideProgress();
             mBajajPayIV.setVisibility(View.INVISIBLE);
             imgNetBankingBajajPayLink.setVisibility(View.INVISIBLE);
             mBajajPayTV.setVisibility(View.VISIBLE);
@@ -839,6 +849,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 mBajajPayTVNetBankingWallet.setText(cutLine);
             }
         }
+        hideProgress();
     }
 
     @Override
@@ -871,15 +882,14 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
      */
     @Override
     public void onBajajPayGetOTPSuccess(BajajPayResponse response) {
+        hideProgress();
         if (response != null) {
-            hideProgress();
             if (response.statusCode.equals("202")) {
                 String decryptData = NewAESEncrypt.decrypt(response.encResponse);
                 BajajPayResponseDecrypt bajajPayResponseDecrypt = new Gson().fromJson(decryptData, BajajPayResponseDecrypt.class);
                 AppDialog.verifyOTPBajajPay(bajajPayResponseDecrypt, this, this, getString(R.string.enter_otp_to_complete_verification));
             } else {
                 response.statusCode.equals("E1133");
-                hideProgress();
                 AppDialog.showBajajPayFailureDialog("", getString(R.string.bajaj_pay_verification_status), this, getString(R.string.otp_limit_exceed_bajajpay), this);
             }
         }
@@ -895,8 +905,8 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
      */
     @Override
     public void onBajajPayVerifyOTPSuccess(BajajPayVerifyOtpResponse response) {
+        hideProgress();
         if (response.statusCode.equals("202")) {
-            hideProgress();
             String decryptData = NewAESEncrypt.decrypt(response.encResponse);
             BajajPayVerifyResponseDecrypt bajajPayResponseDecrypt = new Gson().fromJson(decryptData, BajajPayVerifyResponseDecrypt.class);
             /**  Saving Token for First time Users on verify OTP Response */
@@ -904,10 +914,8 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             String userToken = bajajPayResponseDecrypt.getUserToken();
             mAppPreference.setMobileNumberBP(bajajPayResponseDecrypt.getMobileNumber());
             mAppPreference.setUserTokenBP(userToken);
-            hideProgress();
             AppDialog.showStatusSuccessBajajPayDialog(this, getString(R.string.linked_to_khiladiadda_successfully), this);
         } else if (response.statusCode.equals("E1136")) {
-            hideProgress();
             AppDialog.showBajajPayFailureDialog("", getString(R.string.bajaj_pay_verification_status), this, getString(R.string.otp_is_invalid), this);
         }
     }
@@ -933,13 +941,12 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
      */
     @Override
     public void onBajajPayResendOTPSuccess(BajajPayResponse response) {
+        hideProgress();
         if (response != null) {
-            hideProgress();
             if (response.statusCode.equals("202")) {
                 Toast.makeText(this, getString(R.string.otp_send_successfully), Toast.LENGTH_SHORT).show();
             } else {
                 response.statusCode.equals("E1133");
-                hideProgress();
                 AppDialog.showBajajPayFailureDialog("", getString(R.string.verification_otp_status), this, getString(R.string.otp_limit_exceed_bajajpay), this);
             }
         }
@@ -996,11 +1003,9 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 } else {
                     Snackbar.make(tvError, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
                 }
-                hideProgress();
                 Toast.makeText(this, getString(R.string.payment_successful), Toast.LENGTH_SHORT).show();
             }
         } else if (bajajPaymentResponse.statusCode.equals("E1136")) {
-            hideProgress();
             AppDialog.showBajajPayFailureDialog("", getString(R.string.bajaj_payment_status), this, getString(R.string.otp_is_invalid), this);
         }
     }

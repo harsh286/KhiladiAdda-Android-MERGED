@@ -35,7 +35,7 @@ import com.khiladiadda.network.model.response.droid_doresponse.TournamentDetailR
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
-import com.khiladiadda.wallet.AddWalletActivity;
+import com.khiladiadda.wallet.WalletCashbackActivity;
 import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
 import com.ncorti.slidetoact.SlideToActView;
@@ -313,7 +313,7 @@ public class TournamenetDetailActivity extends BaseActivity implements ITourname
         okBTN.setOnClickListener(arg0 -> {
             dialog.dismiss();
             if (mLowBalance) {
-                startActivity(new Intent(TournamenetDetailActivity.this, AddWalletActivity.class));
+                startActivity(new Intent(TournamenetDetailActivity.this, WalletCashbackActivity.class));
                 slideToActView.resetSlider();
             } else {
                 startPlay();

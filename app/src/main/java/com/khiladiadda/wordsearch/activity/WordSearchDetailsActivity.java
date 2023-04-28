@@ -46,7 +46,7 @@ import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.DownloadApk;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.utility.providers.GenericFileProvider;
-import com.khiladiadda.wallet.AddWalletActivity;
+import com.khiladiadda.wallet.WalletCashbackActivity;
 import com.khiladiadda.wordsearch.adapter.WordSearchPrizePoolAdapter;
 import com.khiladiadda.wordsearch.ip.WordSearchStartPresenter;
 import com.khiladiadda.wordsearch.listener.IOnSubClickListener;
@@ -478,7 +478,7 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
         okBTN.setOnClickListener(arg0 -> {
             dialog.dismiss();
             if (mLowBalance) {
-                startActivity(new Intent(WordSearchDetailsActivity.this, AddWalletActivity.class));
+                startActivity(new Intent(WordSearchDetailsActivity.this, WalletCashbackActivity.class));
             } else {
                 getData();
                 Map<String, Object> eventParameters2 = new HashMap<>();

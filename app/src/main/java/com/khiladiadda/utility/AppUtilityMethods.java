@@ -43,9 +43,6 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
-import com.khiladiadda.gamercash.InstallActivity;
-import com.khiladiadda.gamercash.PayActivity;
-import com.khiladiadda.gamercash.VerifiedActivity;
 import com.khiladiadda.interfaces.IOnDateSetListener;
 import com.khiladiadda.interfaces.IOnLeagueJoinListener;
 import com.khiladiadda.login.LoginActivity;
@@ -61,7 +58,7 @@ import com.khiladiadda.preference.PreferenceKeysModel;
 import com.khiladiadda.profile.ProfileActivity;
 import com.khiladiadda.profile.update.AadharActivity;
 import com.khiladiadda.splash.SplashActivity;
-import com.khiladiadda.wallet.AddWalletActivity;
+import com.khiladiadda.wallet.WalletCashbackActivity;
 import com.moengage.core.MoECoreHelper;
 
 import java.io.BufferedReader;
@@ -575,7 +572,7 @@ public class AppUtilityMethods {
         Button mOkBTN = dialog.findViewById(R.id.btn_ok);
         mOkBTN.setOnClickListener(arg0 -> {
             dialog.dismiss();
-            activity.startActivity(new Intent(activity, AddWalletActivity.class));
+            activity.startActivity(new Intent(activity, WalletCashbackActivity.class));
         });
         Button mNoBTN = dialog.findViewById(R.id.btn_no);
         mNoBTN.setText(R.string.cancel);
@@ -624,7 +621,7 @@ public class AppUtilityMethods {
         Button mOkBTN = dialog.findViewById(R.id.btn_ok);
         mOkBTN.setOnClickListener(arg0 -> {
             dialog.dismiss();
-            activity.startActivity(new Intent(activity, AddWalletActivity.class));
+            activity.startActivity(new Intent(activity, WalletCashbackActivity.class));
         });
         Button mNoBTN = dialog.findViewById(R.id.btn_no);
         mNoBTN.setText(R.string.cancel);

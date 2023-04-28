@@ -12,8 +12,8 @@ public class AppConstant {
     public static final long TIME_OUT = 30;
     public static final long SUREPASS_TIME_OUT = 120;
     //PRODUCTION SERVER
-//    public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29t";
-    public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8="; //uat
+    public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29t";
+//    public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8="; //uat
 
 //    public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";//QA
 
@@ -1126,8 +1126,8 @@ public class AppConstant {
     public static final String EASEBUZZ = "EASEBUZZ";
     public static final String PAYSHARP = "PAYSHARP";
     public static final String PHONEPE = "PHONEPE";
-    public static final String APEXPAY = "APEXPAY";
-    public static final String NEOKRED = "NEOKRED";
     public static final String COUPON = "COUPON";
+
+    public static final String BAJAJWALLET = "BAJAJWALLET";
 
 }

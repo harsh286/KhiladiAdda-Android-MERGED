@@ -34,7 +34,6 @@ public class GamerCashActivity extends BaseActivity implements IGamerCashView {
         gamerCasdVerifyAPI();
     }
 
-
     private void gamerCasdVerifyAPI() {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
@@ -56,7 +55,6 @@ public class GamerCashActivity extends BaseActivity implements IGamerCashView {
 
     @Override
     public void onGamerCashSuccess(GamerCashResponse response) {
-//        new Handler(Looper.getMainLooper()).postDelayed(() -> {
         if (response.getAlreadyLinked() || response.getLinked()) {
             String amount = getIntent().getExtras().getString("enter_amount");
             int coins = getIntent().getExtras().getInt("coins", 0);
@@ -73,7 +71,6 @@ public class GamerCashActivity extends BaseActivity implements IGamerCashView {
             startActivity(intent);
             finish();
         }
-
     }
 
     @Override
@@ -83,4 +80,5 @@ public class GamerCashActivity extends BaseActivity implements IGamerCashView {
         intent.putExtra("isVerified", false);
         startActivity(intent);
     }
+
 };

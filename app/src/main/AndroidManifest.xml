@@ -322,11 +322,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".wallet.AddWalletActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-
-        <activity
             android:name=".wallet.WalletCashbackActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />

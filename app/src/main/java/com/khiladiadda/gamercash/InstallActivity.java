@@ -43,8 +43,6 @@ public class InstallActivity extends BaseActivity {
             } else {
                 notInstallTv.setText("You are not register on gamerpe with " + AppSharedPreference.initialize(this).getMasterData().getResponse().getProfile().getMobile());
             }
-        } else {
-//            Toast.makeText(this, "Gamerpe is not installed. please install it to countinue", Toast.LENGTH_LONG).show();
         }
     }
 

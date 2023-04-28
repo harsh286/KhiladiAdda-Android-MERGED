@@ -26,8 +26,8 @@ import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.league.participant.ParticipantActivity;
-import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.ApiError;
+import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.QuizListDetails;
 import com.khiladiadda.network.model.response.QuizListResponse;
 import com.khiladiadda.network.model.response.StartQuizResponse;
@@ -44,7 +44,7 @@ import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.utility.PermissionUtils;
-import com.khiladiadda.wallet.AddWalletActivity;
+import com.khiladiadda.wallet.WalletCashbackActivity;
 import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
 
@@ -363,7 +363,7 @@ public class QuizDetailsActivity extends BaseActivity implements IQuizListView {
         okBTN.setOnClickListener(arg0 -> {
             dialog.dismiss();
             if (mLowBalance) {
-                startActivity(new Intent(QuizDetailsActivity.this, AddWalletActivity.class));
+                startActivity(new Intent(QuizDetailsActivity.this, WalletCashbackActivity.class));
             } else {
                 startPlay();
                 //Apps Flyer

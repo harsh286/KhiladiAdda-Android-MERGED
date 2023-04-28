@@ -21,7 +21,7 @@ import com.khiladiadda.dialogs.interfaces.IOnJoinBattleListener;
 import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.utility.AppUtilityMethods;
-import com.khiladiadda.wallet.AddWalletActivity;
+import com.khiladiadda.wallet.WalletCashbackActivity;
 
 import java.text.DecimalFormat;
 
@@ -170,7 +170,7 @@ public class JoinBattleDialog extends Dialog implements View.OnClickListener {
             case R.id.btn_send:
                 if (!mIsFree) {
                     if (mLowBalance) {
-                        mContext.startActivity(new Intent(mContext, AddWalletActivity.class));
+                        mContext.startActivity(new Intent(mContext, WalletCashbackActivity.class));
                     } else if (mAmount < 9) {
                         AppUtilityMethods.showMsg(mContext, mContext.getString(R.string.text_battle_amount), false);
                     } else {

@@ -32,6 +32,8 @@ public class VersionDetails {
     @SerializedName("location_enabled") @Expose private boolean locationEnabled;
     @SerializedName("rummy_link") @Expose private String rummyLink;
 
+    @SerializedName("isBajajWallet") @Expose private boolean isBajajWallet;
+
     public String getRummyLink() {
         return rummyLink;
     }
@@ -221,5 +223,13 @@ public class VersionDetails {
 
     public void setGamerCashEnabled(boolean gamerCashEnabled) {
         this.gamerCashEnabled = gamerCashEnabled;
+    }
+
+    public boolean isBajajWallet() {
+        return isBajajWallet;
+    }
+
+    public void setBajajWallet(boolean bajajWallet) {
+        isBajajWallet = bajajWallet;
     }
 }

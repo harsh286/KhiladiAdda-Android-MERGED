@@ -29,7 +29,6 @@ public class WebPaymentActivity extends BaseActivity {
         return R.layout.activity_web_payment;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,22 +47,17 @@ public class WebPaymentActivity extends BaseActivity {
             Snackbar.make(mWebView, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
         mWebView.setWebViewClient(new HelloWebViewClient());
-
-
     }
-
 
     @Override
     public void onBackPressed() {
       onBackPressedDialog();
-
     }
 
     @Override
     protected void initVariables() {
 
     }
-
 
     @Override
     public void onClick(View v) {
@@ -125,4 +119,5 @@ public class WebPaymentActivity extends BaseActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mWebPayment);
         super.onDestroy();
     }
+
 }
