@@ -1032,6 +1032,6 @@ public interface ApiService {
     Observable<BajajPayResponse> delinkWallet(@Header("Content-Type") String content_type, @Header("channel") String channel, @Header("Ocp-Apim-Subscription-Key") String Ocp_Api_sub_key, @Header("Ocp-Apim-Trace") boolean Ocp_api_trace, @Body BajajPayEncryptedRequest bajajPayDeLinkWalletRequest);
 
     @POST(AppConstant.UPDATE_BALANCE)
-    Observable<UpdateBalanceResponse> getUpdateBalance(@Body UpdateBalanceRequest updateBalanceRequest);
+    Observable<UpdateBalanceResponse> updateBalance(@Body UpdateBalanceRequest updateBalanceRequest);
 
 }

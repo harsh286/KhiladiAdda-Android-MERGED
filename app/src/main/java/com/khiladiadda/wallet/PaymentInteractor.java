@@ -265,7 +265,7 @@ public class PaymentInteractor {
     public Subscription getUpdateBalanceKhiladiBajajPay(IApiListener<UpdateBalanceResponse> mUpdateBalanceListener, UpdateBalanceRequest updateBalanceRequest) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
-        return manager.createObservable(service.getUpdateBalance(updateBalanceRequest)).subscribe(new SubscriberCallback<>(mUpdateBalanceListener));
+        return manager.createObservable(service.updateBalance(updateBalanceRequest)).subscribe(new SubscriberCallback<>(mUpdateBalanceListener));
     }
 
 }

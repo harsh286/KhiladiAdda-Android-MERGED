@@ -91,7 +91,7 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     private IWalletCashbackPresenter mPresenter;
     private long mRemainingAddLimit = 5000;
     private int mUpiPaymentType;
-    private boolean mIsCashfree, mIsEasebuzz, mIsPaytm, mIsPaysharp, mIsPhonepe, mIsBajajWallet;
+    private boolean mIsCashfree, mIsEasebuzz, mIsPaytm, mIsPaysharp, mIsPhonepe, mIsBajajWallet, mIsBajajUpi;
 
     @Override
     protected int getContentView() {
@@ -314,6 +314,7 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
                 i.putExtra(AppConstant.PAYSHARP, mIsPaysharp);
                 i.putExtra(AppConstant.PHONEPE, mIsPhonepe);
                 i.putExtra(AppConstant.BAJAJWALLET, mIsBajajWallet);
+                i.putExtra(AppConstant.BAJAJUPI, mIsBajajUpi);
                 startActivity(i);
             }
         } else {
@@ -389,6 +390,9 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
             }
             if (response.getVersion().isBajajWallet()) {
                 mIsBajajWallet = true;
+            }
+            if (response.getVersion().isBajajUPI()) {
+                mIsBajajUpi = true;
             }
         }
         hideProgress();

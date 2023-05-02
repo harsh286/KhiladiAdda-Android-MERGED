@@ -7,8 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,7 +31,6 @@ import com.cashfree.pg.ui.api.CFPaymentComponent;
 import com.cashfree.pg.ui.api.upi.intent.CFUPIIntentCheckout;
 import com.cashfree.pg.ui.api.upi.intent.CFUPIIntentCheckoutPayment;
 import com.easebuzz.payment.kit.PWECouponsActivity;
-import com.google.android.gms.common.images.WebImage;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.khiladiadda.R;
@@ -99,7 +96,6 @@ import com.phonepe.intent.sdk.api.UPIApplicationInfo;
 
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -173,7 +169,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     private boolean mIsBajajPayBanking;
     private boolean mIsPaysharp;
     private boolean mIsPhonepe;
-    private boolean mBajajWalletActive;
+    private boolean mBajajWalletActive, mIsBajajUpi;
     private IPaymentPresenter mPresenter;
     public String mAmountET;
     private long mGamerCash;
@@ -239,15 +235,23 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         mIsPhonepe = getIntent().getBooleanExtra(AppConstant.PHONEPE, false);
         boolean mIsPaytm = getIntent().getBooleanExtra(AppConstant.PAYTM, false);
         mBajajWalletActive = getIntent().getBooleanExtra(AppConstant.BAJAJWALLET, false);
+        mIsBajajUpi = getIntent().getBooleanExtra(AppConstant.BAJAJUPI, false);
+        if (!mBajajWalletActive && !mIsBajajUpi) {
+            mNetBankingBajajPayCL.setVisibility(View.GONE);
+        }
+        if (mIsBajajUpi) {
+            mBajajPayUpiTopCl.setVisibility(View.VISIBLE);
+            mNetBankingBajajPayUpiCL.setVisibility(View.VISIBLE);
+        }
+        if (mBajajWalletActive) {
+            mBajajPayLL.setVisibility(View.VISIBLE);
+            mNetBankingBajajPayWalletCL.setVisibility(View.VISIBLE);
+        }
         if (mIsPaytm) {
             mPaytmWalletCL.setVisibility(View.VISIBLE);
         }
         if (mIsCashfree || mIsEasebuzz) {
             mNetBankingCL.setVisibility(View.VISIBLE);
-        }
-        if (mBajajWalletActive) {
-            mBajajPayLL.setVisibility(View.VISIBLE);
-            mNetBankingBajajPayWalletCL.setVisibility(View.VISIBLE);
         }
         if (mIsGamerCashEnabled) {
             mGamerCashTV.setVisibility(View.VISIBLE);
@@ -305,7 +309,9 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                     if (mBajajWalletActive) {
                         mNetBankingBajajPayWalletCL.setVisibility(View.VISIBLE);
                     }
-                    mNetBankingBajajPayUpiCL.setVisibility(View.VISIBLE);
+                    if (mIsBajajUpi) {
+                        mNetBankingBajajPayUpiCL.setVisibility(View.VISIBLE);
+                    }
                 }
                 mPayBTN.setEnabled(false);
                 break;
@@ -755,7 +761,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     }
 
     @Override
-    public void onPaymentCheckComplete(PhonepeCheckPaymentResponse response) {
+    public void onPhonePePaymentCheckComplete(PhonepeCheckPaymentResponse response) {
         if (response.isStatus()) {
             onPaymentSuccess(response.getPayment_via());
         } else {
@@ -764,7 +770,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     }
 
     @Override
-    public void onPaymentCheckFailure(ApiError errorMsg) {
+    public void onPhonePePaymentCheckFailure(ApiError errorMsg) {
 
     }
 
@@ -986,19 +992,20 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                     int amountAdded = Integer.parseInt(bajajPayDebitTransactionDecryptResponse.getPaymentAmount());
                     updateBalanceRequest.setApp_version(AppUtilityMethods.getVersion());
                     updateBalanceRequest.setAmount(amountAdded);
-                    String base64;
-                    //Base64 of request body
-                    Gson gson = new Gson();
-                    String json = gson.toJson(updateBalanceRequest);
-                    try {
-                        base64 = Base64.encodeToString(json.getBytes("UTF-8"), Base64.DEFAULT);
-                    } catch (UnsupportedEncodingException e) {
-                        throw new RuntimeException(e);
-                    }
-                    //sha256 hash
-                    String hash = AppUtilityMethods.encryptSHA256(base64);
-                    hash = hash + "###" + 7;
-                    //send key hash with hash value
+                    updateBalanceRequest.setTxnId(bajajPayDebitTransactionDecryptResponse.getBflTransactionId());
+//                    String base64;
+//                    //Base64 of request body
+//                    Gson gson = new Gson();
+//                    String json = gson.toJson(updateBalanceRequest);
+//                    try {
+//                        base64 = Base64.encodeToString(json.getBytes("UTF-8"), Base64.DEFAULT);
+//                    } catch (UnsupportedEncodingException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                    //sha256 hash
+//                    String hash = AppUtilityMethods.encryptSHA256(base64);
+//                    hash = hash + "###" + 7;
+//                    //send key hash with hash value
                     mPresenter.updateBalance(updateBalanceRequest);
                 } else {
                     Snackbar.make(tvError, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
@@ -1030,7 +1037,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     @Override
     public void onUpdateBalanceKhiladiAddaFailure(ApiError error) {
         hideProgress();
-        /** TODO on urgent basis because uat is not working */
+        Toast.makeText(this, getString(R.string.payment_bajajpay_failed), Toast.LENGTH_SHORT).show();
         /**Balance Update nhi ho rha h because HTTP 404 Found in this APi.*/
     }
 
@@ -1170,13 +1177,15 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     public void onBackPressed() {
         super.onBackPressed();
         /**calling get getBajajPayBalance when user return from ceate wallet*/
-        getBajajPayBalance();
+        if (mBajajWalletActive) {
+            getBajajPayBalance();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mAppPreference.getUserTokenBP() != null) {
+        if (mAppPreference.getUserTokenBP() != null && mBajajWalletActive) {
             getBajajPayBalance();
         }
         if (mPaySharp) {
@@ -1233,7 +1242,14 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 }, 10000);
             } else {
                 hideProgress();
-                AppDialog.showPaymentConfirmation(this, onPaymentListener, getString(R.string.text_payment_failed), "Payment Failed!", false);
+                if (mPaymentFrom == AppConstant.FROM_PHONEPE_BAJAJPAY) {
+                    PhonepeCheckPaymentRequest phonepeCheckPaymentRequest = new PhonepeCheckPaymentRequest();
+                    phonepeCheckPaymentRequest.setCoupon(mCouponCode);
+                    phonepeCheckPaymentRequest.setOrderId(mPhonepeOrderId);
+                    mPresenter.getPaymentCheckData(phonepeCheckPaymentRequest);
+                } else {
+                    AppDialog.showPaymentConfirmation(this, onPaymentListener, getString(R.string.text_payment_failed), "Payment Failed!", false);
+                }
             }
         } else if (requestCode == AppConstant.PaymentDone && resultCode == RESULT_OK) {
             showProgress("");
@@ -1250,7 +1266,8 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
 
     @Override
     public void onPaymentFailure(CFErrorResponse cfErrorResponse, String orderID) {
-        Log.e("onPaymentFailure " + orderID, cfErrorResponse.getMessage());
+        showProgress("Please wait...");
+        mPresenter.getCashfreeStatus(orderID);
     }
 
     @Override

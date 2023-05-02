@@ -5,10 +5,14 @@ import com.google.gson.annotations.SerializedName;
 public class UpdateBalanceRequest {
     @SerializedName("amount")
     @Expose
-    int amount;
+    private int amount;
     @SerializedName("app_version")
     @Expose
-    String app_version;
+    private String app_version;
+    @SerializedName("txnId")
+    @Expose
+    private String txnId;
+
     public String getApp_version() {
         return app_version;
     }
@@ -25,4 +29,11 @@ public class UpdateBalanceRequest {
         this.amount = amount;
     }
 
+    public String getTxnId() {
+        return txnId;
+    }
+
+    public void setTxnId(String txnId) {
+        this.txnId = txnId;
+    }
 }

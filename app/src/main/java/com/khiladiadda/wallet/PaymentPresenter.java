@@ -418,12 +418,12 @@ public class PaymentPresenter implements IPaymentPresenter {
     private IApiListener<PhonepeCheckPaymentResponse> mPaymentCheckApiListener = new IApiListener<PhonepeCheckPaymentResponse>() {
         @Override
         public void onSuccess(PhonepeCheckPaymentResponse response) {
-            mView.onPaymentCheckComplete(response);
+            mView.onPhonePePaymentCheckComplete(response);
         }
 
         @Override
         public void onError(ApiError error) {
-            mView.onPaymentCheckFailure(error);
+            mView.onPhonePePaymentCheckFailure(error);
         }
     };
 

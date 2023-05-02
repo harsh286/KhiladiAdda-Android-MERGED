@@ -31,8 +31,8 @@ public class VersionDetails {
     @SerializedName("truecaller_enabled") @Expose private boolean truecallerEnabled;
     @SerializedName("location_enabled") @Expose private boolean locationEnabled;
     @SerializedName("rummy_link") @Expose private String rummyLink;
-
     @SerializedName("isBajajWallet") @Expose private boolean isBajajWallet;
+    @SerializedName("isBajajUPI") @Expose private boolean isBajajUPI;
 
     public String getRummyLink() {
         return rummyLink;
@@ -231,5 +231,13 @@ public class VersionDetails {
 
     public void setBajajWallet(boolean bajajWallet) {
         isBajajWallet = bajajWallet;
+    }
+
+    public boolean isBajajUPI() {
+        return isBajajUPI;
+    }
+
+    public void setBajajUPI(boolean bajajUPI) {
+        isBajajUPI = bajajUPI;
     }
 }

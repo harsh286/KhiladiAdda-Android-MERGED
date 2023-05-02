@@ -101,9 +101,9 @@ public interface IPaymentView {
 
     void onPhonepePaymentFailure(ApiError errorMsg);
 
-    void onPaymentCheckComplete(PhonepeCheckPaymentResponse response);
+    void onPhonePePaymentCheckComplete(PhonepeCheckPaymentResponse response);
 
-    void onPaymentCheckFailure(ApiError errorMsg);
+    void onPhonePePaymentCheckFailure(ApiError errorMsg);
 
     void onGetGamerCashSuccess(GetGamerCashResponse response);
 

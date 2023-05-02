@@ -109,6 +109,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_60dp"
                         android:layout_margin="@dimen/margin_5"
+                        android:visibility="gone"
                         android:background="@drawable/ic_selector_merchant"
                         app:layout_constraintTop_toBottomOf="@+id/cl_upi_phone_pe">
 
@@ -323,6 +324,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_60"
                         android:layout_margin="@dimen/margin_5"
+                        android:visibility="gone"
                         android:background="@drawable/ic_selector_merchant"
                         app:layout_constraintTop_toBottomOf="@+id/cl_paytm_wallet">
 
