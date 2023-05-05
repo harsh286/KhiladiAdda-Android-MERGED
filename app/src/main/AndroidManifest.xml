@@ -664,6 +664,11 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.truecaller.android.sdk.PartnerKey"
+            android:value="@string/truecaller_partnerKey" />
+
         <service
             android:name="com.moengage.firebase.MoEFireBaseMessagingService"
             android:exported="false">

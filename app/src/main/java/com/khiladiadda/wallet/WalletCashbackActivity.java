@@ -90,7 +90,7 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     private boolean mIsOfferClicked, mIsGamerCashEnabled;
     private IWalletCashbackPresenter mPresenter;
     private long mRemainingAddLimit = 5000;
-    private int mUpiPaymentType;
+    private int mUpiPaymentType, mOtherUPI;
     private boolean mIsCashfree, mIsEasebuzz, mIsPaytm, mIsPaysharp, mIsPhonepe, mIsBajajWallet, mIsBajajUpi;
 
     @Override
@@ -150,7 +150,7 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     }
 
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
@@ -307,6 +307,7 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
                 i.putExtra(AppConstant.TXN_AMOUNT, mAmountET.getText().toString().trim());
                 i.putExtra(AppConstant.COUPON, mCouponCode);
                 i.putExtra(AppConstant.PAYMENT_MODE, mUpiPaymentType);
+                i.putExtra(AppConstant.OTHER_UPI, mOtherUPI);
                 i.putExtra(AppConstant.GAMERCASH, mIsGamerCashEnabled);
                 i.putExtra(AppConstant.CASHFREE, mIsCashfree);
                 i.putExtra(AppConstant.PAYTM, mIsPaytm);
@@ -372,6 +373,7 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     public void onVersionSuccess(VersionResponse response) {
         if (response.isStatus()) {
             mUpiPaymentType = response.getVersion().getUpiEnable();
+            mOtherUPI = response.getVersion().getOtherUpi();
             mIsGamerCashEnabled = response.getVersion().isGamerCashEnabled();
             if (response.getVersion().isCashfreeEnable()) {
                 mIsCashfree = true;

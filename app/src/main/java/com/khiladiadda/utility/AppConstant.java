@@ -1129,5 +1129,6 @@ public class AppConstant {
     public static final String COUPON = "COUPON";
     public static final String BAJAJWALLET = "BAJAJWALLET";
     public static final String BAJAJUPI = "BAJAJUPI";
+    public static final String OTHER_UPI = "OTHER_UPI";
 
 }

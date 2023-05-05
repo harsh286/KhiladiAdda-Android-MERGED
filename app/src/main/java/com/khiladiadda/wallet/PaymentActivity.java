@@ -157,19 +157,13 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     ConstraintLayout mNetBankingBajajPayUpiCL;
     @BindView(R.id.btn_pay)
     Button mPayBTN;
-
+    @BindView(R.id.tv_other_upi)
+    TextView mOtherUpiTV;
     private static final int PAYTM_REQUEST_CODE = 666;
     private static final int B2B_PG_REQUEST_CODE = 777;
-    private String mCouponCode, mOrderId, mAmount, mCallbackURL, mPhonepeOrderId, mApexPayOrderId, mPaySharpOrderId, mApiEndPoint = "/pg/v1/pay";
-    private int mPaymentFrom, mUpiPaymentType, getmPaymentFrom = 0;
-    private boolean mApexPay, mPaySharp, mIsGamerCashEnabled;
-    private boolean mIsCashfree;
-    private boolean mIsEasebuzz;
-    private boolean mIsBajajWallet;
-    private boolean mIsBajajPayBanking;
-    private boolean mIsPaysharp;
-    private boolean mIsPhonepe;
-    private boolean mBajajWalletActive, mIsBajajUpi;
+    private String mCouponCode, mOrderId, mAmount, mCallbackURL, mPhonepeOrderId, mApexPayOrderId, mPaySharpOrderId, mApiEndPoint = "/pg/v1/pay", bajajpayPaymentAmount, bajajpayStatusMsg;
+    private int mPaymentFrom, mUpiPaymentType, getmPaymentFrom = 0, mOtherUpi;
+    private boolean mApexPay, mPaySharp, mIsGamerCashEnabled, mIsCashfree, mIsEasebuzz, mIsBajajWallet, mIsBajajPayBanking, mIsPaysharp, mIsPhonepe, mBajajWalletActive, mIsBajajUpi;
     private IPaymentPresenter mPresenter;
     public String mAmountET;
     private long mGamerCash;
@@ -219,6 +213,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         mNetBankingCL.setOnClickListener(this);
         mGamerCashTV.setOnClickListener(this);
         mGamerCashVerifiedTV.setOnClickListener(this);
+        mOtherUpiTV.setOnClickListener(this);
     }
 
     @Override
@@ -228,6 +223,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         mCouponCode = getIntent().getStringExtra(AppConstant.COUPON);
         mPayBTN.setText("Add ₹ " + mAmount);
         mUpiPaymentType = getIntent().getIntExtra(AppConstant.PAYMENT_MODE, 0);
+        mOtherUpi = getIntent().getIntExtra(AppConstant.OTHER_UPI, 0);
         mIsGamerCashEnabled = getIntent().getBooleanExtra(AppConstant.GAMERCASH, false);
         mIsCashfree = getIntent().getBooleanExtra(AppConstant.CASHFREE, false);
         mIsEasebuzz = getIntent().getBooleanExtra(AppConstant.EASEBUZZ, false);
@@ -330,6 +326,9 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 setSelection(11);
                 getmPaymentFrom = 1;
                 break;
+            case R.id.tv_other_upi:
+                setSelection(12);
+                break;
             case R.id.btn_pay:
                 if (mIsBajajWallet) {
                     validationBajajPay();
@@ -384,6 +383,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         mBajajPayUpiTopCl.setSelected(false);
         mGooglePeCL.setSelected(false);
         mPaytmUpiTV.setSelected(false);
+        mOtherUpiTV.setSelected(false);
         mPaytmWalletCL.setSelected(false);
         mBajajPayLL.setSelected(false);
         mNetBankingCL.setSelected(false);
@@ -411,6 +411,10 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             case 4:
                 mPaytmUpiTV.setSelected(true);
                 mPaymentFrom = AppConstant.FROM_PAYTM_UPI;
+                break;
+            case 12:
+                mOtherUpiTV.setSelected(true);
+                setPaymentGateway();
                 break;
             case 5:
                 mPaytmWalletCL.setSelected(true);
@@ -443,6 +447,26 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 mGamerCashTV.setSelected(true);
                 mGamerCashVerifiedTV.setSelected(true);
                 mPaymentFrom = AppConstant.FROM_GAMECASE;
+                break;
+        }
+    }
+
+    private void setPaymentGateway() {
+        switch (mOtherUpi) {
+            case 1:
+                mPaymentFrom = AppConstant.FROM_CASHFREE_UPI;
+                break;
+            case 2:
+                mPaymentFrom = AppConstant.FROM_PAYTM;
+                break;
+            case 3:
+                mPaymentFrom = AppConstant.FROM_EASEBUZZ;
+                break;
+            case 4:
+                mPaymentFrom = AppConstant.FROM_PAYSHARP;
+                break;
+            case 5:
+                mPaymentFrom = AppConstant.FROM_PHONEPE;
                 break;
         }
     }
@@ -979,41 +1003,26 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
      */
     @Override
     public void onBajajPayDebitSuccess(BajajPayResponse bajajPaymentResponse) {
-        hideProgress();
         if (bajajPaymentResponse.statusCode.equals("202")) {
             String decryptData = NewAESEncrypt.decrypt(bajajPaymentResponse.encResponse);
             BajajPayDebitTransactionDecryptResponse bajajPayDebitTransactionDecryptResponse = new Gson().fromJson(decryptData, BajajPayDebitTransactionDecryptResponse.class);
             if (bajajPayDebitTransactionDecryptResponse.getStatusCode().equals("202")) {
-                AppDialog.showStatusSuccessDialog(this, bajajPayDebitTransactionDecryptResponse.getStatusMsg() + "\n " + " of  Rs." + bajajPayDebitTransactionDecryptResponse.getPaymentAmount());
+                bajajpayStatusMsg = bajajPayDebitTransactionDecryptResponse.getStatusMsg();
+                bajajpayPaymentAmount = bajajPayDebitTransactionDecryptResponse.getPaymentAmount();
                 /**Call Khiladi Adda Api for update the balance */
-                if (new NetworkStatus(this).isInternetOn()) {
-                    showProgress(getString(R.string.txt_progress_authentication));
-                    UpdateBalanceRequest updateBalanceRequest = new UpdateBalanceRequest();
-                    int amountAdded = Integer.parseInt(bajajPayDebitTransactionDecryptResponse.getPaymentAmount());
-                    updateBalanceRequest.setApp_version(AppUtilityMethods.getVersion());
-                    updateBalanceRequest.setAmount(amountAdded);
-                    updateBalanceRequest.setTxnId(bajajPayDebitTransactionDecryptResponse.getBflTransactionId());
-//                    String base64;
-//                    //Base64 of request body
-//                    Gson gson = new Gson();
-//                    String json = gson.toJson(updateBalanceRequest);
-//                    try {
-//                        base64 = Base64.encodeToString(json.getBytes("UTF-8"), Base64.DEFAULT);
-//                    } catch (UnsupportedEncodingException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                    //sha256 hash
-//                    String hash = AppUtilityMethods.encryptSHA256(base64);
-//                    hash = hash + "###" + 7;
-//                    //send key hash with hash value
-                    mPresenter.updateBalance(updateBalanceRequest);
-                } else {
-                    Snackbar.make(tvError, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
-                }
-                Toast.makeText(this, getString(R.string.payment_successful), Toast.LENGTH_SHORT).show();
+                UpdateBalanceRequest updateBalanceRequest = new UpdateBalanceRequest();
+                int amountAdded = Integer.parseInt(bajajpayPaymentAmount);
+                updateBalanceRequest.setApp_version(AppUtilityMethods.getVersion());
+                updateBalanceRequest.setAmount(amountAdded);
+                updateBalanceRequest.setTxnId(bajajPayDebitTransactionDecryptResponse.getMerchantTxnId());
+                mPresenter.updateBalance(updateBalanceRequest);
             }
         } else if (bajajPaymentResponse.statusCode.equals("E1136")) {
+            hideProgress();
             AppDialog.showBajajPayFailureDialog("", getString(R.string.bajaj_payment_status), this, getString(R.string.otp_is_invalid), this);
+        } else {
+            hideProgress();
+            Snackbar.make(tvError, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -1030,8 +1039,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     public void onUpdateBalanceKhiladiAdda(UpdateBalanceResponse response) {
         hideProgress();
         mAppPreference.setBoolean(AppConstant.FROM_WALLET, true);
-        Toast.makeText(this, getString(R.string.updated_balance_successfully), Toast.LENGTH_SHORT).show();
-        finish();
+        AppDialog.showStatusSuccessDialog(this, bajajpayStatusMsg + "\n " + " of  Rs." + bajajpayPaymentAmount);
     }
 
     @Override
@@ -1185,7 +1193,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     @Override
     protected void onResume() {
         super.onResume();
-        if (mAppPreference.getUserTokenBP() != null && mBajajWalletActive) {
+        if (mAppPreference.getUserTokenBP() != null && mBajajWalletActive && mIsBajajWallet) {
             getBajajPayBalance();
         }
         if (mPaySharp) {
@@ -1227,7 +1235,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 showProgress(getString(R.string.txt_progress_authentication));
                 mPresenter.savePaytmPayment(request);
             } catch (Exception e) {
-                Snackbar.make(mPayBTN, "Please try again.", Snackbar.LENGTH_LONG).show();
+//                Snackbar.make(mPayBTN, "Please try again.", Snackbar.LENGTH_LONG).show();
             }
         } else if (requestCode == B2B_PG_REQUEST_CODE) {  //phonepe
             showProgress("");

@@ -826,7 +826,6 @@ public class AppDialog {
         btnOkay.setOnClickListener(v -> {
             activity.finish();
             dialog.dismiss();
-
         });
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);

@@ -33,6 +33,7 @@ public class VersionDetails {
     @SerializedName("rummy_link") @Expose private String rummyLink;
     @SerializedName("isBajajWallet") @Expose private boolean isBajajWallet;
     @SerializedName("isBajajUPI") @Expose private boolean isBajajUPI;
+    @SerializedName("otherUpi") @Expose private int otherUpi;
 
     public String getRummyLink() {
         return rummyLink;
@@ -240,4 +241,13 @@ public class VersionDetails {
     public void setBajajUPI(boolean bajajUPI) {
         isBajajUPI = bajajUPI;
     }
+
+    public int getOtherUpi() {
+        return otherUpi;
+    }
+
+    public void setOtherUpi(int otherUpi) {
+        this.otherUpi = otherUpi;
+    }
+    
 }

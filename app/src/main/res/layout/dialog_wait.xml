@@ -25,5 +25,4 @@
         android:text="@string/text_wait_payment"
         android:textColor="@color/colorWhite" />
 
-
 </RelativeLayout>
