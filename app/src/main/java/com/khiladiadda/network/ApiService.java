@@ -25,6 +25,7 @@ import com.khiladiadda.network.model.response.ModeResponse;
 import com.khiladiadda.network.model.response.NeokredResponse;
 import com.khiladiadda.network.model.response.PhonePePaymentResponse;
 import com.khiladiadda.network.model.response.PhonepeCheckPaymentResponse;
+import com.khiladiadda.network.model.response.RemainingLimitResponse;
 import com.khiladiadda.network.model.response.RummyCheckGameResponse;
 import com.khiladiadda.network.model.response.RummyHistoryMainResponse;
 import com.khiladiadda.network.model.response.RummyRefreshTokenMainResponse;
@@ -1033,5 +1034,11 @@ public interface ApiService {
 
     @POST(AppConstant.UPDATE_BALANCE)
     Observable<UpdateBalanceResponse> updateBalance(@Body UpdateBalanceRequest updateBalanceRequest);
+
+    @GET(AppConstant.API_REMAINING_LIMIT)
+    Observable<RemainingLimitResponse> getRemainingLimit();
+
+    @POST(AppConstant.API_BAJAJ_VALIDATION)
+    Observable<BaseResponse> checkBajajValidation(@Body PayuChecksumRequest request);
 
 }

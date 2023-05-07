@@ -8,6 +8,8 @@ public interface IWalletCashbackPresenter extends IBasePresenter {
 
     void getProfile();
 
+    void  getRemainingLimit();
+
     void getVersionDetails();
 
     void getInvoice(String id);

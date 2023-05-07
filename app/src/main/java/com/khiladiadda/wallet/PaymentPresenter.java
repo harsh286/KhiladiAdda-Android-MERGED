@@ -662,4 +662,24 @@ public class PaymentPresenter implements IPaymentPresenter {
         }
     };
 
+    @Override
+    public void checkBajajValidation(String amount, String coupon) {
+        PayuChecksumRequest request = new PayuChecksumRequest();
+        request.setOrderAmount(amount);
+        request.setCoupon(coupon);
+        mSubscription = mInteractor.checkBajajValidation(mBajajSeverListener, request);
+    }
+
+    private IApiListener<BaseResponse> mBajajSeverListener = new IApiListener<BaseResponse>() {
+        @Override
+        public void onSuccess(BaseResponse response) {
+            mView.onBajajValidationSuccess(response);
+        }
+
+        @Override
+        public void onError(ApiError error) {
+            mView.onBajajValidationFailure(error);
+        }
+    };
+
 }

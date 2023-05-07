@@ -268,4 +268,10 @@ public class PaymentInteractor {
         return manager.createObservable(service.updateBalance(updateBalanceRequest)).subscribe(new SubscriberCallback<>(mUpdateBalanceListener));
     }
 
+    public Subscription checkBajajValidation(IApiListener<BaseResponse> mUpdateBalanceListener, PayuChecksumRequest updateBalanceRequest) {
+        ApiManager manager = ApiManager.getInstance();
+        ApiService service = manager.createService();
+        return manager.createObservable(service.checkBajajValidation(updateBalanceRequest)).subscribe(new SubscriberCallback<>(mUpdateBalanceListener));
+    }
+
 }

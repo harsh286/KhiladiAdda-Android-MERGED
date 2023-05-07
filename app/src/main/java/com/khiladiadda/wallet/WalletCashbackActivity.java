@@ -27,6 +27,7 @@ import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.InvoiceResponse;
 import com.khiladiadda.network.model.response.ProfileTransactionResponse;
+import com.khiladiadda.network.model.response.RemainingLimitResponse;
 import com.khiladiadda.network.model.response.VersionResponse;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
@@ -89,7 +90,7 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     private String mCouponCode;
     private boolean mIsOfferClicked, mIsGamerCashEnabled;
     private IWalletCashbackPresenter mPresenter;
-    private long mRemainingAddLimit = 5000;
+    private long mRemainingAddLimit;
     private int mUpiPaymentType, mOtherUPI;
     private boolean mIsCashfree, mIsEasebuzz, mIsPaytm, mIsPaysharp, mIsPhonepe, mIsBajajWallet, mIsBajajUpi;
 
@@ -146,7 +147,6 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
                 hideKeyboard(v);
             }
         });
-
     }
 
     public void hideKeyboard(View view) {
@@ -158,7 +158,8 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     protected void initVariables() {
         mPresenter = new WalletCashbackPresenter(this);
         if (new NetworkStatus(this).isInternetOn()) {
-            setData();
+            showProgress("");
+            mPresenter.getRemainingLimit();
         } else {
             Snackbar.make(mAmountET, getString(R.string.error_internet), Snackbar.LENGTH_SHORT).show();
         }
@@ -331,12 +332,22 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     @Override
     public void onProfileComplete(ProfileTransactionResponse responseModel) {
         mAppPreference.setProfileData(responseModel.getResponse());
-        hideProgress();
         setData();
     }
 
     @Override
     public void onProfileFailure(ApiError error) {
+        hideProgress();
+    }
+
+    @Override
+    public void onRemainingLimitComplete(RemainingLimitResponse responseModel) {
+        mRemainingAddLimit = responseModel.getRemaining_add_limit();
+        setData();
+    }
+
+    @Override
+    public void onRemainingLimitFailure(ApiError error) {
         hideProgress();
     }
 
@@ -406,7 +417,6 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     }
 
     private void setData() {
-        showProgress(getString(R.string.txt_progress_authentication));
         Coins coins = mAppPreference.getProfileData().getCoins();
         if (coins != null) {
             double total = coins.getDeposit() + coins.getBonus() + coins.getWinning();
@@ -419,6 +429,8 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
             mTotalCoinsTV.setText(totalCoin);
             mPresenter.getVersionDetails();
         } else {
+            hideProgress();
+            showProgress(getString(R.string.txt_progress_authentication));
             mPresenter.getProfile();
         }
     }

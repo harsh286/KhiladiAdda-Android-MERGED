@@ -194,8 +194,10 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         tvError.setOnClickListener(this);
         mBajajPayLL.setOnClickListener(this);
         mNetBankingBajajPayUpiCL.setOnClickListener(this);
+
         mBajajPayTV.setOnClickListener(this);
         mBajajPayTVNetBankingWallet.setOnClickListener(this);
+
         mBajajPayDeLink.setOnClickListener(this);
         getMBajajPayDeLinkNetBaking.setOnClickListener(this);
         mNetBankingBajajPayCL.setOnClickListener(this);
@@ -285,6 +287,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 setSelection(5);
                 break;
             case R.id.cl_bajajpe_wallet_wallet:
+            case R.id.tv_bajajpe_wallet:
                 setSelection(6);
                 break;
             case R.id.cl_net_banking:
@@ -312,6 +315,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 mPayBTN.setEnabled(false);
                 break;
             case R.id.cl_bajajpe_netbanking_wallet:
+            case R.id.tv_bajajpe_wallet_netbanking:
                 setSelection(9);
                 break;
             case R.id.cl_bajajpe_netbanking_upi:
@@ -331,7 +335,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 break;
             case R.id.btn_pay:
                 if (mIsBajajWallet) {
-                    validationBajajPay();
+                    checkFromServer();
                 } else if (getmPaymentFrom == 1) {
                     checkGamerCashStatus();
                 } else {
@@ -348,6 +352,11 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 }
                 break;
         }
+    }
+
+    private void checkFromServer() {
+        showProgress("");
+        mPresenter.checkBajajValidation(mAmount, mCouponCode);
     }
 
     private void setPaymentFromData(int i) {
@@ -786,16 +795,12 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
 
     @Override
     public void onPhonePePaymentCheckComplete(PhonepeCheckPaymentResponse response) {
-        if (response.isStatus()) {
-            onPaymentSuccess(response.getPayment_via());
-        } else {
-            onPaymentFailed(2, "", response.getPayment_via());
-        }
+        onAllPaymentCompleteCheck(response.isStatus(), response.getMessage(), response.getPayment_via());
     }
 
     @Override
     public void onPhonePePaymentCheckFailure(ApiError errorMsg) {
-
+        hideProgress();
     }
 
     @Override
@@ -1135,6 +1140,21 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     }
 
     @Override
+    public void onBajajValidationSuccess(BaseResponse response) {
+        hideProgress();
+        if (response.isStatus()) {
+            validationBajajPay();
+        }else{
+            AppUtilityMethods.showMsg(this, response.getMessage(), false);
+        }
+    }
+
+    @Override
+    public void onBajajValidationFailure(ApiError error) {
+        hideProgress();
+    }
+
+    @Override
     public void insufficientBalance(String balance) {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
@@ -1193,7 +1213,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     @Override
     protected void onResume() {
         super.onResume();
-        if (mAppPreference.getUserTokenBP() != null && mBajajWalletActive && mIsBajajWallet) {
+        if ((mAppPreference.getUserTokenBP() != null && mBajajWalletActive) || (mBajajWalletActive && mIsBajajWallet)) {
             getBajajPayBalance();
         }
         if (mPaySharp) {
@@ -1238,19 +1258,15 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
 //                Snackbar.make(mPayBTN, "Please try again.", Snackbar.LENGTH_LONG).show();
             }
         } else if (requestCode == B2B_PG_REQUEST_CODE) {  //phonepe
-            showProgress("");
             if (resultCode == RESULT_OK) {
-                final Handler handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(() -> {
-                    hideProgress();
-                    PhonepeCheckPaymentRequest phonepeCheckPaymentRequest = new PhonepeCheckPaymentRequest();
-                    phonepeCheckPaymentRequest.setCoupon(mCouponCode);
-                    phonepeCheckPaymentRequest.setOrderId(mPhonepeOrderId);
-                    mPresenter.getPaymentCheckData(phonepeCheckPaymentRequest);
-                }, 10000);
+                showProgress("");
+                PhonepeCheckPaymentRequest phonepeCheckPaymentRequest = new PhonepeCheckPaymentRequest();
+                phonepeCheckPaymentRequest.setCoupon(mCouponCode);
+                phonepeCheckPaymentRequest.setOrderId(mPhonepeOrderId);
+                mPresenter.getPaymentCheckData(phonepeCheckPaymentRequest);
             } else {
-                hideProgress();
                 if (mPaymentFrom == AppConstant.FROM_PHONEPE_BAJAJPAY) {
+                    showProgress("");
                     PhonepeCheckPaymentRequest phonepeCheckPaymentRequest = new PhonepeCheckPaymentRequest();
                     phonepeCheckPaymentRequest.setCoupon(mCouponCode);
                     phonepeCheckPaymentRequest.setOrderId(mPhonepeOrderId);

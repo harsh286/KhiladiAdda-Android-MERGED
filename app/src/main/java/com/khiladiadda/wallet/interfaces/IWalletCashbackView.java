@@ -4,6 +4,7 @@ import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.response.InvoiceResponse;
 import com.khiladiadda.network.model.response.ProfileTransactionResponse;
+import com.khiladiadda.network.model.response.RemainingLimitResponse;
 import com.khiladiadda.network.model.response.VersionResponse;
 
 public interface IWalletCashbackView {
@@ -17,6 +18,10 @@ public interface IWalletCashbackView {
     void onProfileComplete(ProfileTransactionResponse responseModel);
 
     void onProfileFailure(ApiError error);
+
+    void onRemainingLimitComplete(RemainingLimitResponse responseModel);
+
+    void onRemainingLimitFailure(ApiError error);
 
     void onVersionSuccess(VersionResponse response);
 

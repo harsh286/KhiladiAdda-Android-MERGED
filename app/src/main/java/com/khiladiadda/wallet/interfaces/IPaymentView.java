@@ -149,4 +149,8 @@ public interface IPaymentView {
 
     void onDeLinkWalletFailure(ApiError error);
 
+    void onBajajValidationSuccess(BaseResponse response);
+
+    void onBajajValidationFailure(ApiError error);
+
 }

@@ -78,5 +78,6 @@ public interface IPaymentPresenter extends IBasePresenter {
 
     void delinkWallet(BajajPayEncryptedRequest bajajPayEncryptedRequest);
 
+    void checkBajajValidation(String amount, String couponCode);
 
 }

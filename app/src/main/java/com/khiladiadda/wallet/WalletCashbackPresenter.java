@@ -1,14 +1,17 @@
 package com.khiladiadda.wallet;
 
 import android.text.TextUtils;
+
 import com.khiladiadda.network.IApiListener;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.network.model.response.InvoiceResponse;
 import com.khiladiadda.network.model.response.ProfileTransactionResponse;
+import com.khiladiadda.network.model.response.RemainingLimitResponse;
 import com.khiladiadda.network.model.response.VersionResponse;
 import com.khiladiadda.wallet.interfaces.IWalletCashbackPresenter;
 import com.khiladiadda.wallet.interfaces.IWalletCashbackView;
+
 import rx.Subscription;
 
 public class WalletCashbackPresenter implements IWalletCashbackPresenter {
@@ -102,6 +105,23 @@ public class WalletCashbackPresenter implements IWalletCashbackPresenter {
         @Override
         public void onError(ApiError error) {
             mView.onApplyCouponFailure(error);
+        }
+    };
+
+    @Override
+    public void getRemainingLimit() {
+        mSubscription = mInteractor.getRemainingLimit(mRemainingLimitApiListener);
+    }
+
+    private IApiListener<RemainingLimitResponse> mRemainingLimitApiListener = new IApiListener<RemainingLimitResponse>() {
+        @Override
+        public void onSuccess(RemainingLimitResponse response) {
+            mView.onRemainingLimitComplete(response);
+        }
+
+        @Override
+        public void onError(ApiError error) {
+            mView.onRemainingLimitFailure(error);
         }
     };
 

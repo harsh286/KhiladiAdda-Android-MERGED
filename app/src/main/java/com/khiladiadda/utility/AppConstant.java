@@ -12,8 +12,8 @@ public class AppConstant {
     public static final long TIME_OUT = 30;
     public static final long SUREPASS_TIME_OUT = 120;
     //PRODUCTION SERVER
-//    public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29t";
-    public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8="; //uat
+    public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29t";
+//    public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8="; //uat
 
 //    public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";//QA
 
@@ -95,6 +95,7 @@ public class AppConstant {
     public static final String API_PAYMENT_DETAILS = "user/payment-details";
     public static final String API_PAYMENT_STATUS = "refresh-payment-details/{paymentId}";
     public static final String API_PAYU_CHECKSUM = "payumoney/getchecksum";
+    public static final String API_BAJAJ_VALIDATION = "bajaj/validate/amount";
     public static final String LUDO_CREATE = "LUDO_CREATE";
     public static final String LUDO_ACCEPT = "LUDO_ACCEPT";
     public static final String CALL_BREAK_JOIN = "CALL_BREAK_JOIN";
@@ -102,6 +103,7 @@ public class AppConstant {
     public static final String MATCH_LIVE = "MATCH_LIVE";
     public static final int FROM_NEOKRED = 8;
     public static final String MATCH_TYPE = "MATCH_TYPE";
+    public static final String API_REMAINING_LIMIT = "fetch/remaining-limit";
     public static final String API_CX_BANNER = "user/fantasy/fetch-banners";
     public static final String API_RACE_CONDITION = "racecondition/createContact";
     public static final String API_RACE_CONDITION_FINAL = "racecondition/transfer/{beneId}/{amount}/{otp}";
