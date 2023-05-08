@@ -1,7 +1,10 @@
 package com.khiladiadda.wallet;
 
+import static android.view.View.GONE;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -16,14 +19,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.dialogs.AppDialog;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.main.MainActivity;
+import com.khiladiadda.main.adapter.BannerPagerAdapter;
+import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
+import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.InvoiceResponse;
 import com.khiladiadda.network.model.response.ProfileTransactionResponse;
@@ -34,6 +43,9 @@ import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.wallet.interfaces.IWalletCashbackPresenter;
 import com.khiladiadda.wallet.interfaces.IWalletCashbackView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -75,6 +87,10 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     TextView mTwoThousandTV;
     @BindView(R.id.tv_five_thousand)
     TextView mFiveThousandTV;
+
+
+    @BindView(R.id.tv_offer_benifits)
+    TextView mOfferTV;
     @BindView(R.id.tv_apply_coupon)
     TextView mViewCouponTV;
     @BindView(R.id.ll_offers)
@@ -87,12 +103,23 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     ImageView mInfoBajajPayUPIIV;
     @BindView(R.id.img_info_bajaj_pay_wallet)
     ImageView mInfoBajajPayWalletIV;
+    @BindView(R.id.get_discount_tv_wallet)
+    TextView mWalletHeaderTV;
+    @BindView(R.id.get_discount_tv_upi)
+    TextView mUpiHeaderTV;
     private String mCouponCode;
     private boolean mIsOfferClicked, mIsGamerCashEnabled;
     private IWalletCashbackPresenter mPresenter;
     private long mRemainingAddLimit;
     private int mUpiPaymentType, mOtherUPI;
     private boolean mIsCashfree, mIsEasebuzz, mIsPaytm, mIsPaysharp, mIsPhonepe, mIsBajajWallet, mIsBajajUpi;
+    @BindView(R.id.vp_advertisement)
+    ViewPager mBannerVP;
+    @BindView(R.id.rl_image)
+    RelativeLayout mBannerRL;
+    private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
+    private Handler mHandler;
+    private String mWalletHeader, mUpiHeader, mWalletDetail, mUpiDetail;
 
     @Override
     protected int getContentView() {
@@ -252,10 +279,10 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
                 mBajajUpiRL.setSelected(true);
                 break;
             case R.id.img_info_bajaj_pay_upi:
-                AppDialog.bajajPayUPIDiscountOffer(this, getString(R.string.tooltip_bajajPay_UPI), "BAJAJ PAY UPI OFFER");
+                AppDialog.bajajPayUPIDiscountOffer(this, mWalletDetail, "BAJAJ PAY UPI OFFER");
                 break;
             case R.id.img_info_bajaj_pay_wallet:
-                AppDialog.bajajPayUPIDiscountOffer(this, getString(R.string.tooltip_bajajPay_Wallet), "BAJAJ PAY WALLET OFFER");
+                AppDialog.bajajPayUPIDiscountOffer(this, mUpiDetail, "BAJAJ PAY WALLET OFFER");
                 break;
             case R.id.et_amount:
                 setAmountSelection();
@@ -343,6 +370,23 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     @Override
     public void onRemainingLimitComplete(RemainingLimitResponse responseModel) {
         mRemainingAddLimit = responseModel.getRemaining_add_limit();
+        mWalletHeader = responseModel.getBajaWalletHeader();
+        mWalletHeaderTV.setText(mWalletHeader);
+        mUpiHeader = responseModel.getBajaUPIHeader();
+        mUpiHeaderTV.setText(mUpiHeader);
+
+        mWalletDetail = responseModel.getBajaWalletDetail();
+        mUpiDetail = responseModel.getBajaUPIDetail();
+
+        mRemainingAddLimit = responseModel.getRemaining_add_limit();
+        mRemainingAddLimit = responseModel.getRemaining_add_limit();
+        List<BannerDetails> bannerData = responseModel.getBanner();
+        if (bannerData != null && bannerData.size() > 0) {
+            mBannerRL.setVisibility(View.VISIBLE);
+            setUpAdvertisementViewPager(bannerData);
+        } else {
+            mBannerRL.setVisibility(GONE);
+        }
         setData();
     }
 
@@ -403,9 +447,16 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
             }
             if (response.getVersion().isBajajWallet()) {
                 mIsBajajWallet = true;
+                mBajajWalletRL.setVisibility(View.VISIBLE);
             }
             if (response.getVersion().isBajajUPI()) {
                 mIsBajajUpi = true;
+                mBajajUpiRL.setVisibility(View.VISIBLE);
+            }
+            if (response.getVersion().isBajajWallet() || response.getVersion().isBajajUPI()) {
+                mOfferTV.setVisibility(View.VISIBLE);
+                mViewCouponTV.setVisibility(View.VISIBLE);
+                mOffersLL.setVisibility(View.VISIBLE);
             }
         }
         hideProgress();
@@ -476,6 +527,30 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
             finish();
         }
         super.onResume();
+    }
+
+    private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
+        mAdvertisementsList.clear();
+        mAdvertisementsList.addAll(advertisementDetails);
+        List<Fragment> mFragmentList = new ArrayList<>();
+        for (BannerDetails advertisement : advertisementDetails) {
+            mFragmentList.add(BannerFragment.getInstance(advertisement));
+        }
+        BannerPagerAdapter adapter = new BannerPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
+        mBannerVP.setAdapter(adapter);
+        mBannerVP.setOffscreenPageLimit(3);
+        if (mHandler == null) {
+            mHandler = new Handler();
+            moveToNextAd(0);
+        }
+    }
+
+    private void moveToNextAd(int i) {
+        mBannerVP.setCurrentItem(i, true);
+        mHandler.postDelayed(() -> {
+            int currentItem = mBannerVP.getCurrentItem();
+            moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
+        }, 10000);
     }
 
 }

@@ -194,10 +194,8 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         tvError.setOnClickListener(this);
         mBajajPayLL.setOnClickListener(this);
         mNetBankingBajajPayUpiCL.setOnClickListener(this);
-
         mBajajPayTV.setOnClickListener(this);
         mBajajPayTVNetBankingWallet.setOnClickListener(this);
-
         mBajajPayDeLink.setOnClickListener(this);
         getMBajajPayDeLinkNetBaking.setOnClickListener(this);
         mNetBankingBajajPayCL.setOnClickListener(this);
