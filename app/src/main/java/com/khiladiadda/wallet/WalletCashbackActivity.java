@@ -9,8 +9,10 @@ import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -87,28 +90,8 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     TextView mTwoThousandTV;
     @BindView(R.id.tv_five_thousand)
     TextView mFiveThousandTV;
-
-
-    @BindView(R.id.tv_offer_benifits)
-    TextView mOfferTV;
-    @BindView(R.id.tv_apply_coupon)
-    TextView mViewCouponTV;
-    @BindView(R.id.ll_offers)
-    LinearLayout mOffersLL;
-    @BindView(R.id.rl_bajaj_wallet)
-    RelativeLayout mBajajWalletRL;
-    @BindView(R.id.rl_bajaj_upi)
-    RelativeLayout mBajajUpiRL;
-    @BindView(R.id.img_info_bajaj_pay_upi)
-    ImageView mInfoBajajPayUPIIV;
-    @BindView(R.id.img_info_bajaj_pay_wallet)
-    ImageView mInfoBajajPayWalletIV;
-    @BindView(R.id.get_discount_tv_wallet)
-    TextView mWalletHeaderTV;
-    @BindView(R.id.get_discount_tv_upi)
-    TextView mUpiHeaderTV;
     private String mCouponCode;
-    private boolean mIsOfferClicked, mIsGamerCashEnabled;
+    private boolean mIsGamerCashEnabled;
     private IWalletCashbackPresenter mPresenter;
     private long mRemainingAddLimit;
     private int mUpiPaymentType, mOtherUPI;
@@ -119,7 +102,6 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     RelativeLayout mBannerRL;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
-    private String mWalletHeader, mUpiHeader, mWalletDetail, mUpiDetail;
 
     @Override
     protected int getContentView() {
@@ -142,11 +124,6 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
         mThousandTV.setOnClickListener(this);
         mTwoThousandTV.setOnClickListener(this);
         mFiveThousandTV.setOnClickListener(this);
-        mViewCouponTV.setOnClickListener(this);
-        mBajajWalletRL.setOnClickListener(this);
-        mBajajUpiRL.setOnClickListener(this);
-        mInfoBajajPayWalletIV.setOnClickListener(this);
-        mInfoBajajPayUPIIV.setOnClickListener(this);
         mAmountET.setOnClickListener(this);
 
         mAmountET.addTextChangedListener(new TextWatcher() {
@@ -174,6 +151,17 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
                 hideKeyboard(v);
             }
         });
+
+         mAmountET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+             @Override
+             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                 if(actionId == EditorInfo.IME_ACTION_DONE){
+                    hideKeyboard(mAmountET);
+                     return true;
+                 }
+                 return false;
+             }
+         });
     }
 
     public void hideKeyboard(View view) {
@@ -261,29 +249,6 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
             case R.id.tv_five_thousand:
                 setAmount(5000);
                 break;
-            case R.id.tv_apply_coupon:
-                if (mIsOfferClicked) {
-                    mIsOfferClicked = false;
-                    mOffersLL.setVisibility(View.GONE);
-                } else {
-                    mIsOfferClicked = true;
-                    mOffersLL.setVisibility(View.VISIBLE);
-                }
-                break;
-            case R.id.rl_bajaj_wallet:
-                mBajajWalletRL.setSelected(true);
-                mBajajUpiRL.setSelected(false);
-                break;
-            case R.id.rl_bajaj_upi:
-                mBajajWalletRL.setSelected(false);
-                mBajajUpiRL.setSelected(true);
-                break;
-            case R.id.img_info_bajaj_pay_upi:
-                AppDialog.bajajPayUPIDiscountOffer(this, mWalletDetail, "BAJAJ PAY UPI OFFER");
-                break;
-            case R.id.img_info_bajaj_pay_wallet:
-                AppDialog.bajajPayUPIDiscountOffer(this, mUpiDetail, "BAJAJ PAY WALLET OFFER");
-                break;
             case R.id.et_amount:
                 setAmountSelection();
                 break;
@@ -370,16 +335,6 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     @Override
     public void onRemainingLimitComplete(RemainingLimitResponse responseModel) {
         mRemainingAddLimit = responseModel.getRemaining_add_limit();
-        mWalletHeader = responseModel.getBajaWalletHeader();
-        mWalletHeaderTV.setText(mWalletHeader);
-        mUpiHeader = responseModel.getBajaUPIHeader();
-        mUpiHeaderTV.setText(mUpiHeader);
-
-        mWalletDetail = responseModel.getBajaWalletDetail();
-        mUpiDetail = responseModel.getBajaUPIDetail();
-
-        mRemainingAddLimit = responseModel.getRemaining_add_limit();
-        mRemainingAddLimit = responseModel.getRemaining_add_limit();
         List<BannerDetails> bannerData = responseModel.getBanner();
         if (bannerData != null && bannerData.size() > 0) {
             mBannerRL.setVisibility(View.VISIBLE);
@@ -447,16 +402,9 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
             }
             if (response.getVersion().isBajajWallet()) {
                 mIsBajajWallet = true;
-                mBajajWalletRL.setVisibility(View.VISIBLE);
             }
             if (response.getVersion().isBajajUPI()) {
                 mIsBajajUpi = true;
-                mBajajUpiRL.setVisibility(View.VISIBLE);
-            }
-            if (response.getVersion().isBajajWallet() || response.getVersion().isBajajUPI()) {
-                mOfferTV.setVisibility(View.VISIBLE);
-                mViewCouponTV.setVisibility(View.VISIBLE);
-                mOffersLL.setVisibility(View.VISIBLE);
             }
         }
         hideProgress();
