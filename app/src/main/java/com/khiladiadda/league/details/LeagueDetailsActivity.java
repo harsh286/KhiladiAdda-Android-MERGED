@@ -24,6 +24,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.dialogs.AppDialog;
+import com.khiladiadda.dialogs.LeagueDialog;
+import com.khiladiadda.dialogs.LeaguePaymentDialog;
+import com.khiladiadda.dialogs.RummyDialog;
 import com.khiladiadda.dialogs.interfaces.IOnAddCallDutyCredentialListener;
 import com.khiladiadda.dialogs.interfaces.IOnAddGameCredentialListener;
 import com.khiladiadda.dialogs.interfaces.IOnCreateTeamPaymentListener;
@@ -123,8 +126,8 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
     private ILeagueDetailsPresenter mPresenter;
     Handler handler = new Handler();
     private LeagueListDetails mLeagueDetails;
-    private String mGameType, mGame;
-
+    private String mGameType, mGame, mGameLevel;
+    private boolean mIsMapDownloaded = true;
 
     @Override
     protected int getContentView() {
@@ -392,7 +395,10 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
                 if (mLeagueDetails.getTotalParticipants() == mLeagueDetails.getPlayedParticipants()) {
                     AppUtilityMethods.showMsg(this, getString(R.string.text_league_full), false);
                 } else {
-                    AppDialog.showCreateTeamPaymentDialog(this, addCreateTeamListener, mGameId, mEntryFee, mGameUsername, mGameCharacterId);
+                    LeaguePaymentDialog openLeagueDialog = new LeaguePaymentDialog(this, addCreateTeamListener, mGameId, mEntryFee, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
+                    openLeagueDialog.setCancelable(true);
+                    openLeagueDialog.setCanceledOnTouchOutside(false);
+                    openLeagueDialog.show();
                 }
             } else {
                 Snackbar.make(mLegueNameTV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
@@ -401,45 +407,51 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
     }
 
     private void selectGameType() {
+        LeagueDialog openLeagueDialog = null;
         //solo - add Username in team_user for -PubG_Solo
         if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_SOLO, ""))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.PUBG_SOLO, mGameUsername, mGameCharacterId);
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.PUBG_SOLO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
         }  //duo - add Username in team_user for -PubG_Duo or PubG_Squd
         else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_SQUAD, "")))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.PUBG_DUO, mGameUsername, mGameCharacterId);
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.PUBG_DUO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
         } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_LITE_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_LITE_SOLO, ""))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.PUBG_LITE_SOLO, mGameUsername, mGameCharacterId);
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.PUBG_LITE_SOLO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
         } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_LITE_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_LITE_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_LITE_SQUAD, "")))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.PUBG_LITE_DUO, mGameUsername, mGameCharacterId);
-        } else if ((mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.CALL_DUTY_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.CALL_DUTY_SOLO, "")))) {
-            AppDialog.addCallDutyCredentialDialog(this, addCallDutyCredentialListener, AppConstant.CALL_DUTY_SOLO, mGameUsername);
-        } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.CALL_DUTY_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.CALL_DUTY_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.CALL_DUTY_SQUAD, "")))) {
-            AppDialog.addCallDutyCredentialDialog(this, addCallDutyCredentialListener, AppConstant.CALL_DUTY_DUO, mGameUsername);
-        } else if ((mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FREEFIRE_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FREEFIRE_SOLO, "")))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.FREEFIRE_SOLO, mGameUsername, mGameCharacterId);
-        } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FREEFIRE_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FREEFIRE_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FREEFIRE_SQUAD, "")))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.FREEFIRE_DUO, mGameUsername, mGameCharacterId);
-        } else if ((mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_CLASH_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_CLASH_SOLO, "")))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.FF_CLASH_SOLO, mGameUsername, mGameCharacterId);
-        } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_CLASH_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_CLASH_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_CLASH_SQUAD, "")))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.FF_CLASH_DUO, mGameUsername, mGameCharacterId);
-        } else if ((mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_MAX_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_MAX_SOLO, "")))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.FF_MAX_SOLO, mGameUsername, mGameCharacterId);
-        } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_MAX_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_MAX_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_MAX_SQUAD, "")))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.FF_MAX_DUO, mGameUsername, mGameCharacterId);
-        } else if ((mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_GLOBAL_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_GLOBAL_SOLO, "")))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.PUBG_GLOBAL_SOLO, mGameUsername, mGameCharacterId);
-        } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_GLOBAL_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_GLOBAL_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_GLOBAL_SQUAD, "")))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.PUBG_GLOBAL_DUO, mGameUsername, mGameCharacterId);
-        } else if ((mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PREMIUM_ESPORTS_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PREMIUM_ESPORTS_SOLO, "")))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.PREMIUM_ESPORTS_SOLO, mGameUsername, mGameCharacterId);
-        } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PREMIUM_ESPORTS_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PREMIUM_ESPORTS_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PREMIUM_ESPORTS_SQUAD, "")))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.PREMIUM_ESPORTS_DUO, mGameUsername, mGameCharacterId);
-        } else if ((mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_NEWSTATE_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_NEWSTATE_SOLO, "")))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.PUBG_NEWSTATE_SOLO, mGameUsername, mGameCharacterId);
-        } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_NEWSTATE_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_NEWSTATE_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_NEWSTATE_SQUAD, "")))) {
-            AppDialog.addGameCredentialDialog(this, addGameCredentialListener, AppConstant.PUBG_NEWSTATE_DUO, mGameUsername, mGameCharacterId);
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.PUBG_LITE_DUO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
         }
+//        else if ((mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.CALL_DUTY_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.CALL_DUTY_SOLO, "")))) {
+//            AppDialog.addCallDutyCredentialDialog(this, addCallDutyCredentialListener, AppConstant.CALL_DUTY_SOLO, mGameUsername);
+//        } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.CALL_DUTY_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.CALL_DUTY_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.CALL_DUTY_SQUAD, "")))) {
+//            AppDialog.addCallDutyCredentialDialog(this, addCallDutyCredentialListener, AppConstant.CALL_DUTY_DUO, mGameUsername);
+//        }
+        else if ((mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FREEFIRE_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FREEFIRE_SOLO, "")))) {
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.FREEFIRE_SOLO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
+        } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FREEFIRE_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FREEFIRE_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FREEFIRE_SQUAD, "")))) {
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.FREEFIRE_DUO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
+        } else if ((mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_CLASH_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_CLASH_SOLO, "")))) {
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.FF_CLASH_SOLO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
+        } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_CLASH_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_CLASH_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_CLASH_SQUAD, "")))) {
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.FF_CLASH_DUO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
+        } else if ((mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_MAX_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_MAX_SOLO, "")))) {
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.FF_MAX_SOLO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
+        } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_MAX_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_MAX_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.FF_MAX_SQUAD, "")))) {
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.FF_MAX_DUO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
+        } else if ((mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_GLOBAL_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_GLOBAL_SOLO, "")))) {
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.PUBG_GLOBAL_SOLO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
+        } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_GLOBAL_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_GLOBAL_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_GLOBAL_SQUAD, "")))) {
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.PUBG_GLOBAL_DUO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
+        } else if ((mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PREMIUM_ESPORTS_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PREMIUM_ESPORTS_SOLO, "")))) {
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.PREMIUM_ESPORTS_SOLO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
+        } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PREMIUM_ESPORTS_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PREMIUM_ESPORTS_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PREMIUM_ESPORTS_SQUAD, "")))) {
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.PREMIUM_ESPORTS_DUO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
+        } else if ((mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_NEWSTATE_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_NEWSTATE_SOLO, "")))) {
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.PUBG_NEWSTATE_SOLO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
+        } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_NEWSTATE_ID, "")) && (mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_NEWSTATE_DUO, "")) || mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_NEWSTATE_SQUAD, "")))) {
+            openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.PUBG_NEWSTATE_DUO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
+        }
+        openLeagueDialog.setCancelable(true);
+        openLeagueDialog.setCanceledOnTouchOutside(false);
+        openLeagueDialog.show();
     }
 
     @Override
@@ -449,7 +461,7 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
         if (responseModel.isStatus()) {
             if (mIsCategorySolo) {
                 AppUtilityMethods.showJoinMsg(this, getString(R.string.text_solo_league_joined), false, joinLeagueListener, AppConstant.SOLO);
-              //Apps Flyer
+                //Apps Flyer
                 Map<String, Object> eventParameters2 = new HashMap<>();
                 eventParameters2.put(AFInAppEventParameterName.REVENUE, mEntryFee); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
                 eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
@@ -457,15 +469,15 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
                 eventParameters2.put(AppConstant.LEAGUETYPE, AppConstant.SOLO);
                 eventParameters2.put(AppConstant.LEAGUEGAME, mGame);
                 AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
-               // MO Engage
-                 Properties mProperties = new Properties();
+                // MO Engage
+                Properties mProperties = new Properties();
                 mProperties.addAttribute(AppConstant.LEAGUE_GAME, mGame);
-                mProperties.addAttribute(AppConstant.LEAGUE_TYPE,AppConstant.SOLO);
+                mProperties.addAttribute(AppConstant.LEAGUE_TYPE, AppConstant.SOLO);
                 mProperties.addAttribute(AppConstant.PLAYERTYPE, "Joined");
-                mProperties.addAttribute(AppConstant.ClickedDate,new Date());
-                mProperties.addAttribute("Winning",responseModel.getWalletObj().getWinning());
-                mProperties.addAttribute("Deposit",responseModel.getWalletObj().getDeposit());
-                mProperties.addAttribute("Bonus",responseModel.getWalletObj().getBonus());
+                mProperties.addAttribute(AppConstant.ClickedDate, new Date());
+                mProperties.addAttribute("Winning", responseModel.getWalletObj().getWinning());
+                mProperties.addAttribute("Deposit", responseModel.getWalletObj().getDeposit());
+                mProperties.addAttribute("Bonus", responseModel.getWalletObj().getBonus());
                 MoEAnalyticsHelper.INSTANCE.trackEvent(this, AppConstant.LEAGUE, mProperties);
             } else {
                 AppUtilityMethods.showJoinMsg(this, getString(R.string.text_squd_league_joined), false, joinLeagueListener, AppConstant.DUO);
@@ -474,18 +486,18 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
                 eventParameters2.put(AFInAppEventParameterName.REVENUE, mEntryFee); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
                 eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
                 eventParameters2.put(AppConstant.GAME, AppConstant.LEAGUE);
-                eventParameters2.put(AppConstant.LEAGUETYPE,mGameType);
+                eventParameters2.put(AppConstant.LEAGUETYPE, mGameType);
                 eventParameters2.put(AppConstant.LEAGUEGAME, mGame);
                 AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
                 //Mo Engage
-                 Properties mProperties = new Properties();
+                Properties mProperties = new Properties();
                 mProperties.addAttribute(AppConstant.LEAGUE_GAME, mGame);
-                mProperties.addAttribute(AppConstant.LEAGUE_TYPE,mGameType);
+                mProperties.addAttribute(AppConstant.LEAGUE_TYPE, mGameType);
                 mProperties.addAttribute(AppConstant.PLAYERTYPE, "Joined");
-                mProperties.addAttribute(AppConstant.ClickedDate,new Date());
-                mProperties.addAttribute("Winning",responseModel.getWalletObj().getWinning());
-                mProperties.addAttribute("Deposit",responseModel.getWalletObj().getDeposit());
-                mProperties.addAttribute("Bonus",responseModel.getWalletObj().getBonus());
+                mProperties.addAttribute(AppConstant.ClickedDate, new Date());
+                mProperties.addAttribute("Winning", responseModel.getWalletObj().getWinning());
+                mProperties.addAttribute("Deposit", responseModel.getWalletObj().getDeposit());
+                mProperties.addAttribute("Bonus", responseModel.getWalletObj().getBonus());
                 MoEAnalyticsHelper.INSTANCE.trackEvent(this, AppConstant.LEAGUE, mProperties);
             }
         } else if (responseModel.getMessage().equalsIgnoreCase(getString(R.string.text_recharge_first))) {
@@ -506,7 +518,7 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
         hideProgress();
         if (responseModel.isStatus()) {
             AppUtilityMethods.showPaymentConfirm(this, responseModel.getResponse().getTeam().getCode(), joinLeagueListener);
-           //Apps Flyers
+            //Apps Flyers
             Map<String, Object> eventParameters2 = new HashMap<>();
             eventParameters2.put(AFInAppEventParameterName.REVENUE, mEntryFee); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
             eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
@@ -518,12 +530,12 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
             //Mo Engage
             Properties mProperties = new Properties();
             mProperties.addAttribute(AppConstant.LEAGUE_GAME, mGame);
-            mProperties.addAttribute(AppConstant.LEAGUE_TYPE,mGameType);
-            mProperties.addAttribute(AppConstant.ClickedDate,new Date());
+            mProperties.addAttribute(AppConstant.LEAGUE_TYPE, mGameType);
+            mProperties.addAttribute(AppConstant.ClickedDate, new Date());
             mProperties.addAttribute(AppConstant.PLAYERTYPE, AppConstant.CreateTeam);
-            mProperties.addAttribute("Winning",responseModel.getWalletObj().getWinning());
-            mProperties.addAttribute("Deposit",responseModel.getWalletObj().getDeposit());
-            mProperties.addAttribute("Bonus",responseModel.getWalletObj().getBonus());
+            mProperties.addAttribute("Winning", responseModel.getWalletObj().getWinning());
+            mProperties.addAttribute("Deposit", responseModel.getWalletObj().getDeposit());
+            mProperties.addAttribute("Bonus", responseModel.getWalletObj().getBonus());
             MoEAnalyticsHelper.INSTANCE.trackEvent(this, AppConstant.LEAGUE, mProperties);
         } else {
             AppUtilityMethods.showMsg(this, responseModel.getMessage(), false);
@@ -561,33 +573,35 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
 
     IOnAddGameCredentialListener addGameCredentialListener = new IOnAddGameCredentialListener() {
         @Override
-        public void onCredentialAdd(String userId, String characterId, String teamCode) {
+        public void onCredentialAdd(String userId, String characterId, String teamCode, String gameLevel, boolean mapDownloaded) {
             if (TextUtils.isEmpty(teamCode)) {
                 mTeamName = mAppPreference.getName();
             }
             if (mIsCategorySolo) {
-                showWalletDialog(userId, characterId, teamCode, 1);
+                showWalletDialog(userId, characterId, teamCode, 1, gameLevel, mapDownloaded);
             } else {
-                getDataFromServer(userId, characterId, teamCode, 1);
+                getDataFromServer(userId, characterId, teamCode, 1, gameLevel, mapDownloaded);
             }
         }
     };
 
     IOnAddCallDutyCredentialListener addCallDutyCredentialListener = new IOnAddCallDutyCredentialListener() {
         @Override
-        public void onCallDutyCredentialAdd(String userId, String teamId) {
+        public void onCallDutyCredentialAdd(String userId, String teamId, String gameLevel, boolean mapDownloaded) {
             if (TextUtils.isEmpty(teamId)) {
                 mTeamName = mAppPreference.getName();
             }
             if (mIsCategorySolo) {
-                showWalletDialog(userId, "", teamId, 2);
+                showWalletDialog(userId, "", teamId, 2, gameLevel, mapDownloaded);
             } else {
-                getDataFromServer(userId, "", teamId, 2);
+                getDataFromServer(userId, "", teamId, 2, gameLevel, mapDownloaded);
             }
         }
     };
 
-    IOnCreateTeamPaymentListener addCreateTeamListener = (userId, characterId, teamName) -> showWalletDialog(userId, characterId, teamName, 3);
+    IOnCreateTeamPaymentListener addCreateTeamListener = (userId, characterId, teamName, gamelevel, mapDownloaded) -> {
+        showWalletDialog(userId, characterId, teamName, 3, gamelevel, mapDownloaded);
+    };
 
     IOnLeagueJoinListener joinLeagueListener = (shareTeamCode, teamCode, from) -> {
         if (shareTeamCode) {
@@ -598,7 +612,7 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
         }
     };
 
-    public void showWalletDialog(String userId, String characterId, String teamName, int from) {
+    public void showWalletDialog(String userId, String characterId, String teamName, int from, String gameLevel, boolean mapDownloaded) {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -635,23 +649,23 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
             if (mLowBalance) {
                 startActivity(new Intent(LeagueDetailsActivity.this, WalletCashbackActivity.class));
             } else {
-                getDataFromServer(userId, characterId, teamName, from);
+                getDataFromServer(userId, characterId, teamName, from, gameLevel, mapDownloaded);
             }
         });
         dialog.show();
     }
 
-    private void getDataFromServer(String userId, String characterId, String teamName, int from) {
+    private void getDataFromServer(String userId, String characterId, String teamName, int from, String gameLevel, boolean mapDownloaded) {
         showProgress(getString(R.string.txt_progress_authentication));
         mAppPreference.setIsProfile(false);
         if (from == 1) {
-            AddCredential addCredential = new AddCredential(userId, characterId, teamName, mTeamName);
+            AddCredential addCredential = new AddCredential(userId, characterId, teamName, mTeamName, gameLevel, mapDownloaded);
             mPresenter.startLeague(addCredential, mLeagueId);
         } else if (from == 2) {
-            AddCredential addCredential = new AddCredential(userId, "", teamName, mTeamName);
+            AddCredential addCredential = new AddCredential(userId, "", teamName, mTeamName, gameLevel, mapDownloaded);
             mPresenter.startLeague(addCredential, mLeagueId);
         } else if (from == 3) {
-            AddCredential addCredential = new AddCredential(userId, characterId, "", teamName);
+            AddCredential addCredential = new AddCredential(userId, characterId, "", teamName, gameLevel, mapDownloaded);
             mPresenter.createTeam(addCredential, mLeagueId);
         }
     }

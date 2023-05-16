@@ -94,4 +94,5 @@ public class ActivityPayBP extends BaseActivity {
     public void onClick(View view) {
 
     }
+
 }

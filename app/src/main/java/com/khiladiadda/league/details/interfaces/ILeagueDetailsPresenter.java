@@ -1,6 +1,5 @@
 package com.khiladiadda.league.details.interfaces;
 
-
 import com.khiladiadda.base.interfaces.IBasePresenter;
 import com.khiladiadda.network.model.request.AddCredential;
 

@@ -536,6 +536,15 @@
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
+    <style name="DialogLinearLayoutLeague">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/dialog_shape</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
     <style name="DialogLinearLayoutLudoUni">
         <item name="android:layout_width">300dp</item>
         <item name="android:layout_height">wrap_content</item>

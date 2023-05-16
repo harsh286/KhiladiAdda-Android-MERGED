@@ -25,21 +25,21 @@ public class LeagueDetailsInteractor {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
         return manager.createObservable(service.createTeam(credential, gameId))
-                .subscribe(new SubscriberCallback<CreateTeamResponse>(listener));
+                .subscribe(new SubscriberCallback<>(listener));
     }
 
     public Subscription getMyTeam(String gameId, IApiListener<MyTeamResponse> listener) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
         return manager.createObservable(service.getMyTeam(gameId))
-                .subscribe(new SubscriberCallback<MyTeamResponse>(listener));
+                .subscribe(new SubscriberCallback<>(listener));
     }
 
     public Subscription getProfile(IApiListener<ProfileTransactionResponse> listener) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
         return manager.createObservable(service.getProfile(false))
-                .subscribe(new SubscriberCallback<ProfileTransactionResponse>(listener));
+                .subscribe(new SubscriberCallback<>(listener));
     }
 
 }

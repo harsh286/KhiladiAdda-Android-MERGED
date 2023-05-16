@@ -21,7 +21,10 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -122,134 +125,153 @@ public class AppDialog {
         return dialog;
     }
 
-    public static Dialog addGameCredentialDialog(Activity activity, final IOnAddGameCredentialListener listener, String from, String username, String characterId) {
-        final Dialog dialog = new Dialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_game_credential);
-        final EditText mUsernameET = dialog.findViewById(R.id.et_username);
-        final EditText mCharacterET = dialog.findViewById(R.id.et_character);
-        final EditText mTeamIdET = dialog.findViewById(R.id.et_team_id);
-        final TextView mRulesTV = dialog.findViewById(R.id.tv_rules);
-        final TextView mHelpTV = dialog.findViewById(R.id.tv_help);
-        final TextView mImageTV = dialog.findViewById(R.id.tv_image);
-        if (!TextUtils.isEmpty(username)) {
-            mUsernameET.setText(username);
-        }
-        if (!TextUtils.isEmpty(characterId)) {
-            mCharacterET.setText(characterId);
-        }
-        if (from.equalsIgnoreCase(AppConstant.FREEFIRE_SOLO) || from.equalsIgnoreCase(AppConstant.FREEFIRE_DUO) || from.equalsIgnoreCase(AppConstant.FF_CLASH_SOLO) || from.equalsIgnoreCase(AppConstant.FF_CLASH_DUO) || from.equalsIgnoreCase(AppConstant.FF_MAX_SOLO) || from.equalsIgnoreCase(AppConstant.FF_MAX_DUO)) {
-            mUsernameET.setHint(R.string.help_ff_username);
-            mCharacterET.setHint(R.string.hint_ff_userid);
-            mHelpTV.setText(R.string.help_ff_credential);
-            mImageTV.setText(R.string.help_ff_show_image);
-        } else if (from.equalsIgnoreCase(AppConstant.PUBG_GLOBAL_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_GLOBAL_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_GLOBAL_SQUAD)) {
-            mUsernameET.setHint(R.string.help_pubglobal_username);
-            mCharacterET.setHint(R.string.hint_pubglobal_userid);
-            mHelpTV.setText(R.string.help_pubglobal_credential);
-            mImageTV.setText(R.string.help_pubglobal_show_image);
-        } else if (from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SOLO) || from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SQUAD) || from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_DUO)) {
-            mUsernameET.setHint(R.string.help_esp_username);
-            mCharacterET.setHint(R.string.hint_esp_userid);
-            mHelpTV.setText(R.string.help_esp_credential);
-            mImageTV.setText(R.string.help_esp_show_image);
-        } else if (from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SQUAD)) {
-            mUsernameET.setHint(R.string.hint_pubgns_user_name);
-            mCharacterET.setHint(R.string.hint_pubgns_character_name);
-            mHelpTV.setText(R.string.help_pubg_ns_credential);
-            mImageTV.setText(R.string.help_pubgns_show_image);
-        }
-        if (!from.equalsIgnoreCase(AppConstant.PUBG_SOLO) && !from.equalsIgnoreCase(AppConstant.PUBG_LITE_SOLO) && !from.equalsIgnoreCase(AppConstant.CLASHROYALE) && !from.equalsIgnoreCase(AppConstant.FREEFIRE_SOLO) && !from.equalsIgnoreCase(AppConstant.FF_CLASH_SOLO) && !from.equalsIgnoreCase(AppConstant.FF_MAX_SOLO) && !from.equalsIgnoreCase(AppConstant.PUBG_GLOBAL_SOLO) && !from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SOLO) && !from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SOLO)) {
-            mTeamIdET.setVisibility(View.VISIBLE);
-            mRulesTV.setVisibility(View.VISIBLE);
-        }
-        mImageTV.setOnClickListener(v -> {
-            Intent i = new Intent(activity, ImageActivity.class);
-            if (from.equalsIgnoreCase(AppConstant.PUBG_LITE_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_LITE_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_LITE_SQUAD)) {
-                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_BGMI);
-            } else if (from.equalsIgnoreCase(AppConstant.FREEFIRE_SOLO) || from.equalsIgnoreCase(AppConstant.FREEFIRE_DUO) || from.equalsIgnoreCase(AppConstant.FF_CLASH_SOLO) || from.equalsIgnoreCase(AppConstant.FF_CLASH_DUO) || from.equalsIgnoreCase(AppConstant.FF_MAX_SOLO) || from.equalsIgnoreCase(AppConstant.FF_MAX_DUO)) {
-                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_FREEFIRE);
-            } else if (from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SQUAD)) {
-                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_PUBG_NEWSTATE);
-            } else {
-                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_TDM);
-            }
-            activity.startActivity(i);
-        });
-        Button mCancelBTN = dialog.findViewById(R.id.btn_cancel);
-        mCancelBTN.setOnClickListener(v -> dialog.dismiss());
-        Button mSendBTN = dialog.findViewById(R.id.btn_send);
-        mSendBTN.setOnClickListener(v -> {
-            if (mUsernameET.getText().toString().trim().isEmpty() || mUsernameET.getText().toString().trim().length() < 3) {
-                AppUtilityMethods.showMsg(activity, "Username cannot be empty", false);
-            } else if (from.equalsIgnoreCase(AppConstant.CLASHROYALE) && (mCharacterET.getText().toString().trim().isEmpty() || mCharacterET.getText().toString().trim().length() < 3)) {
-                AppUtilityMethods.showMsg(activity, "Tag-Id cannot be empty", false);
-            } else if ((from.equalsIgnoreCase(AppConstant.PUBG_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_LITE_SOLO)) && (mCharacterET.getText().toString().trim().isEmpty() || mCharacterET.getText().toString().trim().length() < 3)) {
-                AppUtilityMethods.showMsg(activity, "Character-Id cannot be empty", false);
-            } else if ((from.equalsIgnoreCase(AppConstant.FREEFIRE_SOLO) || from.equalsIgnoreCase(AppConstant.FF_CLASH_SOLO) || from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_GLOBAL_SOLO)) && (mCharacterET.getText().toString().trim().isEmpty() || mCharacterET.getText().toString().trim().length() < 3)) {
-                AppUtilityMethods.showMsg(activity, "User-Id cannot be empty", false);
-            } else if ((from.equalsIgnoreCase(AppConstant.PUBG_SQUAD) || from.equalsIgnoreCase(AppConstant.PUBG_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_LITE_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_LITE_SQUAD) || from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SQUAD) || from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_GLOBAL_SQUAD) || from.equalsIgnoreCase(AppConstant.PUBG_GLOBAL_DUO) || from.equalsIgnoreCase(AppConstant.FREEFIRE_SQUAD) || from.equalsIgnoreCase(AppConstant.FREEFIRE_DUO) || from.equalsIgnoreCase(AppConstant.FF_CLASH_SQUAD) || from.equalsIgnoreCase(AppConstant.FF_CLASH_DUO) || from.equalsIgnoreCase(AppConstant.FF_MAX_SQUAD) || from.equalsIgnoreCase(AppConstant.FF_MAX_DUO)) && (mTeamIdET.getText().toString().trim().isEmpty() || mTeamIdET.getText().toString().trim().length() < 3)) {
-                AppUtilityMethods.showMsg(activity, "Team-Id cannot be empty", false);
-            } else if ((from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SQUAD)) && (mCharacterET.getText().toString().trim().isEmpty() || mCharacterET.getText().toString().trim().length() < 3)) {
-                AppUtilityMethods.showMsg(activity, "Account-Id cannot be empty", false);
-            } else if ((from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SQUAD)) && (mTeamIdET.getText().toString().trim().isEmpty() || mTeamIdET.getText().toString().trim().length() < 3)) {
-                AppUtilityMethods.showMsg(activity, "Team-Id cannot be empty", false);
-            } else if (listener != null) {
-                listener.onCredentialAdd(mUsernameET.getText().toString().trim(), mCharacterET.getText().toString().trim(), mTeamIdET.getText().toString().trim());
-            }
-            dialog.dismiss();
-        });
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
-        return dialog;
-    }
+//    public static Dialog addGameCredentialDialog(Activity activity, final IOnAddGameCredentialListener listener, String from, String username, String characterId) {
+//        final Dialog dialog = new Dialog(activity);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.dialog_game_credential);
+//        final EditText mUsernameET = dialog.findViewById(R.id.et_username);
+//        final EditText mCharacterET = dialog.findViewById(R.id.et_character);
+//        final EditText mTeamIdET = dialog.findViewById(R.id.et_team_id);
+//        final TextView mRulesTV = dialog.findViewById(R.id.tv_rules);
+//        final TextView mHelpTV = dialog.findViewById(R.id.tv_help);
+//        final TextView mImageTV = dialog.findViewById(R.id.tv_image);
+//
+//        final EditText mGameLevel = dialog.findViewById(R.id.et_game_level);
+//        final RadioGroup mMapRG = dialog.findViewById(R.id.rg_map);
+//        final LinearLayout mMapLL = dialog.findViewById(R.id.ll_map);
+//
+//        if (from.equalsIgnoreCase(AppConstant.PUBG_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_SQUAD) || from.equalsIgnoreCase(AppConstant.FF_CLASH_SOLO) || from.equalsIgnoreCase(AppConstant.FF_CLASH_DUO) || from.equalsIgnoreCase(AppConstant.FF_CLASH_SQUAD) || from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SOLO) || from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_DUO) || from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SQUAD)) {
+//            mMapLL.setVisibility(View.GONE);
+//        }
+//        mMapRG.setOnCheckedChangeListener((group, checkedId) -> {
+//            RadioButton rb = group.findViewById(checkedId);
+//            if (null != rb) {
+//                int selectedId = mMapRG.getCheckedRadioButtonId();
+//                RadioButton radioVehicleButton = mMapRG.findViewById(selectedId);
+//                String mMapDownloaded = String.valueOf(radioVehicleButton.getText());
+//            }
+//        });
+//
+//        if (!TextUtils.isEmpty(username)) {
+//            mUsernameET.setText(username);
+//        }
+//        if (!TextUtils.isEmpty(characterId)) {
+//            mCharacterET.setText(characterId);
+//        }
+//        if (from.equalsIgnoreCase(AppConstant.FREEFIRE_SOLO) || from.equalsIgnoreCase(AppConstant.FREEFIRE_DUO) || from.equalsIgnoreCase(AppConstant.FF_CLASH_SOLO) || from.equalsIgnoreCase(AppConstant.FF_CLASH_DUO) || from.equalsIgnoreCase(AppConstant.FF_MAX_SOLO) || from.equalsIgnoreCase(AppConstant.FF_MAX_DUO)) {
+//            mUsernameET.setHint(R.string.help_ff_username);
+//            mCharacterET.setHint(R.string.hint_ff_userid);
+//            mHelpTV.setText(R.string.help_ff_credential);
+//            mImageTV.setText(R.string.help_ff_show_image);
+//        } else if (from.equalsIgnoreCase(AppConstant.PUBG_GLOBAL_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_GLOBAL_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_GLOBAL_SQUAD)) {
+//            mUsernameET.setHint(R.string.help_pubglobal_username);
+//            mCharacterET.setHint(R.string.hint_pubglobal_userid);
+//            mHelpTV.setText(R.string.help_pubglobal_credential);
+//            mImageTV.setText(R.string.help_pubglobal_show_image);
+//        } else if (from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SOLO) || from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SQUAD) || from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_DUO)) {
+//            mUsernameET.setHint(R.string.help_esp_username);
+//            mCharacterET.setHint(R.string.hint_esp_userid);
+//            mHelpTV.setText(R.string.help_esp_credential);
+//            mImageTV.setText(R.string.help_esp_show_image);
+//        } else if (from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SQUAD)) {
+//            mUsernameET.setHint(R.string.hint_pubgns_user_name);
+//            mCharacterET.setHint(R.string.hint_pubgns_character_name);
+//            mHelpTV.setText(R.string.help_pubg_ns_credential);
+//            mImageTV.setText(R.string.help_pubgns_show_image);
+//        }
+//        if (!from.equalsIgnoreCase(AppConstant.PUBG_SOLO) && !from.equalsIgnoreCase(AppConstant.PUBG_LITE_SOLO) && !from.equalsIgnoreCase(AppConstant.CLASHROYALE) && !from.equalsIgnoreCase(AppConstant.FREEFIRE_SOLO) && !from.equalsIgnoreCase(AppConstant.FF_CLASH_SOLO) && !from.equalsIgnoreCase(AppConstant.FF_MAX_SOLO) && !from.equalsIgnoreCase(AppConstant.PUBG_GLOBAL_SOLO) && !from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SOLO) && !from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SOLO)) {
+//            mTeamIdET.setVisibility(View.VISIBLE);
+//            mRulesTV.setVisibility(View.VISIBLE);
+//        }
+//        mImageTV.setOnClickListener(v -> {
+//            Intent i = new Intent(activity, ImageActivity.class);
+//            if (from.equalsIgnoreCase(AppConstant.PUBG_LITE_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_LITE_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_LITE_SQUAD)) {
+//                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_BGMI);
+//            } else if (from.equalsIgnoreCase(AppConstant.FREEFIRE_SOLO) || from.equalsIgnoreCase(AppConstant.FREEFIRE_DUO) || from.equalsIgnoreCase(AppConstant.FF_CLASH_SOLO) || from.equalsIgnoreCase(AppConstant.FF_CLASH_DUO) || from.equalsIgnoreCase(AppConstant.FF_MAX_SOLO) || from.equalsIgnoreCase(AppConstant.FF_MAX_DUO)) {
+//                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_FREEFIRE);
+//            } else if (from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SQUAD)) {
+//                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_PUBG_NEWSTATE);
+//            } else {
+//                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_TDM);
+//            }
+//            activity.startActivity(i);
+//        });
+//        Button mCancelBTN = dialog.findViewById(R.id.btn_cancel);
+//        mCancelBTN.setOnClickListener(v -> dialog.dismiss());
+//        Button mSendBTN = dialog.findViewById(R.id.btn_send);
+//        mSendBTN.setOnClickListener(v -> {
+//            if (mUsernameET.getText().toString().trim().isEmpty() || mUsernameET.getText().toString().trim().length() < 3) {
+//                AppUtilityMethods.showMsg(activity, "Username cannot be empty", false);
+//            } else if (from.equalsIgnoreCase(AppConstant.CLASHROYALE) && (mCharacterET.getText().toString().trim().isEmpty() || mCharacterET.getText().toString().trim().length() < 3)) {
+//                AppUtilityMethods.showMsg(activity, "Tag-Id cannot be empty", false);
+//            } else if ((from.equalsIgnoreCase(AppConstant.PUBG_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_LITE_SOLO)) && (mCharacterET.getText().toString().trim().isEmpty() || mCharacterET.getText().toString().trim().length() < 3)) {
+//                AppUtilityMethods.showMsg(activity, "Character-Id cannot be empty", false);
+//            } else if ((from.equalsIgnoreCase(AppConstant.FREEFIRE_SOLO) || from.equalsIgnoreCase(AppConstant.FF_CLASH_SOLO) || from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_GLOBAL_SOLO)) && (mCharacterET.getText().toString().trim().isEmpty() || mCharacterET.getText().toString().trim().length() < 3)) {
+//                AppUtilityMethods.showMsg(activity, "User-Id cannot be empty", false);
+//            } else if ((from.equalsIgnoreCase(AppConstant.PUBG_SQUAD) || from.equalsIgnoreCase(AppConstant.PUBG_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_LITE_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_LITE_SQUAD) || from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SQUAD) || from.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_GLOBAL_SQUAD) || from.equalsIgnoreCase(AppConstant.PUBG_GLOBAL_DUO) || from.equalsIgnoreCase(AppConstant.FREEFIRE_SQUAD) || from.equalsIgnoreCase(AppConstant.FREEFIRE_DUO) || from.equalsIgnoreCase(AppConstant.FF_CLASH_SQUAD) || from.equalsIgnoreCase(AppConstant.FF_CLASH_DUO) || from.equalsIgnoreCase(AppConstant.FF_MAX_SQUAD) || from.equalsIgnoreCase(AppConstant.FF_MAX_DUO)) && (mTeamIdET.getText().toString().trim().isEmpty() || mTeamIdET.getText().toString().trim().length() < 3)) {
+//                AppUtilityMethods.showMsg(activity, "Team-Id cannot be empty", false);
+//            } else if ((from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SOLO) || from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SQUAD)) && (mCharacterET.getText().toString().trim().isEmpty() || mCharacterET.getText().toString().trim().length() < 3)) {
+//                AppUtilityMethods.showMsg(activity, "Account-Id cannot be empty", false);
+//            } else if ((from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_DUO) || from.equalsIgnoreCase(AppConstant.PUBG_NEWSTATE_SQUAD)) && (mTeamIdET.getText().toString().trim().isEmpty() || mTeamIdET.getText().toString().trim().length() < 3)) {
+//                AppUtilityMethods.showMsg(activity, "Team-Id cannot be empty", false);
+//            } else if (mGameLevel.getText().toString().trim().isEmpty()) {
+//                AppUtilityMethods.showMsg(activity, "Game level cannot be empty", false);
+//            } else if (listener != null) {
+//                listener.onCredentialAdd(mUsernameET.getText().toString().trim(), mCharacterET.getText().toString().trim(), mTeamIdET.getText().toString().trim());
+//            }
+//            dialog.dismiss();
+//        });
+//        dialog.setCancelable(false);
+//        dialog.setCanceledOnTouchOutside(true);
+//        dialog.show();
+//        return dialog;
+//    }
 
-    public static Dialog addCallDutyCredentialDialog(Activity activity, final IOnAddCallDutyCredentialListener listener, String from, String username) {
-        final Dialog dialog = new Dialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_game_credential);
-        final EditText mUsernameET = dialog.findViewById(R.id.et_username);
-        final EditText mCharacterET = dialog.findViewById(R.id.et_character);
-        mCharacterET.setVisibility(View.GONE);
-        final EditText mTeamIdET = dialog.findViewById(R.id.et_team_id);
-        final TextView mHelpTV = dialog.findViewById(R.id.tv_help);
-        mHelpTV.setText(R.string.help_cod_credential);
-        final TextView mRulesTV = dialog.findViewById(R.id.tv_rules);
-        final TextView mImageTV = dialog.findViewById(R.id.tv_image);
-        if (!TextUtils.isEmpty(username)) {
-            mUsernameET.setText(username);
-        }
-        mUsernameET.setHint(R.string.help_cod_username);
-        mHelpTV.setText(R.string.help_cod_credential);
-        mImageTV.setText(R.string.help_cod_show_image);
-        if (!from.equalsIgnoreCase(AppConstant.CALL_DUTY_SOLO)) {
-            mTeamIdET.setVisibility(View.VISIBLE);
-            mRulesTV.setVisibility(View.VISIBLE);
-        }
-        mImageTV.setOnClickListener(v -> {
-            Intent i = new Intent(activity, ImageActivity.class);
-            i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_CALLOFDUTY);
-            activity.startActivity(i);
-        });
-        Button mCancelBTN = dialog.findViewById(R.id.btn_cancel);
-        mCancelBTN.setOnClickListener(v -> dialog.dismiss());
-        Button mSendBTN = dialog.findViewById(R.id.btn_send);
-        mSendBTN.setOnClickListener(v -> {
-            if (mUsernameET.getText().toString().trim().isEmpty() || mUsernameET.getText().toString().trim().length() < 2) {
-                AppUtilityMethods.showMsg(activity, "Game Username cannot be empty", false);
-            } else if (from.equalsIgnoreCase(AppConstant.CALL_DUTY_SQUAD) || from.equalsIgnoreCase(AppConstant.CALL_DUTY_DUO) && (mTeamIdET.getText().toString().trim().isEmpty() || mTeamIdET.getText().toString().trim().length() < 3)) {
-                AppUtilityMethods.showMsg(activity, "Team-Id cannot be empty", false);
-            } else if (listener != null) {
-                listener.onCallDutyCredentialAdd(mUsernameET.getText().toString().trim(), mTeamIdET.getText().toString().trim());
-            }
-            dialog.dismiss();
-        });
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
-        return dialog;
-    }
+//    public static Dialog addCallDutyCredentialDialog(Activity activity, final IOnAddCallDutyCredentialListener listener, String from, String username) {
+//        final Dialog dialog = new Dialog(activity);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.dialog_game_credential);
+//        final EditText mUsernameET = dialog.findViewById(R.id.et_username);
+//        final EditText mCharacterET = dialog.findViewById(R.id.et_character);
+//        mCharacterET.setVisibility(View.GONE);
+//        final EditText mTeamIdET = dialog.findViewById(R.id.et_team_id);
+//        final TextView mHelpTV = dialog.findViewById(R.id.tv_help);
+//        mHelpTV.setText(R.string.help_cod_credential);
+//        final TextView mRulesTV = dialog.findViewById(R.id.tv_rules);
+//        final TextView mImageTV = dialog.findViewById(R.id.tv_image);
+//        if (!TextUtils.isEmpty(username)) {
+//            mUsernameET.setText(username);
+//        }
+//        mUsernameET.setHint(R.string.help_cod_username);
+//        mHelpTV.setText(R.string.help_cod_credential);
+//        mImageTV.setText(R.string.help_cod_show_image);
+//        if (!from.equalsIgnoreCase(AppConstant.CALL_DUTY_SOLO)) {
+//            mTeamIdET.setVisibility(View.VISIBLE);
+//            mRulesTV.setVisibility(View.VISIBLE);
+//        }
+//        mImageTV.setOnClickListener(v -> {
+//            Intent i = new Intent(activity, ImageActivity.class);
+//            i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_CALLOFDUTY);
+//            activity.startActivity(i);
+//        });
+//        Button mCancelBTN = dialog.findViewById(R.id.btn_cancel);
+//        mCancelBTN.setOnClickListener(v -> dialog.dismiss());
+//        Button mSendBTN = dialog.findViewById(R.id.btn_send);
+//        mSendBTN.setOnClickListener(v -> {
+//            if (mUsernameET.getText().toString().trim().isEmpty() || mUsernameET.getText().toString().trim().length() < 2) {
+//                AppUtilityMethods.showMsg(activity, "Game Username cannot be empty", false);
+//            } else if (from.equalsIgnoreCase(AppConstant.CALL_DUTY_SQUAD) || from.equalsIgnoreCase(AppConstant.CALL_DUTY_DUO) && (mTeamIdET.getText().toString().trim().isEmpty() || mTeamIdET.getText().toString().trim().length() < 3)) {
+//                AppUtilityMethods.showMsg(activity, "Team-Id cannot be empty", false);
+//            } else if (listener != null) {
+//                listener.onCallDutyCredentialAdd(mUsernameET.getText().toString().trim(), mTeamIdET.getText().toString().trim());
+//            }
+//            dialog.dismiss();
+//        });
+//        dialog.setCancelable(false);
+//        dialog.setCanceledOnTouchOutside(true);
+//        dialog.show();
+//        return dialog;
+//    }
 
     public static Dialog showLiveCredentialDialog(Activity activity, String username, String password, int from) {
         final Dialog dialog = new Dialog(activity);
@@ -279,90 +301,90 @@ public class AppDialog {
         return dialog;
     }
 
-    public static Dialog showCreateTeamPaymentDialog(Activity activity, final IOnCreateTeamPaymentListener listener, String gameId, String entryFee, String username, String characterId) {
-        final Dialog dialog = new Dialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_create_game_payment);
-        final EditText mUsernameET = dialog.findViewById(R.id.et_username);
-        final EditText mCharacterET = dialog.findViewById(R.id.et_character);
-        final EditText mTeamNameET = dialog.findViewById(R.id.et_team_name);
-        final TextView mAmountTV = dialog.findViewById(R.id.tv_amount);
-        final TextView mHelpTV = dialog.findViewById(R.id.tv_help);
-        final TextView mImageTV = dialog.findViewById(R.id.tv_image);
-        Button mSendBTN = dialog.findViewById(R.id.btn_send);
-        Button mCancelBTN = dialog.findViewById(R.id.btn_cancel);
-        if (TextUtils.isEmpty(entryFee)) {
-            mAmountTV.setText("Payable Coins: 0");
-        } else {
-            mAmountTV.setText("Payable Coins: " + entryFee);
-        }
-        if (!TextUtils.isEmpty(username)) {
-            mUsernameET.setText(username);
-        }
-        if (!TextUtils.isEmpty(characterId)) {
-            mCharacterET.setText(characterId);
-        }
-        if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_ID, "")) || gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_LITE_ID, ""))) {
-            mImageTV.setText(R.string.help_pubg_show_image);
-            mUsernameET.setHint(R.string.hint_pubg_user_name);
-            mCharacterET.setHint(R.string.hint_pubg_character_name);
-            mHelpTV.setText(R.string.help_pubg_credential);
-        } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FREEFIRE_ID, "")) || gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FF_CLASH_ID, "")) || gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FF_MAX_ID, ""))) {
-            mImageTV.setText(R.string.help_ff_show_image);
-            mUsernameET.setHint(R.string.help_ff_username);
-            mCharacterET.setHint(R.string.hint_ff_userid);
-            mHelpTV.setText(R.string.help_ff_credential);
-        } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_GLOBAL_ID, ""))) {
-            mImageTV.setText(R.string.help_pubg_show_image);
-            mUsernameET.setHint(R.string.help_pubglobal_username);
-            mCharacterET.setHint(R.string.hint_pubglobal_userid);
-            mHelpTV.setText(R.string.help_pubglobal_credential);
-        } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PREMIUM_ESPORTS_ID, ""))) {
-            mImageTV.setText(R.string.help_esp_show_image);
-            mUsernameET.setHint(R.string.help_esp_username);
-            mCharacterET.setHint(R.string.hint_esp_userid);
-            mHelpTV.setText(R.string.help_esp_credential);
-        } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_NEWSTATE_ID, ""))) {
-            mUsernameET.setHint(R.string.hint_pubgns_user_name);
-            mCharacterET.setHint(R.string.hint_pubgns_character_name);
-            mHelpTV.setText(R.string.help_pubg_ns_credential);
-            mImageTV.setText(R.string.help_pubgns_show_image);
-        }
-        mImageTV.setOnClickListener(v -> {
-            Intent i = new Intent(activity, ImageActivity.class);
-            if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_ID, "")) || gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_LITE_ID, ""))) {
-                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_TDM);
-            } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FREEFIRE_ID, "")) || gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FF_CLASH_ID, ""))) {
-                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_FREEFIRE);
-            } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FF_MAX_ID, ""))) {
-                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_FF_MAX);
-            } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_GLOBAL_ID, ""))) {
-                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_PUBG_GLOBAL);
-            } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PREMIUM_ESPORTS_ID, ""))) {
-                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_PREMIUM_ESPORTS);
-            } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_NEWSTATE_ID, ""))) {
-                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_PUBG_NEWSTATE);
-            }
-            activity.startActivity(i);
-        });
-        mCancelBTN.setOnClickListener(v -> dialog.dismiss());
-        mSendBTN.setOnClickListener(v -> {
-            if (mUsernameET.getText().toString().trim().isEmpty() || mUsernameET.getText().toString().trim().length() < 3) {
-                AppUtilityMethods.showMsg(activity, "Username cannot be empty", false);
-            } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_ID, "")) && (mCharacterET.getText().toString().trim().isEmpty() || mCharacterET.getText().toString().trim().length() < 3)) {
-                AppUtilityMethods.showMsg(activity, "Character-Id cannot be empty", false);
-            } else if (mTeamNameET.getText().toString().trim().isEmpty() || mTeamNameET.getText().toString().trim().length() < 3) {
-                AppUtilityMethods.showMsg(activity, "Team name cannot be empty", false);
-            } else if (listener != null) {
-                listener.onPayment(mUsernameET.getText().toString().trim(), mCharacterET.getText().toString().trim(), mTeamNameET.getText().toString().trim());
-            }
-            dialog.dismiss();
-        });
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
-        return dialog;
-    }
+//    public static Dialog showCreateTeamPaymentDialog(Activity activity, final IOnCreateTeamPaymentListener listener, String gameId, String entryFee, String username, String characterId) {
+//        final Dialog dialog = new Dialog(activity);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.dialog_create_game_payment);
+//        final EditText mUsernameET = dialog.findViewById(R.id.et_username);
+//        final EditText mCharacterET = dialog.findViewById(R.id.et_character);
+//        final EditText mTeamNameET = dialog.findViewById(R.id.et_team_name);
+//        final TextView mAmountTV = dialog.findViewById(R.id.tv_amount);
+//        final TextView mHelpTV = dialog.findViewById(R.id.tv_help);
+//        final TextView mImageTV = dialog.findViewById(R.id.tv_image);
+//        Button mSendBTN = dialog.findViewById(R.id.btn_send);
+//        Button mCancelBTN = dialog.findViewById(R.id.btn_cancel);
+//        if (TextUtils.isEmpty(entryFee)) {
+//            mAmountTV.setText("Payable Coins: 0");
+//        } else {
+//            mAmountTV.setText("Payable Coins: " + entryFee);
+//        }
+//        if (!TextUtils.isEmpty(username)) {
+//            mUsernameET.setText(username);
+//        }
+//        if (!TextUtils.isEmpty(characterId)) {
+//            mCharacterET.setText(characterId);
+//        }
+//        if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_ID, "")) || gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_LITE_ID, ""))) {
+//            mImageTV.setText(R.string.help_pubg_show_image);
+//            mUsernameET.setHint(R.string.hint_pubg_user_name);
+//            mCharacterET.setHint(R.string.hint_pubg_character_name);
+//            mHelpTV.setText(R.string.help_pubg_credential);
+//        } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FREEFIRE_ID, "")) || gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FF_CLASH_ID, "")) || gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FF_MAX_ID, ""))) {
+//            mImageTV.setText(R.string.help_ff_show_image);
+//            mUsernameET.setHint(R.string.help_ff_username);
+//            mCharacterET.setHint(R.string.hint_ff_userid);
+//            mHelpTV.setText(R.string.help_ff_credential);
+//        } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_GLOBAL_ID, ""))) {
+//            mImageTV.setText(R.string.help_pubg_show_image);
+//            mUsernameET.setHint(R.string.help_pubglobal_username);
+//            mCharacterET.setHint(R.string.hint_pubglobal_userid);
+//            mHelpTV.setText(R.string.help_pubglobal_credential);
+//        } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PREMIUM_ESPORTS_ID, ""))) {
+//            mImageTV.setText(R.string.help_esp_show_image);
+//            mUsernameET.setHint(R.string.help_esp_username);
+//            mCharacterET.setHint(R.string.hint_esp_userid);
+//            mHelpTV.setText(R.string.help_esp_credential);
+//        } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_NEWSTATE_ID, ""))) {
+//            mUsernameET.setHint(R.string.hint_pubgns_user_name);
+//            mCharacterET.setHint(R.string.hint_pubgns_character_name);
+//            mHelpTV.setText(R.string.help_pubg_ns_credential);
+//            mImageTV.setText(R.string.help_pubgns_show_image);
+//        }
+//        mImageTV.setOnClickListener(v -> {
+//            Intent i = new Intent(activity, ImageActivity.class);
+//            if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_ID, "")) || gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_LITE_ID, ""))) {
+//                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_TDM);
+//            } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FREEFIRE_ID, "")) || gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FF_CLASH_ID, ""))) {
+//                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_FREEFIRE);
+//            } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FF_MAX_ID, ""))) {
+//                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_FF_MAX);
+//            } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_GLOBAL_ID, ""))) {
+//                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_PUBG_GLOBAL);
+//            } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PREMIUM_ESPORTS_ID, ""))) {
+//                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_PREMIUM_ESPORTS);
+//            } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_NEWSTATE_ID, ""))) {
+//                i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_PUBG_NEWSTATE);
+//            }
+//            activity.startActivity(i);
+//        });
+//        mCancelBTN.setOnClickListener(v -> dialog.dismiss());
+//        mSendBTN.setOnClickListener(v -> {
+//            if (mUsernameET.getText().toString().trim().isEmpty() || mUsernameET.getText().toString().trim().length() < 3) {
+//                AppUtilityMethods.showMsg(activity, "Username cannot be empty", false);
+//            } else if (gameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_ID, "")) && (mCharacterET.getText().toString().trim().isEmpty() || mCharacterET.getText().toString().trim().length() < 3)) {
+//                AppUtilityMethods.showMsg(activity, "Character-Id cannot be empty", false);
+//            } else if (mTeamNameET.getText().toString().trim().isEmpty() || mTeamNameET.getText().toString().trim().length() < 3) {
+//                AppUtilityMethods.showMsg(activity, "Team name cannot be empty", false);
+//            } else if (listener != null) {
+//                listener.onPayment(mUsernameET.getText().toString().trim(), mCharacterET.getText().toString().trim(), mTeamNameET.getText().toString().trim(), , );
+//            }
+//            dialog.dismiss();
+//        });
+//        dialog.setCancelable(false);
+//        dialog.setCanceledOnTouchOutside(true);
+//        dialog.show();
+//        return dialog;
+//    }
 
     public static Dialog addChallengeDialog(Activity activity, final IOnAddChallengeListener listener, String gameUsername, int contestType, int mode, double walletBalance) {
         final Dialog dialog = new Dialog(activity);

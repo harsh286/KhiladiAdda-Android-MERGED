@@ -1010,4 +1010,5 @@
     <string name="payment_successful">Payment Successful.</string>
     <string name="bajaj_create_wallet">Create Bajaj Pay Wallet</string>
     <string name="text_other_upi">Other UPI</string>
+    <string name="hint_game_level">Game Level</string>
 </resources>
