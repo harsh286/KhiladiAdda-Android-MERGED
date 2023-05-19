@@ -1,11 +1,16 @@
 package com.khiladiadda.wallet;
 
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.JsResult;
+import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -52,11 +57,23 @@ public class ActivityPayBP extends BaseActivity {
                 if (inputUrl.contains("/paymentResponse")) {
                     Toast.makeText(getApplicationContext(), "Payment Added to BajajPay Wallet Successfully.", Toast.LENGTH_SHORT).show();
                     ActivityPayBP.this.finish();
-//                    finish();
-                } else {
-
                 }
             }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (URLUtil.isNetworkUrl(url)) {
+                    return false;
+                }
+                if (appInstalledOrNot(url)) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                } else {
+                    // do something if app is not installed
+                }
+                return true;
+            }
+
         });
         webView.loadUrl(url);
     }
@@ -93,6 +110,16 @@ public class ActivityPayBP extends BaseActivity {
     @Override
     public void onClick(View view) {
 
+    }
+
+    private boolean appInstalledOrNot(String uri) {
+        PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+        return false;
     }
 
 }

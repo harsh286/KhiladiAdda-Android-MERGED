@@ -51,6 +51,8 @@ import com.khiladiadda.rummy.interfaces.IRummyPresenter;
 import com.khiladiadda.rummy.interfaces.IRummyView;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.widgets.NudgeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,10 +101,19 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     ViewPager mBannerVP;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
     @Override
     protected int getContentView() {
         return R.layout.activity_rummy;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mNV.initialiseNudgeView(this);
+        MoEInAppHelper.getInstance().showInApp(this);
     }
 
     @Override

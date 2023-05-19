@@ -38,6 +38,8 @@ import com.khiladiadda.network.model.response.LeagueListReponse;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.widgets.NudgeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,10 +81,19 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
     Handler handler = new Handler();
     private String mType, mGame;
     private int mBannerType;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
     @Override
     protected int getContentView() {
         return R.layout.activity_league;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mNV.initialiseNudgeView(this);
+        MoEInAppHelper.getInstance().showInApp(this);
     }
 
     @Override

@@ -6,6 +6,8 @@
     android:background="@drawable/inner_bg"
     tools:context=".fanbattle.FanBattleActivity">
 
+    <include layout="@layout/bannermoengage" />
+
     <RelativeLayout
         android:id="@+id/rl_image"
         android:layout_width="match_parent"

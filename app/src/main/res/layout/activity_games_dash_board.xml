@@ -42,6 +42,8 @@
 
     </RelativeLayout>
 
+    <include layout="@layout/bannermoengage" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_recyler"
         android:layout_width="match_parent"

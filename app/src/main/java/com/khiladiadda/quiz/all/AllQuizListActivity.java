@@ -43,6 +43,8 @@ import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.wallet.WalletActivity;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.widgets.NudgeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,10 +99,19 @@ public class AllQuizListActivity extends BaseActivity implements ICategoryView, 
     ViewPager mBannerVP;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
     @Override
     protected int getContentView() {
         return R.layout.fragment_quiz;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mNV.initialiseNudgeView(this);
+        MoEInAppHelper.getInstance().showInApp(this);
     }
 
     @Override

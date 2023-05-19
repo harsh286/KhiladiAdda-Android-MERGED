@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/droido_bg">
 
+    <include layout="@layout/bannermoengage" />
+
     <include
         android:id="@+id/in_action_bar"
         layout="@layout/new_toolbar_droido"

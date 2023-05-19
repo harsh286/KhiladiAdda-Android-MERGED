@@ -9,6 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <include layout="@layout/bannermoengage" />
+
         <RelativeLayout
             android:id="@+id/rl_top"
             android:layout_width="match_parent"

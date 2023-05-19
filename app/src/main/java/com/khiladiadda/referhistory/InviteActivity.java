@@ -27,30 +27,54 @@ import com.khiladiadda.main.MainActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.widgets.NudgeView;
 
 import butterknife.BindView;
 
 public class InviteActivity extends BaseActivity {
 
-    @BindView(R.id.iv_back) ImageView mBackIV;
-    @BindView(R.id.tv_activity_name) TextView mActivityNameTV;
-    @BindView(R.id.iv_notification) ImageView mNotificationIV;
-    @BindView(R.id.tv_league) TextView mLeagueTV;
-    @BindView(R.id.tv_home) TextView mHomeTV;
-    @BindView(R.id.tv_help) TextView mHelpTV;
-    @BindView(R.id.tv_invite_code) TextView mInviteCodeTV;
-    @BindView(R.id.btn_whatsapp) Button mWhatsAppBTN;
-    @BindView(R.id.btn_option) Button mOptionBTN;
-    @BindView(R.id.tv_view) TextView mViewTV;
-    @BindView(R.id.tv_refer_coins) TextView mReferCoinsTV;
+    @BindView(R.id.iv_back)
+    ImageView mBackIV;
+    @BindView(R.id.tv_activity_name)
+    TextView mActivityNameTV;
+    @BindView(R.id.iv_notification)
+    ImageView mNotificationIV;
+    @BindView(R.id.tv_league)
+    TextView mLeagueTV;
+    @BindView(R.id.tv_home)
+    TextView mHomeTV;
+    @BindView(R.id.tv_help)
+    TextView mHelpTV;
+    @BindView(R.id.tv_invite_code)
+    TextView mInviteCodeTV;
+    @BindView(R.id.btn_whatsapp)
+    Button mWhatsAppBTN;
+    @BindView(R.id.btn_option)
+    Button mOptionBTN;
+    @BindView(R.id.tv_view)
+    TextView mViewTV;
+    @BindView(R.id.tv_refer_coins)
+    TextView mReferCoinsTV;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
-    @Override protected int getContentView() {
+    @Override
+    protected int getContentView() {
         return R.layout.activity_invite;
     }
 
-    @Override protected void initViews() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mNV.initialiseNudgeView(this);
+        MoEInAppHelper.getInstance().showInApp(this);
+    }
+
+    @Override
+    protected void initViews() {
         Bundle intent = getIntent().getExtras();
-        if (intent!=null){
+        if (intent != null) {
             String redirect = intent.getString(AppConstant.PushFrom);
             if (redirect.equalsIgnoreCase(AppConstant.MoEngage)) {
                 mAppPreference.setIsDeepLinking(true);
@@ -68,7 +92,8 @@ public class InviteActivity extends BaseActivity {
         mOptionBTN.setOnClickListener(this);
     }
 
-    @Override protected void initVariables() {
+    @Override
+    protected void initVariables() {
         mInviteCodeTV.setText(mAppPreference.getInviteCode());
         SpannableString ss1 = new SpannableString(mReferCoinsTV.getText().toString().trim());
         ss1.setSpan(new StyleSpan(Typeface.BOLD), 24, ss1.length(), 0);
@@ -77,7 +102,8 @@ public class InviteActivity extends BaseActivity {
         mReferCoinsTV.setText(ss1);
     }
 
-    @Override public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
                 if (mAppPreference.getIsDeepLinking()) {
@@ -106,15 +132,16 @@ public class InviteActivity extends BaseActivity {
                 AppUtilityMethods.inviteOnWhatsApp(this, mOptionBTN);
                 break;
             case R.id.btn_option:
-                if (new NetworkStatus(this).isInternetOn()){
+                if (new NetworkStatus(this).isInternetOn()) {
                     AppsFlyerRefer();
-                }else {
+                } else {
                     Snackbar.make(mOptionBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
                 }
 
                 break;
         }
     }
+
     private void AppsFlyerRefer() {
         LinkGenerator linkGenerator = ShareInviteHelper.generateInviteUrl(this);
         AppsFlyerLib.getInstance().setAppInviteOneLink("g37F");
@@ -124,7 +151,7 @@ public class InviteActivity extends BaseActivity {
         CreateOneLinkHttpTask.ResponseListener listener = new CreateOneLinkHttpTask.ResponseListener() {
             @Override
             public void onResponse(String s) {
-              //  Log.d("APPS", "Share invite link: " + s);
+                //  Log.d("APPS", "Share invite link: " + s);
                 shareInviteCode(s);
 
             }
@@ -140,7 +167,7 @@ public class InviteActivity extends BaseActivity {
     private void shareInviteCode(String refer) {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
-        share.putExtra(Intent.EXTRA_TEXT, "Hi, Please download this app and register through my referral code: " + mAppPreference.getInviteCode() +"\n"+refer);
+        share.putExtra(Intent.EXTRA_TEXT, "Hi, Please download this app and register through my referral code: " + mAppPreference.getInviteCode() + "\n" + refer);
         this.startActivity(Intent.createChooser(share, "Referral Code"));
     }
 

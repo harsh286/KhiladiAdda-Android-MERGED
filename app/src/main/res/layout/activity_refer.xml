@@ -8,6 +8,8 @@
     <include
         layout="@layout/actionbar"/>
 
+    <include layout="@layout/bannermoengage" />
+
     <LinearLayout
         android:id="@+id/ll_top"
         android:layout_below="@+id/action_bar"

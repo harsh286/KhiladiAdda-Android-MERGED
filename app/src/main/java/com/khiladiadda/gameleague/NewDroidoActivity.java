@@ -39,6 +39,8 @@ import com.khiladiadda.network.model.response.droid_doresponse.ResponseDataMyTou
 import com.khiladiadda.network.model.response.droid_doresponse.TrendingTournamentResponse;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.widgets.NudgeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,10 +83,19 @@ public class NewDroidoActivity extends BaseActivity implements ITrendingTourname
     RelativeLayout mImageRL;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
     @Override
     protected int getContentView() {
         return R.layout.activity_new_droido;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mNV.initialiseNudgeView(this);
+        MoEInAppHelper.getInstance().showInApp(this);
     }
 
     @Override

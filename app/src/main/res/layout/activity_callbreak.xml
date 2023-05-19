@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/cb_background"
     android:orientation="vertical"
     tools:context=".rummy.RummyActivity">
 
     <include layout="@layout/actionbar_cb" />
 
+    <include layout="@layout/bannermoengage" />
+
     <RelativeLayout
         android:id="@+id/rl_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_advertisement"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:visibility="gone"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentTop="true"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_image"
@@ -31,8 +34,10 @@
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_image">
 
         <TextView
             android:id="@+id/textView34"
@@ -61,11 +66,11 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_callbreak"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/cl_top"
         android:layout_margin="@dimen/margin_5" />
 
-</LinearLayout>
+</RelativeLayout>

@@ -9,6 +9,8 @@
 
   <include layout="@layout/actionbar_transparent"/>
 
+  <include layout="@layout/bannermoengage" />
+
     <TextView
         android:id="@+id/tv_term_condition"
         style="@style/SettingText"

@@ -7,6 +7,8 @@
     android:background="@drawable/wssplash"
     tools:context=".wordsearch.activity.WordSearchMainActivity">
 
+    <include layout="@layout/bannermoengage" />
+
     <include
         android:id="@+id/inc_toolbar"
         layout="@layout/toolbar_word_search"

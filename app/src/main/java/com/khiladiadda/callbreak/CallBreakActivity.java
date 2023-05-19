@@ -62,6 +62,8 @@ import com.khiladiadda.utility.providers.GenericFileProvider;
 import com.khiladiadda.wallet.WalletActivity;
 import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.widgets.NudgeView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -105,10 +107,19 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
     @BindView(R.id.tv_help_video)
     TextView mHelpVideoTV;
     private long mLastClickTime = 0;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
     @Override
     protected int getContentView() {
         return R.layout.activity_callbreak;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mNV.initialiseNudgeView(this);
+        MoEInAppHelper.getInstance().showInApp(this);
     }
 
     @Override

@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/all_tournaments_bg">
 
+    <include layout="@layout/bannermoengage" />
+
     <include
         android:id="@+id/in_action_bar"
         layout="@layout/ludotmt_toolbar"

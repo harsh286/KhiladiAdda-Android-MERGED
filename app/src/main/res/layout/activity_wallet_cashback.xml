@@ -6,6 +6,8 @@
 
     <include layout="@layout/actionbar" />
 
+    <include layout="@layout/bannermoengage" />
+
     <TextView
         android:id="@+id/tv_coins"
         style="@style/WalletText"

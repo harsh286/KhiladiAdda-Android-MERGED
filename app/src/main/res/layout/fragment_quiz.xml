@@ -11,6 +11,8 @@
 
         <include layout="@layout/actionbar" />
 
+        <include layout="@layout/bannermoengage" />
+
         <RelativeLayout
             android:id="@+id/rl_image"
             android:layout_below="@+id/action_bar"

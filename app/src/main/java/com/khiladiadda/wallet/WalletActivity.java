@@ -54,6 +54,8 @@ import com.khiladiadda.wallet.interfaces.IWalletView;
 import com.khiladiadda.withdrawcoins.NewWithdrawActivity;
 import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.widgets.NudgeView;
 
 import java.util.ArrayList;
 
@@ -92,10 +94,19 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
     private ArrayList<TransactionDetails> mList;
     private boolean isAllowed = true;
     private double mDepositCoins;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
     @Override
     protected int getContentView() {
         return R.layout.activity_wallet;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mNV.initialiseNudgeView(this);
+        MoEInAppHelper.getInstance().showInApp(this);
     }
 
     @Override

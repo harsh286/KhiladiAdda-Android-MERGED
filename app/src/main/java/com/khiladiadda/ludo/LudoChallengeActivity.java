@@ -72,6 +72,8 @@ import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.wallet.WalletActivity;
 import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.widgets.NudgeView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -121,7 +123,6 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
     LinearLayout mLLWallet;
     @BindView(R.id.tv_total_wallet_balance)
     TextView mWalletBalanceTV;
-
     private LudoChallengeAdapter mAllChallengeAdapter;
     private MyChallengeAdapter mMyChallengeAdapter;
     private ILudoChallengePresenter mPresenter;
@@ -134,13 +135,14 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
     private Dialog mUpdateGameUsernameDialog;
     private int mMode = 1, mFilters = 0;
     private Coins mCoins;
-
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
     private boolean getLudoKingAuto;
     private double mTotalWalletBal;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +153,13 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
     @Override
     protected int getContentView() {
         return R.layout.activity_challenge;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mNV.initialiseNudgeView(this);
+        MoEInAppHelper.getInstance().showInApp(this);
     }
 
     @Override

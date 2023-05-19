@@ -48,6 +48,8 @@ import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.widgets.NudgeView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,10 +81,19 @@ public class FanBattleActivity extends BaseActivity implements IFanBattleView, I
     private ArrayList<MatchDetails> mMatchList = new ArrayList<>();
     private IFanBattlePresenter mPresenter;
     private GameDetails mGameDetails;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
     @Override
     protected int getContentView() {
         return R.layout.activity_fan_battle;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mNV.initialiseNudgeView(this);
+        MoEInAppHelper.getInstance().showInApp(this);
     }
 
     @Override

@@ -35,6 +35,8 @@ import android.os.Handler;
 import android.view.View;
 
 import com.khiladiadda.R;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.widgets.NudgeView;
 
 import java.util.List;
 
@@ -60,10 +62,19 @@ public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerVi
     private Handler mHandler;
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
     @Override
     protected int getContentView() {
         return R.layout.activity_games_dash_board;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mNV.initialiseNudgeView(this);
+        MoEInAppHelper.getInstance().showInApp(this);
     }
 
     @Override

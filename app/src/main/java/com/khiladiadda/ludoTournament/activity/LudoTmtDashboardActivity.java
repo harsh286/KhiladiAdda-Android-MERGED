@@ -76,6 +76,8 @@ import com.khiladiadda.utility.providers.GenericFileProvider;
 import com.khiladiadda.wallet.WalletActivity;
 import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.widgets.NudgeView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -140,10 +142,19 @@ public class LudoTmtDashboardActivity extends BaseActivity implements IOnClickLi
     private Handler mHandler;
     private int mDownUp = 1, mTournamentType;
     private long mLastClickTime = 0;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
     @Override
     protected int getContentView() {
         return R.layout.activity_ludo_tmt_dashboard;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mNV.initialiseNudgeView(this);
+        MoEInAppHelper.getInstance().showInApp(this);
     }
 
     @Override

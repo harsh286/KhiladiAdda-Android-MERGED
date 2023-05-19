@@ -14,6 +14,8 @@ import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.terms.TermsActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.widgets.NudgeView;
 
 import butterknife.BindView;
 
@@ -41,10 +43,19 @@ public class SettingActivity extends BaseActivity {
     TextView mNotificationTV;
     @BindView(R.id.tv_logout)
     TextView mLogoutTV;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
     @Override
     protected int getContentView() {
         return R.layout.activity_setting;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mNV.initialiseNudgeView(this);
+        MoEInAppHelper.getInstance().showInApp(this);
     }
 
     @Override

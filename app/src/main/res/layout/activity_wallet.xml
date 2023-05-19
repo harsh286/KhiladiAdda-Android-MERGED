@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".wallet.WalletActivity">
 
+    <include layout="@layout/bannermoengage" />
+
     <LinearLayout
         android:id="@+id/ll_top"
         android:layout_width="match_parent"

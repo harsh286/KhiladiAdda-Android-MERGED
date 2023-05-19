@@ -6,6 +6,8 @@
     android:background="@drawable/main_bg"
     tools:context=".referhistory.InviteActivity">
 
+    <include layout="@layout/bannermoengage" />
+
     <LinearLayout
         android:id="@+id/ll_first"
         android:layout_width="match_parent"

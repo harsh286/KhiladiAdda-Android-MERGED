@@ -52,6 +52,8 @@ import com.khiladiadda.wordsearch.listener.IWordSearchMainPresenter;
 import com.khiladiadda.wordsearch.listener.IWordSearchMainView;
 import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.widgets.NudgeView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -96,10 +98,19 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
     private int mDownUp = 1;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
     @Override
     protected int getContentView() {
         return R.layout.activity_word_search_main;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mNV.initialiseNudgeView(this);
+        MoEInAppHelper.getInstance().showInApp(this);
     }
 
     @Override

@@ -23,6 +23,8 @@ import com.khiladiadda.referhistory.interfaces.IReferView;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
+import com.moengage.inapp.MoEInAppHelper;
+import com.moengage.widgets.NudgeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +44,18 @@ public class ReferActivity extends BaseActivity implements IReferView {
     private IReferPresenter mPresenter;
     private ReferAdapter mAdapter;
     private List<ReferDetail> mList = null;
+    @BindView(R.id.nudge)
+    NudgeView mNV;
 
     @Override protected int getContentView() {
         return R.layout.activity_refer;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mNV.initialiseNudgeView(this);
+        MoEInAppHelper.getInstance().showInApp(this);
     }
 
     @Override protected void initViews() {
