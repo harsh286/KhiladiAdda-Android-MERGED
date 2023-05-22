@@ -119,9 +119,6 @@ public class LeaguePaymentDialog extends BottomSheetDialog implements View.OnCli
         TextView tv = findViewById(R.id.tv_map);
         tv.setText("Have you downloaded " + mMap + " map?");
 
-        if (mFrom.equalsIgnoreCase(AppConstant.PUBG_SOLO) || mFrom.equalsIgnoreCase(AppConstant.PUBG_DUO) || mFrom.equalsIgnoreCase(AppConstant.PUBG_SQUAD) || mFrom.equalsIgnoreCase(AppConstant.FF_CLASH_SOLO) || mFrom.equalsIgnoreCase(AppConstant.FF_CLASH_DUO) || mFrom.equalsIgnoreCase(AppConstant.FF_CLASH_SQUAD) || mFrom.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SOLO) || mFrom.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_DUO) || mFrom.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SQUAD)) {
-            mMapLL.setVisibility(View.GONE);
-        }
         mMapRG.setOnCheckedChangeListener((group, checkedId) -> {
             RadioButton rb = group.findViewById(checkedId);
             if (null != rb) {
