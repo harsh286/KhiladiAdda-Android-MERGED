@@ -174,7 +174,7 @@ public class ApiManager {
     private void initSSL(Context context, OkHttpClient.Builder httpClientBuilder) {
         SSLContext sslContext = null;
         try {
-            sslContext = createCertificate(context.getResources().openRawResource(R.raw.uat_api_khiladiadda_com));
+            sslContext = createCertificate(context.getResources().openRawResource(R.raw.uat_new));
         } catch (CertificateException | IOException | KeyStoreException | KeyManagementException |
                  NoSuchAlgorithmException e) {
             e.printStackTrace();

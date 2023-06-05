@@ -19,6 +19,8 @@ import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.utility.AppConstant;
 
+import java.net.URISyntaxException;
+
 import butterknife.BindView;
 
 public class ActivityPayBP extends BaseActivity {
@@ -65,12 +67,26 @@ public class ActivityPayBP extends BaseActivity {
                 if (URLUtil.isNetworkUrl(url)) {
                     return false;
                 }
-                if (appInstalledOrNot(url)) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    startActivity(intent);
-                } else {
-                    // do something if app is not installed
+
+                Intent upiIntent = null;
+                try {
+                    upiIntent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
                 }
+                startActivity(upiIntent);
+
+//                if (appInstalledOrNot(url)) {
+//                    Intent upiIntent = null;
+//                    try {
+//                        upiIntent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+//                    } catch (URISyntaxException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                    startActivity(upiIntent);
+//                } else {
+//                    // do something if app is not installed
+//                }
                 return true;
             }
 

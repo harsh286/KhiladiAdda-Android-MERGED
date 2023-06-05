@@ -11,13 +11,10 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class NewAESEncrypt {
 
-//    private static String encryptKeyFromBP = "NCgmmzTRSbnGDgEUFDkhxRvsYgKVbkmi";//For Testing
-    private static String encryptKeyFromBP = "KPWOWtTFKOdQMtLuMyMvXNawzHFZlzRF";//For Prod
-
     public static String encrypt(String value) {
         try {
-            IvParameterSpec iv = generateIv(encryptKeyFromBP);
-            SecretKeySpec skeySpec = new SecretKeySpec(encryptKeyFromBP.getBytes("UTF-8"), "AES");
+            IvParameterSpec iv = generateIv(AppConstant.Bajaj_encryptKeyFromBP);
+            SecretKeySpec skeySpec = new SecretKeySpec(AppConstant.Bajaj_encryptKeyFromBP.getBytes("UTF-8"), "AES");
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
             byte[] encrypted = cipher.doFinal(value.getBytes());
@@ -31,8 +28,8 @@ public class NewAESEncrypt {
     public static String decrypt(String encrypted) {
         try {
             byte[] byteEncrypted = encrypted.getBytes();
-            IvParameterSpec iv = generateIv(encryptKeyFromBP);
-            SecretKeySpec skeySpec = new SecretKeySpec(encryptKeyFromBP.getBytes("UTF-8"), "AES");
+            IvParameterSpec iv = generateIv(AppConstant.Bajaj_encryptKeyFromBP);
+            SecretKeySpec skeySpec = new SecretKeySpec(AppConstant.Bajaj_encryptKeyFromBP.getBytes("UTF-8"), "AES");
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
             byte[] original = cipher.doFinal(Base64.decode(byteEncrypted, Base64.DEFAULT));

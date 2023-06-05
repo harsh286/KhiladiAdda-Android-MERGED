@@ -1142,7 +1142,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         hideProgress();
         if (response.isStatus()) {
             validationBajajPay();
-        }else{
+        } else {
             AppUtilityMethods.showMsg(this, response.getMessage(), false);
         }
     }

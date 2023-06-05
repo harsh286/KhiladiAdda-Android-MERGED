@@ -4,6 +4,8 @@ import static android.os.Build.VERSION.SDK_INT;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -35,6 +37,7 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.khiladiadda.R;
 import com.khiladiadda.dialogs.interfaces.IOnAddCallDutyCredentialListener;
@@ -295,6 +298,14 @@ public class AppDialog {
         }
         Button mSendBTN = dialog.findViewById(R.id.btn_send);
         mSendBTN.setOnClickListener(v -> dialog.dismiss());
+
+        mUsernameET.setOnClickListener(v -> {
+            ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("RoomId", username);
+            clipboard.setPrimaryClip(clip);
+            Snackbar.make(mSendBTN, "RoomId is copied.", Snackbar.LENGTH_SHORT).show();
+        });
+
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();

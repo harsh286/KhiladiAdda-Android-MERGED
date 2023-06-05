@@ -116,7 +116,7 @@ public class ApiBajajPayManager {
     private OkHttpClient getHttpClient(){
         OkHttpClient.Builder httpClient=new OkHttpClient.Builder();
         HttpLoggingInterceptor loggingInterceptor=new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.addInterceptor(loggingInterceptor);
         httpClient.readTimeout(AppConstant.TIME_OUT, TimeUnit.SECONDS);
         httpClient.connectTimeout(AppConstant.TIME_OUT, TimeUnit.SECONDS);

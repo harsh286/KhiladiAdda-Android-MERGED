@@ -1011,4 +1011,6 @@
     <string name="bajaj_create_wallet">Create Bajaj Pay Wallet</string>
     <string name="text_other_upi">Other UPI</string>
     <string name="hint_game_level">Game Level</string>
+    <string name="text_game_level">Note - Game level must be 25 or more than 25</string>
+    <string name="text_map_hint">Note - Please download the Map now otherwise you will be kicked from the room</string>
 </resources>

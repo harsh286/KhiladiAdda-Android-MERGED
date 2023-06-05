@@ -21,11 +21,6 @@ public class AppConstant {
 
     //     public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";
 
-    //    Stag-UAT
-//    public static final String BASE_BJAZ_URL = "https://pay-api-uat.bajajfinserv.in/bajaj-common-wrapper-service/";
-    //Prod
-    public static final String BASE_BJAZ_URL = "https://pay-api.bajajfinserv.in/bajaj-common-wrapper-service/";
-
     public static final String URL_HOME = "https://www.khiladiadda.com/";
     public static final String PAN_URL = "https://sandbox.veri5digital.com/service/api/1.0/";
     public static final String VERIFY_PAN = "verifyUserIdDoc";
@@ -1101,25 +1096,32 @@ public class AppConstant {
     /**
      * New added for BajajPay
      */
-//prod
-    public static final String merchantId = "BFL0000001738593";
-    public static final String BAJAJPAY_subMerchantId = "BFL0000001738593";
-    public static final String subMerchantName = "Khiladi Adda";
-    public static final String BAJAJPAY_authSalt = "BPAY44DZ@zNc";
-    public static final String CHANNEL_BAJAJ_PAY = "KHILADI";
-    public static final String OCP_BAJAJ_APIM_SUBSCRIPTION_KEY = "a65cf2700a884f85bd9297c613732d5f";
-    public static final String requestNumber = "1234567";
-    public static final String CONTENT_TYPE_BAJAJ_PAY = "application/json";
-    //Stag
-//    public static final String CHANNEL_BAJAJ_PAY = "BFL_1";
-//    public static final String OCP_BAJAJ_APIM_SUBSCRIPTION_KEY = "7876fd0195174596b1d11b456a935e9e";
-//    public static final String merchantId = "BFLT000000046709";
-//    public static final String BAJAJPAY_subMerchantId = "BFLT000000046709";
-//    public static final String subMerchantName = "Khiladi Adda ";
-//    public static final String BAJAJPAY_authSalt = "BPAY70VN@PPv";
-//    public static final String callBackURl = "https://qa.api.khiladiadda.com/bajaj/addPayment";
+    //Prod
+    //    public static String encryptKeyFromBP = "KPWOWtTFKOdQMtLuMyMvXNawzHFZlzRF";//For Prod
+//    public static final String BASE_BJAZ_URL = "https://pay-api.bajajfinserv.in/bajaj-common-wrapper-service/";
+//    public static final String merchantId = "BFL0000001738593";
+//    public static final String BAJAJPAY_subMerchantId = "BFL0000001738593";
+//    public static final String subMerchantName = "Khiladi Adda";
+//    public static final String BAJAJPAY_authSalt = "BPAY44DZ@zNc";
+//    public static final String CHANNEL_BAJAJ_PAY = "KHILADI";
+//    public static final String OCP_BAJAJ_APIM_SUBSCRIPTION_KEY = "a65cf2700a884f85bd9297c613732d5f";
+//    public static final String requestNumber = "1234567";
+//    public static final String CONTENT_TYPE_BAJAJ_PAY = "application/json";
+
+    //Bajaj Wallet Stag
+    //    Stag-UAT
+    public static final String Bajaj_encryptKeyFromBP = "NCgmmzTRSbnGDgEUFDkhxRvsYgKVbkmi";//For Testing
+    public static final String BASE_BJAZ_URL = "https://pay-api-uat.bajajfinserv.in/bajaj-common-wrapper-service/";
+    public static final String CHANNEL_BAJAJ_PAY = "BFL_1";
+    public static final String OCP_BAJAJ_APIM_SUBSCRIPTION_KEY = "7876fd0195174596b1d11b456a935e9e";
+    public static final String merchantId = "BFLT000000046709";
+    public static final String BAJAJPAY_subMerchantId = "BFLT000000046709";
+    public static final String subMerchantName = "Khiladi Adda ";
+    public static final String BAJAJPAY_authSalt = "BPAY70VN@PPv";
     public static final String callBackURl = AppUtilityMethods.getURL(URL) + "bajaj/addPayment";
     //    public static final String BAJAJ_PAY_PACKAGE_MANAGER = "https://bfl.onelink.me/857331112/ph6g6q1m";
+
+
     public static final String webUrl = "webUrlPayment";
     public static final String UPDATE_BALANCE = "bajaj/topup";
     public static final String GAMERCASH = "GAMERCASH";

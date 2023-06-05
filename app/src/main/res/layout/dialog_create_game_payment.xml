@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_3"
         android:layout_marginEnd="@dimen/margin_10"
-        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginBottom="@dimen/margin_3"
         android:orientation="vertical">
 
         <TextView
@@ -30,8 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/margin_10"
-            android:layout_marginBottom="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_5"
             android:background="@color/color_yellow"
             android:gravity="center"
             android:padding="@dimen/padding_8"
@@ -66,6 +65,14 @@
             android:layout_marginTop="@dimen/margin_10"
             android:hint="@string/hint_game_level"
             android:maxLength="25" />
+
+        <TextView
+            android:id="@+id/tv_game_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_game_level"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_9" />
 
         <LinearLayout
             android:id="@+id/ll_map"
@@ -106,6 +113,14 @@
                     android:textColor="@color/light_black" />
 
             </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_league_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_map_hint"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_9" />
         </LinearLayout>
 
         <TextView
@@ -113,8 +128,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_margin="@dimen/margin_5"
+            android:gravity="center"
             android:hint="@string/text_amount_rs"
             android:textColor="@color/color_green"
             android:textSize="@dimen/text_17"
