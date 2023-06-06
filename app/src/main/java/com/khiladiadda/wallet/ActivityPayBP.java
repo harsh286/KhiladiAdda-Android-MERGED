@@ -2,6 +2,7 @@ package com.khiladiadda.wallet;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.util.Log;
@@ -68,13 +69,48 @@ public class ActivityPayBP extends BaseActivity {
                     return false;
                 }
 
-                Intent upiIntent = null;
-                try {
-                    upiIntent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
-                } catch (URISyntaxException e) {
-                    throw new RuntimeException(e);
+//                Intent upiIntent = null;
+//                try {
+//                    upiIntent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+//                } catch (URISyntaxException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                startActivity(upiIntent);
+
+//                TODO IMPLEMENT NEW INTENT
+
+                if (url.startsWith("intent")) {
+                    String extractedPackageName = url.substring((url.lastIndexOf(";package=") + 9), url.lastIndexOf(";S.browser_fallback_url="));
+                    String extractedFallBackURL = url.substring((url.lastIndexOf("fallback_url=") + 13), url.lastIndexOf(";end"));
+                    Intent upiIntent = null;
+                    /**     * DETECT IF EXPECTED APP INSTALLED : START     * YES : GOTO APP     * NO : GOTO WEB BROWSER URL     * */
+                    PackageManager pm = getPackageManager();
+                    PackageInfo packageInfo = null;
+                    try {
+                        packageInfo = pm.getPackageInfo(extractedPackageName, PackageManager.GET_META_DATA);
+                        if (packageInfo != null) {
+                            try {
+                                upiIntent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+                                startActivity(upiIntent);
+                            } catch (URISyntaxException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            upiIntent = new Intent(Intent.ACTION_VIEW);
+                            upiIntent.setData(Uri.parse(extractedFallBackURL));
+                            startActivity(upiIntent);
+                        }
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
+                        upiIntent = new Intent(Intent.ACTION_VIEW);
+                        upiIntent.setData(Uri.parse(extractedFallBackURL));
+                        startActivity(upiIntent);
+                    }    /**     * DETECT IF EXPECTED APP INSTALLED : END     * YES : GOTO APP     * NO : GOTO WEB BROWSER URL     * */
+                    return true;
+                } else {
+                    return false;
                 }
-                startActivity(upiIntent);
+
 
 //                if (appInstalledOrNot(url)) {
 //                    Intent upiIntent = null;
@@ -87,7 +123,7 @@ public class ActivityPayBP extends BaseActivity {
 //                } else {
 //                    // do something if app is not installed
 //                }
-                return true;
+//                return true;
             }
 
         });

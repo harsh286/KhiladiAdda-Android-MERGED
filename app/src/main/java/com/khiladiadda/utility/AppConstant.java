@@ -1105,8 +1105,8 @@ public class AppConstant {
 //    public static final String BAJAJPAY_authSalt = "BPAY44DZ@zNc";
 //    public static final String CHANNEL_BAJAJ_PAY = "KHILADI";
 //    public static final String OCP_BAJAJ_APIM_SUBSCRIPTION_KEY = "a65cf2700a884f85bd9297c613732d5f";
-//    public static final String requestNumber = "1234567";
-//    public static final String CONTENT_TYPE_BAJAJ_PAY = "application/json";
+    public static final String requestNumber = "1234567";
+    public static final String CONTENT_TYPE_BAJAJ_PAY = "application/json";
 
     //Bajaj Wallet Stag
     //    Stag-UAT
