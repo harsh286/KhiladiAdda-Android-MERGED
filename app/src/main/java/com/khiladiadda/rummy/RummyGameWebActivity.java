@@ -51,7 +51,7 @@ public class RummyGameWebActivity extends BaseActivity {
         }
         webViewGame.addJavascriptInterface(new JsObject(), "Android");
         webViewGame.getSettings().setJavaScriptEnabled(true);
-//        webViewGame.getSettings().setDomStorageEnabled(true);
+        webViewGame.getSettings().setDomStorageEnabled(true);
         webViewGame.getSettings().setBuiltInZoomControls(false);
         getUrlFromSettings();
     }

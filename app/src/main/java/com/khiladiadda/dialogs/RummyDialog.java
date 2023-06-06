@@ -78,12 +78,12 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
         mCancelBtn = findViewById(R.id.mcv_cancel);
         mTwoPlayer = findViewById(R.id.tv_two_players);
         mMorePlayer = findViewById(R.id.tv_more_players);
-        if (numPlayer == 2){
+        if (numPlayer == 2) {
             mTwoPlayer.setTextColor(Color.parseColor("#ffffff"));
             mTwoPlayer.setBackground(mContext.getDrawable(R.drawable.button_background_selected));
             mMorePlayer.setTextColor(Color.parseColor("#000000"));
             mMorePlayer.setBackground(mContext.getDrawable(R.drawable.button_background_notselected));
-        }else {
+        } else {
             mTwoPlayer.setTextColor(Color.parseColor("#000000"));
             mTwoPlayer.setBackground(mContext.getDrawable(R.drawable.button_background_notselected));
             mMorePlayer.setTextColor(Color.parseColor("#ffffff"));
@@ -98,7 +98,7 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
         mCancelBtn.setOnClickListener(this);
 //        mTwoPlayer.setOnClickListener(this);
 //        mMorePlayer.setOnClickListener(this);
-        mEntryFeeTV.setText("₹" + decfor.format(Float.parseFloat(mEntryFee)/100));
+        mEntryFeeTV.setText("₹" + decfor.format(Float.parseFloat(mEntryFee) / 100));
         mTotalBalanceTV.setText("₹" + mTotalBal);
         mDepWinTV.setText("₹" + mDepWinAmount);
     }
@@ -146,12 +146,13 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
     }
 
     private String convertToBase64() throws UnsupportedEncodingException {
-        String req = "{ \"accessToken\": \"" + token + "\", \"refreshToken\": \"" + refreshToken + "\", \"stakeId\": \"" + cardId + "\", \"app_version\": \"" + AppSharedPreference.getInstance().getMasterData().getResponse().getVersion().getAppVersion() + "\", \"type\": 1}";
+//        String req = "{ \"accessToken\": \"" + token + "\", \"refreshToken\": \"" + refreshToken + "\", \"stakeId\": \"" + cardId + "\", \"app_version\": \"" + AppSharedPreference.getInstance().getMasterData().getResponse().getVersion().getAppVersion() + "\", \"type\": 1}";
+        String req = "{ \"accessToken\": \"" + token + "\", \"refreshToken\": \"" + refreshToken + "\", \"stakeId\": \"" + cardId + "\", \"app_version\": \"" + AppSharedPreference.getInstance().getMasterData().getResponse().getVersion().getAppVersion() + "\", \"type\": 1,\"requestVia\": 4}";
         byte[] data = req.getBytes("UTF-8");
         return Base64.encodeToString(data, Base64.DEFAULT);
     }
 
-    public interface OnPlayClick{
+    public interface OnPlayClick {
         public void onPlayClicked();
     }
 }

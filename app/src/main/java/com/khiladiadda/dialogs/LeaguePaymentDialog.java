@@ -94,11 +94,15 @@ public class LeaguePaymentDialog extends BottomSheetDialog implements View.OnCli
             mUsernameET.setHint(R.string.hint_pubg_user_name);
             mCharacterET.setHint(R.string.hint_pubg_character_name);
             mHelpTV.setText(R.string.help_pubg_credential);
+            mMapLL.setVisibility(View.GONE);
         } else if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FREEFIRE_ID, "")) || mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FF_CLASH_ID, "")) || mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FF_MAX_ID, ""))) {
             mImageTV.setText(R.string.help_ff_show_image);
             mUsernameET.setHint(R.string.help_ff_username);
             mCharacterET.setHint(R.string.hint_ff_userid);
             mHelpTV.setText(R.string.help_ff_credential);
+            if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FF_CLASH_ID, ""))) {
+                mMapLL.setVisibility(View.GONE);
+            }
         } else if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_GLOBAL_ID, ""))) {
             mImageTV.setText(R.string.help_pubg_show_image);
             mUsernameET.setHint(R.string.help_pubglobal_username);
@@ -109,6 +113,7 @@ public class LeaguePaymentDialog extends BottomSheetDialog implements View.OnCli
             mUsernameET.setHint(R.string.help_esp_username);
             mCharacterET.setHint(R.string.hint_esp_userid);
             mHelpTV.setText(R.string.help_esp_credential);
+            mMapLL.setVisibility(View.GONE);
         } else if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_NEWSTATE_ID, ""))) {
             mUsernameET.setHint(R.string.hint_pubgns_user_name);
             mCharacterET.setHint(R.string.hint_pubgns_character_name);
@@ -149,7 +154,7 @@ public class LeaguePaymentDialog extends BottomSheetDialog implements View.OnCli
                 } else if (mTeamNameET.getText().toString().trim().isEmpty() || mTeamNameET.getText().toString().trim().length() < 3) {
                     AppUtilityMethods.showMsg(mContext, "Team name cannot be empty", false);
                 } else if (mListener != null) {
-                    mListener.onPayment(mUsernameET.getText().toString().trim(), mCharacterET.getText().toString().trim(), mTeamNameET.getText().toString().trim(),mGameLevelET.getText().toString().trim(),mIsMapDownloaded);
+                    mListener.onPayment(mUsernameET.getText().toString().trim(), mCharacterET.getText().toString().trim(), mTeamNameET.getText().toString().trim(), mGameLevelET.getText().toString().trim(), mIsMapDownloaded);
                 }
                 dismiss();
                 break;
