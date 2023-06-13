@@ -22,7 +22,7 @@ public class RummyHelpAdapter extends RecyclerView.Adapter<RummyHelpAdapter.Ludo
     private List<HelpRulesPointData> mHelpRulesPointData;
     public RummyHelpAdapter(Context context, List<HelpRulesPointData> mHelpRulesPointData) {
         this.mContext=context;
-        this.mHelpRulesPointData = mHelpRulesPointData;
+        this.mHelpRulesPointData=mHelpRulesPointData;
     }
     @NonNull
     @Override
@@ -49,10 +49,9 @@ public class RummyHelpAdapter extends RecyclerView.Adapter<RummyHelpAdapter.Ludo
         ImageView mIconIv;
         @BindView(R.id.tv_head_descp)
         TextView mDescriptionTv;
-
         public LudoContestHolder(View view) {
             super(view);
-            ButterKnife.bind(this, itemView);
+            ButterKnife.bind(this,itemView);
         }
 
     }

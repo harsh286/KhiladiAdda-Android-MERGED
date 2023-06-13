@@ -17,15 +17,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+        <View
+            android:id="@+id/vw_border"
+            android:layout_width="@dimen/margin_80"
+            android:layout_marginTop="@dimen/margin_8"
+            app:layout_constraintStart_toStartOf="@+id/tv_rummy_title"
+            android:background="@drawable/ic_help_border_rummy"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rummy_title"
+            android:layout_height="@dimen/margin_80">
+        </View>
     <ImageView
         android:id="@+id/iv_icon"
         android:layout_width="71dp"
         android:layout_height="61dp"
-        android:layout_marginTop="16dp"
         android:scaleType="fitXY"
-        app:layout_constraintStart_toStartOf="@+id/tv_rummy_title"
-        app:layout_constraintTop_toBottomOf="@+id/tv_rummy_title" />
+        app:layout_constraintStart_toStartOf="@+id/vw_border"
+        app:layout_constraintEnd_toEndOf="@+id/vw_border"
+        app:layout_constraintBottom_toBottomOf="@+id/vw_border"
+        app:layout_constraintTop_toTopOf="@+id/vw_border" />
 
     <TextView
         android:id="@+id/tv_head_descp"
