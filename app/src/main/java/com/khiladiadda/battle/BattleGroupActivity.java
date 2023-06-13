@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.appsflyer.AFInAppEventParameterName;
-import com.appsflyer.AppsFlyerLib;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
@@ -318,11 +316,7 @@ public class BattleGroupActivity extends BaseActivity implements IBattleView, IO
         if (responseModel.isStatus()) {
             showMsg(getString(R.string.text_group_joined_success), true);
             //Apps Flyer
-            Map<String, Object> eventParameters2 = new HashMap<>();
-            eventParameters2.put(AFInAppEventParameterName.REVENUE, mAmount); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-            eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-            eventParameters2.put(AppConstant.GAME, AppConstant.FAN_BATTLE);
-            AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+            AppUtilityMethods.appFlyersGameInvestEvent(this, mAmount.toString(), AppConstant.FAN_BATTLE);
             //Mo Engage
             Properties properties = new Properties();
             properties.addAttribute("invested in combo Amount", mAmount)

@@ -32,8 +32,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appsflyer.AFInAppEventParameterName;
-import com.appsflyer.AppsFlyerLib;
 import com.bumptech.glide.Glide;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
@@ -408,12 +406,8 @@ public class LudoTmtTounamentActivity extends BaseActivity implements ILudoTmtDe
             joinedPb.setProgress(matchDetailsResponse.getnParticipated() + 1);
             joinedPb.setMax(matchDetailsResponse.getnParticipants());
             totalParticipantsNew.setText((matchDetailsResponse.getnParticipated() + 1) + "/" + matchDetailsResponse.getnParticipants());
-            Map<String, Object> eventParameters2 = new HashMap<>();
-            eventParameters2.put(AFInAppEventParameterName.REVENUE, mEntryFee); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-            eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-            eventParameters2.put(AppConstant.GAME, AppConstant.LUDO_TOURNAMENT);
-            eventParameters2.put(AppConstant.EntryFee, mEntryFee);
-            AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+            //AppFlyer
+            AppUtilityMethods.appFlyersGameInvestEvent(this, mEntryFee.toString(), AppConstant.LUDO_TOURNAMENT);
             //Mo Engage
             Properties mProperties = new Properties();
             mProperties.addAttribute(AppConstant.GAMETYPE, AppConstant.LUDO_TOURNAMENT);

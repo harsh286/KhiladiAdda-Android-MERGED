@@ -28,8 +28,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Lifecycle;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.appsflyer.AFInAppEventParameterName;
-import com.appsflyer.AppsFlyerLib;
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
@@ -351,11 +349,8 @@ public class SelectedPlayers extends BaseActivity implements IHTHBattleView, ICr
         if (responseModel.isStatus()) {
             showMsgBigDialog(responseModel.getMessage());
             mAppPreference.setProfileData(responseModel.getProfile());
-            Map<String, Object> eventParameters2 = new HashMap<>();
-            eventParameters2.put(AFInAppEventParameterName.REVENUE, mAmount); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-            eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-            eventParameters2.put(AppConstant.GAME, "ClashX Joined");
-            AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+            //AppFlyer
+            AppUtilityMethods.appFlyersGameInvestEvent(this, mAmount.toString(), "ClashX Joined");
         } else {
             AppUtilityMethods.showMsg(this, responseModel.getMessage(), true);
         }

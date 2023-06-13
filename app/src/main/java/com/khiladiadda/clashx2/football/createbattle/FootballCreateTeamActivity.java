@@ -225,24 +225,24 @@ public class FootballCreateTeamActivity extends BaseActivity implements IFootbal
             case R.id.rl_next:
                 if (mCurrentPage == 4) {
                     try {
-                    mPlayerList = ((FootballReviewFragment) mFragmentList.get(4)).getSelectedPlayers();
-                    if (mPlayerList.size() == 4 && mFrom == 1) {
-                        if (!playerIdList.isEmpty()) {
-                            playerIdList.clear();
+                        mPlayerList = ((FootballReviewFragment) mFragmentList.get(4)).getSelectedPlayers();
+                        if (mPlayerList.size() == 4 && mFrom == 1) {
+                            if (!playerIdList.isEmpty()) {
+                                playerIdList.clear();
+                            }
+                            createBattleN(mPlayerList);
+                            // showMsgSmallDialog(getString(R.string.text_combo_created_success), 1);
+                            //  mNextRL.setClickable(false);
+                        } else if (mPlayerList.size() == 4 && mFrom == 3) {
+                            createBattle(mBattleList.getInvestedAmount(), mPlayerList);
+                            // mNextRL.setClickable(false);
+                        } else if (mPlayerList.size() == 4 && mFrom == 2) {
+                            createBattle(mBattleList.getInvestedAmount(), mPlayerList);
+                            //mNextRL.setClickable(false);
+                        } else {
+                            AppUtilityMethods.showMsg(this, "Please select players  from each category to create battle", false);
                         }
-                        createBattleN(mPlayerList);
-                        // showMsgSmallDialog(getString(R.string.text_combo_created_success), 1);
-                        //  mNextRL.setClickable(false);
-                    } else if (mPlayerList.size() == 4 && mFrom == 3) {
-                        createBattle(mBattleList.getInvestedAmount(), mPlayerList);
-                        // mNextRL.setClickable(false);
-                    } else if (mPlayerList.size() == 4 && mFrom == 2) {
-                        createBattle(mBattleList.getInvestedAmount(), mPlayerList);
-                        //mNextRL.setClickable(false);
-                    } else {
-                        AppUtilityMethods.showMsg(this, "Please select players  from each category to create battle", false);
-                    }
-                }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 } else {
@@ -467,11 +467,7 @@ public class FootballCreateTeamActivity extends BaseActivity implements IFootbal
         if (responseModel.isStatus()) {
             showMsgBigDialog(responseModel.getMessage());
             mAppPreference.setProfileData(responseModel.getProfile());
-            Map<String, Object> eventParameters2 = new HashMap<>();
-            eventParameters2.put(AFInAppEventParameterName.REVENUE, mAmount); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-            eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-            eventParameters2.put(AppConstant.GAME, "ClashX Create");
-            AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+            AppUtilityMethods.appFlyersGameInvestEvent(this, mAmount.toString(), "ClashX Create");
         } else {
             AppUtilityMethods.showMsg(this, responseModel.getMessage(), true);
         }

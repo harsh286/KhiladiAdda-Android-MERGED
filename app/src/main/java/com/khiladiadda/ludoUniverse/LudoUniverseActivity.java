@@ -38,11 +38,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.appsflyer.AFInAppEventParameterName;
-import com.appsflyer.AppsFlyerLib;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
@@ -392,11 +387,8 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         }
         if (response.isStatus()) {
             showDialogMsg(response.getMessage(), 1);
-            Map<String, Object> eventParameters2 = new HashMap<>();
-            eventParameters2.put(AFInAppEventParameterName.REVENUE, mAmount); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-            eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-            eventParameters2.put(AppConstant.GAME, "LUDOADDA CREATE");
-            AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+            //AppFlyers
+            AppUtilityMethods.appFlyersGameInvestEvent(this, mAmount, "LUDOADDA CREATE");
             //Mo Engage
             Properties properties = new Properties();
             properties
@@ -423,11 +415,8 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         hideProgress();
         if (response.isStatus()) {
             showDialogMsg(response.getMessage(), 1);
-            Map<String, Object> eventParameters2 = new HashMap<>();
-            eventParameters2.put(AFInAppEventParameterName.REVENUE, mAmount); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-            eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-            eventParameters2.put(AppConstant.GAME, "LUDOADDA ACCEPT");
-            AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+            //APPFLYERS
+            AppUtilityMethods.appFlyersGameInvestEvent(this, mAmount, "LUDOADDA ACCEPT");
             Properties properties = new Properties();
             properties
                     // tracking integer

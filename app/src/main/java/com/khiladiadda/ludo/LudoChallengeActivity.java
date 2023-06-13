@@ -363,11 +363,8 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
             mAddChallengeDialog.dismiss();
         }
         if (response.isStatus()) {
-            Map<String, Object> eventParameters2 = new HashMap<>();
-            eventParameters2.put(AFInAppEventParameterName.REVENUE, mAmount); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-            eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-            eventParameters2.put(AppConstant.GAME, AppConstant.LUDO_CREATE);
-            AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+            //AppFlyers
+            AppUtilityMethods.appFlyersGameInvestEvent(this, mAmount, AppConstant.LUDO_CREATE);
             //Mo Engage
             Properties properties = new Properties();
             properties
@@ -397,11 +394,7 @@ public class LudoChallengeActivity extends BaseActivity implements ILudoChalleng
     public void acceptContestSuccess(BaseResponse response) {
         hideProgress();
         if (response.isStatus()) {
-            Map<String, Object> eventParameters2 = new HashMap<>();
-            eventParameters2.put(AFInAppEventParameterName.REVENUE, mAmount); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-            eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-            eventParameters2.put(AppConstant.GAME, AppConstant.LUDO_ACCEPT);
-            AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+            AppUtilityMethods.appFlyersGameInvestEvent(this, mAmount.toString(), AppConstant.LUDO_ACCEPT);
             Properties properties = new Properties();
             properties
                     .addAttribute("game", "LudoKing")

@@ -17,8 +17,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appsflyer.AFInAppEventParameterName;
-import com.appsflyer.AppsFlyerLib;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.snackbar.Snackbar;
@@ -367,16 +365,7 @@ public class QuizDetailsActivity extends BaseActivity implements IQuizListView {
             } else {
                 startPlay();
                 //Apps Flyer
-                Map<String, Object> eventParameters2 = new HashMap<>();
-                eventParameters2.put(AFInAppEventParameterName.REVENUE, mEntryFee); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-                eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-                eventParameters2.put(AppConstant.GAME, AppConstant.QUIZONLY);
-                eventParameters2.put(AppConstant.EntryFee, mEntryFee);
-                /*
-                 * Send af_purchase event.
-                 * Trigger: User lands on the thank you page after a successful purchase
-                 */
-                AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+                AppUtilityMethods.appFlyersGameInvestEvent(this, mEntryFeeTV.toString(), AppConstant.QUIZONLY);
                 //Mo Engage
                  Properties mProperties = new Properties();
                 mProperties.addAttribute(AppConstant.GAMETYPE,  AppConstant.QUIZONLY);
