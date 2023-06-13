@@ -38,12 +38,10 @@
                     android:src="@drawable/dash_lu" />
 
                 <ImageView
-                    android:id="@+id/iv_ludo"
+                    android:id="@+id/iv_rummy"
                     style="@style/DashboardLudoImageView"
-                    android:src="@drawable/ic_ludo_" />
-
+                    android:background="@drawable/ic_rummy_img" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,7 +49,6 @@
                 android:layout_marginTop="-8dp"
                 android:layout_marginEnd="@dimen/margin_5"
                 android:orientation="horizontal">
-
                 <ImageView
                     android:id="@+id/iv_ludotournament"
                     style="@style/DashboardGameImageView"
@@ -60,12 +57,12 @@
                 <ImageView
                     android:id="@+id/iv_codepieces"
                     style="@style/DashboardGameImageView"
+                    android:layout_margin="@dimen/margin_10"
                     android:src="@drawable/codepiece" />
-
                 <ImageView
-                    android:id="@+id/iv_rummy"
+                    android:id="@+id/iv_ludo"
                     style="@style/DashboardGameImageView"
-                    android:src="@drawable/ic_rummy_img" />
+                    android:src="@drawable/ic_ludo_" />
 
             </LinearLayout>
 

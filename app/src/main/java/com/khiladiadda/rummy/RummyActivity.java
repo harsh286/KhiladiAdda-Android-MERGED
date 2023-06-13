@@ -1,34 +1,39 @@
 package com.khiladiadda.rummy;
-
 import static android.view.View.GONE;
 
-import android.content.ActivityNotFoundException;
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
-import com.khiladiadda.dialogs.CallBreakDialog;
+import com.khiladiadda.dialogs.AppDialog;
 import com.khiladiadda.dialogs.RummyDialog;
 import com.khiladiadda.interfaces.IOnItemClickListener;
+import com.khiladiadda.interfaces.IOnItemReplayClickListener;
 import com.khiladiadda.main.adapter.BannerPagerAdapter;
 import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.network.model.ApiError;
@@ -39,29 +44,29 @@ import com.khiladiadda.network.model.response.ProfileResponse;
 import com.khiladiadda.network.model.response.ProfileTransactionResponse;
 import com.khiladiadda.network.model.response.RummyCheckGameResponse;
 import com.khiladiadda.network.model.response.RummyDetails;
-import com.khiladiadda.network.model.response.RummyPayload;
 import com.khiladiadda.network.model.response.RummyRefreshTokenMainResponse;
 import com.khiladiadda.network.model.response.RummyResponse;
 import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.profile.ProfilePresenter;
 import com.khiladiadda.profile.interfaces.IProfilePresenter;
 import com.khiladiadda.profile.interfaces.IProfileView;
+import com.khiladiadda.rummy.adapter.RummyLiveTableAdpter;
 import com.khiladiadda.rummy.adapter.RummyAdapter;
 import com.khiladiadda.rummy.interfaces.IRummyPresenter;
 import com.khiladiadda.rummy.interfaces.IRummyView;
+import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 import com.moengage.inapp.MoEInAppHelper;
 import com.moengage.widgets.NudgeView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-
-public class RummyActivity extends BaseActivity implements IRummyView, IOnItemClickListener, RummyDialog.OnPlayClick,
-        IProfileView {
-
+public class RummyActivity extends BaseActivity implements IRummyView, IOnItemClickListener,RummyDialog.OnPlayClick,
+        IProfileView, IOnItemReplayClickListener {
     @BindView(R.id.iv_back)
     ImageView mBackIV;
     @BindView(R.id.tv_activity_name)
@@ -86,29 +91,30 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     TextView mHowToPlayTv;
     @BindView(R.id.tv_history)
     TextView mHistoryTv;
-
+    @BindView(R.id.rv_live_table_rummy)
+    RecyclerView mRummyLiveTableRV;
+    @BindView(R.id.rl_live_table_rummy)
+    RelativeLayout mRummyLiveTableRL;
     private RummyAdapter mAdapter;
+    private RummyLiveTableAdpter mRummyLiveTableAdpter;
     private List<RummyDetails> mList;
+    private List<RummyDetails> mLiveTableList = new ArrayList<>();
     private IRummyPresenter mPresenter;
     private IProfilePresenter mProfilePresenter;
     private String mType, mRefreshToken = "";
     private int mMode = 1, pos = 0;
     private long mLastClickTime = 0;
     private boolean isPlayed = false;
-
-
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
     private Handler mHandler;
     @BindView(R.id.nudge)
     NudgeView mNV;
-
     @Override
     protected int getContentView() {
         return R.layout.activity_rummy;
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -116,6 +122,10 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         MoEInAppHelper.getInstance().showInApp(this);
     }
 
+   /* @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }*/
     @Override
     protected void initViews() {
         mActivityNameTV.setText("Rummy Adda");
@@ -128,6 +138,7 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         mThreeTV.setOnClickListener(this);
         mHowToPlayTv.setOnClickListener(this);
         mHistoryTv.setOnClickListener(this);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRummyRefreshNotificationReceiver, new IntentFilter(AppConstant.RUMMY_PACKAGE));
     }
 
     @Override
@@ -140,6 +151,12 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         mRummyRV.setLayoutManager(new LinearLayoutManager(this));
         mRummyRV.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
+        /*Live Table Adapter call*/
+        mRummyLiveTableAdpter = new RummyLiveTableAdpter(this, mLiveTableList, mMode);
+        mRummyLiveTableRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        //mRummyLiveTableRV.setLayoutManager(new GridLayoutManager(this, 2,GridLayoutManager.HORIZONTAL, false));
+        mRummyLiveTableRV.setAdapter(mRummyLiveTableAdpter);
+        mRummyLiveTableAdpter.setOnItemClickListener(this);
         setMode(14);
         setModeOptionOne();
     }
@@ -194,7 +211,9 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
                     setMode(34);
                 break;
             case R.id.tv_how_to_play:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/jP2AP1z_m6c")));
+//                startActivity(new Intent(this,RummyHelpActivity.class));
+                AppUtilityMethods.showRummyTooltip(this, mHowToPlayTv, AppConstant.FROM_MAIN_ACTIVITY);
+                //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/jP2AP1z_m6c")));
                 break;
             case R.id.tv_history:
                 startActivity(new Intent(this, RummyHistoryActivity.class));
@@ -340,10 +359,19 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         hideProgress();
         if (responseModel.isStatus()) {
             mList.clear();
+            mLiveTableList.clear();
             mList.addAll(responseModel.getResponse());
-//            mAdapter = new RummyAdapter(this, mList, mMode);
+            mLiveTableList.addAll(responseModel.getmLiveTableRes());
+//            mAdapter =new RummyAdapter(this, mList, mMode);
             mAdapter.changeType(mMode);
+            mRummyLiveTableAdpter.changeType(mMode);
             mAdapter.notifyDataSetChanged();
+            mRummyLiveTableAdpter.notifyDataSetChanged();
+            if (mLiveTableList != null && mLiveTableList.size() > 0) {
+                mRummyLiveTableRL.setVisibility(View.VISIBLE);
+            } else {
+                mRummyLiveTableRL.setVisibility(GONE);
+            }
             List<BannerDetails> bannerData = responseModel.getBanner();
             if (bannerData != null && bannerData.size() > 0) {
                 mBannerVP.setVisibility(View.VISIBLE);
@@ -377,9 +405,9 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
 
     @Override
     public void onGetContestCheckGameSuccess(RummyCheckGameResponse responseModel) {
-        hideProgress();
+        /*hideProgress();
         if (responseModel.isStatus()) {
-            if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+            if(SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
                 return;
             }
             mLastClickTime = SystemClock.elapsedRealtime();
@@ -390,32 +418,33 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
             }
             mLastClickTime = SystemClock.elapsedRealtime();
             openBottomDialog(pos, 0);
-        }
+        }*/
     }
 
     @Override
     public void onGetContestCheckGameFailure(ApiError error) {
-
+        hideProgress();
     }
 
     @Override
     public void onItemClick(View view, int position, int tag) {
-        pos = position;
-        showProgress("");
-        mPresenter.getCheckGameStatus();
-    }
+        pos=position;
+        /*send request with card id.card id used for only balance insufficient balance validation*/
+        openBottomDialog(pos);
 
-    private void openBottomDialog(int position, int status) {
+
+    }
+    private void openBottomDialog(int position){
         Coins mCoins = mAppPreference.getProfileData().getCoins();
         double mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
         double mDepWinAmount = mCoins.getDeposit() + mCoins.getWinning();
-
         RummyDialog addExpenseDialog;
-        if (status == 1) {
-            addExpenseDialog = new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), "active", AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme, mList.get(position).getNumPlayers(), this);
+        addExpenseDialog=new RummyDialog(this,String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount),AppSharedPreference.getInstance().getSessionToken(), mRefreshToken,R.style.CustomBottomSheetDialogTheme,this, mList.get(position).getmPlayersDetails(),position);
+        /*if (status == 1) {
+            addExpenseDialog=new RummyDialog(this,String.valueOf(mList.get(position).getEntryFee()), String.valueOf(mList.get(position).getmPlayersDetails().get(0).getMaxWin()), String.valueOf(mList.get(position).getmPlayersDetails().get(1).getMaxWin()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), "active", "active", AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme, mList.get(position).getmPlayersDetails().get(0).getnPlayers(), mList.get(position).getmPlayersDetails().get(1).getnPlayers(), this, mList.get(position).getmPlayersDetails());
         } else {
-            addExpenseDialog = new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), mList.get(position).getCardId(), AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme, mList.get(position).getNumPlayers(), this);
-        }
+            addExpenseDialog=new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.valueOf(mList.get(position).getmPlayersDetails().get(0).getMaxWin()), String.valueOf(mList.get(position).getmPlayersDetails().get(1).getMaxWin()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), mList.get(position).getmPlayersDetails().get(0).getCardId(), mList.get(position).getmPlayersDetails().get(1).getCardId(), AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme, mList.get(position).getmPlayersDetails().get(0).getnPlayers(), mList.get(position).getmPlayersDetails().get(1).getnPlayers(), this, mList.get(position).getmPlayersDetails());
+        }*/
         addExpenseDialog.setCancelable(true);
         addExpenseDialog.setCanceledOnTouchOutside(false);
         addExpenseDialog.show();
@@ -435,6 +464,25 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
             mHandler = new Handler();
             moveToNextAd(0);
         }
+    }
+
+/*When user rejoin the match then this method is call*/
+private void onReJoinRummyDirect() {
+        String encodeRequest = convertToBase64(AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, "active");
+        Intent intLeaderboard = new Intent(this, RummyGameWebActivity.class);
+        intLeaderboard.putExtra("info", encodeRequest);
+        startActivity(intLeaderboard);
+    }
+
+    private String convertToBase64(String token, String refreshToken, String cardId) {
+        try {
+            String req = "{ \"accessToken\": \"" + token + "\", \"refreshToken\": \"" + refreshToken + "\", \"stakeId\": \"" + cardId + "\", \"app_version\": \"" + AppSharedPreference.getInstance().getMasterData().getResponse().getVersion().getAppVersion() + "\", \"type\": 1,\"requestVia\": 4}";
+            byte[] data = req.getBytes("UTF-8");
+            return Base64.encodeToString(data, Base64.DEFAULT);
+        } catch (UnsupportedEncodingException e) {
+            Log.e("TAG", "convertToBase64: " + e.getLocalizedMessage());
+        }
+        return "";
     }
 
     private void moveToNextAd(int i) {
@@ -459,7 +507,7 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     }
 
     private void getProfile() {
-        if (new NetworkStatus(this).isInternetOn()) {
+        if (new NetworkStatus(this).isInternetOn()){
             showProgress(getString(R.string.txt_progress_authentication));
             mProfilePresenter.getProfile();
         } else {
@@ -467,12 +515,10 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         }
     }
 
-
     @Override
     public void onUpdatePasswordComplete(BaseResponse responseModel) {
 
     }
-
     @Override
     public void onUpdatePasswordFailure(ApiError error) {
 
@@ -524,7 +570,6 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     public void onVerifyEmailComplete(BaseResponse responseModel) {
 
     }
-
     @Override
     public void onVerifyEmailFailure(ApiError error) {
 
@@ -546,5 +591,22 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         mPresenter.destroy();
         super.onDestroy();
     }
-
+    @Override
+    public void onReplayItemClick(View view, int position, int tag) {
+        onReJoinRummyDirect();
+    }
+    private final BroadcastReceiver mRummyRefreshNotificationReceiver=new BroadcastReceiver() { // 77
+        @Override
+        public void onReceive(Context context,Intent intent){
+            try {
+                String mFrom=intent.getStringExtra(AppConstant.FROM);
+                if(mFrom.equalsIgnoreCase(AppConstant.RUMMY_UPDATE)){
+                    getProfile();
+                    getData();
+                }
+            }catch (Exception e){
+                throw new RuntimeException(e);
+            }
+        }
+    };
 }

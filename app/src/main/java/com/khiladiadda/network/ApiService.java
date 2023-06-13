@@ -9,6 +9,7 @@ import com.khiladiadda.network.model.request.BajajPayEncryptedRequest;
 import com.khiladiadda.network.model.request.PhonepeCheckPaymentRequest;
 import com.khiladiadda.network.model.request.PhonepeRequest;
 import com.khiladiadda.network.model.request.RaceConditionPayoutRequest;
+import com.khiladiadda.network.model.request.RummyHelpRequest;
 import com.khiladiadda.network.model.request.UpdateBalanceRequest;
 import com.khiladiadda.network.model.request.deposite.DepositLimitRequest;
 import com.khiladiadda.network.model.response.BajajPayGetBalanceResponse;
@@ -27,6 +28,7 @@ import com.khiladiadda.network.model.response.PhonePePaymentResponse;
 import com.khiladiadda.network.model.response.PhonepeCheckPaymentResponse;
 import com.khiladiadda.network.model.response.RemainingLimitResponse;
 import com.khiladiadda.network.model.response.RummyCheckGameResponse;
+import com.khiladiadda.network.model.response.RummyHelpResponse;
 import com.khiladiadda.network.model.response.RummyHistoryMainResponse;
 import com.khiladiadda.network.model.response.RummyRefreshTokenMainResponse;
 import com.khiladiadda.network.model.response.RummyResponse;
@@ -975,7 +977,7 @@ public interface ApiService {
     Observable<RummyRefreshTokenMainResponse> getRummyRefershToken();
 
     @GET(AppConstant.API_RUMMY_CHECKGAMESTATUS)
-    Observable<RummyCheckGameResponse> getRummyCheckGameStatus();
+    Observable<RummyCheckGameResponse>getRummyCheckGameStatus(@Query("cardId") String cardId);
 
     @GET(AppConstant.API_RUMMY_HISTORY)
     Observable<RummyHistoryMainResponse> getRummyHistory();
@@ -1040,5 +1042,8 @@ public interface ApiService {
 
     @POST(AppConstant.API_BAJAJ_VALIDATION)
     Observable<BaseResponse> checkBajajValidation(@Body PayuChecksumRequest request);
+
+    @POST(AppConstant.API_RUMMY_RUlES_POINT)
+    Observable<RummyHelpResponse> rummyHelpRulesPoint(@Body RummyHelpRequest request);
 
 }

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    tools:context=".rummy.RummyHelpActivity">
+    <include
+        android:id="@+id/include6"
+        layout="@layout/actionbar_rummy" />
+    <TextView
+        android:id="@+id/error_tv"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="@dimen/text_16"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content">
+
+    </TextView>
+
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include6">
+
+        <TextView
+            android:id="@+id/tv_points"
+            style="@style/RummyModeSelect"
+            android:text="@string/text_points_underline"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_pool"
+            style="@style/RummyModeSelect"
+            android:text="Pool"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_deal"
+            style="@style/RummyModeSelect"
+            android:text="Deal"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_tips"
+            style="@style/RummyModeSelect"
+            android:text="Tips"
+            android:maxLines="1"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_offer"
+            style="@style/RummyModeSelect"
+            android:text="Offers"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_mode_option"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_top"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_top">
+
+        <TextView
+            android:id="@+id/tv_one"
+            style="@style/RummyModeButton"
+            android:text="51 Pool" />
+
+        <TextView
+            android:id="@+id/tv_two"
+            style="@style/RummyModeButton"
+            android:text="101 Pool" />
+
+        <TextView
+            android:id="@+id/tv_three"
+            style="@style/RummyModeButton"
+            android:text="201 Pool" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_mode_option">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_player"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/rv_help"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                    android:id="@+id/youtube_player_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:shouldDisableView="true"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"  />
+                <!--<VideoView
+                    android:id="@+id/vv_player"
+                    android:layout_width="match_parent"
+                    android:layout_height="154dp"
+                    android:shouldDisableView="true"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--<ProgressBar
+                android:id="@+id/pb_buffer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateDrawable="@drawable/ic_video_progress"
+                app:layout_constraintBottom_toBottomOf="@+id/cl_player"
+                app:layout_constraintEnd_toEndOf="@+id/cl_player"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/cl_player" />-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cl_player"
+                tools:listitem="@layout/items_of_rummy_help" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

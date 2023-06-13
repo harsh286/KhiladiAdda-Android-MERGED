@@ -1,5 +1,6 @@
 package com.khiladiadda.utility;
 
+import android.content.IntentFilter;
 import android.os.Environment;
 
 import java.io.File;
@@ -410,6 +411,7 @@ public class AppConstant {
     public static final String INSUFFICIENT_WALLET_RECHARGE = "Your wallet balance is insufficient. Please recharge your wallet to play and earn.";
     public static final String TEXT_OPPONENT_COMBO = "Opponent’s Combo";
     public static final String TEXT_YOUR_COMBO = "Your Combo";
+    public static final String RUMMY_PACKAGE = "com.khiladiadda.rummy";
 
     public static int REQUEST_NOTIFICATION = 902;
     public static final int FROM_NOTIFICATION = 901;
@@ -1135,4 +1137,17 @@ public class AppConstant {
     public static final String BAJAJUPI = "BAJAJUPI";
     public static final String OTHER_UPI = "OTHER_UPI";
 
+    public static final String RUMMY_UPDATE = "RUMMY_UPDATE";
+
+    //Rummy Game Mode
+    public static final int POOL_51 = 51;
+    public static final int POOL_101 = 101;
+    public static final int POOL_201 = 201;
+    public static final int POINT_13 = 80;
+    public static final int JOKER = 802;
+    public static final int DEAL = 90;
+    public static final int FROM_HELP_ACTIVITY = 1;
+    public static final int FROM_MAIN_ACTIVITY = 2;
+
+    public static final String API_RUMMY_RUlES_POINT = "/user/rummy/rummy-rules";
 }

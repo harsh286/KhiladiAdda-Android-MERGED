@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.khiladiadda.R;
 import com.khiladiadda.interfaces.IOnItemClickListener;
+import com.khiladiadda.network.model.response.PlayersDetails;
 import com.khiladiadda.network.model.response.RummyDetails;
 import com.khiladiadda.network.model.response.RummyPayload;
 import com.khiladiadda.utility.AppConstant;
@@ -23,66 +24,65 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RummyAdapter extends RecyclerView.Adapter<RummyAdapter.LudoContestHolder> {
-
     private Context mContext;
     private List<RummyDetails> mLudoChallengeList;
     private IOnItemClickListener mOnItemClickListener;
     private int mMode;
-
     public RummyAdapter(Context context, List<RummyDetails> ludoChallengeList, int mMode) {
         this.mContext = context;
         this.mLudoChallengeList = ludoChallengeList;
         this.mMode = mMode;
     }
-
     public void setOnItemClickListener(IOnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
     }
-
     @NonNull
     @Override
     public LudoContestHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rummy, parent, false);
         return new LudoContestHolder(itemView, mOnItemClickListener);
     }
-
     @Override
     public void onBindViewHolder(LudoContestHolder holder, int position) {
         final DecimalFormat decfor = new DecimalFormat("0.00");
         RummyDetails ludoContestBean = mLudoChallengeList.get(position);
-        if (mMode == 1) {
+         if(mMode==1){
+             holder.mFeeEntryTV.setVisibility(View.VISIBLE);
+             holder.mFeeEntryTV.setText("Entry Fee ₹"+decfor.format(Float.parseFloat(ludoContestBean.getEntryFee().toString())/100));
             holder.mPointsTv.setText("Points Value");
             holder.mEntryFeeTV.setText("₹" + decfor.format((Float.parseFloat(ludoContestBean.getEntryFee().toString()) / 80) / 100));
-        } else if (mMode == 2) {
+        } else if (mMode==2){
+             holder.mFeeEntryTV.setVisibility(View.INVISIBLE);
             holder.mPointsTv.setText("Entry Fee");
             holder.mEntryFeeTV.setText("₹" + decfor.format((Float.parseFloat(ludoContestBean.getEntryFee().toString())) / 100));
 //            holder.mEntryFeeTV.setText("" + ludoContestBean.getEntryFee() + " Pool");
         } else if (mMode == 3) {
+             holder.mFeeEntryTV.setVisibility(View.INVISIBLE);
             holder.mPointsTv.setText("Entry Fee");
             holder.mEntryFeeTV.setText("₹" + decfor.format((Float.parseFloat(ludoContestBean.getEntryFee().toString())) / 100));
         }
-        if (ludoContestBean.getNumPlayers() == 2) {
+        if(ludoContestBean.getmPlayersDetails().size()==2){
+            holder.mPlayerTV.setVisibility(View.VISIBLE);
+            holder.mPlayersMoreTv.setVisibility(View.VISIBLE);
+            holder.mWinningAmountTV.setText("₹ " + AppUtilityMethods.roundUpNumber(ludoContestBean.getmPlayersDetails().get(0).getMaxWin()));
+            holder.mWinningAmountTV.setText("₹ " + decfor.format(Float.parseFloat(ludoContestBean.getmPlayersDetails().get(0).getMaxWin().toString()) / 100));
+        } else {
             holder.mPlayerTV.setVisibility(View.VISIBLE);
             holder.mPlayersMoreTv.setVisibility(View.GONE);
-        } else {
-            holder.mPlayerTV.setVisibility(View.GONE);
-            holder.mPlayersMoreTv.setVisibility(View.VISIBLE);
         }
         holder.mOnlineTV.setText("" + ludoContestBean.getOnline());
 //        holder.mEntryFeeTV.setText("₹"+ludoContestBean.getEntryFee());
-        holder.mWinningAmountTV.setText("₹ " + AppUtilityMethods.roundUpNumber(ludoContestBean.getMaxWin()));
-        holder.mWinningAmountTV.setText("₹ " + decfor.format(Float.parseFloat(ludoContestBean.getMaxWin().toString()) / 100));
+
+
     }
 
-    public void changeType(int mode) {
+    public void changeType(int mode){
         mMode = mode;
     }
-
     @Override
-    public int getItemCount() {
+    public int getItemCount(){
         return mLudoChallengeList.size();
     }
-
     public static class LudoContestHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.tv_entry_fee)
@@ -95,10 +95,10 @@ public class RummyAdapter extends RecyclerView.Adapter<RummyAdapter.LudoContestH
         TextView mOnlineTV;
         @BindView(R.id.tv_wining_amount)
         TextView mWinningAmountTV;
-        @BindView(R.id.tv_bonus)
-        TextView mBonusTV;
         @BindView(R.id.tv_points)
         TextView mPointsTv;
+        @BindView(R.id.tv_fee_entry)
+        TextView mFeeEntryTV;
         private IOnItemClickListener mOnItemClickListener;
 
         public LudoContestHolder(View view, IOnItemClickListener onItemClickListener) {
