@@ -554,7 +554,7 @@ public class AppDialog {
             if (roomIdET.getText().toString().trim().isEmpty()) {
                 AppUtilityMethods.showMsg(activity, "Your Room Id cannot be blank", false);
             } else if (listener != null) {
-                listener.onUpdateLudo(roomIdET.getText().toString().trim());
+                listener.onUpdateLudo(roomIdET.getText().toString().trim(),false);
             }
         });
         dialog.setCancelable(false);
