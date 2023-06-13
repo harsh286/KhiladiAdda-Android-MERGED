@@ -56,6 +56,20 @@ public class RummyHistoryAdapter extends RecyclerView.Adapter<RummyHistoryAdapte
         holder.mTransactionId.setText(item.getTxnID());
         holder.mRummyCode.setText(item.getRummyCode());
         holder.mPriceTv.setText("Entry ₹" + item.getAmount());
+        //Game Mode
+        if (item.getGameMode() == AppConstant.POOL_51) {
+            holder.mGameModeTV.setText("Pool51");
+        } else if (item.getGameMode() == AppConstant.POOL_101) {
+            holder.mGameModeTV.setText("Pool101");
+        } else if (item.getGameMode() == AppConstant.POOL_201) {
+            holder.mGameModeTV.setText("Pool201");
+        } else if (item.getGameMode() == AppConstant.POINT_13) {
+            holder.mGameModeTV.setText("Point(13 Cards)");
+        } else if (item.getGameMode() == AppConstant.JOKER) {
+            holder.mGameModeTV.setText("Point(jokers)");
+        } else if (item.getGameMode() == AppConstant.DEAL) {
+            holder.mGameModeTV.setText("Deal");
+        }
         if (item.getWinningAmount() >= 0) {
             holder.mWinningPriceTv.setText("Won ₹" + String.format("%.2f", Double.parseDouble(item.getWinningAmount().toString().replaceAll("[+-]", ""))));
             holder.mWinningPriceTv.setTextColor(Color.parseColor("#00910E"));
@@ -116,6 +130,8 @@ public class RummyHistoryAdapter extends RecyclerView.Adapter<RummyHistoryAdapte
         ImageView mArrowIv;
         @BindView(R.id.tv_rummy_code)
         TextView mRummyCode;
+        @BindView(R.id.tv_game_mode)
+        TextView mGameModeTV;
 
         private IOnItemClickListener mOnItemClickListener;
 

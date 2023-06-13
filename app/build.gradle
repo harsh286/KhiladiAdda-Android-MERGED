@@ -49,6 +49,7 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude '*/res/**'
         exclude 'AndroidManifest.xml'
+        exclude("META-INF/*.kotlin_module")
     }
     dexOptions { javaMaxHeapSize "4g" }
 
@@ -147,6 +148,11 @@ dependencies {
     implementation 'com.cashfree.pg:api:2.0.4'
     //paytm new sdk
     implementation 'com.paytm.appinvokesdk:appinvokesdk:1.6.14'
+
+    /*You tube*/
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0'
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.26'
 }
 
 apply plugin: 'com.google.gms.google-services'

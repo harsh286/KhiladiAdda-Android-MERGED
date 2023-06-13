@@ -59,9 +59,12 @@ import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.preference.PreferenceKeysModel;
 import com.khiladiadda.profile.ProfileActivity;
 import com.khiladiadda.profile.update.AadharActivity;
+import com.khiladiadda.rummy.RummyHelpActivity;
 import com.khiladiadda.splash.SplashActivity;
 import com.khiladiadda.wallet.WalletCashbackActivity;
 import com.moengage.core.MoECoreHelper;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -1627,5 +1630,56 @@ public class AppUtilityMethods {
         eventParameters2.put(AppConstant.LOGIN, eventName);
         AppsFlyerLib.getInstance().logEvent(context, AppConstant.LOGIN, eventParameters2);
     }
+
+    public static void showRummyTooltip(Activity activity, View mTV, int type) {
+        View ludoToolTip = LayoutInflater.from(activity).inflate(R.layout.tooltips_of_rummy, null);
+        PopupWindow mWindow = new PopupWindow(ludoToolTip, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        if (Build.VERSION.SDK_INT >= 21) {
+            mWindow.setElevation(5.0f);
+        }
+        mWindow.setOutsideTouchable(true);
+        mWindow.setFocusable(true);
+        mWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        TextView tvEnglish = ludoToolTip.findViewById(R.id.tv_english);
+        TextView tvhindi = ludoToolTip.findViewById(R.id.tv_hindi);
+        TextView tvhinglish = ludoToolTip.findViewById(R.id.tv_hinEnglish);
+        tvEnglish.setOnClickListener(view -> {
+            if (type != 1) {
+                Intent intent = new Intent(activity, RummyHelpActivity.class);
+                intent.putExtra("lang", "english");
+                intent.putExtra("type", 1);
+                activity.startActivity(intent);
+            } else {
+                EventBus.getDefault().post("1");
+            }
+            mWindow.dismiss();
+
+        });
+        tvhindi.setOnClickListener(view -> {
+            if (type != 1) {
+                Intent intent = new Intent(activity, RummyHelpActivity.class);
+                intent.putExtra("lang", "hindi");
+                intent.putExtra("type", 2);
+                activity.startActivity(intent);
+            } else {
+                EventBus.getDefault().post("2");
+            }
+            mWindow.dismiss();
+
+        });
+        tvhinglish.setOnClickListener(view -> {
+            if (type != 1) {
+                Intent intent = new Intent(activity, RummyHelpActivity.class);
+                intent.putExtra("lang", "hinglish");
+                intent.putExtra("type", 3);
+                activity.startActivity(intent);
+            } else {
+                EventBus.getDefault().post("3");
+            }
+            mWindow.dismiss();
+        });
+        mWindow.showAsDropDown(mTV, (int) -(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, activity.getResources().getDisplayMetrics())), 0, Gravity.END);
+    }
+
 
 }

@@ -59,5 +59,15 @@
         android:textColor="@color/white"
         app:drawableEndCompat="@drawable/ic_outline_history" />
 
+    <ImageView
+        android:id="@+id/iv_translator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        android:layout_marginEnd="@dimen/dimen_14dp"
+        android:src="@drawable/ic_translator"/>
+
 </RelativeLayout>
 

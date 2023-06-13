@@ -1,49 +1,30 @@
 package com.khiladiadda.rummy;
-
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
-
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import com.google.gson.Gson;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
 import com.khiladiadda.dialogs.AppDialog;
 import com.khiladiadda.dialogs.interfaces.IOnNetworkErrorListener;
-import com.khiladiadda.gameleague.GamesFinalResultActivity;
 import com.khiladiadda.network.model.response.RummyGameModel;
-import com.khiladiadda.preference.AppSharedPreference;
-import com.khiladiadda.utility.AppConstant;
-import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
-
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-
 import butterknife.BindView;
-
 public class RummyGameWebActivity extends BaseActivity {
-
     @BindView(R.id.web_view)
     WebView webViewGame;
     private String info;
     private String gameurl;
-
     @Override
     protected int getContentView() {
         return R.layout.activity_game_web;
     }
-
     @Override
     protected void initViews() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -100,11 +81,12 @@ public class RummyGameWebActivity extends BaseActivity {
             RummyGameModel filteredData = new Gson().fromJson(data, RummyGameModel.class);
             if (filteredData.getRedirectionType().equals("exit") && filteredData.getRedirectionParams().getRedirectionUrl() != null &&
                     filteredData.getRedirectionParams().getRedirectionUrl().equals("addMoney")) {
-                AppDialog.showRummyRechargeMsg(RummyGameWebActivity.this, "Recharge Now");
+             /*AppDialog.showRummyRechargeMsg(RummyGameWebActivity.this, "Recharge Now");*/
+                AppDialog.showInsufficientRummyDialog(RummyGameWebActivity.this);
                 Log.e("TAG", "receiveMessage: ");
             } else if (filteredData.getRedirectionType().equals("RELOAD")) {
                 finish();
-                Intent intLeaderboard = new Intent(RummyGameWebActivity.this, RummyGameWebActivity.class);
+                Intent intLeaderboard=new Intent(RummyGameWebActivity.this,RummyGameWebActivity.class);
                 intLeaderboard.putExtra("info", info);
                 startActivity(intLeaderboard);
             } else if (filteredData.getRedirectionType().equals("exit") || filteredData.getRedirectionType().equals("EXIT")) {

@@ -11,12 +11,23 @@ public class RummyResponse extends BaseResponse {
     @SerializedName("response")
     @Expose
     private List<RummyDetails> response;
+    @SerializedName("lastGames")
+    @Expose
+    private List<RummyDetails> mLiveTableRes;
     @SerializedName("banners")
     @Expose
     private List<BannerDetails> banner = null;
 
     public List<RummyDetails> getResponse() {
         return response;
+    }
+
+    public List<RummyDetails> getmLiveTableRes() {
+        return mLiveTableRes;
+    }
+
+    public void setmLiveTableRes(List<RummyDetails> mLiveTableRes) {
+        this.mLiveTableRes = mLiveTableRes;
     }
 
     public void setResponse(List<RummyDetails> response) {

@@ -8,5 +8,5 @@ public interface IRummyPresenter extends IBasePresenter {
 
     void getRummyList(String arenaType);
     void getRummyRefreshToken();
-    void getCheckGameStatus();
+    void getCheckGameStatus(String cardId);
 }

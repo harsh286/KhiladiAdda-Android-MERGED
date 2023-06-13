@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/LeagueCardAppearance"
+    android:layout_marginTop="8dp"
+    tools:ignore="MissingDefaultResource">
+
+    <RelativeLayout
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_8">
+        <TextView
+            android:id="@+id/tv_game_mode_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/margin_5"
+            android:fontFamily="@font/productsansregular"
+            android:gravity="left"
+            android:padding="@dimen/padding_5"
+            android:text="Game mode:"
+            android:textColor="#909090"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_game_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_game_mode_title"
+            android:fontFamily="@font/productsansregular"
+            android:gravity="left"
+            android:padding="@dimen/padding_5"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            android:layout_below="@+id/tv_game_mode"
+            android:layout_marginStart="@dimen/margin_8"
+            android:background="@drawable/rummy_players_rectangle"
+            android:fontFamily="@font/productsansregular"
+            android:padding="@dimen/padding_5"
+            android:paddingStart="@dimen/margin_8"
+            android:paddingEnd="@dimen/margin_8"
+            android:text="2P"
+            android:textColor="#B8B8B8"
+            android:textSize="@dimen/text_14"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_players_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_game_mode"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            android:layout_toEndOf="@+id/tv_players"
+            android:background="@drawable/rummy_players_rectangle"
+            android:fontFamily="@font/productsansregular"
+            android:padding="@dimen/padding_5"
+            android:paddingStart="@dimen/margin_8"
+            android:paddingEnd="@dimen/margin_8"
+            android:text="3-6P"
+            android:textColor="#B8B8B8"
+            android:textSize="@dimen/text_14"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tv_join_now"
+            android:layout_width="98dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="4dp"
+            android:textSize="@dimen/text_12"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/button_background_selected"
+            android:gravity="center"
+            android:padding="@dimen/padding_5"
+            android:paddingStart="@dimen/text_12"
+            android:paddingEnd="@dimen/text_12"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            tools:text="Rejoin Now" />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

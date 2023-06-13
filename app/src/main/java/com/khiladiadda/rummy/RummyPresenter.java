@@ -59,8 +59,8 @@ public class RummyPresenter implements IRummyPresenter {
 
 
     @Override
-    public void getCheckGameStatus() {
-        mSubscription = mInteractor.getCheckGameStatus(mGetLudoCheckApiListener);
+    public void getCheckGameStatus(String cardId) {
+        mSubscription = mInteractor.getCheckGameStatus(mGetLudoCheckApiListener,cardId);
     }
 
     private IApiListener<RummyCheckGameResponse> mGetLudoCheckApiListener = new IApiListener<RummyCheckGameResponse>() {

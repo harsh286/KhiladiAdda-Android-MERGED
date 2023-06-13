@@ -74,7 +74,6 @@ import java.util.Map;
 import butterknife.BindView;
 
 public class CallBreakActivity extends BaseActivity implements ICallBreakView, IOnItemClickListener, CallBreakDialog.IOnConfirmClickListener {
-
     @BindView(R.id.iv_back)
     ImageView mBackIV;
     @BindView(R.id.tv_activity_name)
@@ -277,13 +276,13 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.ludoadda_download_popup);
         TextView tv = dialog.findViewById(R.id.textView9);
-        tv.setText("It seem like you haven't downloaded our CourtPiece Pro game to play contests, So please click on download button to download the game.");
+        tv.setText("It seem like you haven't downloaded our CallBreak Pro game to play contests, So please click on download button to download the game.");
         ProgressBar progressBar = dialog.findViewById(R.id.pb_apk_download);
         AppCompatButton iv_playstore = dialog.findViewById(R.id.iv_download);
         ImageView ivCross = dialog.findViewById(R.id.iv_cross);
         TextView tvMsg = dialog.findViewById(R.id.textView9);
         if (mDownUp == 2) {
-            tvMsg.setText("It seem like you haven't update our CourtPiece pro game to play contests, So please click on download button to download the game.");
+            tvMsg.setText("It seem like you haven't update our CallBreak pro game to play contests, So please click on download button to download the game.");
         }
         ivCross.setOnClickListener(view -> {
             dialog.dismiss();

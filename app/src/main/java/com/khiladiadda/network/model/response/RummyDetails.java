@@ -6,19 +6,13 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class RummyDetails {
+    public Integer getNumPlayers() {
+        return numPlayers;
+    }
 
-    @SerializedName("_id")
-    @Expose
-    private String id;
     @SerializedName("arenaType")
     @Expose
     private String arenaType;
-    @SerializedName("numPlayers")
-    @Expose
-    private Integer numPlayers;
-    @SerializedName("maxWin")
-    @Expose
-    private Integer maxWin;
     @SerializedName("stake")
     @Expose
     private Integer stake;
@@ -34,16 +28,15 @@ public class RummyDetails {
     @SerializedName("rake")
     @Expose
     private Integer rake;
-    @SerializedName("cardId")
+    @SerializedName("numPlayers")
     @Expose
-    private String cardId;
+    private Integer numPlayers;
+    @SerializedName("players")
+    @Expose
+    private List<PlayersDetails> mPlayersDetails;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setNumPlayers(Integer numPlayers) {
+        this.numPlayers = numPlayers;
     }
 
     public String getArenaType() {
@@ -52,22 +45,6 @@ public class RummyDetails {
 
     public void setArenaType(String arenaType) {
         this.arenaType = arenaType;
-    }
-
-    public Integer getNumPlayers() {
-        return numPlayers;
-    }
-
-    public void setNumPlayers(Integer numPlayers) {
-        this.numPlayers = numPlayers;
-    }
-
-    public Integer getMaxWin() {
-        return maxWin;
-    }
-
-    public void setMaxWin(Integer maxWin) {
-        this.maxWin = maxWin;
     }
 
     public Integer getStake() {
@@ -110,11 +87,11 @@ public class RummyDetails {
         this.rake = rake;
     }
 
-    public String getCardId() {
-        return cardId;
+    public List<PlayersDetails> getmPlayersDetails() {
+        return mPlayersDetails;
     }
 
-    public void setCardId(String cardId) {
-        this.cardId = cardId;
+    public void setmPlayersDetails(List<PlayersDetails> mPlayersDetails) {
+        this.mPlayersDetails = mPlayersDetails;
     }
 }
