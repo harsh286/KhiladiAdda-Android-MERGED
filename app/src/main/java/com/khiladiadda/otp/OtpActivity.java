@@ -237,7 +237,11 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
             mPresenter.getMasterData();
             MoEAnalyticsHelper.INSTANCE.setUniqueId(this, responseModel.getJwt());
             Properties properties = new Properties();
-            MoEAnalyticsHelper.INSTANCE.trackEvent(this, "LoginUser", properties);
+            if (mFrom == AppConstant.FROM_REGISTRATION_OTP) {
+                MoEAnalyticsHelper.INSTANCE.trackEvent(this, "SignupUser", properties);
+            } else {
+                MoEAnalyticsHelper.INSTANCE.trackEvent(this, "LoginUser", properties);
+            }
             AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AFInAppEventType.LOGIN, null, new AppsFlyerRequestListener() {
                 @Override
                 public void onSuccess() {

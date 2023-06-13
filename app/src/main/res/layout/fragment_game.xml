@@ -57,7 +57,6 @@
                 <ImageView
                     android:id="@+id/iv_codepieces"
                     style="@style/DashboardGameImageView"
-                    android:layout_margin="@dimen/margin_10"
                     android:src="@drawable/codepiece" />
                 <ImageView
                     android:id="@+id/iv_ludo"
