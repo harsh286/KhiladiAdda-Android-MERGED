@@ -530,7 +530,7 @@ public class AppDialog {
                 AppUtilityMethods.showMsg(activity, "Challenge can not be of less than 10 coins", false);
             } else if (Integer.parseInt(amount) > 100000) {
                 AppUtilityMethods.showMsg(activity, "Challenge can not be of greater than 100000 coins", false);
-            } else if (Integer.parseInt(amount) % 10 != 0) {
+            } else if (Integer.parseInt(amount) % 10!=0){
                 AppUtilityMethods.showMsg(activity, "Challenge coins must be multiple of 10.(Ex-10,20,30,40,50,100 and so on)", false);
             } else if (Integer.parseInt(amount) > walletBalance) {
                 AppUtilityMethods.showRechargeMsg(activity, "Your wallet balance is insufficient. Please recharge your wallet to play and earn.");

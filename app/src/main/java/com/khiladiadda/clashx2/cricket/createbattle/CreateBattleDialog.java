@@ -161,7 +161,7 @@ public class CreateBattleDialog extends Dialog implements View.OnClickListener {
         String amount = mAmountET.getText().toString().trim();
         if (mAmountET.getText().toString().trim().isEmpty()) {
             AppUtilityMethods.showMsg(getContext(), "Amount can not be blank", false);
-        } else if (Integer.parseInt(amount) < 10) {
+        } else if (Integer.parseInt(amount) < 3) {
             AppUtilityMethods.showMsg(getContext(), "Challenge can not be of less than 10 coins", false);
         } else if (Integer.parseInt(amount) > 5000) {
             AppUtilityMethods.showMsg(getContext(), "Battle can not be  greater than 5000 coins", false);

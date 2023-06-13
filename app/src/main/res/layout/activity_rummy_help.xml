@@ -83,17 +83,20 @@
         <TextView
             android:id="@+id/tv_one"
             style="@style/RummyModeButton"
-            android:text="51 Pool" />
+            android:textStyle="bold"
+            android:text="Pool 51" />
 
         <TextView
             android:id="@+id/tv_two"
             style="@style/RummyModeButton"
-            android:text="101 Pool" />
+            android:textStyle="bold"
+            android:text="Pool 101" />
 
         <TextView
             android:id="@+id/tv_three"
             style="@style/RummyModeButton"
-            android:text="201 Pool" />
+            android:textStyle="bold"
+            android:text="Pool 201" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

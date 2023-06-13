@@ -76,10 +76,6 @@ public class RummyHelpActivity extends BaseActivity implements IRummyHelpRuleVie
     TextView mPaymentHistoryTv;
     @BindView(R.id.tv_history)
     TextView mHistoryTv;
-    /* @BindView(R.id.vv_player)
-     VideoView mPlayerVv;*/
-   /* @BindView(R.id.pb_buffer)
-    ProgressBar mBufferPb;*/
     @BindView(R.id.error_tv)
     TextView mErrorTV;
     private Uri mUri;
@@ -137,53 +133,41 @@ public class RummyHelpActivity extends BaseActivity implements IRummyHelpRuleVie
             case R.id.tv_points:
                 mCategoryType = 1;
                 modeSet(1);
-//                getData();
                 break;
 
             case R.id.tv_pool:
                 mCategoryType = 3;
                 modeSet(2);
-//                getData();
                 break;
 
             case R.id.tv_deal:
                 mCategoryType = 2;
                 modeSet(3);
-//                getData();
                 break;
 
             case R.id.tv_tips:
                 mCategoryType = 4;
                 modeSet(4);
-//                getData();
                 break;
 
             case R.id.tv_offer:
                 mCategoryType = 5;
                 modeSet(5);
-//                getData();
-
                 break;
 
             case R.id.tv_one:
                 mSubCategoryType = 1;
                 modeSubSet(6);
-//                getData();
-
                 break;
 
 
             case R.id.tv_two:
                 mSubCategoryType = 2;
                 modeSubSet(7);
-//                getData();
                 break;
-
-
             case R.id.tv_three:
                 mSubCategoryType = 3;
                 modeSubSet(8);
-//                getData();
                 break;
 
             case R.id.iv_translator:
@@ -196,7 +180,6 @@ public class RummyHelpActivity extends BaseActivity implements IRummyHelpRuleVie
     private void getData() {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
-            manageVideoBuffer();
             mPresenter.getRummyHelpRuleStatus(new RummyHelpRequest(mCategoryType, mSubCategoryType, mLanguage));
         } else {
             Snackbar.make(mHelpRv, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
@@ -229,8 +212,8 @@ public class RummyHelpActivity extends BaseActivity implements IRummyHelpRuleVie
                 mModeOptionLL.setVisibility(View.VISIBLE);
                 mPoolTv.setSelected(true);
                 mPoolTv.setTextColor(getResources().getColor(R.color.battle_red));
-                mOneTv.setText("51 Pool");
-                mTwoTv.setText("101 Pool");
+                mOneTv.setText("Pool 51");
+                mTwoTv.setText("Pool 101");
                 mThreeTv.setVisibility(View.VISIBLE);
                 modeSubSet(6);
                 break;
@@ -346,7 +329,7 @@ public class RummyHelpActivity extends BaseActivity implements IRummyHelpRuleVie
      * initialize youtube player via Fragment and get instance of YoutubePlayer
      */
     private void initializeYoutubePlayer(String youtubeKey) {
-        youTubePlayerView =findViewById(R.id.youtube_player_view);
+        youTubePlayerView = findViewById(R.id.youtube_player_view);
         getLifecycle().addObserver(youTubePlayerView);
         youTubePlayerView.enableBackgroundPlayback(false);
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
@@ -371,23 +354,6 @@ public class RummyHelpActivity extends BaseActivity implements IRummyHelpRuleVie
         hideProgress();
         mHelpRulesPointData.clear();
 
-    }
-
-    private void manageVideoBuffer() {
-        /*mPlayerVv.setOnPreparedListener(new MediaPlayer.OnPreparedListener(){
-            public void onPrepared(MediaPlayer mp) {
-                mp.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
-                    @Override
-                    public void onBufferingUpdate(MediaPlayer mp,int percent) {
-                        if (percent==100){
-                            mBufferPb.setVisibility(View.GONE);
-                        } else {
-                            mBufferPb.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-            }
-        });*/
     }
 
 }
