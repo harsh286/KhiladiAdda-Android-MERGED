@@ -51,7 +51,6 @@ import java.util.Date;
 import butterknife.BindView;
 
 public class LudoResultActivity extends BaseActivity implements ILudoResultView, IOnLudoUpdateListener {
-
     @BindView(R.id.iv_back)
     ImageView mBackIV;
     @BindView(R.id.tv_activity_name)
@@ -99,10 +98,10 @@ public class LudoResultActivity extends BaseActivity implements ILudoResultView,
     private int mContestType;
     private MediaPlayer mMediaPlayer;
     Handler handler = new Handler();
-
+    private boolean isRoomCodeCopy=false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         LocalBroadcastManager.getInstance(this).registerReceiver(mLudoNotificationReceiver, new IntentFilter("com.khiladiadda.LUDO_NOTIFY"));
     }
@@ -326,6 +325,15 @@ public class LudoResultActivity extends BaseActivity implements ILudoResultView,
                 ClipData clip = ClipData.newPlainText(getString(R.string.room_id), mLudoContest.getRoomId());
                 clipboard.setPrimaryClip(clip);
                 Snackbar.make(mWonBTN, "RoomCode is copied. Go to LudoKing and paste on RoomCode.", Snackbar.LENGTH_SHORT).show();
+                LudoUpdateRequest request = new LudoUpdateRequest(mRoomCode,true);
+                if (new NetworkStatus(this).isInternetOn()) {
+                    isRoomCodeCopy=true;
+                    showProgress(getString(R.string.txt_progress_authentication));
+                    mPresenter.updateLudoContest(mLudoContest.getId(),request);
+                } else {
+                    isRoomCodeCopy=false;
+                    Snackbar.make(mActivityNameTV,R.string.error_internet,Snackbar.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.iv_notification:
                 startActivity(new Intent(this, NotificationActivity.class));
@@ -409,7 +417,8 @@ public class LudoResultActivity extends BaseActivity implements ILudoResultView,
     @Override
     public void onLudoResultSuccess(BaseResponse response) {
         hideProgress();
-        if (response.isStatus()) {
+        if (response.isStatus()){
+            if(!isRoomCodeCopy)
             showMsg(getString(R.string.text_ludo_result_declared), getString(R.string.text_ludo_result_lost), false);
         } else {
             AppUtilityMethods.showMsg(this, response.getMessage(), false);
@@ -423,14 +432,14 @@ public class LudoResultActivity extends BaseActivity implements ILudoResultView,
     }
 
     @Override
-    public void onUpdateLudo(String roomId) {
+    public void onUpdateLudo(String roomId,boolean isRoomCodeCopy){
         mRoomCode = roomId;
-        LudoUpdateRequest request = new LudoUpdateRequest(roomId);
+        LudoUpdateRequest request = new LudoUpdateRequest(roomId,isRoomCodeCopy);
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
             mPresenter.updateLudoContest(mLudoContest.getId(), request);
         } else {
-            Snackbar.make(mActivityNameTV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mActivityNameTV,R.string.error_internet,Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -543,7 +552,7 @@ public class LudoResultActivity extends BaseActivity implements ILudoResultView,
                     }
                 }
             } else {
-                Snackbar.make(mActivityNameTV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mActivityNameTV,R.string.error_internet, Snackbar.LENGTH_SHORT).show();
             }
         });
         mNoBTN.setOnClickListener(arg0 -> dialog.dismiss());
