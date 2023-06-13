@@ -116,11 +116,7 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                Map<String, Object> eventParameters2 = new HashMap<>();
-                eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-                eventParameters2.put(AppConstant.GAME, AppConstant.RUMMY);
-                eventParameters2.put(AppConstant.EntryFee, mEntryFee);
-                AppsFlyerLib.getInstance().logEvent(mContext, AppConstant.INVEST, eventParameters2);
+                AppUtilityMethods.appFlyersGameInvestEvent(mContext, mEntryFee.toString(), AppConstant.RUMMY);
                 //Mo Engage
                 Properties mProperties = new Properties();
                 mProperties.addAttribute(AppConstant.GAMETYPE, AppConstant.RUMMY);

@@ -481,12 +481,8 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
                 startActivity(new Intent(WordSearchDetailsActivity.this, WalletCashbackActivity.class));
             } else {
                 getData();
-                Map<String, Object> eventParameters2 = new HashMap<>();
-                eventParameters2.put(AFInAppEventParameterName.REVENUE, mEntryFee); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-                eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-                eventParameters2.put(AppConstant.GAME, AppConstant.WORD_SEARCH);
-                eventParameters2.put(AppConstant.EntryFee, mEntryFee);
-                AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+                //AppFlyer
+                AppUtilityMethods.appFlyersGameInvestEvent(this, mEntryFeeTV.toString(), AppConstant.WORD_SEARCH);
                 //Mo Engage
                 Properties mProperties = new Properties();
                 mProperties.addAttribute(AppConstant.GAMETYPE, AppConstant.WORD_SEARCH);

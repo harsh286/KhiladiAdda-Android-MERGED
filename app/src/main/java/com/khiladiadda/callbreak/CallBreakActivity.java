@@ -221,12 +221,8 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
         hideProgress();
         if (responseModel.isStatus()) {
             if (responseModel.getStatusCode() == 200 || responseModel.getStatusCode() == 202) { // okay
-                Map<String, Object> eventParameters2 = new HashMap<>();
-                eventParameters2.put(AFInAppEventParameterName.REVENUE, responseModel.getResponse().getWinningAmount()); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-                eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-                eventParameters2.put(AppConstant.GAME, AppConstant.WORD_SEARCH);
-                eventParameters2.put(AppConstant.EntryFee, mEntryFee);
-                AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.CALL_BREAK_JOIN, eventParameters2);
+                //AppFlyer
+                AppUtilityMethods.appFlyersGameInvestEvent(this, responseModel.getResponse().getWinningAmount().toString(), AppConstant.WORD_SEARCH);
                 //Mo Engage
                 Properties mProperties = new Properties();
                 mProperties.addAttribute(AppConstant.GAMETYPE, AppConstant.CALL_BREAK_JOIN);

@@ -20,8 +20,6 @@ import androidx.lifecycle.Lifecycle;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
-import com.appsflyer.AFInAppEventParameterName;
-import com.appsflyer.AppsFlyerLib;
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -471,11 +469,7 @@ public class CreateTeamActivity extends BaseActivity implements ICreateBattleVie
         if (responseModel.isStatus()) {
             showMsgBigDialog(responseModel.getMessage());
             mAppPreference.setProfileData(responseModel.getProfile());
-            Map<String, Object> eventParameters2 = new HashMap<>();
-            eventParameters2.put(AFInAppEventParameterName.REVENUE, mAmount); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-            eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-            eventParameters2.put(AppConstant.GAME, "ClashX Create");
-            AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+            AppUtilityMethods.appFlyersGameInvestEvent(this, mAmount.toString(), "ClashX Create");
         } else {
             AppUtilityMethods.showMsg(this, responseModel.getMessage(), true);
         }

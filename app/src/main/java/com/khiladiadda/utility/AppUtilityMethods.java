@@ -41,6 +41,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.appsflyer.AFInAppEventParameterName;
+import com.appsflyer.AppsFlyerLib;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.interfaces.IOnDateSetListener;
@@ -73,7 +75,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1607,6 +1611,21 @@ public class AppUtilityMethods {
             des += tmp;
         }
         return des;
+    }
+
+    public static void appFlyersGameInvestEvent(Context context, String amount, String eventName){
+        Map<String, Object> eventParameters2 = new HashMap<>();
+        eventParameters2.put(AFInAppEventParameterName.REVENUE, amount); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
+        eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
+        eventParameters2.put(AppConstant.GAME, eventName);
+        AppsFlyerLib.getInstance().logEvent(context, AppConstant.INVEST, eventParameters2);
+    }
+    public static void appFlyersLoginEvent(Context context, String socialName, String eventName,String mMobileNumber){
+        Map<String, Object> eventParameters2 = new HashMap<>();
+//        eventParameters2.put(AppConstant.LOGIN_NUMBER, mMobileNumber);
+        eventParameters2.put(AppConstant.LOGIN_METHOD, socialName);
+        eventParameters2.put(AppConstant.LOGIN, eventName);
+        AppsFlyerLib.getInstance().logEvent(context, AppConstant.LOGIN, eventParameters2);
     }
 
 }

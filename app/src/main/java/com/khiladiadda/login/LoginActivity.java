@@ -28,8 +28,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.appsflyer.AFInAppEventParameterName;
-import com.appsflyer.AppsFlyerLib;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -644,11 +642,7 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
     }
 
     private void appsFlyer(String socialName, String mMobileNumber) {
-        Map<String, Object> eventParameters2 = new HashMap<>();
-        eventParameters2.put(AppConstant.LOGIN_NUMBER, mMobileNumber);
-        eventParameters2.put(AppConstant.LOGIN_METHOD, socialName);
-        eventParameters2.put(AppConstant.LOGIN, "login");
-        AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+        AppUtilityMethods.appFlyersLoginEvent(this, socialName, "login", mMobileNumber);
     }
 
     private void truecallerLogin() {

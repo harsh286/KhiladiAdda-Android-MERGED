@@ -396,11 +396,10 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
     }
 
     private void appsFlyer(String socialName, String mMobileNumber) {
-        Map<String, Object> eventParameters2 = new HashMap<>();
-        eventParameters2.put(AppConstant.LOGIN_NUMBER, mMobileNumber);
-        eventParameters2.put(AppConstant.LOGIN_METHOD, socialName);
-        eventParameters2.put(AppConstant.LOGIN, "login");
-        AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+        if (mFrom == AppConstant.FROM_REGISTRATION_OTP)
+            AppUtilityMethods.appFlyersLoginEvent(this, socialName, "SIGNUP", mMobileNumber);
+        else
+            AppUtilityMethods.appFlyersLoginEvent(this, socialName, "LOGIN", mMobileNumber);
     }
 
 }

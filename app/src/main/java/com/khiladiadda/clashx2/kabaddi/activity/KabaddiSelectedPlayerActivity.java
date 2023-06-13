@@ -365,11 +365,7 @@ public class KabaddiSelectedPlayerActivity extends BaseActivity implements IHTHB
         if (responseModel.isStatus()) {
             showMsgBigDialog(responseModel.getMessage());
             mAppPreference.setProfileData(responseModel.getProfile());
-            Map<String, Object> eventParameters2 = new HashMap<>();
-            eventParameters2.put(AFInAppEventParameterName.REVENUE, mAmount); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-            eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-            eventParameters2.put(AppConstant.GAME, "ClashX Joined");
-            AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+            AppUtilityMethods.appFlyersGameInvestEvent(this, mAmount.toString(), "ClashX Joined");
         } else {
             AppUtilityMethods.showMsg(this, responseModel.getMessage(), true);
         }

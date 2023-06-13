@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsflyer.AFInAppEventParameterName;
-import com.appsflyer.AppsFlyerLib;
 import com.bumptech.glide.Glide;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
@@ -220,12 +219,7 @@ public class TournamenetDetailActivity extends BaseActivity implements ITourname
         hideProgress();
         loadGamelinks(AppConstant.GAMEURLDROIDO, response);
         //Apps Flyer
-        Map<String, Object> eventParameters2 = new HashMap<>();
-        eventParameters2.put(AFInAppEventParameterName.REVENUE, entryPrize); // Estimated revenue from the purchase. The revenue value should not contain comma separators, currency, special characters, or text.
-        eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-        eventParameters2.put(AppConstant.GAME, "Droid_DO");
-        eventParameters2.put(AppConstant.EntryFee, entryPrize);
-        AppsFlyerLib.getInstance().logEvent(getApplicationContext(), AppConstant.INVEST, eventParameters2);
+        AppUtilityMethods.appFlyersGameInvestEvent(this, entryPrize.toString(), "Droid_DO");
         //Mo Engage
         Properties mProperties = new Properties();
         mProperties.addAttribute(AppConstant.GAMETYPE, "Droid_DO");
