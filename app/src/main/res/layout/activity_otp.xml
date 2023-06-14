@@ -69,8 +69,8 @@
 
                 <EditText
                     android:id="@+id/et_one"
-                    android:textCursorDrawable="@drawable/color_cursor"
-                    style="@style/OtpEditText" />
+                    style="@style/OtpEditText"
+                    android:textCursorDrawable="@drawable/color_cursor" />
 
                 <EditText
                     android:id="@+id/et_two"

@@ -3,9 +3,11 @@ package com.khiladiadda.login;
 import static com.khiladiadda.utility.AppConstant.RC_ASK_PERMISSIONS_GPS;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
@@ -23,7 +25,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.IntentSenderRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -33,6 +38,8 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest;
+import com.google.android.gms.auth.api.identity.Identity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -103,6 +110,7 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
     private String mFBToken, mUserName, mMobileNumber, mEmail;
     private boolean isAllowed = true;
     private long mLastClickTime = 0;
+    private Activity activity;
     private GoogleSignInClient mGoogleSignInClient;
 
     @Override
@@ -123,6 +131,8 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
 
     @Override
     protected void initViews() {
+
+        activity = this;
         Window window = this.getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
         mLoginBTN.setOnClickListener(this);
@@ -131,6 +141,8 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
         mGoogleIV.setOnClickListener(this);
         mNeedSupportLL.setOnClickListener(this);
         mTruecaller.setOnClickListener(this);
+
+        autofillNumber();
     }
 
     @Override
@@ -703,6 +715,35 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
         mGoogleSignInClient.revokeAccess()
                 .addOnCompleteListener(this, task -> {
                 });
+    }
+
+    private void autofillNumber() {
+        GetPhoneNumberHintIntentRequest request = GetPhoneNumberHintIntentRequest.builder().build();
+        ActivityResultLauncher<IntentSenderRequest> phoneNumberHintIntentResultLauncher =
+                registerForActivityResult(
+                        new ActivityResultContracts.StartIntentSenderForResult(), new ActivityResultCallback<ActivityResult>() {
+                            @Override
+                            public void onActivityResult(ActivityResult result) {
+                                try {
+                                    String phoneNumber = Identity.getSignInClient(getApplicationContext()).getPhoneNumberFromIntent(result.getData());
+                                    mEmailET.setText(phoneNumber.substring((phoneNumber.length() - 10), phoneNumber.length()));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+        Identity.getSignInClient(this)
+                .getPhoneNumberHintIntent(request)
+                .addOnSuccessListener(result -> {
+                    try {
+                        IntentSender intentSender = result.getIntentSender();
+                        phoneNumberHintIntentResultLauncher.launch(new IntentSenderRequest.Builder(intentSender).build());
+                    } catch (Exception e) {
+                        Log.i("Error launching", "error occurred in launching Activity result");
+                    }
+                })
+                .addOnFailureListener(e -> Log.i("Failure occurred", "Failure getting phone number"+ e));
     }
 
 }

@@ -3,6 +3,7 @@ package com.khiladiadda.otp;
 import static android.os.Build.VERSION.SDK_INT;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -24,7 +26,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -32,6 +39,12 @@ import com.appsflyer.AFInAppEventParameterName;
 import com.appsflyer.AFInAppEventType;
 import com.appsflyer.AppsFlyerLib;
 import com.appsflyer.attribution.AppsFlyerRequestListener;
+import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest;
+import com.google.android.gms.auth.api.identity.Identity;
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
@@ -43,6 +56,7 @@ import com.khiladiadda.network.model.response.MasterResponse;
 import com.khiladiadda.network.model.response.OtpResponse;
 import com.khiladiadda.otp.interfaces.IOtpPresenter;
 import com.khiladiadda.otp.interfaces.IOtpView;
+import com.khiladiadda.otp.service.SmsBroadcastReceiver;
 import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.registration.RegistrationActivity;
 import com.khiladiadda.utility.AppConstant;
@@ -57,6 +71,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 import butterknife.BindView;
@@ -92,6 +109,10 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
     private List<EditText> mEditTexts;
     private int mFrom;
 
+    private Activity activity;
+    private SmsBroadcastReceiver smsBroadcastReceiver;
+
+
     @Override
     protected int getContentView() {
         return R.layout.activity_otp;
@@ -109,6 +130,7 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
 
     @Override
     protected void initVariables() {
+        activity = this;
         mPresenter = new OtpPresenter(this);
         mEditTexts = Arrays.asList(mOneET, mTwoET, mThreeET, mFourET, mFiveET, mSixET);
         mFrom = getIntent().getIntExtra(AppConstant.FROM, 0);
@@ -128,6 +150,8 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
             editText.addTextChangedListener(new OtpTextWatcher(i));
             editText.setOnKeyListener(this);
         }
+        startSmsUserConsent();
+
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -406,4 +430,103 @@ public class OtpActivity extends BaseActivity implements IOtpView, View.OnKeyLis
             AppUtilityMethods.appFlyersLoginEvent(this, socialName, "LOGIN", mMobileNumber);
     }
 
+
+    private void startSmsUserConsent() {
+        SmsRetrieverClient client = SmsRetriever.getClient(this);
+        //We can add sender phone number or leave it blank
+        // I'm adding null here
+
+        client.startSmsUserConsent(null).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+
+            @Override
+            public void onSuccess(Void aVoid) {
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 200) {
+            if ((resultCode == RESULT_OK) && (data != null)) {
+                //That gives all message to us.
+                // We need to get the code from inside with regex
+                String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
+                getOtpFromMessage(message);
+            }
+        }
+    }
+
+    private String[] breakOtpNumber(int number) {
+        String[] arr = String.valueOf(number).split("(?<=.)");
+        return String.valueOf(number).split("(?<=.)");
+    }
+    private void getOtpFromMessage(String message) {
+        // This will match any 6 digit number in the message
+        Pattern pattern = Pattern.compile("(|^)\\d{6}");
+        Matcher matcher = pattern.matcher(message);
+        if (matcher.find()) {
+            Log.e("OTP Text", "getOtpFromMessage: " + matcher.group(0));
+            String[] num = breakOtpNumber(Integer.parseInt(Objects.requireNonNull(matcher.group(0))));
+                mOneET.setText(num[0]);
+                mTwoET.setText(num[1]);
+                mThreeET.setText(num[2]);
+                mFourET.setText(num[3]);
+                mFiveET.setText(num[4]);
+                mSixET.setText(num[5]);
+
+                doCursorAligment();
+
+        }
+    }
+
+    private void registerBroadcastReceiver() {
+        smsBroadcastReceiver = new SmsBroadcastReceiver();
+        smsBroadcastReceiver.smsBroadcastReceiverListener =
+                new SmsBroadcastReceiver.SmsBroadcastReceiverListener() {
+                    @Override
+                    public void onSuccess(Intent intent) {
+                        startActivityForResult(intent, 200);
+                    }
+
+                    @Override
+                    public void onFailure() {
+                    }
+                };
+        IntentFilter intentFilter = new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION);
+        registerReceiver(smsBroadcastReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerBroadcastReceiver();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(smsBroadcastReceiver);
+
+    }
+
+    private void doCursorAligment() {
+        if (mSixET.getText() != null)
+            mSixET.setSelection(mSixET.getText().length());
+        if (mFiveET.getText() != null)
+            mFiveET.setSelection(mSixET.getText().length());
+        if (mFourET.getText() != null)
+            mFourET.setSelection(mSixET.getText().length());
+        if (mThreeET.getText() != null)
+            mThreeET.setSelection(mSixET.getText().length());
+        if (mTwoET.getText() != null)
+            mTwoET.setSelection(mSixET.getText().length());
+        if (mOneET.getText() != null)
+            mOneET.setSelection(mSixET.getText().length());
+    }
 }
