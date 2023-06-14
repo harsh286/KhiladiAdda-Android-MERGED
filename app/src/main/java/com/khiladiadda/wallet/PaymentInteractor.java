@@ -12,6 +12,7 @@ import com.khiladiadda.network.model.request.CashfreeSavePayment;
 import com.khiladiadda.network.model.request.ChecksumRequest;
 import com.khiladiadda.network.model.request.EaseBuzzHashRequest;
 import com.khiladiadda.network.model.request.EaseBuzzSaveRequest;
+import com.khiladiadda.network.model.request.LinkBajajWalletRequest;
 import com.khiladiadda.network.model.request.PaySharpRequest;
 import com.khiladiadda.network.model.request.PaykunRequest;
 import com.khiladiadda.network.model.request.PaymentRequest;
@@ -272,6 +273,11 @@ public class PaymentInteractor {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
         return manager.createObservable(service.checkBajajValidation(updateBalanceRequest)).subscribe(new SubscriberCallback<>(mUpdateBalanceListener));
+    }
+    public Subscription linkBajajWallet(IApiListener<BaseResponse> mLinkBajajWallet, LinkBajajWalletRequest linkBajajWalletRequest) {
+        ApiManager manager = ApiManager.getInstance();
+        ApiService service = manager.createService();
+        return manager.createObservable(service.getProfileLinkBajajWallet(linkBajajWalletRequest)).subscribe(new SubscriberCallback<>(mLinkBajajWallet));
     }
 
 }

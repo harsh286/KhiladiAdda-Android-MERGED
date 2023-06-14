@@ -100,6 +100,7 @@ public class AppConstant {
     public static final int FROM_NEOKRED = 8;
     public static final String MATCH_TYPE = "MATCH_TYPE";
     public static final String API_REMAINING_LIMIT = "fetch/remaining-limit";
+    public static final String API_PROFILE_LINK_BAJAJ_WALLET="profile/link/bajaj-wallet";
     public static final String API_CX_BANNER = "user/fantasy/fetch-banners";
     public static final String API_RACE_CONDITION = "racecondition/createContact";
     public static final String API_RACE_CONDITION_FINAL = "racecondition/transfer/{beneId}/{amount}/{otp}";
@@ -108,7 +109,7 @@ public class AppConstant {
 //    public static final String API_FETCH_GAMER_CASH = "/user/gamercash/fethc-gc";
 //    public static final String API_SWITCH_GAMER_CASH = "/user/gamercash/add-coins";
 
-    public static final String API_GET_RUMMY_LIST = "/user/rummy/fetchCards";
+    public static final String API_GET_RUMMY_LIST = "/user/rummy/new-fetchCards/";
     public static final String API_GET_RUMMY_REFRESH_TOKEN = "/user/rummy/fetchRefreshToken";
     public static final String API_GET_CALLBREAK_LIST = "/user/callbreak/fetchCards";
     public static final String API_GET_CALLBREAK_JOIN = "/user/callbreak/joinCard/{id}";

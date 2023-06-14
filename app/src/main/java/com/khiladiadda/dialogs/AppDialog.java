@@ -1,5 +1,4 @@
 package com.khiladiadda.dialogs;
-
 import static android.os.Build.VERSION.SDK_INT;
 
 import android.app.Activity;
@@ -74,9 +73,7 @@ import com.moengage.core.model.AppStatus;
 
 import java.text.DecimalFormat;
 import java.util.Random;
-
 public class AppDialog {
-
     public static Dialog getAppProgressDialog(Context context, String message) {
         Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -275,7 +272,6 @@ public class AppDialog {
 //        dialog.show();
 //        return dialog;
 //    }
-
     public static Dialog showLiveCredentialDialog(Activity activity, String username, String password, int from) {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1396,7 +1392,7 @@ public class AppDialog {
             long lastClickTime = 0;
 
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
                 if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
                     return;
                 }

@@ -3,6 +3,7 @@ package com.khiladiadda.wallet.interfaces;
 import com.khiladiadda.base.interfaces.IBasePresenter;
 import com.khiladiadda.network.model.request.BajajPayEncryptedRequest;
 import com.khiladiadda.network.model.request.CashfreeSavePayment;
+import com.khiladiadda.network.model.request.LinkBajajWalletRequest;
 import com.khiladiadda.network.model.request.PaySharpRequest;
 import com.khiladiadda.network.model.request.PaymentRequest;
 import com.khiladiadda.network.model.request.PayuSavePayment;
@@ -67,6 +68,7 @@ public interface IPaymentPresenter extends IBasePresenter {
     void getResendOtp(BajajPayEncryptedRequest bajajPayEncryptedRequest);
 
     void verifyOTPData(BajajPayEncryptedRequest bajajPayVerifyOtpEncryptedRequest);
+    void getLinkBajajWallet(LinkBajajWalletRequest linkBajajWalletRequest);
 
     void doPayBajajPayAuthOTP(BajajPayEncryptedRequest bajajPayEncryptedRequest);
 

@@ -9,6 +9,7 @@ import com.khiladiadda.network.model.request.CashfreeSavePayment;
 import com.khiladiadda.network.model.request.ChecksumRequest;
 import com.khiladiadda.network.model.request.EaseBuzzHashRequest;
 import com.khiladiadda.network.model.request.EaseBuzzSaveRequest;
+import com.khiladiadda.network.model.request.LinkBajajWalletRequest;
 import com.khiladiadda.network.model.request.PaySharpRequest;
 import com.khiladiadda.network.model.request.PaymentRequest;
 import com.khiladiadda.network.model.request.PayuChecksumRequest;
@@ -517,6 +518,22 @@ public class PaymentPresenter implements IPaymentPresenter {
         @Override
         public void onError(ApiError error) {
             mView.onBajajPayVerifyOTPFailure(error);
+        }
+    };
+    @Override
+    public void getLinkBajajWallet(LinkBajajWalletRequest linkBajajWalletRequest) {
+        mSubscription = mInteractor.linkBajajWallet(mLinkBajajWalletListener,linkBajajWalletRequest);
+    }
+
+    private IApiListener<BaseResponse>mLinkBajajWalletListener = new IApiListener<BaseResponse>() {
+        @Override
+        public void onSuccess(BaseResponse response) {
+            mView.onLinkBajajSuccess(response);
+        }
+
+        @Override
+        public void onError(ApiError error) {
+            mView.onLinkBajajFailure(error);
         }
     };
 

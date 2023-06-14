@@ -16,6 +16,13 @@ public class RemainingLimitResponse extends BaseResponse {
     @SerializedName("bajaUPIHeader") @Expose private String bajaUPIHeader;
     @SerializedName("bajaWalletDetail") @Expose private String bajaWalletDetail;
     @SerializedName("bajaUPIDetail") @Expose private String bajaUPIDetail;
+    @SerializedName("bajajWallet") @Expose private BajajWallet mBajajWallet;
+    public BajajWallet getmBajajWallet() {
+        return mBajajWallet;
+    }
+    public void setmBajajWallet(BajajWallet mBajajWallet) {
+        this.mBajajWallet = mBajajWallet;
+    }
 
     public long getRemaining_add_limit() {
         return remaining_add_limit;

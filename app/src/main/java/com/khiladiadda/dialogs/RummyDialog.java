@@ -57,7 +57,10 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
     private int itemPosition, mNumberOfPlayersPosition;
     private Dialog mDialog;
 
-    public RummyDialog(@NonNull Context context, String mEntryFee, String totalBal, String mDepWinAmount, String token, String refreshToken, int theme, OnPlayClick mOnPlayClicked, List<PlayersDetails> mPlayerDetails, int itemPosition) {
+    private String mLatitute, mLongitude;
+
+
+    public RummyDialog(@NonNull Context context, String mEntryFee, String totalBal, String mDepWinAmount, String token, String refreshToken, int theme, OnPlayClick mOnPlayClicked, List<PlayersDetails> mPlayerDetails, int itemPosition, String mLatitute, String mLongitude) {
         super(context);
         this.mContext = context;
         this.mEntryFee = mEntryFee;
@@ -68,6 +71,8 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
         this.mOnPlayClicked = mOnPlayClicked;
         this.mPlayerDetails = mPlayerDetails;
         this.itemPosition = itemPosition;
+        this.mLatitute = mLatitute;
+        this.mLongitude = mLongitude;
     }
 
     @Override
@@ -133,7 +138,7 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
             case R.id.btn_play:
                 if (new NetworkStatus(mContext).isInternetOn()) {
                     showProgress(mContext.getString(R.string.txt_progress_authentication));
-                    mPresenter.getCheckGameStatus(mPlayerDetails.get(mNumberOfPlayersPosition).get_id());
+                    mPresenter.getCheckGameStatus(mPlayerDetails.get(mNumberOfPlayersPosition).get_id(),mLatitute,mLongitude);
                 } else {
                     Snackbar.make(mPlayBTN, mContext.getString(R.string.error_internet), Snackbar.LENGTH_LONG).show();
                 }
@@ -217,11 +222,11 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
         /*Below code for check user wallet balance if user balance is less then from entry fee the show wallet popup*/
         if (Double.parseDouble(mTotalBal) >= Double.parseDouble(mEntryAmount)) {
             try {
-                intLeaderboard.putExtra("info", convertToBase64(cardId));
+                intLeaderboard.putExtra("info",convertToBase64(cardId));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            Map<String, Object> eventParameters2 = new HashMap<>();
+            Map<String, Object> eventParameters2=new HashMap<>();
             eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
             eventParameters2.put(AppConstant.GAME, AppConstant.RUMMY);
             eventParameters2.put(AppConstant.EntryFee, mEntryFee);
