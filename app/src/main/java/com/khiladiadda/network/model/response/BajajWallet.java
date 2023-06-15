@@ -1,7 +1,5 @@
 package com.khiladiadda.network.model.response;
-
 import com.google.gson.annotations.SerializedName;
-
 public class BajajWallet {
     @SerializedName("isDelink")
     private boolean isDelink;
@@ -9,6 +7,26 @@ public class BajajWallet {
     private boolean isLinked;
     @SerializedName("mobile")
     private String mMobile;
+    @SerializedName("bajajAccessTocken")
+    private String bajajAccessTocken;
+    @SerializedName("bajajUserTocken")
+    private String bajajUserTocken;
+
+    public String getBajajAccessTocken() {
+        return bajajAccessTocken;
+    }
+
+    public void setBajajAccessTocken(String bajajAccessTocken) {
+        this.bajajAccessTocken = bajajAccessTocken;
+    }
+
+    public String getBajajUserTocken() {
+        return bajajUserTocken;
+    }
+
+    public void setBajajUserTocken(String bajajUserTocken) {
+        this.bajajUserTocken = bajajUserTocken;
+    }
 
     public boolean isDelink() {
         return isDelink;

@@ -167,6 +167,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     private IPaymentPresenter mPresenter;
     public String mAmountET;
     private long mGamerCash;
+    private String userToken="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -507,12 +508,12 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     /**
      * Get BajajPay balance From BajajPay
      */
-    private void getBajajPayBalance() {
+    private void getBajajPayBalance(){
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
             /**  Request to send data to BajajPay for Getting Balance  */
-            BajajPayGetBalanceRequest bajajPayGetBalanceRequest = new BajajPayGetBalanceRequest(AppConstant.merchantId, mAppPreference.getMobileNumberBP(), mAppPreference.getUserTokenBP(), AppConstant.BAJAJPAY_subMerchantId, AppConstant.subMerchantName);
-            String jsonData = new Gson().toJson(bajajPayGetBalanceRequest);
+            BajajPayGetBalanceRequest bajajPayGetBalanceRequest = new BajajPayGetBalanceRequest(AppConstant.merchantId,mAppPreference.getMobileNumberBP(), mAppPreference.getUserTokenBP(),"","");
+            String jsonData=new Gson().toJson(bajajPayGetBalanceRequest);
             String encryptData = NewAESEncrypt.encrypt(jsonData.trim());
             BajajPayEncryptedRequest bajajPayEncryptedRequest = new BajajPayEncryptedRequest(encryptData);
             mPresenter.getBajajPayBalance(bajajPayEncryptedRequest);
@@ -805,15 +806,15 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     public void onGetGamerCashSuccess(GetGamerCashResponse response) {
         if (response.isStatus()) {
             mAppPreference.setIsGamerCashLinked(response.getAlreadyLinked() || response.getLinked());
-            if (mIsGamerCashEnabled) {
+            if(mIsGamerCashEnabled){
                 if (response.getAlreadyLinked() || response.getLinked()) {
                     mGamerCash = response.getResponse().getCoins();
                     mGamerCashTV.setVisibility(View.GONE);
-                    if (mAppPreference.getBoolean(AppConstant.IS_GAMERCASH_ENABLED, false)) {
+                    if(mAppPreference.getBoolean(AppConstant.IS_GAMERCASH_ENABLED, false)) {
                         mGamerCashVerifiedTV.setVisibility(View.VISIBLE);
                     }
                     mGamerCashVerifiedTV.setText(getString(R.string.gamer_cash_coins) + mGamerCash + " GC");
-                } else {
+                }else {
                     if (mAppPreference.getBoolean(AppConstant.IS_GAMERCASH_ENABLED, false)) {
                         mGamerCashTV.setVisibility(View.VISIBLE);
                     }
@@ -945,14 +946,14 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             BajajPayVerifyResponseDecrypt bajajPayResponseDecrypt = new Gson().fromJson(decryptData, BajajPayVerifyResponseDecrypt.class);
             /**Saving Token for First time Users on verify OTP Response */
             /**Saving Mobile Number to SharedPreferences */
-            String userToken = bajajPayResponseDecrypt.getUserToken();
+             userToken = bajajPayResponseDecrypt.getUserToken();
             mAppPreference.setMobileNumberBP(bajajPayResponseDecrypt.getMobileNumber());
             mAppPreference.setUserTokenBP(userToken);
             AppDialog.showStatusSuccessBajajPayDialog(this, getString(R.string.linked_to_khiladiadda_successfully), this);
             /*Call Api Link bajaj wallet*/
             if (new NetworkStatus(this).isInternetOn()) {
                 showProgress(getString(R.string.txt_progress_authentication));
-                mPresenter.getLinkBajajWallet(new LinkBajajWalletRequest(bajajPayResponseDecrypt.getMobileNumber(), false));
+                mPresenter.getLinkBajajWallet(new LinkBajajWalletRequest(bajajPayResponseDecrypt.getMobileNumber(), false,mAppPreference.getUserTokenBP(),userToken));
             } else {
                 Snackbar.make(tvError, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
             }
@@ -1137,7 +1138,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             /*Call Api Link wallet*/
             if (new NetworkStatus(this).isInternetOn()) {
                 showProgress(getString(R.string.txt_progress_authentication));
-                mPresenter.getLinkBajajWallet(new LinkBajajWalletRequest(bajajPayDeLinkWalletDecryptResponse.getMobileNumber(), true));
+                mPresenter.getLinkBajajWallet(new LinkBajajWalletRequest(bajajPayDeLinkWalletDecryptResponse.getMobileNumber(),true,mAppPreference.getUserTokenBP(),userToken));
             } else {
                 Snackbar.make(tvError, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
             }

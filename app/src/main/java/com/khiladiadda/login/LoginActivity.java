@@ -716,7 +716,7 @@ public class LoginActivity extends BaseActivity implements ILoginView, ITrueCall
                 .addOnCompleteListener(this, task -> {
                 });
     }
-
+    /*Auto fill Otp*/
     private void autofillNumber() {
         GetPhoneNumberHintIntentRequest request = GetPhoneNumberHintIntentRequest.builder().build();
         ActivityResultLauncher<IntentSenderRequest> phoneNumberHintIntentResultLauncher =

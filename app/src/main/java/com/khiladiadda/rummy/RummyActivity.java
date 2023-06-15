@@ -126,11 +126,6 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         mNV.initialiseNudgeView(this);
         MoEInAppHelper.getInstance().showInApp(this);
     }
-
-    /* @Override
-     protected void onCreate(Bundle savedInstanceState) {
-         super.onCreate(savedInstanceState);
-     }*/
     @Override
     protected void initViews() {
         mActivityNameTV.setText("Rummy Adda");
@@ -160,7 +155,6 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         /*Live Table Adapter call*/
         mRummyLiveTableAdpter = new RummyLiveTableAdpter(this, mLiveTableList, mMode);
         mRummyLiveTableRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        //mRummyLiveTableRV.setLayoutManager(new GridLayoutManager(this, 2,GridLayoutManager.HORIZONTAL, false));
         mRummyLiveTableRV.setAdapter(mRummyLiveTableAdpter);
         mRummyLiveTableAdpter.setOnItemClickListener(this);
         setMode(14);
@@ -217,9 +211,7 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
                     setMode(34);
                 break;
             case R.id.tv_how_to_play:
-//                startActivity(new Intent(this,RummyHelpActivity.class));
                 AppUtilityMethods.showRummyTooltip(this, mHowToPlayTv, AppConstant.FROM_MAIN_ACTIVITY);
-                //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/jP2AP1z_m6c")));
                 break;
             case R.id.tv_history:
                 startActivity(new Intent(this, RummyHistoryActivity.class));
@@ -275,16 +267,6 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
                 setDeal();
                 setOne();
                 break;
-//            case 35:
-//                mType = "deal_S13";
-//                setDeal();
-//                setTwo();
-//                break;
-//            case 36:
-//                mType = "deal_S13";
-//                setDeal();
-//                setThree();
-//                break;
         }
     }
 
@@ -368,7 +350,6 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
             mLiveTableList.clear();
             mList.addAll(responseModel.getResponse());
             mLiveTableList.addAll(responseModel.getmLiveTableRes());
-//            mAdapter =new RummyAdapter(this, mList, mMode);
             mAdapter.changeType(mMode);
             mRummyLiveTableAdpter.changeType(mMode);
             mAdapter.notifyDataSetChanged();
@@ -411,20 +392,7 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
 
     @Override
     public void onGetContestCheckGameSuccess(RummyCheckGameResponse responseModel) {
-        /*hideProgress();
-        if (responseModel.isStatus()) {
-            if(SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
-                return;
-            }
-            mLastClickTime = SystemClock.elapsedRealtime();
-            openBottomDialog(pos, 1);
-        } else {
-            if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
-                return;
-            }
-            mLastClickTime = SystemClock.elapsedRealtime();
-            openBottomDialog(pos, 0);
-        }*/
+
     }
 
     @Override

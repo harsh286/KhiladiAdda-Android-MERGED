@@ -8,10 +8,36 @@ public class LinkBajajWalletRequest{
     @SerializedName("isDelink")
     @Expose
     private boolean isDelink;
-    public LinkBajajWalletRequest(String mobile,boolean isDelink){
-        this.mobile =mobile;
-        this.isDelink =isDelink;
+    @SerializedName("bajajAccessTocken")
+    @Expose
+    private String bajajAccessTocken;
+    @SerializedName("bajajUserTocken")
+    @Expose
+    private String bajajUserTocken;
+
+    public LinkBajajWalletRequest(String mobile, boolean isDelink, String bajajAccessTocken, String bajajUserTocken) {
+        this.mobile = mobile;
+        this.isDelink = isDelink;
+        this.bajajAccessTocken = bajajAccessTocken;
+        this.bajajUserTocken = bajajUserTocken;
     }
+
+    public String getBajajAccessTocken() {
+        return bajajAccessTocken;
+    }
+
+    public void setBajajAccessTocken(String bajajAccessTocken) {
+        this.bajajAccessTocken = bajajAccessTocken;
+    }
+
+    public String getBajajUserTocken() {
+        return bajajUserTocken;
+    }
+
+    public void setBajajUserTocken(String bajajUserTocken) {
+        this.bajajUserTocken = bajajUserTocken;
+    }
+
     public String getMobile(){
         return mobile;
     }

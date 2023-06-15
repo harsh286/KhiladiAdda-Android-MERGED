@@ -63,7 +63,6 @@ import java.util.List;
 import butterknife.BindView;
 
 public class NewLeaderboardActivity extends BaseActivity implements ILeaderboardView, CompoundButton.OnCheckedChangeListener, AdapterView.OnItemSelectedListener {
-
     @BindView(R.id.iv_back)
     ImageView mBackIV;
     @BindView(R.id.btn_ludo)
