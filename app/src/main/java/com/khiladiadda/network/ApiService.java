@@ -1,11 +1,11 @@
 package com.khiladiadda.network;
-
 import com.khiladiadda.battle.model.BannerResponse;
 import com.khiladiadda.battle.model.BattleGroupResponse;
 import com.khiladiadda.battle.model.BattleResponse;
 import com.khiladiadda.login.TrueCallerRequest;
 import com.khiladiadda.login.TrueCallerResponse;
 import com.khiladiadda.network.model.request.BajajPayEncryptedRequest;
+import com.khiladiadda.network.model.request.LinkBajajWalletRequest;
 import com.khiladiadda.network.model.request.PhonepeCheckPaymentRequest;
 import com.khiladiadda.network.model.request.PhonepeRequest;
 import com.khiladiadda.network.model.request.RaceConditionPayoutRequest;
@@ -206,7 +206,6 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
-
 public interface ApiService {
 
     //Manually Register
@@ -977,7 +976,7 @@ public interface ApiService {
     Observable<RummyRefreshTokenMainResponse> getRummyRefershToken();
 
     @GET(AppConstant.API_RUMMY_CHECKGAMESTATUS)
-    Observable<RummyCheckGameResponse>getRummyCheckGameStatus(@Query("cardId") String cardId);
+    Observable<RummyCheckGameResponse>getRummyCheckGameStatus(@Query("cardId") String cardId,@Query("lat") String lat,@Query("lng") String lng);
 
     @GET(AppConstant.API_RUMMY_HISTORY)
     Observable<RummyHistoryMainResponse> getRummyHistory();
@@ -1039,6 +1038,8 @@ public interface ApiService {
 
     @GET(AppConstant.API_REMAINING_LIMIT)
     Observable<RemainingLimitResponse> getRemainingLimit();
+    @POST(AppConstant.API_PROFILE_LINK_BAJAJ_WALLET)
+    Observable<BaseResponse>getProfileLinkBajajWallet(@Body LinkBajajWalletRequest linkBajajWalletRequest);
 
     @POST(AppConstant.API_BAJAJ_VALIDATION)
     Observable<BaseResponse> checkBajajValidation(@Body PayuChecksumRequest request);

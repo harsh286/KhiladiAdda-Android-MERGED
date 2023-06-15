@@ -1,6 +1,7 @@
 package com.khiladiadda.wallet.interfaces;
 
 import com.khiladiadda.base.interfaces.IBasePresenter;
+import com.khiladiadda.network.model.request.LinkBajajWalletRequest;
 
 public interface IWalletCashbackPresenter extends IBasePresenter {
 
@@ -9,6 +10,7 @@ public interface IWalletCashbackPresenter extends IBasePresenter {
     void getProfile();
 
     void  getRemainingLimit();
+
 
     void getVersionDetails();
 

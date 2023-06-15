@@ -1,5 +1,4 @@
 package com.khiladiadda.dialogs;
-
 import static android.os.Build.VERSION.SDK_INT;
 
 import android.app.Activity;
@@ -74,9 +73,7 @@ import com.moengage.core.model.AppStatus;
 
 import java.text.DecimalFormat;
 import java.util.Random;
-
 public class AppDialog {
-
     public static Dialog getAppProgressDialog(Context context, String message) {
         Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -275,7 +272,6 @@ public class AppDialog {
 //        dialog.show();
 //        return dialog;
 //    }
-
     public static Dialog showLiveCredentialDialog(Activity activity, String username, String password, int from) {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -530,7 +526,7 @@ public class AppDialog {
                 AppUtilityMethods.showMsg(activity, "Challenge can not be of less than 10 coins", false);
             } else if (Integer.parseInt(amount) > 100000) {
                 AppUtilityMethods.showMsg(activity, "Challenge can not be of greater than 100000 coins", false);
-            } else if (Integer.parseInt(amount) % 10 != 0) {
+            } else if (Integer.parseInt(amount) % 10!=0){
                 AppUtilityMethods.showMsg(activity, "Challenge coins must be multiple of 10.(Ex-10,20,30,40,50,100 and so on)", false);
             } else if (Integer.parseInt(amount) > walletBalance) {
                 AppUtilityMethods.showRechargeMsg(activity, "Your wallet balance is insufficient. Please recharge your wallet to play and earn.");
@@ -807,11 +803,11 @@ public class AppDialog {
             String amount = amountET.getText().toString().trim();
             if (amountET.getText().toString().trim().isEmpty()) {
                 AppUtilityMethods.showMsg(activity, "Amount can not be blank", false);
-            } else if (Integer.parseInt(amount) < 10) {
-                AppUtilityMethods.showMsg(activity, "Challenge can not be of less than 10 coins", false);
+            } else if ((Integer.parseInt(amount) < 10) && (Integer.parseInt(amount) != 3) && (Integer.parseInt(amount) != 5)) {
+                AppUtilityMethods.showMsg(activity, "Challenge can be of 3 or 5 or can not be of less than 10 coins", false);
             } else if (Integer.parseInt(amount) > 100000) {
                 AppUtilityMethods.showMsg(activity, "Challenge can not be of greater than 100000 coins", false);
-            } else if (Integer.parseInt(amount) % 10 != 0) {
+            } else if (Integer.parseInt(amount) % 10 != 0&&Integer.parseInt(amount)>=10) {
                 AppUtilityMethods.showMsg(activity, "Challenge coins must be multiple of 10.(Ex-10,20,30,40,50,100 and so on)", false);
             } else if (Integer.parseInt(amount) > walletBalance) {
                 AppUtilityMethods.showRechargeMsg(activity, "Your wallet balance is insufficient. Please recharge your wallet to play and earn.");
@@ -1396,7 +1392,7 @@ public class AppDialog {
             long lastClickTime = 0;
 
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
                 if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
                     return;
                 }

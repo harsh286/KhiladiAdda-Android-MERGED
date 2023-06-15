@@ -152,5 +152,9 @@ public interface IPaymentView {
     void onBajajValidationSuccess(BaseResponse response);
 
     void onBajajValidationFailure(ApiError error);
+    void onLinkBajajSuccess(BaseResponse response);
+
+    void onLinkBajajFailure(ApiError error);
+
 
 }

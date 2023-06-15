@@ -1,4 +1,5 @@
 package com.khiladiadda.rummy;
+
 import static android.view.View.GONE;
 
 import android.app.Activity;
@@ -56,6 +57,7 @@ import com.khiladiadda.rummy.interfaces.IRummyPresenter;
 import com.khiladiadda.rummy.interfaces.IRummyView;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
+import com.khiladiadda.utility.LocationCheckUtils;
 import com.khiladiadda.utility.NetworkStatus;
 import com.moengage.inapp.MoEInAppHelper;
 import com.moengage.widgets.NudgeView;
@@ -65,8 +67,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-public class RummyActivity extends BaseActivity implements IRummyView, IOnItemClickListener,RummyDialog.OnPlayClick,
-        IProfileView, IOnItemReplayClickListener {
+
+public class RummyActivity extends BaseActivity implements IRummyView, IOnItemClickListener, RummyDialog.OnPlayClick,
+        IProfileView, IOnItemReplayClickListener , LocationCheckUtils.IOnAdressPassed {
     @BindView(R.id.iv_back)
     ImageView mBackIV;
     @BindView(R.id.tv_activity_name)
@@ -111,10 +114,12 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
     private Handler mHandler;
     @BindView(R.id.nudge)
     NudgeView mNV;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_rummy;
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -122,10 +127,10 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         MoEInAppHelper.getInstance().showInApp(this);
     }
 
-   /* @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }*/
+    /* @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+     }*/
     @Override
     protected void initViews() {
         mActivityNameTV.setText("Rummy Adda");
@@ -143,6 +148,7 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
 
     @Override
     protected void initVariables() {
+        LocationCheckUtils.initialize(this, this, this);
         AppUtilityMethods.deleteCache(this);
         mPresenter = new RummyPresenter(this);
         mProfilePresenter = new ProfilePresenter(this);
@@ -428,28 +434,25 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
 
     @Override
     public void onItemClick(View view, int position, int tag) {
-        pos=position;
-        /*send request with card id.card id used for only balance insufficient balance validation*/
-        openBottomDialog(pos);
-
-
+        if (LocationCheckUtils.getInstance().hasLocationPermission()){
+            LocationCheckUtils.getInstance().requestNewLocationData();
+            pos = position;
+            /*send request with card id.card id used for only balance insufficient balance validation*/
+            openBottomDialog(pos);
+        } else {
+            AppDialog.DialogWithLocationCallBack(this, "KhiladiAdda need to access your location.");
+        }
     }
-    private void openBottomDialog(int position){
+    private void openBottomDialog(int position) {
         Coins mCoins = mAppPreference.getProfileData().getCoins();
         double mTotalWalletBal = mCoins.getDeposit() + mCoins.getWinning() + mCoins.getBonus();
         double mDepWinAmount = mCoins.getDeposit() + mCoins.getWinning();
         RummyDialog addExpenseDialog;
-        addExpenseDialog=new RummyDialog(this,String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount),AppSharedPreference.getInstance().getSessionToken(), mRefreshToken,R.style.CustomBottomSheetDialogTheme,this, mList.get(position).getmPlayersDetails(),position);
-        /*if (status == 1) {
-            addExpenseDialog=new RummyDialog(this,String.valueOf(mList.get(position).getEntryFee()), String.valueOf(mList.get(position).getmPlayersDetails().get(0).getMaxWin()), String.valueOf(mList.get(position).getmPlayersDetails().get(1).getMaxWin()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), "active", "active", AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme, mList.get(position).getmPlayersDetails().get(0).getnPlayers(), mList.get(position).getmPlayersDetails().get(1).getnPlayers(), this, mList.get(position).getmPlayersDetails());
-        } else {
-            addExpenseDialog=new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.valueOf(mList.get(position).getmPlayersDetails().get(0).getMaxWin()), String.valueOf(mList.get(position).getmPlayersDetails().get(1).getMaxWin()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), mList.get(position).getmPlayersDetails().get(0).getCardId(), mList.get(position).getmPlayersDetails().get(1).getCardId(), AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme, mList.get(position).getmPlayersDetails().get(0).getnPlayers(), mList.get(position).getmPlayersDetails().get(1).getnPlayers(), this, mList.get(position).getmPlayersDetails());
-        }*/
+        addExpenseDialog = new RummyDialog(this, String.valueOf(mList.get(position).getEntryFee()), String.format("%.2f", mTotalWalletBal), String.format("%.2f", mDepWinAmount), AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, R.style.CustomBottomSheetDialogTheme, this, mList.get(position).getmPlayersDetails(), position,LocationCheckUtils.getInstance().getmLatitute(),LocationCheckUtils.getInstance().getmLongitude());
         addExpenseDialog.setCancelable(true);
         addExpenseDialog.setCanceledOnTouchOutside(false);
         addExpenseDialog.show();
     }
-
     private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
         mAdvertisementsList.clear();
         mAdvertisementsList.addAll(advertisementDetails);
@@ -466,8 +469,8 @@ public class RummyActivity extends BaseActivity implements IRummyView, IOnItemCl
         }
     }
 
-/*When user rejoin the match then this method is call*/
-private void onReJoinRummyDirect() {
+    /*When user rejoin the match then this method is call*/
+    private void onReJoinRummyDirect() {
         String encodeRequest = convertToBase64(AppSharedPreference.getInstance().getSessionToken(), mRefreshToken, "active");
         Intent intLeaderboard = new Intent(this, RummyGameWebActivity.class);
         intLeaderboard.putExtra("info", encodeRequest);
@@ -507,7 +510,7 @@ private void onReJoinRummyDirect() {
     }
 
     private void getProfile() {
-        if (new NetworkStatus(this).isInternetOn()){
+        if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
             mProfilePresenter.getProfile();
         } else {
@@ -519,6 +522,7 @@ private void onReJoinRummyDirect() {
     public void onUpdatePasswordComplete(BaseResponse responseModel) {
 
     }
+
     @Override
     public void onUpdatePasswordFailure(ApiError error) {
 
@@ -570,6 +574,7 @@ private void onReJoinRummyDirect() {
     public void onVerifyEmailComplete(BaseResponse responseModel) {
 
     }
+
     @Override
     public void onVerifyEmailFailure(ApiError error) {
 
@@ -591,22 +596,32 @@ private void onReJoinRummyDirect() {
         mPresenter.destroy();
         super.onDestroy();
     }
+
     @Override
     public void onReplayItemClick(View view, int position, int tag) {
         onReJoinRummyDirect();
     }
-    private final BroadcastReceiver mRummyRefreshNotificationReceiver=new BroadcastReceiver() { // 77
+
+    private final BroadcastReceiver mRummyRefreshNotificationReceiver = new BroadcastReceiver() { // 77
         @Override
-        public void onReceive(Context context,Intent intent){
+        public void onReceive(Context context, Intent intent) {
             try {
-                String mFrom=intent.getStringExtra(AppConstant.FROM);
-                if(mFrom.equalsIgnoreCase(AppConstant.RUMMY_UPDATE)){
+                String mFrom = intent.getStringExtra(AppConstant.FROM);
+                if (mFrom.equalsIgnoreCase(AppConstant.RUMMY_UPDATE)) {
                     getProfile();
                     getData();
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     };
+    @Override
+    public void iOnAddressSuccess() {
+
+    }
+    @Override
+    public void iOnAddressFailure() {
+
+    }
 }

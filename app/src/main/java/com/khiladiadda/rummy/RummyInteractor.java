@@ -30,10 +30,10 @@ public class RummyInteractor {
         ApiService service = manager.createService();
         return manager.createObservable(service.getRummyRefershToken()).subscribe(new SubscriberCallback<>(listener));
     }
-    Subscription getCheckGameStatus(IApiListener<RummyCheckGameResponse> listener,String carId){
+    Subscription getCheckGameStatus(IApiListener<RummyCheckGameResponse> listener,String carId, String mLatitude,String mLongitude){
         ApiManager manager =ApiManager.getInstance();
         ApiService service = manager.createService();
-        return manager.createObservable(service.getRummyCheckGameStatus(carId)).subscribe(new SubscriberCallback<>(listener));
+        return manager.createObservable(service.getRummyCheckGameStatus(carId, mLatitude, mLongitude)).subscribe(new SubscriberCallback<>(listener));
     }
     Subscription getRummyHistory(IApiListener<RummyHistoryMainResponse> listener) {
         ApiManager manager = ApiManager.getInstance();

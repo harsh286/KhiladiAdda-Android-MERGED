@@ -346,6 +346,9 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     @Override
     public void onRemainingLimitComplete(RemainingLimitResponse responseModel) {
         mRemainingAddLimit = responseModel.getRemaining_add_limit();
+        if(!responseModel.getmBajajWallet().getmMobile().equals("")){
+            mAppPreference.setMobileNumberBP(responseModel.getmBajajWallet().getmMobile());
+        }
         List<BannerDetails> bannerData = responseModel.getBanner();
         if (bannerData != null && bannerData.size() > 0) {
             mBannerRL.setVisibility(View.VISIBLE);

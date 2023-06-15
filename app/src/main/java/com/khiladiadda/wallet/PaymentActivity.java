@@ -50,6 +50,7 @@ import com.khiladiadda.network.model.request.BajajPayEncryptedRequest;
 import com.khiladiadda.network.model.request.BajajPayGetBalanceRequest;
 import com.khiladiadda.network.model.request.BajajPayGetOtpRequest;
 import com.khiladiadda.network.model.request.BajajPayInsuffiencientBalanceRequest;
+import com.khiladiadda.network.model.request.LinkBajajWalletRequest;
 import com.khiladiadda.network.model.request.PaySharpRequest;
 import com.khiladiadda.network.model.request.PaymentRequest;
 import com.khiladiadda.network.model.request.PhonepeCheckPaymentRequest;
@@ -106,7 +107,6 @@ import java.util.UUID;
 import butterknife.BindView;
 
 public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDownloadListener, PaytmPaymentTransactionCallback, CFCheckoutResponseCallback {
-
     @BindView(R.id.iv_back)
     ImageView mBackIV;
     @BindView(R.id.tv_activity_name)
@@ -847,6 +847,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     public void onBajajPayGetBalanceSuccess(BajajPayGetBalanceResponse response) {
         if (response.getStatusCode().equals("202")) {
             if (response.getStatusCode().equals("202")) {
+                mBajajPayDeLink.setVisibility(View.VISIBLE);
                 String decryptData = NewAESEncrypt.decrypt(response.encResponse);
                 BajajPayBalanceDecryptResponse bajajPayBalanceDecryptResponse = new Gson().fromJson(decryptData, BajajPayBalanceDecryptResponse.class);
                 if (mAppPreference.getUserTokenBP() != null) {
@@ -942,12 +943,19 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         if (response.statusCode.equals("202")) {
             String decryptData = NewAESEncrypt.decrypt(response.encResponse);
             BajajPayVerifyResponseDecrypt bajajPayResponseDecrypt = new Gson().fromJson(decryptData, BajajPayVerifyResponseDecrypt.class);
-            /**  Saving Token for First time Users on verify OTP Response */
+            /**Saving Token for First time Users on verify OTP Response */
             /**Saving Mobile Number to SharedPreferences */
             String userToken = bajajPayResponseDecrypt.getUserToken();
             mAppPreference.setMobileNumberBP(bajajPayResponseDecrypt.getMobileNumber());
             mAppPreference.setUserTokenBP(userToken);
             AppDialog.showStatusSuccessBajajPayDialog(this, getString(R.string.linked_to_khiladiadda_successfully), this);
+            /*Call Api Link bajaj wallet*/
+            if (new NetworkStatus(this).isInternetOn()) {
+                showProgress(getString(R.string.txt_progress_authentication));
+                mPresenter.getLinkBajajWallet(new LinkBajajWalletRequest(bajajPayResponseDecrypt.getMobileNumber(), false));
+            } else {
+                Snackbar.make(tvError, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+            }
         } else if (response.statusCode.equals("E1136")) {
             AppDialog.showBajajPayFailureDialog("", getString(R.string.bajaj_pay_verification_status), this, getString(R.string.otp_is_invalid), this);
         }
@@ -1077,7 +1085,6 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         }
     }
 
-
     private void authSendFromPayOTPPP(BajajPayEncryptedRequest authOtpEncRequest) {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
@@ -1127,6 +1134,13 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             mAppPreference.getEditor().remove("mobileNumberBP").commit();
             mAppPreference.setMobileNumberBP(bajajPayDeLinkWalletDecryptResponse.getMobileNumber());
             mAppPreference.getEditor().remove("acTokenBP").commit();
+            /*Call Api Link wallet*/
+            if (new NetworkStatus(this).isInternetOn()) {
+                showProgress(getString(R.string.txt_progress_authentication));
+                mPresenter.getLinkBajajWallet(new LinkBajajWalletRequest(bajajPayDeLinkWalletDecryptResponse.getMobileNumber(), true));
+            } else {
+                Snackbar.make(tvError, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+            }
         }
         Toast.makeText(this, getString(R.string.succesfully_delink_bajajpay), Toast.LENGTH_SHORT).show();
     }
@@ -1149,6 +1163,20 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
 
     @Override
     public void onBajajValidationFailure(ApiError error) {
+        hideProgress();
+    }
+
+    @Override
+    public void onLinkBajajSuccess(BaseResponse response) {
+        if (response.isStatus()) {
+            mBajajPayDeLink.setVisibility(View.VISIBLE);
+        }
+        hideProgress();
+    }
+
+    @Override
+    public void onLinkBajajFailure(ApiError error) {
+        mBajajPayDeLink.setVisibility(View.INVISIBLE);
         hideProgress();
     }
 
