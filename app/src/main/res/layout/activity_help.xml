@@ -41,7 +41,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:contentDescription="@string/text_free_fire"
+                    android:contentDescription="@string/text_BGMI"
                     android:src="@drawable/ic_bgmisupport" />
 
                 <ImageView
@@ -49,7 +49,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:contentDescription="@string/text_free_fire"
+                    android:contentDescription="@string/text_free_fire_max"
                     android:src="@drawable/freefire_max_query" />
 
             </LinearLayout>

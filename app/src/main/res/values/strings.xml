@@ -226,6 +226,8 @@
     <string name="text_credited">Credited</string>
     <string name="text_upi_address">UPI Address</string>
     <string name="text_free_fire">Free Fire</string>
+    <string name="text_free_fire_max">Free Fire Max</string>
+    <string name="text_BGMI">BGMI</string>
     <string name="display_team">Team: %1$d</string>
     <string name="later">Later</string>
     <string name="update_now">Update Now</string>
@@ -344,7 +346,7 @@
     <string name="text_help_captain">1. Now wait for some time till anyone accept your challenge.\n2. After opponent has accepted your challenge, you have to update the Room Code.\n3. You will get Room Code from Ludo King App.\n4. Once the challenge is finished, please update the result.\n5. 25 coins will be deducted, if you do not upload the result.\n6. 25 coins will be deducted if you upload the wrong result.\n7. Click on View Video option to know how to update Room Code.\n8. You have to update the room code within 15 minutes otherwise 25 coins will deducted</string>
     <string name="text_help_opponent">1. Now wait for your opponent to update the Room Code.\n2. When opponent will update the Room Code, you will receive a notification and you will also see a button(Play On Ludo King).\n3. Once you click on (Play On Ludo King) button, you can see the Room Code and Join the room.\n4. 25 coins will be deducted, if you do not upload the result.\n5. 25 coins will be deducted if you upload the wrong result.\n6. If your opponent does not update the room code in 30 minutes, then the challenge will be cancelled and your coins will be refunded automatically</string>
     <string name="text_no_ludo_challeneges">Hey, you have not played any ludo challenges. Create or accept challenges to play and earn.</string>
-    <string name="text_no_courtpiece_history">Hey, you have not played any CallBreak Pro yet. Accept challenges to play and earn.</string>
+    <string name="text_no_courtpiece_history">Hey, you have not played any CallBreak yet. Accept challenges to play and earn.</string>
     <string name="text_no_transaction">You havn\'t perform any transactions.</string>
     <string name="password_hide">********</string>
     <string name="text_play_now">Play Now</string>
@@ -804,7 +806,7 @@
     <string name="text_wordsearch">WordSearch</string>
     <string name="text_droid_leaderboard">Droid-O LeaderBoard</string>
     <string name="text_ludo_tournament_leaderboard">Tournament LeaderBoard</string>
-    <string name="text_court_piece_leaderboard">CallBreak Pro LeaderBoard</string>
+    <string name="text_court_piece_leaderboard">CallBreak LeaderBoard</string>
     <string name="text_rummy_leaderboard">Rummy Adda LeaderBoard</string>
     <string name="text_wordsearch_leaderboard">WordSearch LeaderBoard</string>
 
@@ -942,7 +944,7 @@
     <string name="text_disable_ludoadda">Hi Khiladi, \n There is some issue in LudoAdda. Please connect on support</string>
     <string name="phonepe_upi">PhonePe</string>
     <string name="text_beneficiary_name_required">Your account beneficiary name is required.</string>
-    <string name="text_court_piece_pro">CallBreak Pro</string>
+    <string name="text_court_piece_pro">CallBreak</string>
     <string name="courtpiece_history"><u>History</u></string>
     <string name="text_history">History</string>
     <string name="view_more"><u>View more</u></string>
