@@ -35,6 +35,7 @@ import com.khiladiadda.main.adapter.BannerPagerAdapter;
 import com.khiladiadda.main.fragment.BannerFragment;
 import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
+import com.khiladiadda.network.model.request.BajajPayRemainingRequest;
 import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.InvoiceResponse;

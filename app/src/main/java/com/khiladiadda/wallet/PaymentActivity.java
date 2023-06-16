@@ -1680,4 +1680,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         super.onDestroy();
     }
 
+
+
+
 }

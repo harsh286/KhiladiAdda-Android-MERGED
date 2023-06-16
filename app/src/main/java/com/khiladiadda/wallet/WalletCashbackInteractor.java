@@ -5,6 +5,7 @@ import com.khiladiadda.network.ApiService;
 import com.khiladiadda.network.IApiListener;
 import com.khiladiadda.network.SubscriberCallback;
 import com.khiladiadda.network.model.BaseResponse;
+import com.khiladiadda.network.model.request.BajajPayRemainingRequest;
 import com.khiladiadda.network.model.response.InvoiceResponse;
 import com.khiladiadda.network.model.response.ProfileTransactionResponse;
 import com.khiladiadda.network.model.response.RemainingLimitResponse;

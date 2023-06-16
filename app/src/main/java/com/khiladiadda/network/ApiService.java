@@ -5,6 +5,7 @@ import com.khiladiadda.battle.model.BattleResponse;
 import com.khiladiadda.login.TrueCallerRequest;
 import com.khiladiadda.login.TrueCallerResponse;
 import com.khiladiadda.network.model.request.BajajPayEncryptedRequest;
+import com.khiladiadda.network.model.request.BajajPayRemainingRequest;
 import com.khiladiadda.network.model.request.LinkBajajWalletRequest;
 import com.khiladiadda.network.model.request.PhonepeCheckPaymentRequest;
 import com.khiladiadda.network.model.request.PhonepeRequest;
