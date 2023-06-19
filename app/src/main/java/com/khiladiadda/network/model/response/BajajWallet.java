@@ -7,9 +7,9 @@ public class BajajWallet {
     private boolean isLinked;
     @SerializedName("mobile")
     private String mMobile;
-    @SerializedName("bajajAccessTocken")
+    @SerializedName("accessToken")
     private String bajajAccessTocken;
-    @SerializedName("bajajUserTocken")
+    @SerializedName("userToken")
     private String bajajUserTocken;
 
     public String getBajajAccessTocken() {

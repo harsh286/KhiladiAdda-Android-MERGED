@@ -1151,4 +1151,7 @@ public class AppConstant {
     public static final int FROM_MAIN_ACTIVITY = 2;
 
     public static final String API_RUMMY_RUlES_POINT = "/user/rummy/rummy-rules";
+    public static final String IS_DELINK = "isDlink";
+    public static final String IS_LINKED = "isLinked";
+    public static final String REMAININGDATA = "remaining_data";
 }

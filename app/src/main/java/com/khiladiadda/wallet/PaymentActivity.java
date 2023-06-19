@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -167,7 +165,10 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     private IPaymentPresenter mPresenter;
     public String mAmountET;
     private long mGamerCash;
-    private String userToken="";
+    private String userToken = "";
+    private String bajajAccessToken, mMobileNumber = "";
+    private HashMap<String, Boolean> mRemainingData = new HashMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,6 +234,8 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         boolean mIsPaytm = getIntent().getBooleanExtra(AppConstant.PAYTM, false);
         mBajajWalletActive = getIntent().getBooleanExtra(AppConstant.BAJAJWALLET, false);
         mIsBajajUpi = getIntent().getBooleanExtra(AppConstant.BAJAJUPI, false);
+        mMobileNumber = getIntent().getStringExtra("mobile_number");
+        mRemainingData = (HashMap<String, Boolean>) getIntent().getSerializableExtra(AppConstant.REMAININGDATA);
         if (!mBajajWalletActive && !mIsBajajUpi) {
             mNetBankingBajajPayCL.setVisibility(View.GONE);
         }
@@ -258,6 +261,9 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             mGamerCashTV.setVisibility(View.GONE);
             mGamerCashVerifiedTV.setVisibility(View.GONE);
         }
+
+        checkBajajpayLinked(mRemainingData);
+
         mAppPreference.setBoolean(AppConstant.FROM_WALLET, false);
     }
 
@@ -501,19 +507,23 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 AppDialog.showBajajPayFailureDialog(getString(R.string.bajaj_create_wallet), getString(R.string.bajaj_pay_balance_status), this, getString(R.string.mobile_not_bajajpay), this);
             }
         } else {
-            AppDialog.linkWalletBajajPay(this, this, mAppPreference.getMobile());
+            if (mMobileNumber.isEmpty())
+                AppDialog.linkWalletBajajPay(this, this, mAppPreference.getMobile());
+            else
+                AppDialog.linkWalletBajajPay(this, this, mMobileNumber);
+
         }
     }
 
     /**
      * Get BajajPay balance From BajajPay
      */
-    private void getBajajPayBalance(){
+    private void getBajajPayBalance() {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
             /**  Request to send data to BajajPay for Getting Balance  */
-            BajajPayGetBalanceRequest bajajPayGetBalanceRequest = new BajajPayGetBalanceRequest(AppConstant.merchantId,mAppPreference.getMobileNumberBP(), mAppPreference.getUserTokenBP(),"","");
-            String jsonData=new Gson().toJson(bajajPayGetBalanceRequest);
+            BajajPayGetBalanceRequest bajajPayGetBalanceRequest = new BajajPayGetBalanceRequest(AppConstant.merchantId, mAppPreference.getMobileNumberBP(), mAppPreference.getUserTokenBP(), "", "");
+            String jsonData = new Gson().toJson(bajajPayGetBalanceRequest);
             String encryptData = NewAESEncrypt.encrypt(jsonData.trim());
             BajajPayEncryptedRequest bajajPayEncryptedRequest = new BajajPayEncryptedRequest(encryptData);
             mPresenter.getBajajPayBalance(bajajPayEncryptedRequest);
@@ -806,15 +816,15 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     public void onGetGamerCashSuccess(GetGamerCashResponse response) {
         if (response.isStatus()) {
             mAppPreference.setIsGamerCashLinked(response.getAlreadyLinked() || response.getLinked());
-            if(mIsGamerCashEnabled){
+            if (mIsGamerCashEnabled) {
                 if (response.getAlreadyLinked() || response.getLinked()) {
                     mGamerCash = response.getResponse().getCoins();
                     mGamerCashTV.setVisibility(View.GONE);
-                    if(mAppPreference.getBoolean(AppConstant.IS_GAMERCASH_ENABLED, false)) {
+                    if (mAppPreference.getBoolean(AppConstant.IS_GAMERCASH_ENABLED, false)) {
                         mGamerCashVerifiedTV.setVisibility(View.VISIBLE);
                     }
                     mGamerCashVerifiedTV.setText(getString(R.string.gamer_cash_coins) + mGamerCash + " GC");
-                }else {
+                } else {
                     if (mAppPreference.getBoolean(AppConstant.IS_GAMERCASH_ENABLED, false)) {
                         mGamerCashTV.setVisibility(View.VISIBLE);
                     }
@@ -922,7 +932,9 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             if (response.statusCode.equals("202")) {
                 String decryptData = NewAESEncrypt.decrypt(response.encResponse);
                 BajajPayResponseDecrypt bajajPayResponseDecrypt = new Gson().fromJson(decryptData, BajajPayResponseDecrypt.class);
-                AppDialog.verifyOTPBajajPay(bajajPayResponseDecrypt, this, this, getString(R.string.enter_otp_to_complete_verification));
+                bajajAccessToken = bajajPayResponseDecrypt.getAccessToken();
+//                AppDialog.verifyOTPBajajPay(bajajPayResponseDecrypt, this, this, getString(R.string.enter_otp_to_complete_verification));
+                AppDialog.verifyOTPBajajPay(bajajPayResponseDecrypt, this, this, "Enter OTP to complete your verification\nOTP sent on " + bajajPayResponseDecrypt.getMobileNumber());
             } else {
                 response.statusCode.equals("E1133");
                 AppDialog.showBajajPayFailureDialog("", getString(R.string.bajaj_pay_verification_status), this, getString(R.string.otp_limit_exceed_bajajpay), this);
@@ -946,14 +958,13 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             BajajPayVerifyResponseDecrypt bajajPayResponseDecrypt = new Gson().fromJson(decryptData, BajajPayVerifyResponseDecrypt.class);
             /**Saving Token for First time Users on verify OTP Response */
             /**Saving Mobile Number to SharedPreferences */
-             userToken = bajajPayResponseDecrypt.getUserToken();
+            userToken = bajajPayResponseDecrypt.getUserToken();
             mAppPreference.setMobileNumberBP(bajajPayResponseDecrypt.getMobileNumber());
             mAppPreference.setUserTokenBP(userToken);
-            AppDialog.showStatusSuccessBajajPayDialog(this, getString(R.string.linked_to_khiladiadda_successfully), this);
             /*Call Api Link bajaj wallet*/
             if (new NetworkStatus(this).isInternetOn()) {
                 showProgress(getString(R.string.txt_progress_authentication));
-                mPresenter.getLinkBajajWallet(new LinkBajajWalletRequest(bajajPayResponseDecrypt.getMobileNumber(), false,mAppPreference.getUserTokenBP(),userToken));
+                mPresenter.getLinkBajajWallet(new LinkBajajWalletRequest(bajajPayResponseDecrypt.getMobileNumber(), false, bajajAccessToken, userToken));
             } else {
                 Snackbar.make(tvError, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
             }
@@ -1064,6 +1075,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
 
     @Override
     public void getOTPBajajPa(String number) {
+        bajajAccessToken = number;
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
             BajajPayGetOtpRequest bajajPayGetOtpRequest = new BajajPayGetOtpRequest(number, AppConstant.merchantId, AppConstant.BAJAJPAY_subMerchantId, AppConstant.subMerchantName);
@@ -1138,7 +1150,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             /*Call Api Link wallet*/
             if (new NetworkStatus(this).isInternetOn()) {
                 showProgress(getString(R.string.txt_progress_authentication));
-                mPresenter.getLinkBajajWallet(new LinkBajajWalletRequest(bajajPayDeLinkWalletDecryptResponse.getMobileNumber(),true,mAppPreference.getUserTokenBP(),userToken));
+                mPresenter.getLinkBajajWallet(new LinkBajajWalletRequest(bajajPayDeLinkWalletDecryptResponse.getMobileNumber(), true, mAppPreference.getUserTokenBP(), userToken));
             } else {
                 Snackbar.make(tvError, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
             }
@@ -1169,6 +1181,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
 
     @Override
     public void onLinkBajajSuccess(BaseResponse response) {
+        AppDialog.showStatusSuccessBajajPayDialog(this, getString(R.string.linked_to_khiladiadda_successfully), this);
         if (response.isStatus()) {
             mBajajPayDeLink.setVisibility(View.VISIBLE);
         }
@@ -1680,7 +1693,11 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         super.onDestroy();
     }
 
-
-
-
+    private void checkBajajpayLinked(HashMap<String, Boolean> data) {
+        if (data.get(AppConstant.IS_LINKED) == true && data.get(AppConstant.IS_DELINK) == false) {
+//            getBajajPayBalance();
+        } else if (data.get(AppConstant.IS_LINKED) == false && data.get(AppConstant.IS_DELINK) == true) {
+            deLinkWallet();
+        }
+    }
 }

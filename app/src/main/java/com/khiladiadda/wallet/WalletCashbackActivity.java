@@ -51,7 +51,9 @@ import com.moengage.inapp.MoEInAppHelper;
 import com.moengage.widgets.NudgeView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -104,9 +106,12 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     @BindView(R.id.rl_image)
     RelativeLayout mBannerRL;
     private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
+
+    private HashMap<String, Boolean> mRemainingData = new HashMap<>();
     private Handler mHandler;
     @BindView(R.id.nudge)
     NudgeView mNV;
+    private String mMobileNumber;
 
     @Override
     protected int getContentView() {
@@ -164,16 +169,16 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
             }
         });
 
-         mAmountET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-             @Override
-             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                 if(actionId == EditorInfo.IME_ACTION_DONE){
+        mAmountET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     hideKeyboard(mAmountET);
-                     return true;
-                 }
-                 return false;
-             }
-         });
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     public void hideKeyboard(View view) {
@@ -321,6 +326,8 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
                 i.putExtra(AppConstant.PHONEPE, mIsPhonepe);
                 i.putExtra(AppConstant.BAJAJWALLET, mIsBajajWallet);
                 i.putExtra(AppConstant.BAJAJUPI, mIsBajajUpi);
+                i.putExtra(AppConstant.REMAININGDATA, mRemainingData);
+                i.putExtra("mobile_number", mMobileNumber);
                 startActivity(i);
             }
         } else {
@@ -347,10 +354,13 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     @Override
     public void onRemainingLimitComplete(RemainingLimitResponse responseModel) {
         mRemainingAddLimit = responseModel.getRemaining_add_limit();
-        if(!responseModel.getmBajajWallet().getmMobile().equals("")){
-            mAppPreference.setMobileNumberBP(responseModel.getmBajajWallet().getmMobile());
-            mAppPreference.setUserTokenBP(responseModel.getmBajajWallet().getBajajAccessTocken());
-        }
+        mRemainingData.put(AppConstant.IS_DELINK, responseModel.getmBajajWallet().isDelink());
+        mRemainingData.put(AppConstant.IS_LINKED, responseModel.getmBajajWallet().isLinked());
+        mMobileNumber = responseModel.getmBajajWallet().getmMobile();
+//        mAppPreference.setMobileNumberBP(responseModel.getmBajajWallet().getmMobile());
+//        mAppPreference.setUserTokenBP(responseModel.getmBajajWallet().getBajajUserTocken());
+//        mAppPreference.setMobileNumberBP("9717188365");
+//        mAppPreference.setUserTokenBP("e1a9680299ec41be3d2d4230be3309be0f3dac0f6fa2348cd5eb0fc43641");
         List<BannerDetails> bannerData = responseModel.getBanner();
         if (bannerData != null && bannerData.size() > 0) {
             mBannerRL.setVisibility(View.VISIBLE);
