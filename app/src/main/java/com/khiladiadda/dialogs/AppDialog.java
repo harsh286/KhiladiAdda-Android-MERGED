@@ -1648,4 +1648,203 @@ public class AppDialog {
         return dialog;
     }
 
+
+    /**
+     * PineLabs OTP Dialog
+     **/
+
+    public static Dialog PineLabsDialog(final Context activity, final IOnPineLabsListener listener,String msg) {
+        final Dialog dialog = new Dialog(activity, R.style.MyDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.bajajpay_verify_otp);
+        TextView tvMsg = dialog.findViewById(R.id.tv_enter_otp);
+        tvMsg.setText(msg);
+        TextView tvResendOTP = dialog.findViewById(R.id.tv_resend_otp);
+        /**TODO changes here*/
+        tvResendOTP.setVisibility(View.VISIBLE);
+        tvResendOTP.setOnClickListener(new View.OnClickListener() {
+            int countResendOTP = 0;
+            long lastClickTime = 0;
+
+            @Override
+            public void onClick(View view){
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+                    return;
+                }
+                lastClickTime = SystemClock.elapsedRealtime();
+                countResendOTP++;
+                if (countResendOTP == 3) {
+                    Toast.makeText(activity, activity.getString(R.string.maximum_limit_reached), Toast.LENGTH_SHORT).show();
+                    tvResendOTP.setTextColor(activity.getResources().getColor(R.color.amount_color));
+                    tvResendOTP.setEnabled(false);
+                } else {
+                    listener.iOnResendOtp();
+                }
+            }
+        });
+        EditText et1 = dialog.findViewById(R.id.et_one);
+        EditText et2 = dialog.findViewById(R.id.et_two);
+        EditText et3 = dialog.findViewById(R.id.et_three);
+        EditText et4 = dialog.findViewById(R.id.et_four);
+        EditText et5 = dialog.findViewById(R.id.et_five);
+        EditText et6 = dialog.findViewById(R.id.et_six);
+        et1.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et1.getText().toString().length() > 0) {
+                    et2.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+
+            }
+
+        });
+        et2.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et2.getText().toString().length() > 0)     //size as per your requirement
+                {
+                    et3.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et2.getText().toString().equals("")) {
+                    et1.requestFocus();
+                }
+            }
+
+        });
+        et3.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et3.getText().toString().length() > 0)     //size as per your requirement
+                {
+                    et4.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et3.getText().toString().equals("")) {
+                    et2.requestFocus();
+                }
+            }
+
+        });
+        et4.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et4.getText().toString().length() > 0)     //size as per your requirement
+                {
+                    et5.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et4.getText().toString().equals("")) {
+                    et3.requestFocus();
+                }
+            }
+
+        });
+        et5.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et5.getText().toString().length() > 0)     //size as per your requirement
+                {
+                    et6.requestFocus();
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et5.getText().toString().equals("")) {
+                    et4.requestFocus();
+                }
+            }
+        });
+        et6.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (et6.getText().toString().equals("")) {
+                    et5.requestFocus();
+                }
+            }
+        });
+        AppCompatButton acbVerifyOtp = dialog.findViewById(R.id.acb_verify);
+        AppCompatButton acbCancel = dialog.findViewById(R.id.acb_cancel);
+        acbCancel.setOnClickListener(view -> dialog.dismiss());
+        acbVerifyOtp.setOnClickListener(view -> {
+            String mOTP = et1.getText().toString().trim() + et2.getText().toString().trim() + et3.getText().toString().trim() + et4.getText().toString().trim() + et5.getText().toString().trim() + et6.getText().toString().trim();
+            if (mOTP.trim().length() < 6) {
+                Toast.makeText(activity, activity.getString(R.string.otp_less_10), Toast.LENGTH_SHORT).show();
+            } else {
+                listener.iOnOtpSuccess();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        return dialog;
+    }
+
+
+    /**
+     * PineLabs Success
+     **/
+
+    public static Dialog showStatusSuccessPineLabsDialog(Activity activity, IOnPineLabsListener listener) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.setContentView(R.layout.dialog_status_success_pinelabs);
+        Button btnOkay = dialog.findViewById(R.id.btn_okay_dialog_bajajpay);
+        btnOkay.setOnClickListener(v -> {
+            listener.iOnSuccessOkayClicked(1);
+            dialog.dismiss();
+        });
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        return dialog;
+    }
+
+    /**
+     * PineLabs Success
+     **/
+
+    public static Dialog showPanCardSuccessPineLabsDialog(Activity activity, IOnPineLabsListener listener) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.setContentView(R.layout.dialog_status_success_pinelabs);
+        Button btnOkay = dialog.findViewById(R.id.btn_okay_dialog_bajajpay);
+        btnOkay.setOnClickListener(v -> {
+            listener.iOnSuccessOkayClicked(2);
+            dialog.dismiss();
+        });
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        return dialog;
+    }
+
+
 }

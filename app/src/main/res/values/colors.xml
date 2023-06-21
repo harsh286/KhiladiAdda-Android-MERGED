@@ -115,9 +115,13 @@
     <color name="rummy_red">#CA2236</color>
     <color name="rummy_tab_red">#670C10</color>
     <color name="red_popup">#E22447</color>
+    <color name="grey_text">#141414</color>
+    <color name="blue_text">#288BFF</color>
 
     //new added
     <color name="bajajpay_color">#CA2236</color>
     <color name="store_pack_border_color">#E3E3E3</color>
+    <color name="grey_1">#D7CFCF</color>
+    <color name="grey_2">#696969</color>
 
 </resources>

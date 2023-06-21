@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".pinelabs.PineLabsTransactionLimitActivity">
+
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar_pinelabs" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include">
+
+        <TextView
+            android:id="@+id/tv_card_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Set Card Transaction Limt"
+            android:textColor="#141414"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/swOnOff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/dimen_12dp"
+            android:checked="false"
+            android:thumb="@drawable/switch_thumb_selector"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:track="@drawable/switch_track_selector" />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/seekBar_pinelabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:maxHeight="@dimen/margin_8"
+            android:minHeight="@dimen/margin_8"
+            android:progress="50"
+            android:progressDrawable="@drawable/custom_seekbar_progress"
+            android:splitTrack="false"
+            android:thumb="@drawable/custom_thumb_seekbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_card_limit" />
+
+        <TextView
+            android:id="@+id/tv_start_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_12dp"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            android:text="500"
+            android:textColor="#C90808"
+            android:textSize="@dimen/dimen_14dp"
+            app:layout_constraintStart_toStartOf="@id/seekBar_pinelabs"
+            app:layout_constraintTop_toBottomOf="@id/seekBar_pinelabs" />
+
+        <TextView
+            android:id="@+id/tv_max_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            android:layout_marginEnd="@dimen/dimen_12dp"
+            android:text="5000"
+            android:textColor="#C90808"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintEnd_toEndOf="@id/seekBar_pinelabs"
+            app:layout_constraintTop_toBottomOf="@id/seekBar_pinelabs" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_1"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:background="#D7CFCF"
+            app:layout_constraintTop_toBottomOf="@+id/tv_start_limit" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_e_com_transctions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_card">
+
+        <TextView
+            android:id="@+id/tv_e_com_transctions_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Enable E-Com Transaction"
+            android:textColor="#141414"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_sub_transctions_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:text="Enable E-Com Transaction Limit"
+            android:textColor="#696969"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_e_com_transctions_limit" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/e_com_transctions_swOnOff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/dimen_12dp"
+            android:checked="false"
+            android:thumb="@drawable/switch_thumb_selector"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:track="@drawable/switch_track_selector" />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/seekBar_transctions_limit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:maxHeight="@dimen/margin_8"
+            android:minHeight="@dimen/margin_8"
+            android:progress="50"
+            android:progressDrawable="@drawable/custom_seekbar_progress"
+            android:splitTrack="false"
+            android:thumb="@drawable/custom_thumb_seekbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_sub_transctions_limit" />
+
+        <TextView
+            android:id="@+id/tv_transctions_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_12dp"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            android:text="500"
+            android:textColor="#C90808"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintStart_toStartOf="@id/seekBar_transctions_limit"
+            app:layout_constraintTop_toBottomOf="@id/seekBar_transctions_limit" />
+
+        <TextView
+            android:id="@+id/tv_max_transctions_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            android:layout_marginEnd="@dimen/dimen_12dp"
+            android:text="5000"
+            android:textColor="#C90808"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintEnd_toEndOf="@id/seekBar_transctions_limit"
+            app:layout_constraintTop_toBottomOf="@id/seekBar_transctions_limit" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_1"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:background="#D7CFCF"
+            app:layout_constraintTop_toBottomOf="@+id/tv_transctions_limit" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_pos_transactions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_e_com_transctions">
+
+        <TextView
+            android:id="@+id/tv_pos_transactions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Enable POS Transaction"
+            android:textColor="#141414"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_sub_pos_transactions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:text="Enable POS Transaction Limit"
+            android:textColor="#696969"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_pos_transactions" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/swOnOff_sub_pos_transactions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/dimen_12dp"
+            android:checked="true"
+            android:thumb="@drawable/switch_thumb_selector"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:track="@drawable/switch_track_selector" />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/seekBar_pos_transactions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:maxHeight="@dimen/margin_8"
+            android:minHeight="@dimen/margin_8"
+            android:progress="50"
+            android:progressDrawable="@drawable/custom_seekbar_progress"
+            android:splitTrack="false"
+            android:thumb="@drawable/custom_thumb_seekbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_sub_pos_transactions" />
+
+        <TextView
+            android:id="@+id/tv_pos_transactions_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_12dp"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            android:text="500"
+            android:textColor="#C90808"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintStart_toStartOf="@id/seekBar_pos_transactions"
+            app:layout_constraintTop_toBottomOf="@id/seekBar_pos_transactions" />
+
+        <TextView
+            android:id="@+id/tv_max_pos_transactions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            android:layout_marginEnd="@dimen/dimen_12dp"
+            android:text="5000"
+            android:textColor="#C90808"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintEnd_toEndOf="@id/seekBar_pos_transactions"
+            app:layout_constraintTop_toBottomOf="@id/seekBar_pos_transactions" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_1"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:background="#D7CFCF"
+            app:layout_constraintTop_toBottomOf="@+id/tv_pos_transactions_start" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_proceed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="56dp"
+        android:background="@drawable/ic_rectangle_6dp"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_pos_transactions" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

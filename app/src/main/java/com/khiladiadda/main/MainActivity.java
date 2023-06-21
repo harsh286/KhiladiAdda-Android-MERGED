@@ -47,6 +47,7 @@ import com.khiladiadda.network.model.request.UpdateFavouriteRequest;
 import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.DashboardResponse;
+import com.khiladiadda.pinelabs.PineLabsDashboardActivity;
 import com.khiladiadda.profile.ProfileActivity;
 import com.khiladiadda.profile.StatActivity;
 import com.khiladiadda.quiz.list.QuizListActivity;
@@ -220,6 +221,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.nav_youtube:
                 AppUtilityMethods.openYoutube(this);
+                break;
+            case R.id.nav_pinelabs:
+                Intent pinelabs = new Intent(this, PineLabsDashboardActivity.class);
+                startActivity(pinelabs);
                 break;
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

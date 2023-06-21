@@ -54,6 +54,10 @@
             android:icon="@drawable/ic_deposit"
             android:title="@string/menu_deposit" />
         <item
+            android:id="@+id/nav_pinelabs"
+            android:icon="@drawable/ic_deposit"
+            android:title="@string/menu_pinelabs" />
+        <item
             android:id="@+id/nav_setting"
             android:icon="@drawable/ic_nav_setting"
             android:title="@string/menu_setting" />

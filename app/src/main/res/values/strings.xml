@@ -836,6 +836,7 @@
     <string name="text_age_terms">I\'m 18 years old and I understand that under-age use of this app may be illegal. I agree to complete my KYC before the first cash withdrawal on the app.</string>
     <string name="text_terms__wallet_limit">I agree to <u><font color='red'>Terms and Conditions</font></u></string>
     <string name="menu_deposit">Deposit Limit</string>
+    <string name="menu_pinelabs">Pine Labs</string>
     <string name="title_tournaments">My Tournaments</string>
     <string name="title_trending">Trending</string>
     <string name="text_participants">Participants</string>
@@ -1016,4 +1017,7 @@
     <string name="text_game_level">Note - Game level must be 25 or more than 25</string>
     <string name="text_map_hint">Note - Please download the Map now otherwise you will be kicked from the room</string>
     <string name="insuffiecient_Rummy">You wallet balance is insufficient.\\nPlease recharge your wallet to play and earn.</string>
+    <string name="get_otp">Get OTP</string>
+    <string name="your_mobile_number_has_been_successfully_verified">Your mobile number has been successfully verified.</string>
+    <string name="total_card_balance">Total card balance</string>
 </resources>

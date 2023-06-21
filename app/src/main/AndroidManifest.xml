@@ -36,7 +36,6 @@
         <package android:name="com.tb.ludouniverse.in" />
         <package android:name="com.KhiladiAdda.CourtPiecePro" />
         <package android:name="org.altruist.BajajExperia" />
-
     </queries>
 
     <application
@@ -53,6 +52,33 @@
         tools:node="merge"
         tools:replace="android:allowBackup, android:theme,android:icon">
         <activity
+            android:name=".pinelabs.PineLabsTransactionLimitActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pinelabs.PineLabsUpdateCardStatusActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pinelabs.PineLabsGeneratePinActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pinelabs.PineLabsManageCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pinelabs.PineLabsCardDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pinelabs.PineLabsLinkDeviceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pinelabs.PineLabsPancardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pinelabs.PineLabsDetailsScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pinelabs.PineLabsDashboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".rummy.RummyLogsWebViewActivity"
             android:exported="false">
             <meta-data
@@ -62,7 +88,7 @@
         <activity
             android:name=".rummy.RummyHelpActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".rummy.RummyHistoryActivity"
             android:exported="false">
@@ -670,7 +696,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.truecaller.android.sdk.PartnerKey"
             android:value="@string/truecaller_partnerKey" />
