@@ -20,8 +20,8 @@ public class LeagueListPresenter implements ILeagueListPresenter {
     }
 
     @Override
-    public void getGameDetails(String gameId, int type) {
-        mAddSubscription = mInteractor.getGame(gameId, type, mAddApiListener);
+    public void getGameDetails(String catId, int type,String gameId) {
+        mAddSubscription = mInteractor.getGame(catId,type,mAddApiListener,gameId);
     }
 
     private IApiListener<LeagueListReponse> mAddApiListener = new IApiListener<LeagueListReponse>() {

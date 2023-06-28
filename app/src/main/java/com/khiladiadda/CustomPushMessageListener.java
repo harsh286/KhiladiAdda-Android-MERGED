@@ -92,9 +92,9 @@ public class CustomPushMessageListener extends PushMessageListener {
         AppSharedPreference mAppPreference = AppSharedPreference.getInstance();
         mAppPreference.setIsDeepLinking(true);
         Intent i;
-        i = new Intent(activity, LeagueActivity.class);
+        i = new Intent(activity,LeagueActivity.class);
         i.putExtra(AppConstant.FROM, mFrom);
-        i.putExtra(AppConstant.CATEGORY, mCategory);
+        i.putExtra(AppConstant.CATEGORY,mCategory);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(i);
     }

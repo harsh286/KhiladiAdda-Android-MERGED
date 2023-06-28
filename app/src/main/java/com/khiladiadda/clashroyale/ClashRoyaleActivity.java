@@ -25,6 +25,7 @@ import com.khiladiadda.network.model.response.ClashRoyaleFilterReponse;
 import com.khiladiadda.network.model.response.GameCategory;
 import com.khiladiadda.network.model.response.LeagueListDetails;
 import com.khiladiadda.network.model.response.LeagueListReponse;
+import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.NetworkStatus;
 
@@ -120,9 +121,8 @@ public class ClashRoyaleActivity extends BaseActivity implements IClashRoyaleVie
         mFilterAdapter.notifyDataSetChanged();
         getLeague();
     }
-
     private void getLeague() {
-        mPresenter.getLeagueList(mFilterId, mBannerType);
+        mPresenter.getLeagueList(mFilterId,mBannerType,"");
     }
 
     @Override public void onFilterFailure(ApiError error) {

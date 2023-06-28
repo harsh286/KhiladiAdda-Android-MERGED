@@ -1,9 +1,9 @@
 package com.khiladiadda.league;
-
 import static android.view.View.GONE;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,10 +17,12 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
+import com.khiladiadda.dialogs.AppDialog;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.help.HelpActivity;
 import com.khiladiadda.interfaces.IOnItemClickListener;
 import com.khiladiadda.league.adapter.LeagueListAdapter;
+import com.khiladiadda.league.adapter.LeagueLiveListAdapter;
 import com.khiladiadda.league.details.LeagueDetailsActivity;
 import com.khiladiadda.league.interfaces.ILeagueListPresenter;
 import com.khiladiadda.league.interfaces.ILeagueListView;
@@ -35,6 +37,8 @@ import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.GameCategory;
 import com.khiladiadda.network.model.response.LeagueListDetails;
 import com.khiladiadda.network.model.response.LeagueListReponse;
+import com.khiladiadda.preference.AppSharedPreference;
+import com.khiladiadda.rummy.adapter.RummyLiveTableAdpter;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
@@ -45,9 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-
-public class LeagueActivity extends BaseActivity implements ILeagueListView, IOnItemClickListener {
-
+public class LeagueActivity extends BaseActivity implements ILeagueListView, IOnItemClickListener, LeagueLiveListAdapter.IOnItemClickListener {
     @BindView(R.id.iv_back)
     ImageView mBackIV;
     @BindView(R.id.iv_notification)
@@ -60,6 +62,8 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
     TextView mHelpTV;
     @BindView(R.id.rv_league)
     RecyclerView mRV;
+    @BindView(R.id.rv_live_league_match)
+    RecyclerView mLiveLeagueMatchRV;
     @BindView(R.id.btn_solo)
     TextView mSoloBTN;
     @BindView(R.id.btn_duo)
@@ -70,15 +74,16 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
     TextView mNoDataTV;
     @BindView(R.id.vp_advertisement)
     ViewPager mBannerVP;
-
     private ILeagueListPresenter mPresenter;
     private LeagueListAdapter mLeagueAdapter;
-    private List<LeagueListDetails> mLeagueList;
+    private LeagueLiveListAdapter mLeagueLiveAdapter;
+    private List<LeagueListDetails>mLeagueList;
+    private List<LeagueListDetails>mLeagueLiveList;
     private String mGameId;
-    private boolean mIsCategorySolo = true;
-    private List<BannerDetails> mAdvertisementsList = new ArrayList<>();
+    private boolean mIsCategorySolo=true;
+    private List<BannerDetails>mAdvertisementsList=new ArrayList<>();
     private Handler mHandler;
-    Handler handler = new Handler();
+    Handler handler=new Handler();
     private String mType, mGame;
     private int mBannerType;
     @BindView(R.id.nudge)
@@ -113,10 +118,17 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
         mPresenter = new LeagueListPresenter(this);
         setData();
         mLeagueList = new ArrayList<>();
-        mLeagueAdapter = new LeagueListAdapter(mLeagueList, mGameId);
+        mLeagueLiveList = new ArrayList<>();
+        mLeagueAdapter=new LeagueListAdapter(mLeagueList,mGameId);
         mRV.setLayoutManager(new LinearLayoutManager(this));
         mRV.setAdapter(mLeagueAdapter);
         mLeagueAdapter.setOnItemClickListener(this);
+        /*live League*/
+        /*Live Table Adapter call*/
+        mLeagueLiveAdapter = new LeagueLiveListAdapter(mLeagueLiveList,mGameId);
+        mLiveLeagueMatchRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mLiveLeagueMatchRV.setAdapter(mLeagueLiveAdapter);
+        mLeagueLiveAdapter.setOnItemClickListener(this);
         String mCategoryType = getIntent().getStringExtra(AppConstant.CATEGORY);
         if (mCategoryType != null) {
             if (mCategoryType.equalsIgnoreCase(AppConstant.SOLO)) {
@@ -202,10 +214,10 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
         }
     }
 
-    private void getData(String mCategoryId) {
+    private void getData(String mCategoryId,String gameId) {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
-            mPresenter.getGameDetails(mCategoryId, mBannerType);
+            mPresenter.getGameDetails(mCategoryId,mBannerType,gameId);
         } else {
             Snackbar.make(mDuoBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
@@ -227,42 +239,45 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
             mSquadBTN.setSelected(true);
             mType = AppConstant.SQUAD;
         }
-        String categoryId = "";
+        String categoryId="";
         List<Active> gameList = mAppPreference.getMasterData().getResponse().getGames();
         for (Active game : gameList) {
-            if (mGameId.equalsIgnoreCase(game.getId())) {
+            if (mGameId.equalsIgnoreCase(game.getId())){
                 for (GameCategory category : game.getCategories()) {
                     if (mFromCategory.equalsIgnoreCase(category.getTitle())) {
-                        categoryId = category.getId();
+                        categoryId=category.getId();
                         break;
                     }
                 }
             }
         }
-        getData(categoryId);
+        getData(categoryId,mGameId);
     }
 
     @Override
     public void onGameComplete(LeagueListReponse responseModel) {
         mLeagueList.clear();
-        if (responseModel.isStatus()) {
+        mLeagueLiveList.clear();
+        if (responseModel.isStatus()){
             if (responseModel.getResponse().size() > 0) {
                 mLeagueList.addAll(responseModel.getResponse());
                 mNoDataTV.setVisibility(View.GONE);
-            } else {
+            }else{
                 mNoDataTV.setVisibility(View.VISIBLE);
             }
-            List<BannerDetails> banners = responseModel.getBanners();
-            if (banners != null && banners.size() > 0) {
+            mLeagueLiveList.addAll(responseModel.getLiveLeagueRes());
+            List<BannerDetails> banners=responseModel.getBanners();
+            if (banners != null && banners.size() > 0){
                 setUpAdvertisementViewPager(banners);
             } else {
                 mBannerVP.setVisibility(GONE);
             }
             mLeagueAdapter.notifyDataSetChanged();
+            mLeagueLiveAdapter.notifyDataSetChanged();
             hideProgress();
         } else {
             hideProgress();
-            Snackbar.make(mDuoBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mDuoBTN,R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -273,7 +288,7 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        if (menuItem.getItemId() == android.R.id.home) {
+        if (menuItem.getItemId()==android.R.id.home) {
             onBackPressed();
             return true;
         }
@@ -288,7 +303,7 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
             if (!mIsCategorySolo && !mAppPreference.getBoolean(AppConstant.LEAGUE_CREATE_JOIN_HELP, false)) {
                 details = new Intent(this, LeagueHelpActivity.class);
             } else {
-                details = new Intent(this, LeagueDetailsActivity.class);
+                details = new Intent(this,LeagueDetailsActivity.class);
             }
             details.putExtra(AppConstant.FROM, AppConstant.LEAGUE);
             details.putExtra(AppConstant.DATA, detail);
@@ -370,5 +385,21 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
         mPresenter.destroy();
         super.onDestroy();
     }
-
+    /*Below code for get Room ID and Password*/
+    @Override
+    public void onClickItem(View view, int position, int tag) {
+        if (TextUtils.isEmpty(mLeagueLiveList.get(position).getRoomId()) && TextUtils.isEmpty(mLeagueLiveList.get(position).getRoomPassword())) {
+            if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_NEWSTATE_ID, ""))) {
+                AppUtilityMethods.showMsg(this, getString(R.string.text_credential_pubgns_pending), false);
+            } else {
+                AppUtilityMethods.showMsg(this, getString(R.string.text_credential_pending), false);
+            }
+        } else {
+            if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_NEWSTATE_ID, ""))) {
+                AppDialog.showLiveCredentialDialog(this, mLeagueLiveList.get(position).getRoomId(), mLeagueLiveList.get(position).getRoomPassword(), 1);
+            } else {
+                AppDialog.showLiveCredentialDialog(this, mLeagueLiveList.get(position).getRoomId(), mLeagueLiveList.get(position).getRoomPassword(), 2);
+            }
+        }
+    }
 }

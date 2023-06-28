@@ -31,6 +31,9 @@ public class RummyDetails {
     @SerializedName("numPlayers")
     @Expose
     private Integer numPlayers;
+    @SerializedName("bonus")
+    @Expose
+    private Integer bonus;
     @SerializedName("players")
     @Expose
     private List<PlayersDetails> mPlayersDetails;
@@ -93,5 +96,11 @@ public class RummyDetails {
 
     public void setmPlayersDetails(List<PlayersDetails> mPlayersDetails) {
         this.mPlayersDetails = mPlayersDetails;
+    }
+    public Integer getBonus(){
+        return bonus;
+    }
+    public void setBonus(Integer bonus) {
+        this.bonus = bonus;
     }
 }

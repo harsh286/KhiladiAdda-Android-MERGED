@@ -411,7 +411,7 @@ public interface ApiService {
 
     //Get CR League List on Filter basis
     @GET(AppConstant.API_CR_LEAGUE)
-    Observable<LeagueListReponse> getCRLeague(@Path("id") String id, @Query("type") int type);
+    Observable<LeagueListReponse> getCRLeague(@Path("catId") String catId,@Path("gameId") String gameId,@Query("type") int type);
 
     //Get League Participant
     @GET(AppConstant.API_LEAGUE_PARTICIPANT)

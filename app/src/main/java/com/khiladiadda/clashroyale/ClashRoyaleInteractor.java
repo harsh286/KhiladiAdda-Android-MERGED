@@ -18,10 +18,10 @@ public class ClashRoyaleInteractor {
                 .subscribe(new SubscriberCallback<>(listener));
     }
 
-    public Subscription getLeague(String gameId, int type, IApiListener<LeagueListReponse> listener) {
+    public Subscription getLeague(String catId, String gameId,int type,IApiListener<LeagueListReponse> listener) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
-        return manager.createObservable(service.getCRLeague(gameId,type))
+        return manager.createObservable(service.getCRLeague(catId,gameId,type))
                 .subscribe(new SubscriberCallback<>(listener));
     }
 

@@ -143,7 +143,7 @@ dependencies {
     //truecaller
     implementation "com.truecaller.android.sdk:truecaller-sdk:2.7.0"
     //Phonepe
-    implementation 'phonepe.intentsdk.android.release:IntentSDK:1.6.8@aar'
+    implementation 'phonepe.intentsdk.android.snapshot:IntentSDK:releaseSDK-788438-SNAPSHOT'
     //cashfree new sdk
     implementation 'com.cashfree.pg:api:2.0.4'
     //paytm new sdk

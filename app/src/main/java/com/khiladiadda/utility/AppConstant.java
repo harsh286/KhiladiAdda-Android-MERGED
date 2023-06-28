@@ -219,7 +219,7 @@ public class AppConstant {
     public static final String API_HTH_CANCELBATTLE = "user/fantasy/cancel-battle-group/{id}";
     //    public static final String API_GAME_ID = "user/game";
     public static final String API_GAME_CATEGORY = "user/game/{id}";
-    public static final String API_CR_LEAGUE = "user/game-league/{id}";
+    public static final String API_CR_LEAGUE = "user/game-league/{catId}/{gameId}";
     public static final String API_LEAGUE_PARTICIPANT = "user/league/{id}";
     public static final String API_JOIN_LEAGUE = "user/attempt-league/{id}";
     public static final String API_CREATE_TEAM = "user/attempt-league/{id}";
@@ -413,6 +413,7 @@ public class AppConstant {
     public static final String TEXT_OPPONENT_COMBO = "Opponent’s Combo";
     public static final String TEXT_YOUR_COMBO = "Your Combo";
     public static final String RUMMY_PACKAGE = "com.khiladiadda.rummy";
+    public static final String MY_LIVE_LEAGUE_CARD = "liveLeague";
 
     public static int REQUEST_NOTIFICATION = 902;
     public static final int FROM_NOTIFICATION = 901;

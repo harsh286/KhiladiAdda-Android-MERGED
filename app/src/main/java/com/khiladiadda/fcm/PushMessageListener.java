@@ -113,6 +113,10 @@ public class PushMessageListener implements NonMoEngagePushListener {
                     Intent intent = new Intent(AppConstant.LUDO_TOURNAMENT_PACKAGE);
                     intent.putExtra(AppConstant.FROM, AppConstant.LUDOTMT_LOBBY_FULL);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                }else if (mType==77||mType==76) { //Rummy 76 for cancel, 77 for result update
+                    Intent intent = new Intent(AppConstant.RUMMY_PACKAGE);
+                    intent.putExtra(AppConstant.FROM, AppConstant.RUMMY_UPDATE);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                 }
 
                 sendNotification(mTitle, mMessage);

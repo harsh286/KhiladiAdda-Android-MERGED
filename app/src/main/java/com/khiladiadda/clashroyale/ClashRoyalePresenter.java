@@ -23,11 +23,11 @@ public class ClashRoyalePresenter implements IClashRoyalePresenter {
     }
 
     @Override public void getFilterList() {
-        mSubscription = mInteractor.getFilter(AppSharedPreference.getInstance().getString(AppConstant.CLASHROYALE_ID, ""), mFilterApiListener);
+        mSubscription = mInteractor.getFilter(AppSharedPreference.getInstance().getString(AppConstant.CLASHROYALE_ID, ""),mFilterApiListener);
     }
 
-    @Override public void getLeagueList(String gameId, int type) {
-        mSubscription = mInteractor.getLeague(gameId, type, mLeagueApiListener);
+    @Override public void getLeagueList(String catId, int type,String gameId){
+        mSubscription = mInteractor.getLeague(catId,gameId,type,mLeagueApiListener);
     }
 
     private IApiListener<ClashRoyaleFilterReponse> mFilterApiListener = new IApiListener<ClashRoyaleFilterReponse>() {

@@ -4,18 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".wallet.WalletActivity">
-
     <include layout="@layout/bannermoengage" />
-
     <LinearLayout
         android:id="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:orientation="vertical">
-
         <include layout="@layout/actionbar_transparent" />
-
         <TextView
             android:id="@+id/tv_coins"
             style="@style/WalletText"
@@ -23,8 +19,7 @@
             android:layout_marginEnd="@dimen/margin_30"
             android:text="@string/text_total_coins"
             android:textSize="@dimen/text_15" />
-
-        <LinearLayout
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_5"
@@ -112,6 +107,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_withdraw"
+            android:visibility="visible"
             style="@style/ButtonBottomLast"
             android:drawableTop="@drawable/withdraw"
             android:text="@string/text_withdraw_next" />

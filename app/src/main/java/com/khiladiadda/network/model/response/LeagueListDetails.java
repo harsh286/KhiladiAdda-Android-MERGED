@@ -1,5 +1,4 @@
 package com.khiladiadda.network.model.response;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -7,9 +6,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
-
 public class LeagueListDetails implements Parcelable {
-
     @SerializedName("title") @Expose public String title;
     @SerializedName("game_category_id") @Expose public String gameCategoryId;
     @SerializedName("match_id") @Expose public String matchId;

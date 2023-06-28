@@ -1612,7 +1612,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
 
     private void phonePePayment(PhonePePaymentResponse response) {
         String upiPackage = "";
-        if (mPaymentFrom == AppConstant.FROM_PHONEPE_GPAY) {
+        if(mPaymentFrom==AppConstant.FROM_PHONEPE_GPAY){
             upiPackage = "com.google.android.apps.nbu.paisa.user";
         } else if (mPaymentFrom == AppConstant.FROM_PHONEPE_PaytmPAY) {
             upiPackage = "net.one97.paytm";
@@ -1692,7 +1692,6 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         mPresenter.destroy();
         super.onDestroy();
     }
-
     private void checkBajajpayLinked(HashMap<String, Boolean> data) {
         if (data.get(AppConstant.IS_LINKED) == true && data.get(AppConstant.IS_DELINK) == false) {
 //            getBajajPayBalance();

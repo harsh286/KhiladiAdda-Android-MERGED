@@ -26,8 +26,8 @@ public class RummyGameWebActivity extends BaseActivity {
         return R.layout.activity_game_web;
     }
     @Override
-    protected void initViews() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+    protected void initViews(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
             WebView.setWebContentsDebuggingEnabled(true);
         }
         webViewGame.addJavascriptInterface(new JsObject(), "Android");
@@ -78,18 +78,18 @@ public class RummyGameWebActivity extends BaseActivity {
         @JavascriptInterface
         public void receiveMessage(String data) throws JSONException {
             Log.i("JsObject", "new postMessage data= " + data);
-            RummyGameModel filteredData = new Gson().fromJson(data, RummyGameModel.class);
+            RummyGameModel filteredData = new Gson().fromJson(data,RummyGameModel.class);
             if (filteredData.getRedirectionType().equals("exit") && filteredData.getRedirectionParams().getRedirectionUrl() != null &&
-                    filteredData.getRedirectionParams().getRedirectionUrl().equals("addMoney")) {
+                    filteredData.getRedirectionParams().getRedirectionUrl().equals("addMoney")){
              /*AppDialog.showRummyRechargeMsg(RummyGameWebActivity.this, "Recharge Now");*/
-                AppDialog.showInsufficientRummyDialog(RummyGameWebActivity.this);
+                 AppDialog.showInsufficientRummyDialog(RummyGameWebActivity.this);
                 Log.e("TAG", "receiveMessage: ");
-            } else if (filteredData.getRedirectionType().equals("RELOAD")) {
+            } else if (filteredData.getRedirectionType().equals("RELOAD")){
                 finish();
                 Intent intLeaderboard=new Intent(RummyGameWebActivity.this,RummyGameWebActivity.class);
                 intLeaderboard.putExtra("info", info);
                 startActivity(intLeaderboard);
-            } else if (filteredData.getRedirectionType().equals("exit") || filteredData.getRedirectionType().equals("EXIT")) {
+            } else if (filteredData.getRedirectionType().equals("exit")||filteredData.getRedirectionType().equals("EXIT")) {
                 finish();
             }
         }

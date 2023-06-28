@@ -1,5 +1,4 @@
 package com.khiladiadda.wallet;
-
 import static android.view.View.GONE;
 
 import android.app.Activity;
@@ -56,9 +55,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-
 public class WalletCashbackActivity extends BaseActivity implements IWalletCashbackView {
-
     @BindView(R.id.iv_back)
     ImageView mBackIV;
     @BindView(R.id.tv_activity_name)
@@ -327,7 +324,7 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
                 i.putExtra(AppConstant.BAJAJWALLET, mIsBajajWallet);
                 i.putExtra(AppConstant.BAJAJUPI, mIsBajajUpi);
                 i.putExtra(AppConstant.REMAININGDATA, mRemainingData);
-                i.putExtra("mobile_number", mMobileNumber);
+                i.putExtra("mobile_number",mMobileNumber.toString());
                 startActivity(i);
             }
         } else {
@@ -345,23 +342,21 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
         mAppPreference.setProfileData(responseModel.getResponse());
         setData();
     }
-
     @Override
     public void onProfileFailure(ApiError error) {
         hideProgress();
     }
-
     @Override
     public void onRemainingLimitComplete(RemainingLimitResponse responseModel) {
-        mRemainingAddLimit = responseModel.getRemaining_add_limit();
-        mRemainingData.put(AppConstant.IS_DELINK, responseModel.getmBajajWallet().isDelink());
-        mRemainingData.put(AppConstant.IS_LINKED, responseModel.getmBajajWallet().isLinked());
-        mMobileNumber = responseModel.getmBajajWallet().getmMobile();
+        mRemainingAddLimit = responseModel.getRemainingAddLimit();
+        mRemainingData.put(AppConstant.IS_DELINK, responseModel.getBajajWallet().getDelink());
+        mRemainingData.put(AppConstant.IS_LINKED, responseModel.getBajajWallet().getLinked());
+         mMobileNumber=responseModel.getBajajWallet().getMobile();
 //        mAppPreference.setMobileNumberBP(responseModel.getmBajajWallet().getmMobile());
 //        mAppPreference.setUserTokenBP(responseModel.getmBajajWallet().getBajajUserTocken());
 //        mAppPreference.setMobileNumberBP("9717188365");
 //        mAppPreference.setUserTokenBP("e1a9680299ec41be3d2d4230be3309be0f3dac0f6fa2348cd5eb0fc43641");
-        List<BannerDetails> bannerData = responseModel.getBanner();
+        List<BannerDetails> bannerData=responseModel.getBanners();
         if (bannerData != null && bannerData.size() > 0) {
             mBannerRL.setVisibility(View.VISIBLE);
             setUpAdvertisementViewPager(bannerData);

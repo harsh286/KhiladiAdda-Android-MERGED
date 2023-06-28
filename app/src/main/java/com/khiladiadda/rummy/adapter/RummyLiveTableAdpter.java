@@ -68,7 +68,7 @@ public class RummyLiveTableAdpter extends RecyclerView.Adapter<RummyLiveTableAdp
         } else if (ludoContestBean.getGameMode() == AppConstant.POINT_13) {
             holder.mGameModeTv.setText("Point(13 cards)");
         } else if (ludoContestBean.getGameMode() == AppConstant.JOKER) {
-            holder.mGameModeTv.setText("Point(2 Jokes)");
+            holder.mGameModeTv.setText("Point(2 Jokers)");
         } else if (ludoContestBean.getGameMode() == AppConstant.DEAL) {
             holder.mGameModeTv.setText("Deal");
         }

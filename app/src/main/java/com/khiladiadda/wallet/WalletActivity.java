@@ -93,7 +93,7 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
     private TransactionAdapter mAdapter;
     private ArrayList<TransactionDetails> mList;
     private boolean isAllowed = true;
-    private double mDepositCoins;
+    private double mDepositCoins,mWinningCoins,mBonusCoins;
     @BindView(R.id.nudge)
     NudgeView mNV;
 
@@ -228,7 +228,16 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
 
     private void setData() {
         Coins coins = mAppPreference.getProfileData().getCoins();
-        mDepositCoins = coins.getDeposit();
+          mDepositCoins = coins.getDeposit();
+          /*point calculation*/
+         int mBonus=((int)(coins.getBonus()*100));
+          mBonusCoins=((double) mBonus)/100.0;
+         /*Deposit*/
+        int mDeposit=((int)(coins.getDeposit()*100));
+         mDepositCoins=((double) mDeposit)/100.0;
+         /*winning*/
+        int mWinning=((int)(coins.getWinning()*100));
+        mWinningCoins=((double) mWinning)/100.0;
         if (!TextUtils.isEmpty(mAppPreference.getMobile()) && !mAppPreference.getMobile().startsWith("8888888888")) {
             mAppPreference.setMobile(String.valueOf(mAppPreference.getMobile()));
         }
@@ -238,18 +247,21 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
             mDepositTV.setText(getString(R.string.text_deposited_next) + mDepositCoins);
         }
         if (String.valueOf(coins.getWinning()).contains(".")) {
-            mWinningTV.setText(getString(R.string.text_wining_next) + String.format("%.2f", coins.getWinning()));
+            mWinningTV.setText(getString(R.string.text_wining_next) +String.format("%.2f", mWinningCoins));
         } else {
-            mWinningTV.setText(getString(R.string.text_wining_next) + coins.getWinning());
+            mWinningTV.setText(getString(R.string.text_wining_next) + mWinningCoins);
         }
         if (String.valueOf(coins.getBonus()).contains(".")) {
-            mBonusTV.setText(getString(R.string.text_bonus_next) + String.format("%.2f", coins.getBonus()));
-        } else {
-            mBonusTV.setText(getString(R.string.text_bonus_next) + coins.getBonus());
-        }
 
-        double total = mDepositCoins + coins.getBonus() + coins.getWinning();
-        if (String.valueOf(total).contains(".")) {
+            mBonusTV.setText(getString(R.string.text_bonus_next)+String.format("%.2f", mBonusCoins));
+
+        } else {
+            mBonusTV.setText(getString(R.string.text_bonus_next) +mBonusCoins);
+        }
+        double total=mDepositCoins + mBonusCoins + mWinningCoins;
+        int totalCoins=((int)(total*100));
+        total=((double) totalCoins)/100.0;
+        if(String.valueOf(total).contains(".")){
             mTotalCoinsTV.setText("Total Balance\n" + "₹" + String.format("%.2f", total));
         } else {
             mTotalCoinsTV.setText("Total Balance\n" + "₹" + total);

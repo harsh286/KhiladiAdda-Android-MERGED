@@ -17,8 +17,10 @@ import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -1125,22 +1127,19 @@ public class AppDialog {
     }
 
     public static Dialog showInsufficientRummyDialog(Activity activity) {
-        final Dialog dialog = new Dialog(activity);
+        final Dialog dialog=new Dialog(activity);
         dialog.setContentView(R.layout.dialog_status_rummy_insufficient);
-        Button btnOkay = dialog.findViewById(R.id.btn_okay_dialog);
-        btnOkay.setOnClickListener(v -> {
+        Button btnOkay=dialog.findViewById(R.id.btn_okay_dialog);
+        btnOkay.setOnClickListener(v->{
             dialog.dismiss();
-            activity.startActivity(new Intent(activity, WalletCashbackActivity.class));
+            activity.startActivity(new Intent(activity,WalletCashbackActivity.class));
             activity.finish();
-
         });
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
         return dialog;
     }
-
-
     //Match Live Dialog
     public void showLiveDialog(Context context, String msg, boolean live) {
         final Dialog dialog = new Dialog(context);

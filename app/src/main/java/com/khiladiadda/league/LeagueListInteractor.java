@@ -10,10 +10,10 @@ import rx.Subscription;
 
 public class LeagueListInteractor {
 
-    public Subscription getGame(String gameId, int type, IApiListener<LeagueListReponse> listener) {
+    public Subscription getGame(String catId, int type,IApiListener<LeagueListReponse> listener,String gameId ) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
-        return manager.createObservable(service.getCRLeague(gameId, type))
+        return manager.createObservable(service.getCRLeague(catId,gameId,type))
                 .subscribe(new SubscriberCallback<>(listener));
     }
 

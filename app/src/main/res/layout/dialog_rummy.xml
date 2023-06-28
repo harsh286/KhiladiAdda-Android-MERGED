@@ -6,11 +6,11 @@
 <!--    android:id="@+id/main"-->
 <!--    android:background="@color/colorTransparent"-->
 <!--    android:backgroundTint="@color/ic_round_top_background">-->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="420dp"
+    android:layout_height="480dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/ic_round_top_background"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -168,12 +168,38 @@
         android:text="Deposit + Winning"
         android:textColor="@color/black"
         android:textSize="@dimen/text_16" />
+    <TextView
+        android:id="@+id/tv_bonus_coin_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_deposit_label"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_5"
+        android:gravity="center"
+        android:padding="@dimen/padding_8"
+        android:text="Bonus Coins"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_16" />
+
+    <TextView
+        android:id="@+id/tv_bonus_coin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_deposit"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:gravity="center"
+        android:padding="@dimen/padding_8"
+        tools:text="Deposit + Winning"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_16" />
 
     <TextView
         android:id="@+id/tv_notice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_deposit"
+        android:layout_below="@+id/tv_bonus_coin_txt"
         android:padding="@dimen/text_8"
         android:text="You agree to Khiladiadda terms and conditions as you join the contest. By joining the contest you also confirm that you are not a resident of Andhra Pradesh, Assam, Odisha, Telangana, Nagaland, Sikkim." />
 

@@ -1,5 +1,4 @@
 package com.khiladiadda.dialogs;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -11,6 +10,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,26 +41,23 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 public class RummyDialog extends BottomSheetDialog implements View.OnClickListener, IRummyView {
     private Button mPlayBTN;
-    private TextView mEntryFeeTV, mTotalBalanceTV, mDepWinTV, mTwoPlayer, mMorePlayer, mWinningAmountTV;
+    private TextView mEntryFeeTV, mTotalBalanceTV, mDepWinTV, mTwoPlayer, mMorePlayer, mWinningAmountTV, mBonusCoins,mDepositlabelTv,mbonuscCoinTextTv;
     private MaterialCardView mCancelBtn;
     private Context mContext;
-    private String mEntryFee, mWinningAmount, mTotalBal, mDepWinAmount, cardId, token, refreshToken;
+    private String mEntryFee, mWinningAmount,mTotalBal,mDepWinAmount,cardId,token,refreshToken;
     private OnPlayClick mOnPlayClicked;
     private String mEntryAmount;
     private List<PlayersDetails> mPlayerDetails;
     private DecimalFormat decfor;
     private IRummyPresenter mPresenter;
     private long mLastClickTime = 0;
-    private int itemPosition, mNumberOfPlayersPosition;
+    private int itemPosition, mNumberOfPlayersPosition, mBonus;
+    private Double mBonusWallet, mGetBonus;
     private Dialog mDialog;
-
     private String mLatitute, mLongitude;
-
-
-    public RummyDialog(@NonNull Context context, String mEntryFee, String totalBal, String mDepWinAmount, String token, String refreshToken, int theme, OnPlayClick mOnPlayClicked, List<PlayersDetails> mPlayerDetails, int itemPosition, String mLatitute, String mLongitude) {
+    public RummyDialog(@NonNull Context context, String mEntryFee, String totalBal, String mDepWinAmount, String token, String refreshToken, int theme, OnPlayClick mOnPlayClicked, List<PlayersDetails> mPlayerDetails, int itemPosition, String mLatitute, String mLongitude, double mBonusWallet, int mBonus) {
         super(context);
         this.mContext = context;
         this.mEntryFee = mEntryFee;
@@ -73,6 +70,8 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
         this.itemPosition = itemPosition;
         this.mLatitute = mLatitute;
         this.mLongitude = mLongitude;
+        this.mBonusWallet = mBonusWallet;
+        this.mBonus = mBonus;
     }
 
     @Override
@@ -92,10 +91,13 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
         mPlayBTN = findViewById(R.id.btn_play);
         mEntryFeeTV = findViewById(R.id.tv_entry_fee);
         mTotalBalanceTV = findViewById(R.id.tv_total_wallet_balance);
+        mBonusCoins = findViewById(R.id.tv_bonus_coin);
         mDepWinTV = findViewById(R.id.tv_deposit);
         mCancelBtn = findViewById(R.id.mcv_cancel);
         mTwoPlayer = findViewById(R.id.tv_two_players);
         mMorePlayer = findViewById(R.id.tv_more_players);
+        mDepositlabelTv = findViewById(R.id.tv_deposit_label);
+        mbonuscCoinTextTv = findViewById(R.id.tv_bonus_coin_txt);
         mWinningAmountTV = findViewById(R.id.tv_winning_amount);
         if (mPlayerDetails.size() != 2) {
             if (mPlayerDetails.get(0).getnPlayers() == 2) {
@@ -128,7 +130,6 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
         cardId = mPlayerDetails.get(0).getCardId();
         modeSwitch();
     }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -137,10 +138,17 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
                 break;
             case R.id.btn_play:
                 if (new NetworkStatus(mContext).isInternetOn()) {
-                    showProgress(mContext.getString(R.string.txt_progress_authentication));
-                    mPresenter.getCheckGameStatus(mPlayerDetails.get(mNumberOfPlayersPosition).get_id(),mLatitute,mLongitude);
+                    if(Double.parseDouble(mDepWinAmount)>=Double.parseDouble(mEntryAmount)){
+                        showProgress(mContext.getString(R.string.txt_progress_authentication));
+                        mPresenter.getCheckGameStatus(mPlayerDetails.get(mNumberOfPlayersPosition).get_id(),mLatitute, mLongitude);
+                    } else if(Double.parseDouble(mDepWinAmount)>=(Double.parseDouble(mEntryAmount)-mGetBonus)&&mBonusWallet >= mGetBonus) {
+                        showProgress(mContext.getString(R.string.txt_progress_authentication));
+                        mPresenter.getCheckGameStatus(mPlayerDetails.get(mNumberOfPlayersPosition).get_id(), mLatitute, mLongitude);
+                    } else {
+                        AppDialog.showInsufficientRummyDialog((Activity)mContext);
+                    }
                 } else {
-                    Snackbar.make(mPlayBTN, mContext.getString(R.string.error_internet), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mPlayBTN,mContext.getString(R.string.error_internet), Snackbar.LENGTH_LONG).show();
                 }
                 break;
             case R.id.tv_two_players:
@@ -165,24 +173,29 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
                 break;
         }
     }
-    private void modeSwitch(){
+    private void modeSwitch() {
+        final DecimalFormat decfor = new DecimalFormat("0.00");
         mWinningAmountTV.setText("₹" + decfor.format(Float.parseFloat(mWinningAmount) / 100));
         mEntryFeeTV.setText("₹" + decfor.format(Float.parseFloat(mEntryFee) / 100));
         mEntryAmount = decfor.format(Float.parseFloat(mEntryFee) / 100);
         mTotalBalanceTV.setText("₹" + mTotalBal);
-        mDepWinTV.setText("₹" + mDepWinAmount);
+        double useBalance=Double.parseDouble(mEntryAmount)-(Double.parseDouble(mEntryAmount) * mBonus/100);
+        mDepWinTV.setText("₹" +useBalance);
+        mDepositlabelTv.setText("Deposit + Winning"+" (₹"+mDepWinAmount+")");
+        mbonuscCoinTextTv.setText("Bonus Coins"+ "(₹" + decfor.format(mBonusWallet)+")");
+        mGetBonus=Double.parseDouble(mEntryAmount) *mBonus/100;
+        mBonusCoins.setText("₹" + decfor.format(Double.parseDouble(mEntryAmount) * mBonus/100));
     }
+
     private String convertToBase64(String cardId) throws UnsupportedEncodingException {
         String req = "{ \"accessToken\": \"" + token + "\", \"refreshToken\": \"" + refreshToken + "\", \"stakeId\": \"" + cardId + "\", \"app_version\": \"" + AppSharedPreference.getInstance().getMasterData().getResponse().getVersion().getAppVersion() + "\", \"type\": 1,\"requestVia\": 4}";
         byte[] data = req.getBytes("UTF-8");
         return Base64.encodeToString(data, Base64.DEFAULT);
     }
-
     @Override
     public void onGetContestSuccess(RummyResponse responseModel) {
 
     }
-
     @Override
     public void onGetContestFailure(ApiError error) {
 
@@ -200,48 +213,56 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
     @Override
     public void onGetContestCheckGameSuccess(RummyCheckGameResponse responseModel) {
         hideProgress();
-        if (responseModel.isStatus()) {
+        if(responseModel.isStatus()) {
             if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
                 return;
             }
-            mLastClickTime = SystemClock.elapsedRealtime();
-            callRummyWebView("active");
+            mLastClickTime=SystemClock.elapsedRealtime();
+            callRummyWebView();
 
         } else {
-            if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
-                return;
+            if (responseModel.getResponse()==10){
+                AppDialog.showInsufficientRummyDialog((Activity) mContext);
+            } else {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+                    return;
+                }
+                mLastClickTime=SystemClock.elapsedRealtime();
+                callRummyWebView();
             }
-            mLastClickTime = SystemClock.elapsedRealtime();
-            callRummyWebView(cardId);
-
         }
     }
-
-    private void callRummyWebView(String cardId) {
-        Intent intLeaderboard = new Intent(mContext, RummyGameWebActivity.class);
+    private void callRummyWebView(){
         /*Below code for check user wallet balance if user balance is less then from entry fee the show wallet popup*/
-        if (Double.parseDouble(mTotalBal) >= Double.parseDouble(mEntryAmount)) {
-            try {
-                intLeaderboard.putExtra("info",convertToBase64(cardId));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            Map<String, Object> eventParameters2=new HashMap<>();
-            eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
-            eventParameters2.put(AppConstant.GAME, AppConstant.RUMMY);
-            eventParameters2.put(AppConstant.EntryFee, mEntryFee);
-            AppsFlyerLib.getInstance().logEvent(mContext, AppConstant.INVEST, eventParameters2);
-            //Mo Engage
-            Properties mProperties = new Properties();
-            mProperties.addAttribute(AppConstant.GAMETYPE, AppConstant.RUMMY);
-            mProperties.addAttribute("EnrtyFee", mEntryFee);
-            MoEAnalyticsHelper.INSTANCE.trackEvent(mContext, AppConstant.RUMMY, mProperties);
-            mContext.startActivity(intLeaderboard);
-            mOnPlayClicked.onPlayClicked();
+       /* if(Double.parseDouble(mDepWinAmount)>=Double.parseDouble(mEntryAmount)){
+            playRummy();
+        } else if (Double.parseDouble(mDepWinAmount)>=(Double.parseDouble(mEntryAmount)-mGetBonus) && mBonusWallet >= mGetBonus) {
+            playRummy();
         } else {
             AppDialog.showInsufficientRummyDialog((Activity) mContext);
-        }
+        }*/
+        playRummy();
         dismiss();
+    }
+    private void playRummy(){
+        Intent intLeaderboard=new Intent(mContext,RummyGameWebActivity.class);
+        try {
+            intLeaderboard.putExtra("info",convertToBase64(cardId));
+        } catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
+        Map<String, Object> eventParameters2 = new HashMap<>();
+        eventParameters2.put(AFInAppEventParameterName.CURRENCY, AppConstant.INR); // Currency code
+        eventParameters2.put(AppConstant.GAME, AppConstant.RUMMY);
+        eventParameters2.put(AppConstant.EntryFee, mEntryFee);
+        AppsFlyerLib.getInstance().logEvent(mContext, AppConstant.INVEST, eventParameters2);
+        //Mo Engage
+        Properties mProperties = new Properties();
+        mProperties.addAttribute(AppConstant.GAMETYPE, AppConstant.RUMMY);
+        mProperties.addAttribute("EnrtyFee", mEntryFee);
+        MoEAnalyticsHelper.INSTANCE.trackEvent(mContext, AppConstant.RUMMY, mProperties);
+        mContext.startActivity(intLeaderboard);
+        mOnPlayClicked.onPlayClicked();
     }
 
     @Override
@@ -258,9 +279,8 @@ public class RummyDialog extends BottomSheetDialog implements View.OnClickListen
         mDialog = AppDialog.getAppProgressDialog(mContext, message);
         mDialog.show();
     }
-
-    private void hideProgress() {
-        if (mDialog != null && mDialog.isShowing()) {
+    private void hideProgress(){
+        if(mDialog != null && mDialog.isShowing()){
             mDialog.dismiss();
             mDialog = null;
         }

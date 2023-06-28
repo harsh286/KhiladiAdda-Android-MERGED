@@ -6,6 +6,6 @@ public interface IClashRoyalePresenter extends IBasePresenter {
 
     void getFilterList();
 
-    void getLeagueList(String gameId, int type);
+    void getLeagueList(String catId,int type,String gameId);
 
 }

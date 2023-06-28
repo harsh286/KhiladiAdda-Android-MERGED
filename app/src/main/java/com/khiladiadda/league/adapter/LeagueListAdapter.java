@@ -100,9 +100,7 @@ public class LeagueListAdapter extends RecyclerView.Adapter<LeagueListAdapter.Pe
             holder.mIV.setImageResource(R.mipmap.ic_launcher);
         }
     }
-
     public static class PersonViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         @BindView(R.id.iv_image)
         ImageView mIV;
         @BindView(R.id.tv_heading)

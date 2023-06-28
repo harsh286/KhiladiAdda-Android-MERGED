@@ -6,7 +6,8 @@ import com.khiladiadda.network.model.BaseResponse;
 
 public class ClashRoyaleFilterReponse extends BaseResponse {
 
-    @SerializedName("response") @Expose public Active response = null;
+    @SerializedName("response")
+    @Expose public Active response = null;
 
     public Active getResponse() {
         return response;

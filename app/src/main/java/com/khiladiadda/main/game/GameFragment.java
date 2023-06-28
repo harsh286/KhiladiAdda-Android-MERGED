@@ -170,9 +170,9 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
                 updateMoengage("LeaguesTDM");
                 break;
             case R.id.iv_freefire:
-                i = new Intent(getActivity(), LeagueActivity.class);
+                i = new Intent(getActivity(),LeagueActivity.class);
                 i.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_FREEFIRE);
-                i.putExtra(AppConstant.FROM_TYPE, AppConstant.FREEFIRE_SOLO);
+                i.putExtra(AppConstant.FROM_TYPE,AppConstant.FREEFIRE_SOLO);
                 updateMoengage("LeaguesFF");
                 break;
             case R.id.iv_ff_clash:

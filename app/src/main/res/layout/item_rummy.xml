@@ -75,10 +75,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/margin_8"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
             android:layout_marginEnd="18sp">
-
             <ImageView
                 android:id="@+id/imageView15"
                 android:layout_width="9dp"
@@ -136,6 +135,24 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
+            android:id="@+id/tv_fee_entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_wining_amount"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:drawableLeft="@drawable/ic_enetry_fee"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:maxLines="2"
+            android:padding="@dimen/padding_5"
+            android:textColor="@color/card_red"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:visibility="visible"/>
+
+        <TextView
             android:id="@+id/tv_buying_prize"
             android:layout_width="98dp"
             android:padding="@dimen/padding_5"
@@ -162,9 +179,9 @@
             android:paddingEnd="@dimen/text_12"
             android:textColor="@color/white"
             android:textStyle="bold"
-            tools:text="₹ 5k" />
+            tools:text="₹ 5k"/>
         <TextView
-            android:id="@+id/tv_fee_entry"
+            android:id="@+id/tv_bonus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_wining_amount"
@@ -172,10 +189,11 @@
             android:padding="@dimen/padding_5"
             android:visibility="visible"
             android:gravity="center"
+            android:textStyle="bold"
             android:drawablePadding="4dp"
-            android:drawableLeft="@drawable/ic_enetry_fee"
+            android:drawableLeft="@drawable/ic_discount"
             android:textColor="@color/card_red"
-            android:textSize="14sp" />
+            android:textSize="11sp"/>
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

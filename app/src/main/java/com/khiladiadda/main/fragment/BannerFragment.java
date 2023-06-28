@@ -75,16 +75,16 @@ public class BannerFragment extends BaseFragment {
     public void onClick(View view) {
         if (view.getId() == R.id.iv_advertisement) {
             if (mAdvertisement.getTitle().equalsIgnoreCase(AppConstant.LUDO)) {
-                Intent ludo = new Intent(getActivity(), LudoChallengeActivity.class);
-                ludo.putExtra(AppConstant.CONTEST_TYPE, AppConstant.TYPE_LUDO);
+                Intent ludo = new Intent(getActivity(),LudoChallengeActivity.class);
+                ludo.putExtra(AppConstant.CONTEST_TYPE,AppConstant.TYPE_LUDO);
                 startActivity(ludo);
             } else if (mAdvertisement.getTitle().equalsIgnoreCase("Ludo_Create")) {
                 Intent ludo = new Intent(getActivity(), LudoChallengeActivity.class);
                 ludo.putExtra(AppConstant.FROM, AppConstant.FROM_CREATE_LUDO);
                 startActivity(ludo);
             } else if (mAdvertisement.getTitle().equalsIgnoreCase(mPreference.getString(AppConstant.PUBG_ID, ""))) {
-                Intent pubG = new Intent(getActivity(), LeagueActivity.class);
-                pubG.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_TDM);
+                Intent pubG = new Intent(getActivity(),LeagueActivity.class);
+                pubG.putExtra(AppConstant.FROM,AppConstant.FROM_VIEW_TDM);
                 startActivity(pubG);
             } else if (mAdvertisement.getTitle().equals("INVITE")) {
                 startActivity(new Intent(getActivity(), ReferHelpActivity.class));
@@ -110,7 +110,7 @@ public class BannerFragment extends BaseFragment {
             } else if (mAdvertisement.getTitle().equalsIgnoreCase("FF_CS_SOLO")) {
                 Intent ludo = new Intent(getActivity(), LeagueActivity.class);
                 ludo.putExtra(AppConstant.FROM, AppConstant.FROM_VIEW_FF_CLASH);
-                ludo.putExtra(AppConstant.FROM_TYPE, AppConstant.FF_CLASH_SOLO);
+                ludo.putExtra(AppConstant.FROM_TYPE,AppConstant.FF_CLASH_SOLO);
                 startActivity(ludo);
             } else if (mAdvertisement.getTitle().equalsIgnoreCase("FF_CS_DUO")) {
                 Intent ludo = new Intent(getActivity(), LeagueActivity.class);

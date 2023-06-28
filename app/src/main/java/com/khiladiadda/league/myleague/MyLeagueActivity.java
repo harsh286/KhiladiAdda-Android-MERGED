@@ -62,7 +62,6 @@ public class MyLeagueActivity extends BaseActivity implements IMyLeagueView, IOn
     TextView mNoDataTV;
     @BindView(R.id.btn_room_password)
     Button mRoomPwdBTN;
-
     private IMyLeaguePresenter mPresenter;
     private MyLeagueUpcomingAdapter mUpcomingAdapter;
     private MyLeagueLiveAdapter mLiveAdapter;
@@ -140,9 +139,7 @@ public class MyLeagueActivity extends BaseActivity implements IMyLeagueView, IOn
         mPastAdapter.setOnItemClickListener(this);
         mUpcomingAdapter.setOnItemClickListener(this);
         mUpcomingAdapter.setOnItemChildClickListener(this);
-
         setAnimation();
-
         if (TextUtils.isEmpty(mGameId)) {
             mNoDataTV.setVisibility(View.VISIBLE);
         } else {

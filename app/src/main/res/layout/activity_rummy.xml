@@ -102,6 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_live_table"
+            android:scrollbars="horizontal"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/margin_5"
             android:orientation="horizontal"

@@ -8,36 +8,72 @@ import java.util.List;
 
 public class RemainingLimitResponse extends BaseResponse {
 
-    @SerializedName("remaining_add_limit") @Expose private long remaining_add_limit;
+    @SerializedName("remaining_add_limit")
+    @Expose
+    private Integer remainingAddLimit;
     @SerializedName("banners")
     @Expose
-    private List<BannerDetails> banner = null;
-    @SerializedName("bajaWalletHeader") @Expose private String bajaWalletHeader;
-    @SerializedName("bajaUPIHeader") @Expose private String bajaUPIHeader;
-    @SerializedName("bajaWalletDetail") @Expose private String bajaWalletDetail;
-    @SerializedName("bajaUPIDetail") @Expose private String bajaUPIDetail;
-    @SerializedName("bajajWallet") @Expose private BajajWallet mBajajWallet;
-    public BajajWallet getmBajajWallet() {
-        return mBajajWallet;
-    }
-    public void setmBajajWallet(BajajWallet mBajajWallet) {
-        this.mBajajWallet = mBajajWallet;
+    private List<BannerDetails> banners;
+    @SerializedName("bajajAccessTocken")
+    @Expose
+    private String bajajAccessTocken;
+    @SerializedName("bajajUserTocken")
+    @Expose
+    private String bajajUserTocken;
+    @SerializedName("bajajWallet")
+    @Expose
+    private BajajWallet bajajWallet;
+    @SerializedName("bajaWalletHeader")
+    @Expose
+    private String bajaWalletHeader;
+    @SerializedName("bajaWalletDetail")
+    @Expose
+    private String bajaWalletDetail;
+    @SerializedName("bajaUPIHeader")
+    @Expose
+    private String bajaUPIHeader;
+    @SerializedName("bajaUPIDetail")
+    @Expose
+    private String bajaUPIDetail;
+
+    public Integer getRemainingAddLimit() {
+        return remainingAddLimit;
     }
 
-    public long getRemaining_add_limit() {
-        return remaining_add_limit;
+    public void setRemainingAddLimit(Integer remainingAddLimit) {
+        this.remainingAddLimit = remainingAddLimit;
     }
 
-    public void setRemaining_add_limit(long remaining_add_limit) {
-        this.remaining_add_limit = remaining_add_limit;
+    public List<BannerDetails> getBanners() {
+        return banners;
     }
 
-    public List<BannerDetails> getBanner() {
-        return banner;
+    public void setBanners(List<BannerDetails> banners) {
+        this.banners = banners;
     }
 
-    public void setBanner(List<BannerDetails> banner) {
-        this.banner = banner;
+    public String getBajajAccessTocken() {
+        return bajajAccessTocken;
+    }
+
+    public void setBajajAccessTocken(String bajajAccessTocken) {
+        this.bajajAccessTocken = bajajAccessTocken;
+    }
+
+    public String getBajajUserTocken() {
+        return bajajUserTocken;
+    }
+
+    public void setBajajUserTocken(String bajajUserTocken) {
+        this.bajajUserTocken = bajajUserTocken;
+    }
+
+    public BajajWallet getBajajWallet() {
+        return bajajWallet;
+    }
+
+    public void setBajajWallet(BajajWallet bajajWallet) {
+        this.bajajWallet = bajajWallet;
     }
 
     public String getBajaWalletHeader() {
@@ -48,20 +84,20 @@ public class RemainingLimitResponse extends BaseResponse {
         this.bajaWalletHeader = bajaWalletHeader;
     }
 
-    public String getBajaUPIHeader() {
-        return bajaUPIHeader;
-    }
-
-    public void setBajaUPIHeader(String bajaUPIHeader) {
-        this.bajaUPIHeader = bajaUPIHeader;
-    }
-
     public String getBajaWalletDetail() {
         return bajaWalletDetail;
     }
 
     public void setBajaWalletDetail(String bajaWalletDetail) {
         this.bajaWalletDetail = bajaWalletDetail;
+    }
+
+    public String getBajaUPIHeader() {
+        return bajaUPIHeader;
+    }
+
+    public void setBajaUPIHeader(String bajaUPIHeader) {
+        this.bajaUPIHeader = bajaUPIHeader;
     }
 
     public String getBajaUPIDetail() {

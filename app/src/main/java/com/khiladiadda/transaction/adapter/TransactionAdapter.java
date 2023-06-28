@@ -43,10 +43,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @NonNull
     @Override
     public EventHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transact, parent, false);
+        View itemView=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transact, parent, false);
         return new EventHolder(itemView, mOnItemClickListener, mOnItemChildClickListener);
     }
-
     @Override
     public void onBindViewHolder(EventHolder holder, int position) {
         TransactionDetails details = mFDList.get(position);
@@ -97,7 +96,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         private final IOnItemChildClickListener mOnItemChildClickListener;
 
-        public EventHolder(View view, IOnItemClickListener onItemClickListener, IOnItemChildClickListener onItemChildClickListener) {
+        public EventHolder(View view, IOnItemClickListener onItemClickListener,IOnItemChildClickListener onItemChildClickListener) {
             super(view);
             ButterKnife.bind(this, itemView);
             mOnItemChildClickListener = onItemChildClickListener;
