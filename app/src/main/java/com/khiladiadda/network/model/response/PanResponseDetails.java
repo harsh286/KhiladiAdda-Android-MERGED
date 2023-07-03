@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class PanResponseDetails {
-
         @SerializedName("code")
         @Expose
         private String code;

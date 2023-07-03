@@ -1,6 +1,5 @@
 package com.khiladiadda.league;
 import static android.view.View.GONE;
-
 import android.content.Intent;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -8,12 +7,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
@@ -37,17 +34,13 @@ import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.network.model.response.GameCategory;
 import com.khiladiadda.network.model.response.LeagueListDetails;
 import com.khiladiadda.network.model.response.LeagueListReponse;
-import com.khiladiadda.preference.AppSharedPreference;
-import com.khiladiadda.rummy.adapter.RummyLiveTableAdpter;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 import com.moengage.inapp.MoEInAppHelper;
 import com.moengage.widgets.NudgeView;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 public class LeagueActivity extends BaseActivity implements ILeagueListView, IOnItemClickListener, LeagueLiveListAdapter.IOnItemClickListener {
     @BindView(R.id.iv_back)
@@ -112,7 +105,6 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
         mDuoBTN.setOnClickListener(this);
         mSquadBTN.setOnClickListener(this);
     }
-
     @Override
     protected void initVariables() {
         mPresenter = new LeagueListPresenter(this);
@@ -228,10 +220,10 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
         mDuoBTN.setSelected(false);
         mSquadBTN.setSelected(false);
         mIsCategorySolo = false;
-        if (mFromCategory.equalsIgnoreCase(AppConstant.SOLO)) {
+        if (mFromCategory.equalsIgnoreCase(AppConstant.SOLO)){
             mIsCategorySolo = true;
             mSoloBTN.setSelected(true);
-            mType = AppConstant.SOLO;
+            mType=AppConstant.SOLO;
         } else if (mFromCategory.equalsIgnoreCase(AppConstant.DUO)) {
             mDuoBTN.setSelected(true);
             mType = AppConstant.DUO;
@@ -305,7 +297,7 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
             } else {
                 details = new Intent(this,LeagueDetailsActivity.class);
             }
-            details.putExtra(AppConstant.FROM, AppConstant.LEAGUE);
+            details.putExtra(AppConstant.FROM,AppConstant.LEAGUE);
             details.putExtra(AppConstant.DATA, detail);
             details.putExtra("type", mType);
             details.putExtra("game", mGame);
@@ -358,11 +350,9 @@ public class LeagueActivity extends BaseActivity implements ILeagueListView, IOn
         }
         startActivity(view);
     }
-
     Runnable runnable = this::showVideoHelp;
-
     private void showVideoHelp() {
-        AppUtilityMethods.showCODVideoMsg(this, false);
+        AppUtilityMethods.showCODVideoMsg(this,false);
     }
 
     @Override

@@ -1,6 +1,4 @@
 package com.khiladiadda.network.model.response.droid_doresponse;
-
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,7 +6,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-
 public class ResponseLeaderBoard implements Parcelable {
     @SerializedName("leaderboard")
     @Expose

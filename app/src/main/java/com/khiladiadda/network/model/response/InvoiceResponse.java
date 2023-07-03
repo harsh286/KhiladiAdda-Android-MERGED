@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import com.khiladiadda.network.model.BaseResponse;
 
 public class InvoiceResponse extends BaseResponse {
-
     @SerializedName("response")
     @Expose
     private InvoiceDetails response;

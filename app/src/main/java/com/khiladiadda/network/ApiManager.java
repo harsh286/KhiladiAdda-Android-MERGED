@@ -1,18 +1,16 @@
 package com.khiladiadda.network;
-
 import android.content.Context;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.khiladiadda.BuildConfig;
 import com.khiladiadda.KhiladiAddaApp;
 import com.khiladiadda.R;
 import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
@@ -158,23 +156,27 @@ public class ApiManager {
                         header(AppConstant.TEXT_ENC_KEY, AppConstant.ENC_KEY).
                         header(AppConstant.TEXT_KEY_NEW, AppConstant.KEY_NEW).
                         method(original.method(), original.body());
-            } catch (NoSuchAlgorithmException e) {
+            } catch (NoSuchAlgorithmException e){
                 e.printStackTrace();
             }
             assert request != null;
             return chain.proceed(request.build());
         }).addInterceptor(loggingInterceptor);
-        httpClient.readTimeout(AppConstant.TIME_OUT, TimeUnit.SECONDS);
+        httpClient.readTimeout(AppConstant.TIME_OUT,TimeUnit.SECONDS);
         httpClient.connectTimeout(AppConstant.TIME_OUT, TimeUnit.SECONDS);
         httpClient.writeTimeout(AppConstant.TIME_OUT, TimeUnit.SECONDS);
         httpClient.retryOnConnectionFailure(true);
         return httpClient.build();
     }
-
     private void initSSL(Context context, OkHttpClient.Builder httpClientBuilder) {
         SSLContext sslContext = null;
-        try {
-            sslContext = createCertificate(context.getResources().openRawResource(R.raw.uat_new));
+          try{
+            if(BuildConfig.MODE){
+                sslContext=createCertificate(context.getResources().openRawResource(R.raw.uat_new));
+            }else{
+                sslContext=createCertificate(context.getResources().openRawResource(R.raw.prod_new));
+            }
+
         } catch (CertificateException | IOException | KeyStoreException | KeyManagementException |
                  NoSuchAlgorithmException e) {
             e.printStackTrace();

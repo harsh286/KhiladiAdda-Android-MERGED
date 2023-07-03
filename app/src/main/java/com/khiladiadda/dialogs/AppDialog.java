@@ -77,7 +77,7 @@ import java.text.DecimalFormat;
 import java.util.Random;
 public class AppDialog {
     public static Dialog getAppProgressDialog(Context context, String message) {
-        Dialog dialog = new Dialog(context);
+        Dialog dialog=new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_app_progresss);
         dialog.getWindow().setBackgroundDrawableResource(R.color.colorTransparent);
@@ -85,7 +85,6 @@ public class AppDialog {
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
     }
-
     public static Dialog getAppProgressDialogWithMessage(Context context, String message) {
         Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -286,9 +285,9 @@ public class AppDialog {
         } else {
             mUsernameET.setText("RoomId: " + username);
         }
-        mUsernameET.setEnabled(false);
+        mUsernameET.setEnabled(true);
         final TextView mCharacterET = dialog.findViewById(R.id.tv_character);
-        if (!TextUtils.isEmpty(password)) {
+        if (!TextUtils.isEmpty(password)){
             mCharacterET.setText("Password: " + password);
             mCharacterET.setEnabled(false);
         } else {
@@ -299,7 +298,7 @@ public class AppDialog {
 
         mUsernameET.setOnClickListener(v -> {
             ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("RoomId", username);
+            ClipData clip = ClipData.newPlainText("RoomId",username);
             clipboard.setPrimaryClip(clip);
             Snackbar.make(mSendBTN, "RoomId is copied.", Snackbar.LENGTH_SHORT).show();
         });

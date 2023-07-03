@@ -1,5 +1,4 @@
 package com.khiladiadda.league.details;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -64,9 +63,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-
 public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetailsView {
-
     @BindView(R.id.iv_back)
     ImageView mBackIV;
     @BindView(R.id.iv_notification)
@@ -296,7 +293,7 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
                 startActivity(join);
                 break;
             case R.id.tv_rules:
-                Intent i = new Intent(this, QuizRuleActivity.class);
+                Intent i = new Intent(this,QuizRuleActivity.class);
                 if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_SOLO, ""))) {
                     i.putExtra(AppConstant.FROM, AppConstant.PUBG_SOLO);
                 } else if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_ID, "")) && !mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_SOLO, ""))) {
@@ -334,12 +331,12 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
                 break;
             case R.id.btn_view_participant:
                 if (mIsCategorySolo) {
-                    Intent participant = new Intent(this, ParticipantActivity.class);
+                    Intent participant = new Intent(this,ParticipantActivity.class);
                     participant.putExtra(AppConstant.FROM, AppConstant.LEAGUE);
                     participant.putExtra(AppConstant.ID, mLeagueId);
                     startActivity(participant);
                 } else {
-                    Intent participant = new Intent(this, TeamActivity.class);
+                    Intent participant = new Intent(this,TeamActivity.class);
                     participant.putExtra(AppConstant.ID, mLeagueId);
                     startActivity(participant);
                 }
@@ -401,13 +398,13 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
                     openLeagueDialog.show();
                 }
             } else {
-                Snackbar.make(mLegueNameTV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mLegueNameTV,R.string.error_internet, Snackbar.LENGTH_SHORT).show();
             }
         }
     }
 
     private void selectGameType() {
-        LeagueDialog openLeagueDialog = null;
+        LeagueDialog openLeagueDialog=null;
         //solo - add Username in team_user for -PubG_Solo
         if (mGameId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_ID, "")) && mGameTypeId.equalsIgnoreCase(mAppPreference.getString(AppConstant.PUBG_SOLO, ""))) {
             openLeagueDialog = new LeagueDialog(this, addGameCredentialListener, AppConstant.PUBG_SOLO, mGameUsername, mGameCharacterId, mLeagueDetails.getMap());
@@ -598,7 +595,6 @@ public class LeagueDetailsActivity extends BaseActivity implements ILeagueDetail
             }
         }
     };
-
     IOnCreateTeamPaymentListener addCreateTeamListener = (userId, characterId, teamName, gamelevel, mapDownloaded) -> {
         showWalletDialog(userId, characterId, teamName, 3, gamelevel, mapDownloaded);
     };

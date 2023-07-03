@@ -343,26 +343,22 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
         setData();
     }
     @Override
-    public void onProfileFailure(ApiError error) {
+    public void onProfileFailure(ApiError error){
         hideProgress();
     }
     @Override
-    public void onRemainingLimitComplete(RemainingLimitResponse responseModel) {
-        mRemainingAddLimit = responseModel.getRemainingAddLimit();
-        mRemainingData.put(AppConstant.IS_DELINK, responseModel.getBajajWallet().getDelink());
-        mRemainingData.put(AppConstant.IS_LINKED, responseModel.getBajajWallet().getLinked());
-         mMobileNumber=responseModel.getBajajWallet().getMobile();
-//        mAppPreference.setMobileNumberBP(responseModel.getmBajajWallet().getmMobile());
-//        mAppPreference.setUserTokenBP(responseModel.getmBajajWallet().getBajajUserTocken());
-//        mAppPreference.setMobileNumberBP("9717188365");
-//        mAppPreference.setUserTokenBP("e1a9680299ec41be3d2d4230be3309be0f3dac0f6fa2348cd5eb0fc43641");
-        List<BannerDetails> bannerData=responseModel.getBanners();
-        if (bannerData != null && bannerData.size() > 0) {
+    public void onRemainingLimitComplete(RemainingLimitResponse responseModel){
+        mRemainingAddLimit=responseModel.getRemainingAddLimit();
+         List<BannerDetails> bannerData=responseModel.getBanners();
+        if (bannerData != null && bannerData.size() > 0){
             mBannerRL.setVisibility(View.VISIBLE);
             setUpAdvertisementViewPager(bannerData);
         } else {
             mBannerRL.setVisibility(GONE);
         }
+        mRemainingData.put(AppConstant.IS_DELINK, responseModel.getBajajWallet().getDelink());
+        mRemainingData.put(AppConstant.IS_LINKED, responseModel.getBajajWallet().getLinked());
+        mMobileNumber=responseModel.getBajajWallet().getMobile();
         setData();
     }
 
@@ -370,12 +366,10 @@ public class WalletCashbackActivity extends BaseActivity implements IWalletCashb
     public void onRemainingLimitFailure(ApiError error) {
         hideProgress();
     }
-
     @Override
     public void onInvoiceComplete(InvoiceResponse responseModel) {
 
     }
-
     @Override
     public void onInvoiceFailure(ApiError error) {
 

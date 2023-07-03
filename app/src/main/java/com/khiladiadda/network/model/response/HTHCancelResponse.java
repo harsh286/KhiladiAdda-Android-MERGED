@@ -7,9 +7,7 @@ import com.khiladiadda.network.model.BaseResponse;
 import java.util.List;
 
 public class HTHCancelResponse extends BaseResponse {
-
     @SerializedName("profile") @Expose private ProfileDetails profile;
-
     public ProfileDetails getProfile() {
         return profile;
     }

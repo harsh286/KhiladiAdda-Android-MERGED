@@ -745,7 +745,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         } else {
             mSubmitBTN.setEnabled(true);
             hideProgress();
-            AppUtilityMethods.showMsg(this, getString(R.string.text_not_enough_coins_wallet), false);
+            AppUtilityMethods.showMsg(this,getString(R.string.text_not_enough_coins_wallet), false);
         }
     }
 

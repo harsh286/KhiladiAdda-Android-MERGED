@@ -7,7 +7,6 @@ import com.khiladiadda.network.model.BaseResponse;
 import java.util.List;
 
 public class CallBreakResponse extends BaseResponse {
-
     @SerializedName("response")
     @Expose
     private List<CallBreakDetails> response;

@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class CallBreakDetails {
-
     @SerializedName("_id")
     @Expose
     private String id;

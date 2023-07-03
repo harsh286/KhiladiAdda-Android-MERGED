@@ -1,8 +1,6 @@
 package com.khiladiadda.network.model.response.ludoTournament;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 public class LudoTmtUserSecondInfoResponse {
     @SerializedName("name")
     @Expose

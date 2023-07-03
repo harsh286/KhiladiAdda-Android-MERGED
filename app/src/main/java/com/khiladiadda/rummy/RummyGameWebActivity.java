@@ -1,5 +1,4 @@
 package com.khiladiadda.rummy;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Build;
@@ -34,6 +33,7 @@ public class RummyGameWebActivity extends BaseActivity {
         webViewGame.getSettings().setJavaScriptEnabled(true);
         webViewGame.getSettings().setDomStorageEnabled(true);
         webViewGame.getSettings().setBuiltInZoomControls(false);
+        webViewGame.getSettings().setMediaPlaybackRequiresUserGesture(false);
         getUrlFromSettings();
     }
 

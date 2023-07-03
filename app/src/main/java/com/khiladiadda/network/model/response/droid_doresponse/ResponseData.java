@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResponseData {
-
     @SerializedName("_id")
     @Expose
     private String id;

@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class LeaderBoardDetails {
-
     @SerializedName("leaderboard") @Expose private List<LeaderBoard> leaderboard = null;
     @SerializedName("myRank") @Expose private long myRank;
 

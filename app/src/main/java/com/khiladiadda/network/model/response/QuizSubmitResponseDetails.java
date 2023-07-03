@@ -7,7 +7,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class QuizSubmitResponseDetails implements Parcelable {
-
     @SerializedName("n_attempts") @Expose private long nAttempts;
     @SerializedName("attempted_questions") @Expose private long attemptedQuestions;
     @SerializedName("skipped_questions") @Expose private long skippedQuestions;

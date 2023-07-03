@@ -1,10 +1,8 @@
 package com.khiladiadda.network.model.response.droid_doresponse;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 public class TrendingDetailRespo {
-        @SerializedName("n_attempts")
+    @SerializedName("n_attempts")
         @Expose
         private Integer nAttempts;
         @SerializedName("user_id")

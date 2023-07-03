@@ -1017,4 +1017,8 @@
     <string name="text_map_hint">Note - Please download the Map now otherwise you will be kicked from the room</string>
     <string name="insuffiecient_Rummy">You wallet balance is insufficient.\nPlease recharge your wallet to play and earn.</string>
     <string name="tv_leagues_title">Leagues</string>
+    <string name="txt_view_id_and_password">View ID and Password</string>
+    <string name="note_game_level_must_be_25_or_more_than_25">Note - Game level must be 25 or more than 25</string>
+    <string name="note_game_level_must_be_50_or_more_than_50">Note - Game level must be 50 or more than 50</string>
+    <string name="note_game_level_must_be_30_or_more_than_30">Note - Game level must be 30 or more than 30</string>
 </resources>

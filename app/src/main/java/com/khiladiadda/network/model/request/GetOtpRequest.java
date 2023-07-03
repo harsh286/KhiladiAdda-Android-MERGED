@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class GetOtpRequest {
-
     @SerializedName("headers")
     @Expose
     private CaptchaHeader headers;

@@ -290,8 +290,8 @@ public class ParticipantActivity extends BaseActivity implements IParticipantVie
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
+        public void onScrollStateChanged(RecyclerView recyclerView,int newState) {
+            super.onScrollStateChanged(recyclerView,newState);
         }
 
         @Override

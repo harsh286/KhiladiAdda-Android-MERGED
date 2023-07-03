@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class GameCategory {
-
     @SerializedName("desc") @Expose private String desc;
     @SerializedName("_id") @Expose private String id;
     @SerializedName("title") @Expose private String title;

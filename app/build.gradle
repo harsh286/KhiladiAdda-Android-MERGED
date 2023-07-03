@@ -30,8 +30,21 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("boolean","MODE","true")
+            /*Production*/
+            //buildConfigField("String", "BASE_URL","\"aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29t\"")
+            /*Uat*/
+            buildConfigField("String", "BASE_URL","\"aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8=\"")
             signingConfig signingConfigs.release
         }
+        debug{
+            buildConfigField("boolean", "MODE","true")
+            //buildConfigField("boolean","MODE","false")
+            /*Uat*/
+            buildConfigField("String", "BASE_URL","\"aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8=\"")
+            signingConfig signingConfigs.debug
+        }
+
 //        debug {
 //            debuggable false
 //        }

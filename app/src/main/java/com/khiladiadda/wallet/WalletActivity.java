@@ -175,7 +175,7 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
                 break;
             case R.id.btn_add_coins:
                 if (mAppPreference.getBoolean(AppConstant.IS_LOCATION_ENABLED, false)) {
-                    if (LocationCheckUtils.getInstance().hasLocationPermission()) {
+                    if(LocationCheckUtils.getInstance().hasLocationPermission()) {
                         LocationCheckUtils.getInstance().requestNewLocationData();
                         if (isAllowed) {
 //                            i = new Intent(this, AddWalletActivity.class);

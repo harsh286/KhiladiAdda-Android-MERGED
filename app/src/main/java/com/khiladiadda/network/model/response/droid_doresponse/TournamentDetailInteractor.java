@@ -12,8 +12,6 @@ public class TournamentDetailInteractor {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();
         return manager.createObservable(service.getTournamentStart(tournamentDetailRequest)).subscribe(new SubscriberCallback<>(listener));
-
-//        return manager.createObservable(service.getTournamentStart(tournamentDetailRequest),tournamentDetailRequest).subscribe(new SubscriberCallback<>(listener));
     }
 
 }

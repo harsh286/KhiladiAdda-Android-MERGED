@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class CategoryList {
-
     @SerializedName("_id") @Expose private String id;
     @SerializedName("name") @Expose private String name;
     @SerializedName("image") @Expose private String image;

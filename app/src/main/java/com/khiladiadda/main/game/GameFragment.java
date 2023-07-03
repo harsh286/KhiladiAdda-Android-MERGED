@@ -1,5 +1,4 @@
 package com.khiladiadda.main.game;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,7 +37,6 @@ import com.moengage.core.analytics.MoEAnalyticsHelper;
 import java.util.Date;
 
 import butterknife.BindView;
-
 public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLoaded {
     @BindView(R.id.tv_gift)
     TextView mGiftTV;
@@ -94,7 +92,6 @@ public class GameFragment extends BaseFragment implements HomeFragment.IOnPageLo
     protected int getContentView() {
         return R.layout.fragment_game;
     }
-
     @Override
     protected void initViews(View view) {
         mGiftTV.setOnClickListener(this);

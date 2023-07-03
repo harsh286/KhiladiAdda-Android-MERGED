@@ -3,6 +3,8 @@ package com.khiladiadda.utility;
 import android.content.IntentFilter;
 import android.os.Environment;
 
+import com.khiladiadda.BuildConfig;
+
 import java.io.File;
 
 /**
@@ -12,16 +14,7 @@ import java.io.File;
 public class AppConstant {
     public static final long TIME_OUT = 30;
     public static final long SUREPASS_TIME_OUT = 120;
-    //PRODUCTION SERVER
-//    public static final String URL = "aHR0cHM6Ly9wcm9kLmFwaS5wcW12aHFxcndpenBnaGpmYmhzYW96ZWRpcWRlY25td2t3cnRobC5rLWFkZGEuY29t";
-    public static final String URL = "aHR0cHM6Ly91YXQuYXBpLmtoaWxhZGlhZGRhLmNvbS8="; //uat
-
-//    public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";//QA
-
-//    public static final String URL = "aHR0cHM6Ly9raGlsYWRpLnRyb29weC5pby8=";// https://khiladi.troopx.io/
-
-    //     public static final String URL = "aHR0cHM6Ly9xYS5hcGkua2hpbGFkaWFkZGEuY29tLw==";
-
+    public static final String URL= BuildConfig.BASE_URL;
     public static final String URL_HOME = "https://www.khiladiadda.com/";
     public static final String PAN_URL = "https://sandbox.veri5digital.com/service/api/1.0/";
     public static final String VERIFY_PAN = "verifyUserIdDoc";
@@ -85,8 +78,6 @@ public class AppConstant {
     public static final String API_MANUAL_WITHDRAW_HISTORY = "user/withdrawals";
     public static final String API_WITHDRAW_HISTORY = "user/withdrawal-history";
     public static final String API_WITHDRAW_REQUEST = "user/withdrawal/request";
-
-    public static final String API_TRANSFER_COINS = "user/coins/transfer";
     public static final String API_TRANSACTION = "user/transaction";
     public static final String API_PAYMENT_DETAILS = "user/payment-details";
     public static final String API_PAYMENT_STATUS = "refresh-payment-details/{paymentId}";
@@ -105,10 +96,6 @@ public class AppConstant {
     public static final String API_RACE_CONDITION = "racecondition/createContact";
     public static final String API_RACE_CONDITION_FINAL = "racecondition/transfer/{beneId}/{amount}/{otp}";
     public static final String API_INSTANT_PAY = "ipay/transfer/{beneId}/{amount}/{otp}/{latitude}/{longitude}";
-//    public static final String API_GAMER_CASH_VERFIYUSER = "/user/gamercash/link-wallet";
-//    public static final String API_FETCH_GAMER_CASH = "/user/gamercash/fethc-gc";
-//    public static final String API_SWITCH_GAMER_CASH = "/user/gamercash/add-coins";
-
     public static final String API_GET_RUMMY_LIST = "/user/rummy/new-fetchCards/";
     public static final String API_GET_RUMMY_REFRESH_TOKEN = "/user/rummy/fetchRefreshToken";
     public static final String API_GET_CALLBREAK_LIST = "/user/callbreak/fetchCards";
@@ -144,8 +131,7 @@ public class AppConstant {
     public static final String WORD_SEARCH = "Word Search";
     public static final String RUMMY = "Rummy";
     public static final String LUDO_TOURNAMENT = "LUDO TOURNAMENT";
-
-    //    public static String API_PAYU_UPI_CHECKSUM = "payumoney/generate/hash-checksum";
+    //public static String API_PAYU_UPI_CHECKSUM = "payumoney/generate/hash-checksum";
     public static final String API_PAYU_PAYMENT = "payumoney/verifychecksum";
     public static final String API_CASHFREE_CHECKHSUM = "cashfree/getchecksum";
     public static final String API_CASHFREE_PAYMENT = "cashfree/verify/getchecksum";
@@ -182,11 +168,11 @@ public class AppConstant {
     public static final String API_CALL_BREAK = "/user/callbreak/leaderboard";
     public static final String API_RUMMY = "/user/rummy/leaderboard";
     public static final String API_RUMMY_CHECKGAMESTATUS = "/user/rummy/checkGameStatus";
-    public static final String API_RUMMY_HISTORY = "/user/rummy/history";
+    public static final String API_RUMMY_HISTORY="/user/rummy/history";
     public static final String API_ADD_CASHFREE_BENEFICIARY = "cashfree/add/beneficiary";
     public static final String TEXT_KEY_TYPE = "type";
     public static final String API_FIREBASE = "user/firebase";
-    //    public static final String API_MATE_DATA = "user-detail/mobile/{id}";
+    //public static final String API_MATE_DATA = "user-detail/mobile/{id}";
     public static final String API_REFER_HISTORY = "user/reference";
     public static final String API_BOOKMARK_FACT = "user/bookmark/Fact/{id}";
     public static final String API_BOOKMARK_FACT_LIST = "user/bookmarked-facts";
@@ -219,7 +205,7 @@ public class AppConstant {
     public static final String API_HTH_CANCELBATTLE = "user/fantasy/cancel-battle-group/{id}";
     //    public static final String API_GAME_ID = "user/game";
     public static final String API_GAME_CATEGORY = "user/game/{id}";
-    public static final String API_CR_LEAGUE = "user/game-league/{catId}/{gameId}";
+    public static final String API_CR_LEAGUE = "user/game/league/{catId}/{gameId}";
     public static final String API_LEAGUE_PARTICIPANT = "user/league/{id}";
     public static final String API_JOIN_LEAGUE = "user/attempt-league/{id}";
     public static final String API_CREATE_TEAM = "user/attempt-league/{id}";
@@ -378,10 +364,8 @@ public class AppConstant {
     //    public static final String FB_HEAD = "HeadToHead";
     public static final String FB_RUMBLE_VIEWED = "FB_RUMBLE_VIEWED";
     public static final String FB_CLASSIC_WORK = "FB_CLASSIC_WORK";
-
-    //    public static final String FB_HEAD_VIEWED = "FB_HEAD_VIEWED";
-//
-//    public static final String FROM_PAN = "PAN";
+    //public static final String FB_HEAD_VIEWED = "FB_HEAD_VIEWED";
+    //public static final String FROM_PAN = "PAN";
     public static final String FROM_AADHAR = "AADHAR";
     //    public static final String AADHAR_CLIENT_ID = "TECH7966";
     public static final String AADHAR_CLIENT_ID = "TECH3772";
@@ -422,7 +406,6 @@ public class AppConstant {
     public static final int FROM_CASHFREE = 2;
     public static final int FROM_PAYU = 3;
 //    public static final int FROM_RAZORPAY = 4;
-
     //Paytm
 //    public static final String PaytmStagingCallbackURL = "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=";
     public static final String PaytmProductionCallbackURL = "https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=";
@@ -986,7 +969,7 @@ public class AppConstant {
     public static final int FROM_BAJAJYPAY_UPI = 504;
 
     //Cashfree Status
-    public static final String API_CASHFREE_STATUS = "/cashfree/getOrder/{orderId}";
+    public static final String API_CASHFREE_STATUS="/cashfree/getOrder/{orderId}";
 
     public static String LT_CLASSIC = "Classic";
     public static String LT_SERIES = "Series";

@@ -15,9 +15,4 @@ public class LeaderBoardInteractor {
         return manager.createObservable(service.getLeaderBoardDroidoList(tournamentId)).subscribe(new SubscriberCallback<>(listener));
     }
 
-//    Subscription getLeaderBoardDroidoLiveList(IApiListener<LeaderBoardDroidoResponse> listener, String tournamentId,boolean myRank) {
-//        ApiManager manager = ApiManager.getInstance();
-//        ApiService service = manager.createService();
-//        return manager.createObservable(service.getLeaderBoardDroidoLiveList(tournamentId),myRank).subscribe(new SubscriberCallback<>(listener));
-//    }
 }

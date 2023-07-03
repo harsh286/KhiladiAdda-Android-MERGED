@@ -6,9 +6,7 @@
     android:background="@drawable/inner_bg"
     android:orientation="vertical"
     tools:context=".profile.ProfileActivity">
-
     <include layout="@layout/footer_white" />
-
     <include layout="@layout/bannermoengage" />
 
     <RelativeLayout

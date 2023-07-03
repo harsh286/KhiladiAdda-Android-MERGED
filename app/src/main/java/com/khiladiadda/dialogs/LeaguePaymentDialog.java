@@ -27,7 +27,7 @@ import com.khiladiadda.utility.ImageActivity;
 public class LeaguePaymentDialog extends BottomSheetDialog implements View.OnClickListener {
 
     private Button mCancelBTN, mSendBTN;
-    private TextView mAmountTV, mHelpTV, mImageTV;
+    private TextView mAmountTV, mHelpTV, mImageTV, mGameHintTV;
     private EditText mGameLevelET, mUsernameET, mCharacterET, mTeamNameET;
     private RadioGroup mMapRG;
     private LinearLayout mMapLL;
@@ -71,13 +71,13 @@ public class LeaguePaymentDialog extends BottomSheetDialog implements View.OnCli
         mImageTV = findViewById(R.id.tv_image);
         mMapRG = findViewById(R.id.rg_map);
         mMapLL = findViewById(R.id.ll_map);
+        mGameHintTV = findViewById(R.id.tv_game_hint);
     }
 
     private void initVariables() {
         mSendBTN.setOnClickListener(this);
         mCancelBTN.setOnClickListener(this);
         mImageTV.setOnClickListener(this);
-
         if (TextUtils.isEmpty(mEntryFee)) {
             mAmountTV.setText("Payable Coins: 0");
         } else {
@@ -88,6 +88,14 @@ public class LeaguePaymentDialog extends BottomSheetDialog implements View.OnCli
         }
         if (!TextUtils.isEmpty(mCharacterId)) {
             mCharacterET.setText(mCharacterId);
+        }
+        /*Change Game level*/
+        if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FREEFIRE_ID,"")) ||mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.FF_MAX_ID,""))) {
+            mGameHintTV.setText(R.string.note_game_level_must_be_25_or_more_than_25);
+        } else if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PREMIUM_ESPORTS_ID, ""))) {
+            mGameHintTV.setText(R.string.note_game_level_must_be_50_or_more_than_50);
+        } else {
+            mGameHintTV.setText(R.string.note_game_level_must_be_30_or_more_than_30);
         }
         if (mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_ID, "")) || mGameId.equalsIgnoreCase(AppSharedPreference.getInstance().getString(AppConstant.PUBG_LITE_ID, ""))) {
             mImageTV.setText(R.string.help_pubg_show_image);
@@ -120,7 +128,6 @@ public class LeaguePaymentDialog extends BottomSheetDialog implements View.OnCli
             mHelpTV.setText(R.string.help_pubg_ns_credential);
             mImageTV.setText(R.string.help_pubgns_show_image);
         }
-
         TextView tv = findViewById(R.id.tv_map);
         tv.setText("Have you downloaded " + mMap + " map?");
 
@@ -137,6 +144,7 @@ public class LeaguePaymentDialog extends BottomSheetDialog implements View.OnCli
                 }
             }
         });
+
 
     }
 
@@ -178,5 +186,6 @@ public class LeaguePaymentDialog extends BottomSheetDialog implements View.OnCli
                 break;
         }
     }
+
 
 }

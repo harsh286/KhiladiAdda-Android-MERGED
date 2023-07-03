@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DialogLinearLayoutLeague"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#F1e7ea">
-
-    <TextView
-        android:id="@+id/tv_dialog_name"
-        style="@style/NewDialogHeadText"
-        android:text="@string/text_game_credential" />
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_3"
-        android:layout_marginEnd="@dimen/margin_10"
-        android:layout_marginBottom="@dimen/margin_3"
-        android:orientation="vertical">
+        android:fillViewport="true"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_dialog_name"
+            style="@style/NewDialogHeadText"
+            android:text="@string/text_game_credential" />
+
+        <LinearLayout
+            android:layout_below="@+id/tv_dialog_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_15"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_15"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_help"
@@ -43,6 +51,8 @@
             style="@style/CustomEditTextLudo"
             android:layout_marginTop="@dimen/margin_10"
             android:hint="@string/hint_game_user_name"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
             android:maxLength="25" />
 
         <EditText
@@ -50,12 +60,16 @@
             style="@style/CustomEditTextLudo"
             android:layout_marginTop="@dimen/margin_10"
             android:hint="@string/hint_character_name"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
             android:maxLength="25" />
 
         <EditText
             android:id="@+id/et_team_name"
             style="@style/CustomEditTextLudo"
             android:layout_marginTop="@dimen/margin_10"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
             android:hint="@string/hint_team_name_any"
             android:maxLength="25" />
 
@@ -64,13 +78,14 @@
             style="@style/CustomEditTextLudo"
             android:layout_marginTop="@dimen/margin_10"
             android:hint="@string/hint_game_level"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
             android:maxLength="25" />
 
         <TextView
             android:id="@+id/tv_game_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/text_game_level"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_9" />
 
@@ -153,12 +168,13 @@
                 android:layout_marginStart="@dimen/margin_5"
                 android:text="@string/txt_pay" />
         </LinearLayout>
-
-        <TextView
+            <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/text_squad_payment"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_9" />
     </LinearLayout>
-</LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

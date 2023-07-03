@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +26,7 @@ import com.khiladiadda.utility.ImageActivity;
 public class LeagueDialog extends BottomSheetDialog implements View.OnClickListener {
 
     private Button mCancelBTN, mSendBTN;
-    private TextView mRulesTV, mHelpTV, mImageTV;
+    private TextView mRulesTV, mHelpTV, mImageTV,mGameHintTV;
     private EditText mGameLevelET, mUsernameET, mCharacterET, mTeamIdET;
     private RadioGroup mMapRG;
     private LinearLayout mMapLL;
@@ -56,7 +57,7 @@ public class LeagueDialog extends BottomSheetDialog implements View.OnClickListe
         return R.layout.dialog_game_credential;
     }
 
-    protected void initViews() {
+    protected void initViews(){
         mCancelBTN = findViewById(R.id.btn_cancel);
         mSendBTN = findViewById(R.id.btn_send);
         mGameLevelET = findViewById(R.id.et_game_level);
@@ -68,6 +69,7 @@ public class LeagueDialog extends BottomSheetDialog implements View.OnClickListe
         mImageTV = findViewById(R.id.tv_image);
         mMapRG = findViewById(R.id.rg_map);
         mMapLL = findViewById(R.id.ll_map);
+        mGameHintTV = findViewById(R.id.tv_game_hint);
     }
 
     private void initVariables() {
@@ -99,6 +101,14 @@ public class LeagueDialog extends BottomSheetDialog implements View.OnClickListe
         }
         if (!TextUtils.isEmpty(mCharacterId)) {
             mCharacterET.setText(mCharacterId);
+        }
+        /*Change Game level*/
+        if (mFrom.equalsIgnoreCase(AppConstant.FREEFIRE_SOLO)||mFrom.equalsIgnoreCase(AppConstant.FREEFIRE_DUO) || mFrom.equalsIgnoreCase(AppConstant.FREEFIRE_SQUAD) || mFrom.equalsIgnoreCase(AppConstant.FF_MAX_SOLO) || mFrom.equalsIgnoreCase(AppConstant.FF_MAX_DUO) || mFrom.equalsIgnoreCase(AppConstant.FF_MAX_SQUAD)) {
+            mGameHintTV.setText(R.string.note_game_level_must_be_25_or_more_than_25);
+        } else if (mFrom.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SOLO) || mFrom.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_SQUAD) || mFrom.equalsIgnoreCase(AppConstant.PREMIUM_ESPORTS_DUO)) {
+            mGameHintTV.setText(R.string.note_game_level_must_be_50_or_more_than_50);
+        } else {
+            mGameHintTV.setText(R.string.note_game_level_must_be_30_or_more_than_30);
         }
         if (mFrom.equalsIgnoreCase(AppConstant.FREEFIRE_SOLO) || mFrom.equalsIgnoreCase(AppConstant.FREEFIRE_DUO) || mFrom.equalsIgnoreCase(AppConstant.FF_CLASH_SOLO) || mFrom.equalsIgnoreCase(AppConstant.FF_CLASH_DUO) || mFrom.equalsIgnoreCase(AppConstant.FF_MAX_SOLO) || mFrom.equalsIgnoreCase(AppConstant.FF_MAX_DUO)) {
             mUsernameET.setHint(R.string.help_ff_username);

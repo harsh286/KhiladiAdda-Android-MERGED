@@ -1,5 +1,4 @@
 package com.khiladiadda.wallet;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,12 +9,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import com.appsflyer.AFInAppEventParameterName;
 import com.appsflyer.AppsFlyerLib;
 import com.cashfree.pg.api.CFPaymentGatewayService;
@@ -24,6 +21,8 @@ import com.cashfree.pg.core.api.CFTheme;
 import com.cashfree.pg.core.api.callback.CFCheckoutResponseCallback;
 import com.cashfree.pg.core.api.exception.CFException;
 import com.cashfree.pg.core.api.utils.CFErrorResponse;
+import com.cashfree.pg.core.api.webcheckout.CFWebCheckoutPayment;
+import com.cashfree.pg.core.api.webcheckout.CFWebCheckoutTheme;
 import com.cashfree.pg.ui.api.CFDropCheckoutPayment;
 import com.cashfree.pg.ui.api.CFPaymentComponent;
 import com.cashfree.pg.ui.api.upi.intent.CFUPIIntentCheckout;
@@ -103,7 +102,6 @@ import java.util.Random;
 import java.util.UUID;
 
 import butterknife.BindView;
-
 public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDownloadListener, PaytmPaymentTransactionCallback, CFCheckoutResponseCallback {
     @BindView(R.id.iv_back)
     ImageView mBackIV;
@@ -167,11 +165,9 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
     private long mGamerCash;
     private String userToken = "";
     private String bajajAccessToken, mMobileNumber = "";
-    private HashMap<String, Boolean> mRemainingData = new HashMap<>();
-
-
+    private HashMap<String, Boolean> mRemainingData=new HashMap<>();
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         try {
             PhonePe.init(this);
@@ -339,9 +335,9 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 setSelection(12);
                 break;
             case R.id.btn_pay:
-                if (mIsBajajWallet) {
+                if(mIsBajajWallet){
                     checkFromServer();
-                } else if (getmPaymentFrom == 1) {
+                }else if(getmPaymentFrom == 1){
                     checkGamerCashStatus();
                 } else {
                     if (mPaymentFrom == AppConstant.FROM_GPAY_UPI) {
@@ -562,6 +558,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         hideProgress();
         if (responseModel.isStatus()) {
             startCashfreeNewSDK(responseModel);
+            //startCashfreeWebCheckout(responseModel);
         } else {
             AppUtilityMethods.showMsg(this, responseModel.getMessage(), false);
         }
@@ -1320,24 +1317,21 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             mPresenter.getApexPayStatus(mApexPayOrderId, mCouponCode);
         }
     }
-
     //Cashfree New SDK Callback
     @Override
-    public void onPaymentVerify(String orderID) {
+    public void onPaymentVerify(String orderID){
         showProgress("Please wait...");
         mPresenter.getCashfreeStatus(orderID);
     }
-
     @Override
-    public void onPaymentFailure(CFErrorResponse cfErrorResponse, String orderID) {
+    public void onPaymentFailure(CFErrorResponse cfErrorResponse,String orderID){
         showProgress("Please wait...");
         mPresenter.getCashfreeStatus(orderID);
     }
-
     @Override
-    public void onTransactionResponse(@Nullable Bundle inResponse) {
+    public void onTransactionResponse(@Nullable Bundle inResponse){
         try {
-            PaymentRequest request = new PaymentRequest();
+            PaymentRequest request=new PaymentRequest();
             request.setCustomerID(mAppPreference.getProfileData().getId());
             request.setType(AppConstant.PATYM);
             request.setStatus(inResponse.getString(AppConstant.STATUS));
@@ -1399,7 +1393,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             mCallbackURL = AppConstant.PaytmProductionCallbackURL + mOrderId;
             mPresenter.getPaytmChecksum(mOrderId, newAmount, mCallbackURL, mCouponCode);
         } else if (mPaymentFrom == AppConstant.FROM_CASHFREE || mPaymentFrom == AppConstant.FROM_CASHFREE_GPAY || mPaymentFrom == AppConstant.FROM_CASHFREE_PPAY || mPaymentFrom == AppConstant.FROM_CASHFREE_APAY || mPaymentFrom == AppConstant.FROM_CASHFREE_UPI) {
-            mPresenter.getCashfreeChecksum(mAmount, mCouponCode);
+            mPresenter.getCashfreeChecksum(mAmount,mCouponCode);
         } else if (mPaymentFrom == AppConstant.FROM_PAYU) {
             mPresenter.getPayuChecksum(mAmount, mCouponCode);
         } else if (mPaymentFrom == AppConstant.FROM_PAYKUN) {
@@ -1502,6 +1496,31 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 CFPaymentGatewayService gatewayService = CFPaymentGatewayService.getInstance();
                 gatewayService.doPayment(PaymentActivity.this, cfDropCheckoutPayment);
             }
+        } catch (CFException exception) {
+            exception.printStackTrace();
+        }
+    }
+    /*Below code WebCheckout*/
+    private void startCashfreeWebCheckout(CashfreeChecksumResponse cashfreeChecksumData) {
+        try {
+            CFSession cfSession = new CFSession.CFSessionBuilder()
+                    .setEnvironment(CFSession.Environment.PRODUCTION)
+                    .setPaymentSessionID(cashfreeChecksumData.getChecksum())
+                    .setOrderId(cashfreeChecksumData.getOrderId())
+                    .build();
+            //setting theme in pg screen
+            // Replace with your application's theme colors
+            CFWebCheckoutTheme cfTheme = new CFWebCheckoutTheme.CFWebCheckoutThemeBuilder()
+                    .setNavigationBarBackgroundColor("#fc2678")
+                    .setNavigationBarTextColor("#ffffff")
+                    .build();
+            CFWebCheckoutPayment cfWebCheckoutPayment=new CFWebCheckoutPayment.CFWebCheckoutPaymentBuilder()
+                    .setSession(cfSession)
+                    .setCFWebCheckoutUITheme(cfTheme)
+                    .build();
+            CFPaymentGatewayService gatewayService = CFPaymentGatewayService.getInstance();
+            gatewayService.doPayment(PaymentActivity.this,cfWebCheckoutPayment);
+
         } catch (CFException exception) {
             exception.printStackTrace();
         }
@@ -1682,7 +1701,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             showProgress("");
             mPresenter.getGamerCashUserData();
         } else {
-            Snackbar.make(mPayBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mPayBTN,R.string.error_internet,Snackbar.LENGTH_SHORT).show();
         }
     }
 

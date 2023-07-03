@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import com.khiladiadda.network.model.BaseResponse;
 
 public class CashfreeChecksumResponse extends BaseResponse {
-
     @SerializedName("response")
     @Expose
     private String checksum;
