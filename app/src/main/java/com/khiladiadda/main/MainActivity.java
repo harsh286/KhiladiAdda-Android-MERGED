@@ -64,7 +64,6 @@ import java.util.List;
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, IMainView {
-
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawer;
     @BindView(R.id.nav_view)
@@ -141,7 +140,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             String title = getSupportFragmentManager().getBackStackEntryAt(backStackEntryCount - 1).getName();
             getSupportActionBar().setTitle(getString(R.string.my_dashboard));
             getSupportFragmentManager().popBackStackImmediate(new Fragment().getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        } else if (backPressCount == 0) {
+        } else if (backPressCount==0){
             Snackbar.make(findViewById(android.R.id.content), getString(R.string.press_again_exit), Snackbar.LENGTH_LONG).show();
             backPressCount++;
         } else {

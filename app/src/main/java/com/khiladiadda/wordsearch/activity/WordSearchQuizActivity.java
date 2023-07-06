@@ -133,35 +133,31 @@ public class WordSearchQuizActivity extends BaseActivity implements IOnClickList
             Toast.makeText(this, "" + R.string.error_internet, Toast.LENGTH_LONG).show();
         }
     }
-
     private void setupRecycler() {
         mQuizzesRv.setLayoutManager(new LinearLayoutManager(this));
     }
-
     @Override
     public void onWordSearchQuizComplete(WordSearchCategoriesQuizzesMainResponse responseModel) {
         hideProgress();
-        mCategoriesQuizzesResponseList = responseModel.getResponse();
+        mCategoriesQuizzesResponseList=responseModel.getResponse();
         mQuizzesRv.setAdapter(new WordSearchQuizAdapter(this, mCategoriesQuizzesResponseList, ""));
     }
-
     @Override
-    public void onWordSearchQuizFailure(ApiError error) {
+    public void onWordSearchQuizFailure(ApiError error){
         hideProgress();
     }
-
     @Override
     public void onItemClick(int pos) {
-        if (mFrom.equals(AppConstant.ALL_QUIZZES)) {
-            if (mMyQuizzesMainResponseList.get(pos).getQuiz().get(0).getQuizStatus() != 0) {
+        if(mFrom.equals(AppConstant.ALL_QUIZZES)) {
+            if(mMyQuizzesMainResponseList.get(pos).getQuiz().get(0).getQuizStatus() != 0) {
                 openLiveLeaderboard(pos, mMyQuizzesMainResponseList.get(pos).getQuizId());
-            } else {
+            }else{
                 Intent intent = new Intent(WordSearchQuizActivity.this, WordSearchDetailsActivity.class);
                 intent.putExtra(AppConstant.WORD_SEARCH_TYPE, 3);
                 intent.putExtra(AppConstant.WORD_SEARCH_MY_QUIZZES, mMyQuizzesMainResponseList.get(pos));
                 startActivity(intent);
             }
-        } else {
+        }else {
             Intent intent = new Intent(WordSearchQuizActivity.this, WordSearchDetailsActivity.class);
             intent.putExtra(AppConstant.WORD_SEARCH_TYPE, 0);
             intent.putExtra(AppConstant.WORD_SEARCH_CATEGORY_QUIZZES, mCategoriesQuizzesResponseList.get(pos));

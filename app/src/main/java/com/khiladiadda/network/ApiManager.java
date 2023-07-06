@@ -123,8 +123,7 @@ public class ApiManager {
         Retrofit retrofit = getRetrofit();
         return retrofit.create(ApiService.class);
     }
-
-    public ApiService createService(String baseUrl) {
+    public ApiService createService(String baseUrl){
         Retrofit retrofit = getRetrofit(baseUrl);
         return retrofit.create(ApiService.class);
     }
@@ -140,8 +139,8 @@ public class ApiManager {
      */
     private OkHttpClient getHttpClient() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        initSSL(KhiladiAddaApp.getInstance(), httpClient);
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        initSSL(KhiladiAddaApp.getInstance(),httpClient);
+        HttpLoggingInterceptor loggingInterceptor=new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.addInterceptor(chain -> {
             Request original = chain.request();

@@ -96,7 +96,7 @@ public class SettingActivity extends BaseActivity {
                 startActivity(terms);
                 break;
             case R.id.tv_privacy_policy:
-                terms.putExtra(AppConstant.FROM, AppConstant.PRIVACY);
+                terms.putExtra(AppConstant.FROM,AppConstant.PRIVACY);
                 startActivity(terms);
                 break;
             case R.id.tv_cancellation_policy:

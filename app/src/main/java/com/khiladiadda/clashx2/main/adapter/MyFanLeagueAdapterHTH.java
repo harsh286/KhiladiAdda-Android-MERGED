@@ -34,7 +34,7 @@ public class MyFanLeagueAdapterHTH extends RecyclerView.Adapter<MyFanLeagueAdapt
         this.mBattleList = mBattleList;
         this.mLive = live;
         this.mUpcoming = upcoming;
-        this.past = past;
+        this.past=past;
     }
 
     public void setOnItemClickListener(IOnItemClickListener mOnItemClickListener) {

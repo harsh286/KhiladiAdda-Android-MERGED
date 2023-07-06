@@ -1,11 +1,14 @@
 package com.khiladiadda.registration;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -39,6 +42,7 @@ import com.khiladiadda.network.model.ApiError;
 import com.khiladiadda.network.model.BaseResponse;
 import com.khiladiadda.otp.OtpActivity;
 import com.khiladiadda.registration.interfaces.IRegistrationView;
+import com.khiladiadda.terms.TermsActivity;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.LocationCheckUtils;
@@ -46,9 +50,7 @@ import com.khiladiadda.utility.NetworkStatus;
 import com.khiladiadda.utility.PermissionUtils;
 
 import butterknife.BindView;
-
 public class RegistrationActivity extends BaseActivity implements IRegistrationView {
-
     @BindView(R.id.et_name)
     EditText mNameET;
     @BindView(R.id.et_mobile)
@@ -65,6 +67,8 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
     Button mNextBTN;
     @BindView(R.id.tv_terms)
     TextView mTermTV;
+//    @BindView(R.id.tv_privacy_policy)
+//    TextView mPrivacyPolicyTV;
     @BindView(R.id.ll_need_support)
     LinearLayout mNeedSupportLL;
     @BindView(R.id.tv_user)
@@ -104,6 +108,7 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
         }
         mNextBTN.setOnClickListener(this);
         mTermTV.setOnClickListener(this);
+//        mPrivacyPolicyTV.setOnClickListener(this);
         mNeedSupportLL.setOnClickListener(this);
         mEmailRl.setOnClickListener(this);
         mEmailView.setOnClickListener(this);
@@ -121,14 +126,11 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
                 LocationCheckUtils.getInstance().requestNewLocationData();
             }
         }
-        String s = getString(R.string.text_terms);
-        SpannableString content = new SpannableString(s);
-        content.setSpan(new ForegroundColorSpan(Color.RED), 0, s.length(), 0);
-        content.setSpan(new UnderlineSpan(), 13, s.length() - 20, 0);
-        mTermTV.setText(content);
         mNameET.setText(mUsername);
         mMobileET.setText(mMobileno);
         mEmailET.setText(mEmail);
+        /*Add terms and condition,privacy policy below method*/
+        customTextView(mTermTV);
     }
 
     @Override
@@ -165,9 +167,14 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
                 }
                 break;
             case R.id.tv_terms:
-                Uri uri = Uri.parse("https://www.khiladiadda.com/terms-and-condition");
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+//                Uri uri = Uri.parse("https://www.khiladiadda.com/terms-and-condition");
+//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                startActivity(intent);
+                break;
+            case R.id.tv_privacy_policy:
+                Uri uriPrivacy = Uri.parse("https://www.khiladiadda.com/privacy-policy/");
+                Intent intentPrivacy = new Intent(Intent.ACTION_VIEW, uriPrivacy);
+                startActivity(intentPrivacy);
                 break;
             case R.id.ll_need_support:
                 openWhatsappContact();
@@ -244,17 +251,17 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
     @Override
     public void onValidationComplete() {
         if (mTermCB.isChecked()) {
-            if (mAgeTermCB.isChecked()) {
-                if (new NetworkStatus(this).isInternetOn()) {
-                    showProgress(getString(R.string.txt_progress_authentication));
-                    mPresenter.doRegister(mGmailId);
+                if (mAgeTermCB.isChecked()) {
+                    if (new NetworkStatus(this).isInternetOn()) {
+                        showProgress(getString(R.string.txt_progress_authentication));
+                        mPresenter.doRegister(mGmailId);
+                    } else {
+                        Snackbar.make(mNextBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Snackbar.make(mNextBTN, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mNextBTN, R.string.text_select_term_condition, Snackbar.LENGTH_SHORT).show();
                 }
-            } else {
-                Snackbar.make(mNextBTN, R.string.text_select_term_condition, Snackbar.LENGTH_SHORT).show();
-            }
-        } else {
+           }else {
             Snackbar.make(mNextBTN, R.string.text_select_term_condition, Snackbar.LENGTH_SHORT).show();
         }
     }
@@ -337,5 +344,34 @@ public class RegistrationActivity extends BaseActivity implements IRegistrationV
                     }
                 });
     }
+    private void customTextView(TextView view){
+        SpannableStringBuilder spanTxt = new SpannableStringBuilder(
+                "Please check ");
+        spanTxt.append("Terms & Condition and Legality & Legality & Responsible Gaming ");
+        spanTxt.append("&");
+        spanTxt.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                Uri uri = Uri.parse("https://www.khiladiadda.com/terms-and-condition");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        },spanTxt.length() - "Terms & Condition and Legality & Legality & Responsible Gaming ".length(), spanTxt.length(), 0);
+        spanTxt.setSpan(new ForegroundColorSpan(Color.RED), 13, 75, 0);
+        spanTxt.append(" Privacy Policy");
+        spanTxt.setSpan(new ForegroundColorSpan(Color.WHITE), 76, 77, 0);
 
+        spanTxt.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                Uri uriPrivacy = Uri.parse("https://www.khiladiadda.com/privacy-policy/");
+                Intent intentPrivacy = new Intent(Intent.ACTION_VIEW, uriPrivacy);
+                startActivity(intentPrivacy);
+            }
+        }, spanTxt.length() - "Privacy Policy".length(), spanTxt.length(), 0);
+        spanTxt.append(" to further proceed");
+        spanTxt.setSpan(new ForegroundColorSpan(Color.RED), 77, 92, 0);
+        view.setMovementMethod(LinkMovementMethod.getInstance());
+        view.setText(spanTxt, TextView.BufferType.SPANNABLE);
+    }
 }

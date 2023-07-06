@@ -1,11 +1,11 @@
 package com.khiladiadda.clashx2.main.activity;
-
 import static android.view.View.GONE;
 
 import com.khiladiadda.clashx2.main.adapter.ClashXDashBoardTabsAdapter;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.clashx2.main.interfaces.ICxBannerPresenter;
 import com.khiladiadda.clashx2.main.interfaces.ICxBannerView;
+import com.khiladiadda.main.MainActivity;
 import com.khiladiadda.network.model.response.BannerDetails;
 import com.khiladiadda.main.adapter.BannerPagerAdapter;
 import com.khiladiadda.clashx2.main.CxBannerPresenter;
@@ -41,9 +41,7 @@ import com.moengage.widgets.NudgeView;
 import java.util.List;
 
 import butterknife.BindView;
-
 public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerView, View.OnClickListener {
-
     @BindView(R.id.viewPager_dashboard_games)
     ViewPager viewPager;
     @BindView(R.id.tab_layout_dashboard)
@@ -123,24 +121,26 @@ public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerVi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
-                finish();
+                Intent intentMain=new Intent(this,MainActivity.class);
+                /* intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);*/
+                startActivity(intentMain);
+                finishAffinity();
                 break;
             case R.id.tv_league:
-                Intent intent = new Intent(this, MyFanLeagueActivityHTH.class);
+                Intent intent=new Intent(this,MyFanLeagueActivityHTH.class);
                 startActivity(intent);
                 break;
             case R.id.tv_help:
-                Intent intent1 = new Intent(this, HelpActivity.class);
+                Intent intent1 = new Intent(this,HelpActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.iv_notification_clashx:
-                Intent intent2 = new Intent(this, NotificationActivity.class);
+                Intent intent2 = new Intent(this,NotificationActivity.class);
                 startActivity(intent2);
                 break;
         }
 
     }
-
     @Override
     public void onCxBannerComplete(CxBannerMainResponse responseModel) {
         if (responseModel.isStatus()) {
@@ -152,20 +152,17 @@ public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerVi
             }
         }
     }
-
     @Override
-    public void onCxBannerFailure(ApiError error) {
+    public void onCxBannerFailure(ApiError error){
 
     }
-
-    private void getData(String type) {
-        if (new NetworkStatus(this).isInternetOn()) {
+    private void getData(String type){
+        if (new NetworkStatus(this).isInternetOn()){
             mPresenter.getBannerResponse(type);
         } else {
-            Snackbar.make(mBackIV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mBackIV,R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
     }
-
     private void setUpAdvertisementViewPager(List<BannerDetails> advertisementDetails) {
         mAdvertisementsList.clear();
         mAdvertisementsList.addAll(advertisementDetails);
@@ -208,12 +205,18 @@ public class ClashXDashBoardActivity extends BaseActivity implements ICxBannerVi
         getData("41 42 43");
         viewPager.setCurrentItem(0);
     }
-
     @Override
-    protected void onDestroy() {
+    protected void onDestroy(){
         AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }
-
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Intent intent=new Intent(this,MainActivity.class);
+       /* intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);*/
+        startActivity(intent);
+        finishAffinity();
+    }
 }

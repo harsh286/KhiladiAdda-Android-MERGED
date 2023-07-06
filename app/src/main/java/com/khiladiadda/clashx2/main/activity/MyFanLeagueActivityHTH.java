@@ -286,7 +286,7 @@ public class MyFanLeagueActivityHTH extends BaseActivity implements ICreateBattl
     public void onClicked(int position) {
         if (mUpcoming) {
             if (mMatchList.get(position).isLive()) {
-                Intent i = new Intent(this, BattlesUpcomingActivity.class);
+                Intent i=new Intent(this, BattlesUpcomingActivity.class);
                 i.putExtra(AppConstant.DATA, mMatchList.get(position));
                 // i.putExtra(AppConstant.FROM, AppConstant.FROM_FANBATTLE_UPCOMING);
                 i.putExtra(AppConstant.MATCH_TYPE, mMatchList.get(position).getMatch_type());

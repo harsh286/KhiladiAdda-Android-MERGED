@@ -4,11 +4,8 @@ import com.khiladiadda.base.interfaces.IBasePresenter;
 import com.khiladiadda.network.model.request.AddBeneficieryRazorpay;
 import com.khiladiadda.network.model.request.ManualWithdrawRequest;
 import com.khiladiadda.network.model.request.RaceConditionPayoutRequest;
-
 public interface IWithdrawPresenter extends IBasePresenter {
-
     void validateData();
-
     void getBeneficiaryList();
 
     void onCashfreeAddBeneficiary(String bankAccount, String ifscCode, String address, String transferMode, String vpa, String name, int transferType);

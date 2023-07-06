@@ -3,11 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/newblack">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <View
             android:layout_width="250dp"
             android:layout_height="250dp"
@@ -132,23 +130,6 @@
             android:layout_marginTop="@dimen/margin_10"
             android:layout_marginEnd="@dimen/margin_20"
             android:background="@color/colorTransparent" />
-
-        <!--        <com.google.android.material.card.MaterialCardView-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_below="@id/rl_phone"-->
-        <!--            android:layout_gravity="center_horizontal"-->
-        <!--            android:layout_marginStart="@dimen/margin_20"-->
-        <!--            android:layout_marginTop="@dimen/margin_10"-->
-        <!--            android:layout_marginEnd="@dimen/margin_20"-->
-        <!--            android:background="@drawable/whitlebackground">-->
-        <!--            <TextView-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="@dimen/margin_50"-->
-        <!--                android:layout_marginStart=""/>-->
-        <!--        </com.google.android.material.card.MaterialCardView>-->
-
-
         <RelativeLayout
             android:id="@+id/rl_invite"
             android:layout_width="match_parent"
@@ -184,27 +165,25 @@
             android:layout_marginStart="@dimen/margin_30"
             android:layout_marginTop="@dimen/margin_20"
             android:layout_marginEnd="@dimen/margin_50">
-
             <CheckBox
                 android:id="@+id/cb_terms"
                 android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:buttonTint="@color/white" />
-
             <TextView
                 android:id="@+id/tv_terms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_5"
                 android:layout_marginTop="@dimen/margin_10"
+                android:lineSpacingExtra="6dp"
                 android:layout_toEndOf="@+id/cb_terms"
                 android:gravity="center_vertical"
                 android:text="@string/text_terms"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_10" />
+                android:textSize="@dimen/text_10"/>
         </RelativeLayout>
-
         <RelativeLayout
             android:id="@+id/rl_under_age"
             android:layout_width="match_parent"

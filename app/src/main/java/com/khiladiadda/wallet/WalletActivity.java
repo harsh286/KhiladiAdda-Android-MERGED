@@ -1,5 +1,4 @@
 package com.khiladiadda.wallet;
-
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,12 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.khiladiadda.R;
 import com.khiladiadda.base.BaseActivity;
@@ -24,24 +21,10 @@ import com.khiladiadda.dialogs.AppDialog;
 import com.khiladiadda.fcm.NotificationActivity;
 import com.khiladiadda.main.MainActivity;
 import com.khiladiadda.network.model.ApiError;
-import com.khiladiadda.network.model.BaseResponse;
-import com.khiladiadda.network.model.response.ApexPayChecksumResponse;
-import com.khiladiadda.network.model.response.CashfreeChecksumResponse;
-import com.khiladiadda.network.model.response.ChecksumResponse;
 import com.khiladiadda.network.model.response.Coins;
-import com.khiladiadda.network.model.response.GetGamerCashResponse;
 import com.khiladiadda.network.model.response.InvoiceResponse;
-import com.khiladiadda.network.model.response.NeokredResponse;
-import com.khiladiadda.network.model.response.PaySharpResponse;
-import com.khiladiadda.network.model.response.PaykunOrderResponse;
-import com.khiladiadda.network.model.response.PayuChecksumResponse;
-import com.khiladiadda.network.model.response.PhonePePaymentResponse;
-import com.khiladiadda.network.model.response.PhonepeCheckPaymentResponse;
 import com.khiladiadda.network.model.response.ProfileTransactionResponse;
-import com.khiladiadda.network.model.response.RazorpayOrderIdResponse;
 import com.khiladiadda.network.model.response.TransactionDetails;
-import com.khiladiadda.network.model.response.VersionResponse;
-import com.khiladiadda.network.model.response.ZaakpayChecksumResponse;
 import com.khiladiadda.transaction.PaymentHistoryActivity;
 import com.khiladiadda.transaction.TransactionActivity;
 import com.khiladiadda.transaction.adapter.TransactionAdapter;
@@ -56,13 +39,9 @@ import com.moengage.core.Properties;
 import com.moengage.core.analytics.MoEAnalyticsHelper;
 import com.moengage.inapp.MoEInAppHelper;
 import com.moengage.widgets.NudgeView;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
-
 public class WalletActivity extends BaseActivity implements IWalletView, TransactionAdapter.IOnItemChildClickListener, LocationCheckUtils.IOnAdressPassed {
-
     @BindView(R.id.iv_back)
     ImageView mBackIV;
     @BindView(R.id.tv_activity_name)
@@ -178,8 +157,7 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
                     if(LocationCheckUtils.getInstance().hasLocationPermission()) {
                         LocationCheckUtils.getInstance().requestNewLocationData();
                         if (isAllowed) {
-//                            i = new Intent(this, AddWalletActivity.class);
-                            i = new Intent(this, WalletCashbackActivity.class);
+                            i=new Intent(this, WalletCashbackActivity.class);
                             walletActivityResultLauncher.launch(i);
                         } else
                             Snackbar.make(mAddCoinsBTN, R.string.not_allowed, Snackbar.LENGTH_SHORT).show();
@@ -266,8 +244,7 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
         } else {
             mTotalCoinsTV.setText("Total Balance\n" + "₹" + total);
         }
-
-        SpannableString deposit = new SpannableString(mDepositTV.getText().toString());
+        SpannableString deposit=new SpannableString(mDepositTV.getText().toString());
         deposit.setSpan(new RelativeSizeSpan(1.2f), 9, deposit.length(), 0); // set size
         mDepositTV.setText(deposit);
         SpannableString winning = new SpannableString(mWinningTV.getText().toString());
@@ -298,18 +275,16 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
         mPaytm = responseModel.getPaytmEnabled();
         setData();
     }
-
     @Override
-    public void onProfileFailure(ApiError error) {
+    public void onProfileFailure(ApiError error){
         hideProgress();
     }
-
     @Override
-    public void onInvoiceComplete(InvoiceResponse responseModel) {
+    public void onInvoiceComplete(InvoiceResponse responseModel){
         hideProgress();
-        if (responseModel.isStatus()) {
+        if (responseModel.isStatus()){
             try {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                Intent browserIntent=new Intent(Intent.ACTION_VIEW);
                 browserIntent.setDataAndType(Uri.parse(responseModel.getResponse().getFileUrl()), "application/pdf");
                 Intent chooser = Intent.createChooser(browserIntent, getString(R.string.chooser_title));
                 chooser.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // optional
@@ -319,25 +294,21 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
             }
         }
     }
-
     @Override
     public void onInvoiceFailure(ApiError error) {
         hideProgress();
     }
-
     @Override
     protected void onDestroy() {
         AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();
     }
-
     @Override
     public void onInvoiceClicked(int position) {
         showProgress(getString(R.string.txt_progress_authentication));
         mPresenter.getInvoice(mList.get(position).getId());
     }
-
     @Override
     public void onBackPressed() {
         if (mAppPreference.getIsDeepLinking()) {
@@ -347,16 +318,13 @@ public class WalletActivity extends BaseActivity implements IWalletView, Transac
             finish();
         }
     }
-
     ActivityResultLauncher<Intent> walletActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         getData();
     });
-
     @Override
     public void iOnAddressSuccess() {
         isAllowed = true;
     }
-
     @Override
     public void iOnAddressFailure() {
         isAllowed = false;

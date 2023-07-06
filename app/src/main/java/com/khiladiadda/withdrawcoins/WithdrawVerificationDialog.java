@@ -65,11 +65,10 @@ public class WithdrawVerificationDialog extends Dialog implements View.OnClickLi
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_withdraw_verification);
         getWindow().setBackgroundDrawableResource(R.color.colorTransparent);
-        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
     }
-
     private void initViews() {
         ButterKnife.bind(this);
         mProceedBTN.setOnClickListener(this);

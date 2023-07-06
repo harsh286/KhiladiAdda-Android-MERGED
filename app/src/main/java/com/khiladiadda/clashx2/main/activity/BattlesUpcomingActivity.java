@@ -301,7 +301,7 @@ public class BattlesUpcomingActivity extends BaseActivity implements ICreateBatt
                 createBattle.putExtra(AppConstant.MATCH_TYPE, mMatch_Type);
                 startActivity(createBattle);
             } else if (mMatch_Type == 2) {
-                Intent createBattle = new Intent(this, FootballBattleScoreActivity.class);
+                Intent createBattle = new Intent(this,FootballBattleScoreActivity.class);
                 createBattle.putExtra(AppConstant.FROM, AppConstant.FROM_FANBATTLE_PAST);
                 createBattle.putExtra(AppConstant.DATA, mMatchDetail);
                 createBattle.putExtra(AppConstant.ID, mMyBattleList.get(position).getId());
@@ -320,6 +320,7 @@ public class BattlesUpcomingActivity extends BaseActivity implements ICreateBatt
                 createBattle.putExtra(AppConstant.CATEGORY, getIntent().getStringExtra(AppConstant.CATEGORY));
                 createBattle.putExtra(AppConstant.MATCH_TYPE, mMatch_Type);
                 startActivity(createBattle);
+                finish();
             }
         } else {
             if (mMatch_Type == 3) {

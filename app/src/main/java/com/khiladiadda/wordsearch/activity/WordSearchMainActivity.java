@@ -370,14 +370,13 @@ public class WordSearchMainActivity extends BaseActivity implements IOnViewAllCl
         }
     }
 
-    private void moveToNextAd(int i) {
+    private void moveToNextAd(int i){
         mBannerVP.setCurrentItem(i, true);
         mHandler.postDelayed(() -> {
             int currentItem = mBannerVP.getCurrentItem();
             moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
         }, 10000);
     }
-
     @Override
     protected void onDestroy() {
         AppUtilityMethods.deleteCache(this);

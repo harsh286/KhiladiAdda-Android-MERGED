@@ -493,9 +493,8 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
         });
         dialog.show();
     }
-
     public void showMsg(final Context activity, String msg, boolean isCancel, boolean status) {
-        final Dialog dialog = new Dialog(activity);
+        final Dialog dialog=new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCanceledOnTouchOutside(isCancel);
@@ -510,8 +509,7 @@ public class WordSearchDetailsActivity extends BaseActivity implements IOnSubCli
         });
         dialog.show();
     }
-
-    private Dialog downloadOptionPopup(final Context activity, final IOnVesrionDownloadListener listener) {
+    private Dialog downloadOptionPopup(final Context activity, final IOnVesrionDownloadListener listener){
         final Dialog dialog = new Dialog(activity, R.style.MyDialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);

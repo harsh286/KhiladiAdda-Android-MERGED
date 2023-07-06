@@ -1,11 +1,9 @@
 package com.khiladiadda.withdrawcoins;
-
 import static android.view.View.GONE;
 import static com.khiladiadda.utility.AppConstant.PATYM;
 import static com.khiladiadda.utility.AppConstant.PATYMUPI;
 import static com.khiladiadda.utility.AppConstant.PATYMWALLTERUPI;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -87,10 +86,8 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-
 public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, IOnItemClickListener, NewBeneficiaryAdapter.IOnItemChildClickListener,
         LocationCheckUtils.IOnAdressPassed {
-
     @BindView(R.id.iv_back)
     ImageView mBackIV;
     @BindView(R.id.tv_activity_name)
@@ -154,7 +151,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     private double mWinningCoins, mTDSAmount;
     private int mAmount, mPayoutGateway, selectedPos = RecyclerView.NO_POSITION, mPayoutSelect = 0;
     private List<WithdrawComissionDetails> mWithdrawCommission = null;
-    private boolean mKYCVerified, mIsDataRefresh, mIsWithdrawVerified;
+    private boolean mKYCVerified = true, mIsDataRefresh, mIsWithdrawVerified;
     @BindView(R.id.tv_payment_history)
     TextView mPaymentHistoryTV;
     @BindView(R.id.vp_advertisement)
@@ -248,7 +245,6 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
             }
         });
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -623,7 +619,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     }
 
     @Override
-    public void onWithdrawLimitComplete(WIthdrawLimitResponse response) {
+    public void onWithdrawLimitComplete(@NonNull WIthdrawLimitResponse response) {
         if (response.isStatus()) {
             if (response.getResponse().isKycEnabled()) {
                 //addahr not verified then check limit amount
@@ -745,7 +741,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         } else {
             mSubmitBTN.setEnabled(true);
             hideProgress();
-            AppUtilityMethods.showMsg(this,getString(R.string.text_not_enough_coins_wallet), false);
+            AppUtilityMethods.showMsg(this, getString(R.string.text_not_enough_coins_wallet), false);
         }
     }
 
@@ -1070,15 +1066,14 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
         for (BannerDetails advertisement : advertisementDetails) {
             mFragmentList.add(BannerFragment.getInstance(advertisement));
         }
-        BannerPagerAdapter adapter = new BannerPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
+        BannerPagerAdapter adapter=new BannerPagerAdapter(this.getSupportFragmentManager(),mFragmentList);
         mBannerVP.setAdapter(adapter);
         mBannerVP.setOffscreenPageLimit(3);
-        if (mHandler == null) {
-            mHandler = new Handler();
+        if (mHandler==null){
+            mHandler=new Handler();
             moveToNextAd(0);
         }
     }
-
     private void moveToNextAd(int i) {
         mBannerVP.setCurrentItem(i, true);
         mHandler.postDelayed(() -> {
@@ -1086,9 +1081,8 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
             moveToNextAd((currentItem + 1) % mAdvertisementsList.size() == 0 ? 0 : currentItem + 1);
         }, 10000);
     }
-
     @Override
-    protected void onDestroy() {
+    protected void onDestroy(){
         AppUtilityMethods.deleteCache(this);
         mPresenter.destroy();
         super.onDestroy();

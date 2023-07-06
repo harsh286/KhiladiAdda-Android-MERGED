@@ -292,9 +292,11 @@ public class BattlesScoreActivity extends BaseActivity implements IHTHBattleView
             String data = intent.getStringExtra(AppConstant.FROM);
             if (data.equalsIgnoreCase(AppConstant.HTHPASTREFRSH)) {
                 if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
-                    Intent i = new Intent(BattlesScoreActivity.this, MyFanLeagueActivityHTH.class);
-                    i.putExtra(AppConstant.FROM, AppConstant.FROM_FANBATTLE_PAST);
+                    Intent i = new Intent(BattlesScoreActivity.this,ClashXDashBoardActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra(AppConstant.FROM,AppConstant.FROM_FANBATTLE_PAST);
                     startActivity(i);
+                    finish();
                 }
             }
         }

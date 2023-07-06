@@ -1,5 +1,4 @@
 package com.khiladiadda.dialogs;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,9 +22,7 @@ import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.ImageActivity;
-
 public class LeaguePaymentDialog extends BottomSheetDialog implements View.OnClickListener {
-
     private Button mCancelBTN, mSendBTN;
     private TextView mAmountTV, mHelpTV, mImageTV, mGameHintTV;
     private EditText mGameLevelET, mUsernameET, mCharacterET, mTeamNameET;
@@ -54,11 +51,9 @@ public class LeaguePaymentDialog extends BottomSheetDialog implements View.OnCli
         initViews();
         initVariables();
     }
-
     protected int getContentView() {
         return R.layout.dialog_create_game_payment;
     }
-
     protected void initViews() {
         mCancelBTN = findViewById(R.id.btn_cancel);
         mSendBTN = findViewById(R.id.btn_send);

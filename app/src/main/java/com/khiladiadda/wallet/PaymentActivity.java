@@ -176,14 +176,12 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             e.printStackTrace();
         }
     }
-
     @Override
     protected int getContentView() {
         return R.layout.activity_payment;
     }
-
     @Override
-    protected void initViews() {
+    protected void initViews(){
         mBackIV.setOnClickListener(this);
         mActivityNameTV.setText(R.string.text_payment);
         mNotificationIV.setOnClickListener(this);
@@ -213,11 +211,10 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
         mGamerCashVerifiedTV.setOnClickListener(this);
         mOtherUpiTV.setOnClickListener(this);
     }
-
     @Override
-    protected void initVariables() {
-        mPresenter = new PaymentPresenter(this);
-        mAmount = getIntent().getStringExtra(AppConstant.TXN_AMOUNT);
+    protected void initVariables(){
+        mPresenter=new PaymentPresenter(this);
+        mAmount=getIntent().getStringExtra(AppConstant.TXN_AMOUNT);
         mCouponCode = getIntent().getStringExtra(AppConstant.COUPON);
         mPayBTN.setText("Add ₹ " + mAmount);
         mUpiPaymentType = getIntent().getIntExtra(AppConstant.PAYMENT_MODE, 0);
@@ -257,12 +254,9 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
             mGamerCashTV.setVisibility(View.GONE);
             mGamerCashVerifiedTV.setVisibility(View.GONE);
         }
-
         checkBajajpayLinked(mRemainingData);
-
         mAppPreference.setBoolean(AppConstant.FROM_WALLET, false);
     }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -306,7 +300,7 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                     mIsBajajPayBanking = true;
                     imgArrowStraight.setVisibility(View.GONE);
                     imgArrowDown.setVisibility(View.VISIBLE);
-                    if (mBajajWalletActive) {
+                    if(mBajajWalletActive){
                         mNetBankingBajajPayWalletCL.setVisibility(View.VISIBLE);
                     }
                     if (mIsBajajUpi) {
@@ -354,14 +348,12 @@ public class PaymentActivity extends BaseActivity implements IPaymentView, IBPDo
                 break;
         }
     }
-
-    private void checkFromServer() {
+    private void checkFromServer(){
         showProgress("");
-        mPresenter.checkBajajValidation(mAmount, mCouponCode);
+        mPresenter.checkBajajValidation(mAmount,mCouponCode);
     }
-
-    private void setPaymentFromData(int i) {
-        if (mUpiPaymentType == 1) {
+    private void setPaymentFromData(int i){
+        if (mUpiPaymentType == 1){
             mPaymentFrom = AppConstant.FROM_CASHFREE_UPI;
         } else if (mUpiPaymentType == 2) {
             mPaymentFrom = AppConstant.FROM_PAYTM;

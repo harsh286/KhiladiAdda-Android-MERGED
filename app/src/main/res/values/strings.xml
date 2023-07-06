@@ -13,7 +13,7 @@
     <string name="hint_email">Email Address</string>
     <string name="prompt_mobile">Mobile Number</string>
     <string name="hint_password">Password</string>
-    <string name="text_terms">Please check Term &amp; Conditions, Legality &amp; Responsible Gaming to proceed further!</string>
+    <string name="text_terms">Please check Term &amp; Conditions, Legality &amp; Legality &amp; Responsible Gaming!</string>
     <string name="txt_save">Save</string>
     <string name="txt_continue">Continue</string>
     <string name="text_send_otp">Send OTP</string>
@@ -200,7 +200,8 @@
     <string name="text_select_image">Please select image to upload</string>
     <string name="text_uploaded_succefully">Profile image is ready. Click update to save your profile image and details.</string>
     <string name="text_update_username">Click on edit below to update username</string>
-    <string name="text_select_term_condition">Please select Terms &amp; condition box</string>
+    <string name="text_select_term_condition">Please select Terms &amp; condition and privacy policy box</string>
+    <string name="text_select_privacy_policy">Please select Privacy &amp; Policy box</string>
     <string name="hint_game_user_name">Game Username</string>
     <string name="hint_team_name">Team Name</string>
     <string name="hint_team_id">Team Id</string>
@@ -1021,4 +1022,5 @@
     <string name="note_game_level_must_be_25_or_more_than_25">Note - Game level must be 25 or more than 25</string>
     <string name="note_game_level_must_be_50_or_more_than_50">Note - Game level must be 50 or more than 50</string>
     <string name="note_game_level_must_be_30_or_more_than_30">Note - Game level must be 30 or more than 30</string>
+    <string name="privacy_text">&amp; Privacy Policy to proceed further</string>
 </resources>
