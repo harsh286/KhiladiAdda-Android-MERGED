@@ -151,7 +151,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     private double mWinningCoins, mTDSAmount;
     private int mAmount, mPayoutGateway, selectedPos = RecyclerView.NO_POSITION, mPayoutSelect = 0;
     private List<WithdrawComissionDetails> mWithdrawCommission = null;
-    private boolean mKYCVerified = true, mIsDataRefresh, mIsWithdrawVerified;
+    private boolean mKYCVerified,mIsDataRefresh,mIsWithdrawVerified;
     @BindView(R.id.tv_payment_history)
     TextView mPaymentHistoryTV;
     @BindView(R.id.vp_advertisement)
@@ -617,7 +617,6 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     public void onRazorpayTransferFailed(ApiError error) {
         hideProgress();
     }
-
     @Override
     public void onWithdrawLimitComplete(@NonNull WIthdrawLimitResponse response) {
         if (response.isStatus()) {
@@ -730,7 +729,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
 
     @Override
     public void onCheckTDSComplete(TdsResponse response) {
-        mTDSAmount = response.getTdsAmount();
+        mTDSAmount=response.getTdsAmount();
         if ((mAmount) <= mWinningCoins) {
             if (mKYCVerified) {
                 hideProgress();
