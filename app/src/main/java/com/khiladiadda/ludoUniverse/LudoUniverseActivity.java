@@ -1,7 +1,5 @@
 package com.khiladiadda.ludoUniverse;
-
 import static android.view.View.GONE;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -17,7 +15,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -27,7 +24,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.AppCompatButton;
@@ -66,6 +62,7 @@ import com.khiladiadda.network.model.response.Coins;
 import com.khiladiadda.network.model.response.LudoContest;
 import com.khiladiadda.network.model.response.LudoContestResponse;
 import com.khiladiadda.network.model.response.ModeResponse;
+import com.khiladiadda.preference.AppSharedPreference;
 import com.khiladiadda.utility.AppConstant;
 import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.DownloadApk;
@@ -85,9 +82,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-
 public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseView, IOnAddLudoUniverseListener, LudoUniAdapter.IOnItemChildClickListener, IOnItemClickListener, MyLudoUniAdapter.IOnItemChildClickListener {
-
     @BindView(R.id.iv_back)
     ImageView mBackIV;
     @BindView(R.id.tv_activity_name)
@@ -281,12 +276,11 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
                 startActivity(profile);
                 break;
             case R.id.ll_download:
-                mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
+                mVersionDialog=downloadOptionPopup(this, mOnVersionListener);
                 break;
         }
     }
-
-    private void createChallenge() {
+    private void createChallenge(){
         mAddChallengeDialog = AppDialog.addLudoUniverseDialog(this, this);
     }
 
@@ -307,7 +301,7 @@ public class LudoUniverseActivity extends BaseActivity implements ILudoUniverseV
         mSyncProfile = false;
         mLudoContestList.clear();
         if (responseModel.isLudoEnabled()) {
-            mLink = responseModel.getLudoApkLink();
+            mLink = AppSharedPreference.initialize(this).getVersion().getResponse().getLudoApkLink();
             mCurrentVersion = responseModel.getApk_version();
             mLudoContestList.addAll(responseModel.getResponse());
             mAllChallengeAdapter.notifyDataSetChanged();

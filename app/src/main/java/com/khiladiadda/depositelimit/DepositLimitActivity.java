@@ -1,5 +1,4 @@
 package com.khiladiadda.depositelimit;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
@@ -22,9 +21,7 @@ import com.khiladiadda.utility.AppUtilityMethods;
 import com.khiladiadda.utility.NetworkStatus;
 
 import butterknife.BindView;
-
 public class DepositLimitActivity extends BaseActivity implements IDepositView {
-
     @BindView(R.id.sb_limit)
     public SeekBar mLimitSeekBar;
     @BindView(R.id.tv_price_change)
@@ -119,7 +116,7 @@ public class DepositLimitActivity extends BaseActivity implements IDepositView {
                 if (mTermCB.isChecked()) {
                     addData();
                 } else {
-                    Snackbar.make(mSetLimitBtn, R.string.text_select_term_condition, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mSetLimitBtn,R.string.text_select_term_condition, Snackbar.LENGTH_SHORT).show();
                 }
                 break;
         }

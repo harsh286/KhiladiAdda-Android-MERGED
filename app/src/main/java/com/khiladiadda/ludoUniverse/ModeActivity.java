@@ -131,9 +131,11 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
         rulesTv.setMovementMethod(new ScrollingMovementMethod());
         rulesTv.setText(AppConstant.ADDA_CLASSIC_RULES);
         launchIntent = getPackageManager().getLeanbackLaunchIntentForPackage(AppConstant.LudoAddaPackageName);
-        if (launchIntent != null) getVersion();
-        else mAppPreference.setBoolean("LudoDownload", false);
-        mVideoCL.setOnClickListener(this);
+        if (launchIntent!=null)
+            getVersion();
+        else
+            mAppPreference.setBoolean("LudoDownload",false);
+            mVideoCL.setOnClickListener(this);
     }
 
     @Override
@@ -153,7 +155,7 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
                 }
                 break;
             case R.id.tv_download:
-                mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
+                mVersionDialog=downloadOptionPopup(this, mOnVersionListener);
                 break;
             case R.id.tv_help_video:
                 openLink();
@@ -199,7 +201,7 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
                         a.putParcelableArrayListExtra("banner", (ArrayList<? extends Parcelable>) bannerData);
                         startActivity(a);
                     } else {
-                        mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
+                        mVersionDialog=downloadOptionPopup(this, mOnVersionListener);
                     }
                 } else {
                     mVersionDialog = downloadOptionPopup(this, mOnVersionListener);
@@ -376,7 +378,7 @@ public class ModeActivity extends BaseActivity implements ILudoUniverseView {
                     mVersionDialog.dismiss();
                     mVersionDialog = null;
                     mAppPreference.setBoolean("LudoDownload", true);
-                } catch (Exception e) {
+                }catch (Exception e) {
                     Toast.makeText(ModeActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });

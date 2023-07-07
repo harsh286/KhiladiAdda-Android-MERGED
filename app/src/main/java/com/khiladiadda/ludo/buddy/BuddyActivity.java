@@ -84,7 +84,6 @@ public class BuddyActivity extends BaseActivity implements ILudoBuddyView, LudoB
             mPresenter.getBuddyListUniverse(mFrom);
         }
     }
-
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.iv_back) {

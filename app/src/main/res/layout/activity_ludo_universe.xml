@@ -6,7 +6,6 @@
     android:background="@drawable/ludouniverrsebg">
 
     <include layout="@layout/actionbar_ludo_adda" />
-
     <RelativeLayout
         android:id="@+id/rl_image"
         android:layout_below="@+id/action_bar"

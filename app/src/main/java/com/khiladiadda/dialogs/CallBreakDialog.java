@@ -97,7 +97,7 @@ public class CallBreakDialog extends BottomSheetDialog implements View.OnClickLi
 
 
     @Override
-    public void onClick(View view) {
+    public void onClick(@NonNull View view) {
         switch (view.getId()) {
             case R.id.btn_cancel:
                 dismiss();

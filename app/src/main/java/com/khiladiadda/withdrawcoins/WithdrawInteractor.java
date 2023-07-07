@@ -97,7 +97,6 @@ public class WithdrawInteractor {
         ApiService service = manager.createService();
         return manager.createObservable(service.verifyBeneficiary(beneficiaryId)).subscribe(new SubscriberCallback<>(listener));
     }
-
     public Subscription onApexPayTransfer(IApiListener<PayoutResponse> listener, String beneficiaryId, String amount, String otp) {
         ApiManager manager = ApiManager.getInstance();
         ApiService service = manager.createService();

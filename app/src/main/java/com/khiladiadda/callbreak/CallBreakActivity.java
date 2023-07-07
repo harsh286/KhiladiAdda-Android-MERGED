@@ -1,7 +1,5 @@
 package com.khiladiadda.callbreak;
-
 import static android.view.View.GONE;
-
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -19,16 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-
-import com.appsflyer.AFInAppEventParameterName;
-import com.appsflyer.AppsFlyerLib;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -72,7 +66,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-
 public class CallBreakActivity extends BaseActivity implements ICallBreakView, IOnItemClickListener, CallBreakDialog.IOnConfirmClickListener {
     @BindView(R.id.iv_back)
     ImageView mBackIV;
@@ -158,7 +151,6 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
             AppUtilityMethods.openYoutubeCallbreak(this, "www.youtube.com/watch?v=BQXaInDe4m4", "https://www.youtube.com/watch?v=BQXaInDe4m4");
         }
     }
-
     private void getData() {
         if (new NetworkStatus(this).isInternetOn()) {
             showProgress(getString(R.string.txt_progress_authentication));
@@ -168,7 +160,6 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
             Snackbar.make(mActivityNameTV, R.string.error_internet, Snackbar.LENGTH_SHORT).show();
         }
     }
-
     private void getCoins() {
         Coins mCoins = mAppPreference.getProfileData().getCoins();
         if (mCoins != null) {
@@ -209,22 +200,20 @@ public class CallBreakActivity extends BaseActivity implements ICallBreakView, I
             AppUtilityMethods.showMsg(this, responseModel.getMessage(), false);
         }
     }
-
     @Override
     public void onGetContestFailure(ApiError error) {
         hideProgress();
     }
-
     @Override
     public void onGetContestJoinSuccess(CallBreakJoinMainResponse responseModel) {
         hideProgress();
         if (responseModel.isStatus()) {
             if (responseModel.getStatusCode() == 200 || responseModel.getStatusCode() == 202) { // okay
                 //AppFlyer
-                AppUtilityMethods.appFlyersGameInvestEvent(this, responseModel.getResponse().getWinningAmount().toString(), AppConstant.WORD_SEARCH);
+                //AppUtilityMethods.appFlyersGameInvestEvent(this,responseModel.getResponse().getWinningAmount().toString(), AppConstant.WORD_SEARCH);
                 //Mo Engage
-                Properties mProperties = new Properties();
-                mProperties.addAttribute(AppConstant.GAMETYPE, AppConstant.CALL_BREAK_JOIN);
+                Properties mProperties=new Properties();
+                mProperties.addAttribute(AppConstant.GAMETYPE,AppConstant.CALL_BREAK_JOIN);
                 mProperties.addAttribute("EnrtyFee", mEntryFee);
                 MoEAnalyticsHelper.INSTANCE.trackEvent(this, AppConstant.CALL_BREAK_JOIN, mProperties);
                 launchUnityWithData(mainResponse.getResponse().get(position).getId(), mainResponse.getResponse().get(position).getEntryFees(), mainResponse.getResponse().get(position).getWinningAmount(), responseModel.getResponse().getRandomName(), responseModel.getResponse().getRandomDp(), mainResponse.getResponse().get(position).prizePoolBreakup);

@@ -361,7 +361,6 @@ public class MyLudoUniverseActivity extends BaseActivity implements ILudoUnivers
         mNoBTN.setOnClickListener(arg0 -> dialog.dismiss());
         dialog.show();
     }
-
     public void showMsg(String msg) {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

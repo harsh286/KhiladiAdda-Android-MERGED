@@ -65,6 +65,7 @@ import com.khiladiadda.network.model.response.ProfileDetails;
 import com.khiladiadda.network.model.response.TdsResponse;
 import com.khiladiadda.network.model.response.WIthdrawLimitResponse;
 import com.khiladiadda.network.model.response.WithdrawComissionDetails;
+import com.khiladiadda.network.model.response.WithdrawLimitDetails;
 import com.khiladiadda.profile.update.AadharActivity;
 import com.khiladiadda.terms.TermsActivity;
 import com.khiladiadda.transaction.TransactionActivity;
@@ -165,9 +166,8 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     protected int getContentView() {
         return R.layout.activity_new_withdraw;
     }
-
     @Override
-    protected void onStart() {
+    protected void onStart(){
         super.onStart();
         mNV.initialiseNudgeView(this);
         MoEInAppHelper.getInstance().showInApp(this);
@@ -565,12 +565,10 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     public void onGetManualWithdrawComplete(ManualWithdrawResponse responseModel) {
 
     }
-
     @Override
-    public void onGetManualWithdrawFailure(ApiError error) {
+    public void onGetManualWithdrawFailure(ApiError error){
 
     }
-
     @Override
     public void onResendOtpComplete(OtpResponse responseModel) {
         hideProgress();
@@ -620,16 +618,17 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     @Override
     public void onWithdrawLimitComplete(@NonNull WIthdrawLimitResponse response) {
         if (response.isStatus()) {
-            if (response.getResponse().isKycEnabled()) {
+            WithdrawLimitDetails res = response.getResponse();
+            if (res.isKycEnabled()){
                 //addahr not verified then check limit amount
                 //aadhar verified and withdraw limit
-                if (!response.getResponse().isAadharVerified() && (mAmount > response.getResponse().getLimitAmount())) {
+                if (!res.isAadharVerified() && (mAmount > res.getLimitAmount())){
                     hideProgress();
                     new WithdrawVerificationDialog(NewWithdrawActivity.this, response.getMessage(), mName, mBank, mIfsc, mBID);
-                } else if (!response.getResponse().isAadharVerified() && ((mAmount + response.getResponse().getAmountData()) > response.getResponse().getLimitAmount())) {
+                } else if (!res.isAadharVerified() && ((mAmount + res.getAmountData()) > res.getLimitAmount())) {
                     hideProgress();
                     new WithdrawVerificationDialog(NewWithdrawActivity.this, response.getMessage(), mName, mBank, mIfsc, mBID);
-                } else if (mIsWithdrawVerified && response.getResponse().isAadharVerified() && (mAmount > response.getResponse().getnWithdrawalLimit())) {
+                } else if (mIsWithdrawVerified && res.isAadharVerified() && (mAmount > res.getnWithdrawalLimit())) {
                     mPresenter.verifyBeneficiary(mBID);
                 } else {
                     hideProgress();
@@ -650,11 +649,10 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     public void onWithdrawLimitFailed(ApiError error) {
         hideProgress();
     }
-
     @Override
-    public void onVerifyBeneficiaryComplete(BeneficiaryVerifyResponse responseModel) {
-        hideProgress();
-        if (responseModel.isStatus()) {
+    public void onVerifyBeneficiaryComplete(BeneficiaryVerifyResponse responseModel){
+         hideProgress();
+        if(responseModel.isStatus()){
             mKYCVerified = true;
             AppUtilityMethods.showMsg(this, "!!!Thank You!!!\nYour bank details and aadhar card details has matched. Now you can withdraw amount easily.", false);
             getBeneficiaryList();
@@ -810,8 +808,8 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                 if (!TextUtils.isEmpty(mList.get(position).getBeneId())) {
                     mBeneficiaryId = mList.get(position).getBeneId();
                 }
-                if (mPaymentMode.equalsIgnoreCase(AppConstant.VPA)) {
-                    mPaymentMode = AppConstant.UPI;
+                if(mPaymentMode.equalsIgnoreCase(AppConstant.VPA)){
+                    mPaymentMode=AppConstant.UPI;
                 }
             }
             mAmountDetailsLL.setVisibility(View.VISIBLE);
@@ -893,8 +891,8 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
     }
 
     public void showConfirmWithdrawDialog() {
-        mIsDataRefresh = true;
-        final Dialog dialog = new Dialog(this);
+        mIsDataRefresh=true;
+        final Dialog dialog=new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCanceledOnTouchOutside(false);
@@ -986,7 +984,7 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                 } else {
                     mPayoutGatewayName = "Neokred";
                 }
-                double amount = Double.parseDouble(mAmountET.getText().toString().trim());
+                double amount=Double.parseDouble(mAmountET.getText().toString().trim());
                 mPresenter.onEasebuzzTransfer(mBeneficiaryId, amount, otp, mPayoutGateway);
             } else if (mPayoutGateway == 7) { /* ===Race-Condition after OTP Verify=== */
                 mPresenter.onRaceConditionTransferFinal(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
@@ -996,9 +994,8 @@ public class NewWithdrawActivity extends BaseActivity implements IWithdrawView, 
                 mPresenter.onPaySharpTransfer(mBeneficiaryId, mAmountET.getText().toString().trim(), otp);
             }
         }
-
         @Override
-        public void onResendOtpListener() {
+        public void onResendOtpListener(){
             mIsDataRefresh = true;
             showProgress(getString(R.string.txt_progress_authentication));
             mPresenter.resendOtp(mAppPreference.getMobile());
